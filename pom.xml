@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.rest</groupId>
-	<artifactId>yun</artifactId>
+	<artifactId>YUN</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>yun Maven Webapp</name>
+	<name>YUN Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -137,11 +137,11 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<finalName>yun</finalName>
+		<finalName>YUN</finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
-		<finalName>yun</finalName>
+		<finalName>YUN</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
