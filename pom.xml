@@ -114,6 +114,7 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.0.23.Final</version>
 		</dependency>
+		<!-- 文件lib下的非开源jar引入 -->
 		<dependency>
 			<groupId>com.gexin.rp.sdk</groupId>
 			<artifactId>base</artifactId>
@@ -140,6 +141,7 @@
 		<finalName>YUN</finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<!-- 配置tomcat热部署，注意需要更改maven安装路劲下的setting文件，以及配置tomcat权限 -->
 	<build>
 		<finalName>YUN</finalName>
 		<plugins>
@@ -179,6 +181,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!-- 打包路劲设置 -->
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
