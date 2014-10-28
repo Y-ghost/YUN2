@@ -107,8 +107,8 @@
 		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
-			<param-name>configContextLocation</param-name>
-			<param-value>/WEB-INF/springMVC-servlet.xml</param-value>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springMVC.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

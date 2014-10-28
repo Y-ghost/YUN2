@@ -38,7 +38,7 @@
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{projecttype,jdbcType=INTEGER}, 
       #{department,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
       #{county,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{createuser,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}
+      now(), #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.rest.yun.beans.Project" >
@@ -71,9 +71,9 @@
       <if test="createuser != null" >
         Createuser,
       </if>
-      <if test="createtime != null" >
+<!--       <if test="createtime != null" > -->
         Createtime,
-      </if>
+<!--       </if> -->
       <if test="modifyuser != null" >
         Modifyuser,
       </if>
@@ -109,9 +109,9 @@
       <if test="createuser != null" >
         #{createuser,jdbcType=INTEGER},
       </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
+<!--       <if test="createtime != null" > -->
+        now(),
+<!--       </if> -->
       <if test="modifyuser != null" >
         #{modifyuser,jdbcType=INTEGER},
       </if>
@@ -174,4 +174,35 @@
       Modifytime = #{modifytime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- Select projects by some parameters -->
+  <select id="selectProjectForList" parameterType="map" resultMap="BaseResultMap">
+	
+	 select <include refid="Base_Column_List"/> from Project 
+	 <where>
+	 	<if test="projectName != null">
+		  	Name = #{projectName}
+		</if>
+	 </where>
+	 
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		${sortField}
+	 	</when>
+	 	<otherwise>
+	 		Createtime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+	</select>
+  
 </mapper>

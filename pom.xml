@@ -7,6 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>YUN Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<finalName>YUN</finalName>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring.version>3.2.4.RELEASE</spring.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -62,17 +69,17 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -114,6 +121,13 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.0.23.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		
 		<!-- 文件lib下的非开源jar引入 -->
 		<dependency>
 			<groupId>com.gexin.rp.sdk</groupId>
@@ -137,10 +151,7 @@
 			<systemPath>${basedir}/lib/gexin-rp-sdk-template-2.0.0.6.jar</systemPath>
 		</dependency>
 	</dependencies>
-	<properties>
-		<finalName>YUN</finalName>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	
 	<!-- 配置tomcat热部署，注意需要更改maven安装路劲下的setting文件，以及配置tomcat权限 -->
 	<build>
 		<finalName>YUN</finalName>
