@@ -50,5 +50,6 @@
 			</div>
 		</div>
 	</div>
+<input type="hidden" id="basePath" value="${requestScope.basePath}"/>
 </body>
 </html>

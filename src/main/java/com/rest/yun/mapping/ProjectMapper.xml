@@ -180,9 +180,15 @@
 	
 	 select <include refid="Base_Column_List"/> from Project 
 	 <where>
-	 	<if test="projectName != null">
+	 	<if test="projectName != null and projectName != ''">
 		  	Name = #{projectName}
 		</if>
+		<if test="province !=null and province != ''">
+    	  	AND Province = #{province}
+      </if>  
+      <if test="city !=null and city != ''">
+    		AND City = #{city}
+      </if>  
 	 </where>
 	 
 	 order by 

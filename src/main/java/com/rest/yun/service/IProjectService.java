@@ -18,6 +18,8 @@ public interface IProjectService {
 
 	void updateProject(Project project);
 
+	Project getProjectById(int projectId);
+
 	Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria);
 
 }

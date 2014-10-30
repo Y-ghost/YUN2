@@ -85,4 +85,14 @@ public class ProjectServiceImpl implements IProjectService {
 		return page;
 	}
 
+	@Override
+	public Project getProjectById(int projectId) {
+		if (projectId == 0) {
+			LOG.warn("Project is null");
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+
+		return projectMapper.selectByPrimaryKey(projectId);
+	}
+
 }
