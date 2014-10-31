@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.rest.yun.beans.Project;
+import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.exception.ErrorCode;
 import com.rest.yun.exception.ServerException;
@@ -76,7 +77,7 @@ public class ProjectServiceImpl implements IProjectService {
 	public Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Page<Project> page = new Page<Project>(pageNow, pageSize);
-		params.put("page", page);
+		params.put(Constants.PAGE, page);
 		if (criteria != null) {
 			params.putAll(criteria);
 		}

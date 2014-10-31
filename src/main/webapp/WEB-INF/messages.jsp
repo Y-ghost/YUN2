@@ -36,7 +36,7 @@
 							</div>
 						</div>
 					</form>
-					<div class="table-responsive">
+					<div class="table-responsive" id="tableContainer">
 						<table class="table table-striped table-hover" id="table">
 							<thead>
 							</thead>
@@ -69,10 +69,10 @@
   			<div class="form-group">
     			<label class="col-sm-3 control-label">项目地址：</label>
     			<div class="col-sm-9">
-    				<div class="col-sm-5" style="padding-left:0">
+    				<div class="col-sm-5 selectItem" style="padding-left:0">
     					<select class="form-control provinceItem" name="province"></select>
     				</div>
-    				<div class="col-sm-5">
+    				<div class="col-sm-5 selectItem">
     					<select class="form-control cityItem" name="city"></select>
     				</div>
     			</div>

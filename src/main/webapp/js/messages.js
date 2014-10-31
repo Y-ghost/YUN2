@@ -24,6 +24,60 @@ rainet.message.view = function(){
 		return rainet.utils.formateDate(data);
 	}
 	
+	var setValidateForPrjoect = function($form){
+		$form.bootstrapValidator({
+			feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok',
+	            invalid: 'glyphicon glyphicon-remove',
+	            validating: 'glyphicon glyphicon-refresh'
+	        },
+			fields : {
+				name : {
+					validators : {
+						notEmpty : {
+							message: '项目名称不能为空'
+						}
+					}
+				},
+				department : {
+					validators : {
+						notEmpty : {
+							message: '负责单位不能为空'
+						}
+					}
+				},
+				province : {
+					validators : {
+						regexp: {
+	                        regexp: /^[^1]+$/i,
+	                        message: '省份不能为空'
+	                    }
+					}
+				},
+				city : {
+					validators : {
+						regexp: {
+	                        regexp: /^[^1]+$/i,
+	                        message: '城市不能为空'
+	                    }
+					}
+				},
+				
+				address : {
+					validators : {
+						notEmpty : {
+							message: '详细地址不能为空'
+						}
+					}
+				},
+			}
+		})
+		// 修复-->当选择省份时，已经校验过的城市不会重新验证的问题
+		.on('change', '.provinceItem', function(){
+			$form.bootstrapValidator('revalidateField', 'city');
+		});
+	}
+	
 	var setProjectInfo = function(data, readonly){
 		var $projectHtml = $('#projectInfo').clone().attr('id', 'projectInfo1').css('display','block');
 		$('.projectName',$projectHtml).val(data.name);
@@ -47,16 +101,23 @@ rainet.message.view = function(){
 		}
 		if (!readonly) {
 			buttons.success = {label : '修改', className : 'btn-success', callback : function(){
-				console.log($("form", $projectHtml).serialize);
-				var formData = $("form", $projectHtml).serializeArray();
+				var $form = $("form", $projectHtml);
+				// 检查验证是否通过
+				var bv = $form.data('bootstrapValidator');
+				if (bv.$invalidFields.length > 0) {
+					return false;
+				}
+				var formData = $form.serializeArray();
 				var jsonData = rainet.utils.serializeObject(formData);
-				rainet.message.service.update(jsonData, function(data){
+				rainet.message.service.project.update(jsonData, function(data){
 					if (data) {
-						// Add notification
+						rainet.utils.notification.success('修改成功');
 						$golabDataTable.api().ajax.reload();
 					}
 				});
 			}};
+			// Add validation
+			setValidateForPrjoect($("form", $projectHtml));
 		}
 		bootbox.dialog({
 			message : $projectHtml,
@@ -105,13 +166,13 @@ rainet.message.view = function(){
 				},
 				detail : function(self){
 					var projectId = $(self).attr('data-id');
-					rainet.message.service.get(projectId, function(data){
+					rainet.message.service.project.get(projectId, function(data){
 						setProjectInfo(data, true);
 					});
 				},
 				edit : function(self){
 					var projectId = $(self).parent().parent().attr('id');
-					rainet.message.service.get(projectId, function(data){
+					rainet.message.service.project.get(projectId, function(data){
 						setProjectInfo(data);
 					});
 				},
@@ -131,8 +192,8 @@ rainet.message.view = function(){
 							      label: "确定",
 							      className: "btn-success",
 							      callback : function(){
-							    	  rainet.message.service.del(projectId, function(data){
-							    		// Add notification
+							    	  rainet.message.service.project.del(projectId, function(data){
+							    		rainet.utils.notification.success('删除成功');
 										$golabDataTable.api().ajax.reload();
 							    	  });
 							      }
@@ -144,8 +205,9 @@ rainet.message.view = function(){
 				updateParam : function(param){
 					var city = $.trim($('#city').val());
 					if (city != -1) {
-						param.city = city;
-						param.province = $.trim($('#province').val());
+						// 处理中文
+						param.city = encodeURIComponent(city);
+						param.province = encodeURIComponent($.trim($('#province').val()));
 					}
 				}
 				
@@ -239,7 +301,7 @@ rainet.message.view = function(){
 					param.criteria = JSON.stringify(criteria);
 				}
 				// Get list project
-				rainet.message.service.list(param, function(data){
+				rainet.message.service[module].list(param, function(data){
 					var result = {};
 					result.draw = data.pageNum;
 					settings.iDraw = data.pageNum;
@@ -295,45 +357,53 @@ rainet.message.url = {
 };
 
 rainet.message.service = {
-		get: function(projectId, callback){
-			rainet.ajax.execute({
-				url : rainet.message.url.project.url + projectId,
-				success : function(data){
-					callback(data);
-				}
-			});
-		},
-		list : function(param, callback){
-			rainet.ajax.execute({
-				url : rainet.message.url.project.url,
-				data : param,
-				success : function(data){
-					callback(data);
-				}
-			});
-		},
 		
-		update: function(project, callback){
-			rainet.ajax.execute({
-				url : rainet.message.url.project.url,
-				method : 'PUT',
-				data : JSON.stringify(project),
-				contentType : 'application/json; charset=utf-8',
-				success : function(data){
-					callback(data);
-				}
-			});
-		},
+		project : {
+			get: function(projectId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.project.url + projectId,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.project.url,
+					data : param,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			update: function(project, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.project.url,
+					$busyEle : $('#tableContainer'),
+					method : 'PUT',
+					data : JSON.stringify(project),
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			del: function(projectId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.project.url + projectId,
+					$busyEle : $('#tableContainer'),
+					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+		}
 		
-		del: function(projectId, callback){
-			rainet.ajax.execute({
-				url : rainet.message.url.project.url + projectId,
-				method : 'DELETE',
-				success : function(data){
-					callback(data);
-				}
-			});
-		},
 		
 };
 

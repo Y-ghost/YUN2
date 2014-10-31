@@ -51,3 +51,47 @@ rainet.utils.serializeObject = function(array){
     });
     return o;
 }
+
+rainet.utils.notification = {
+	success : function(text){
+		noty({text : text, type : 'success', timeout : 1500});
+	},
+	error : function(text){
+		noty({text : text, type : 'error', theme : 'bootstrapTheme', timeout : 1500});
+	}
+};
+
+rainet.utils.busy = function(){
+	var defaults = {
+			template: "<div style=\"position:absolute;left:0;top:0;right:0;bottom:0;height: 100%;width:100%;opacity:.7;background-color:white;\" ng-show=\"display()\">\n"+
+							"<div style=\"position:absolute;left:44.5%;top:37%;\">\n"+
+							"<i class=\"fa fa-spinner fa-spin fa-lg\"></i><Label style=\"padding:0 5px;\"></Label>\n"+
+							"</div>\n"+
+						"</div>\n",
+			message:'正在努力加载...'
+	};
+	
+	var $template = undefined;
+	
+	var loading = function(text, $ele) {
+		if (!$ele) {
+			$ele = $('body');
+		}
+		var position = $ele.css('position');
+		if (position === 'static' || position === '' || typeof position === 'undefined'){
+			$ele.css('position','relative');
+		}
+		$template = $(defaults.template);
+		$('label', $template).text(text || defaults.message);
+		$ele.append($template);
+	}
+	
+	var remove = function() {
+		$template.remove();
+	}
+	
+	return {
+		loading : loading,
+		remove : remove
+	};
+}();

@@ -7,8 +7,10 @@
 
 <script src="${requestScope.basePath}js/lib/jquery-1.11.1.min.js"></script>
 <script src="${requestScope.basePath}bootstrap/js/bootstrap.min.js"></script>
+<script src="${requestScope.basePath}bootstrap/validation/js/bootstrapValidator.min.js"></script>
+<script src="${requestScope.basePath}js/lib/jquery.noty.packaged.min.js"></script>
 <script src="${requestScope.basePath}js/settings.js"></script>
-<script src="${requestScope.basePath}js/ajax.js"></script>
 <script src="${requestScope.basePath}js/common.js"></script>
+<script src="${requestScope.basePath}js/ajax.js"></script>
 </body>
 </html>

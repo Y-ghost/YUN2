@@ -6,6 +6,7 @@ rainet.ajax = {
 		execute : function(options) {
 			$.ajax({
 				  beforeSend : function(){
+					  rainet.utils.busy.loading(options.busyMsg, options.$busyEle);
 					  if (options.beforeSend) {
 						  options.beforeSend();
 					  }
@@ -19,9 +20,10 @@ rainet.ajax = {
 				  contentType : options.contentType,
 				  dataType: options.dataType || 'json',
 				  success: function(data){
+					  rainet.utils.busy.remove();
 					  var status = data.code;
 					  if (status != '200') {
-						  alert(data.message);
+						  rainet.utils.notification.error(data.message);
 						  return ;
 					  }
 					  if (options.success) {
@@ -29,7 +31,8 @@ rainet.ajax = {
 					  }
 				  },
 				  error: function(xhr, type){
-					  alert("error");
+					  rainet.utils.busy.remove();
+					  rainet.utils.notification.error('服务异常');
 					  return ;
 				  }
 				});
