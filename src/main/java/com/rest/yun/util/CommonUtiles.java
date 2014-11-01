@@ -31,32 +31,17 @@ public class CommonUtiles {
 	}
 
 	/**
-	 * @Title: getLastOneSecondDate
+	 * @Title: getLastDate
 	 * @author 杨贵松
-	 * @date 2014年3月26日 上午10:59:56
-	 * @Description: 获取比当前时间早10秒的时间
+	 * @date 2014年11月01日 下午11:17:35
+	 * @Description: 获取比当前时间早几秒的时间
 	 * @return
 	 * @throws ParseException
 	 *             Date 返回
 	 */
-	public static Date getLastOneSecondDate() throws ParseException {
+	public static Date getLastDate(int num) throws ParseException {
 		long t = System.currentTimeMillis();
-		Date date = new Date(t + 10 * 1000);
-		return date;
-	}
-
-	/**
-	 * @Title: getLastTwoSecondDate
-	 * @author 杨贵松
-	 * @date 2014年4月22日 下午3:47:45
-	 * @Description: 获取比当前时间早30秒的时间
-	 * @return
-	 * @throws ParseException
-	 *             Date 返回
-	 */
-	public static Date getLastTwoSecondDate() throws ParseException {
-		long t = System.currentTimeMillis();
-		Date date = new Date(t + 30 * 1000);
+		Date date = new Date(t + num * 1000);
 		return date;
 	}
 

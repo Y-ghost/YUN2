@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/validation/css/bootstrapValidator.min.css" />
-<link rel="stylesheet" href="${requestScope.basePath}css/t.css" />
+<link rel="stylesheet" href="${requestScope.basePath}css/message.css" />
 </head>
 <body>
 	<!-- Header -->

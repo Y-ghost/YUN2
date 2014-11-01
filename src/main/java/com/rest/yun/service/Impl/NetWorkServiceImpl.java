@@ -91,7 +91,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @throws ParseException 
 	 */
 	public String waitData(String address,String ContralCode,Date startDate) throws Exception{
-		Date endDate = CommonUtiles.getLastOneSecondDate();
+		Date endDate = CommonUtiles.getLastDate(10);
 		String dataContext = "";
 		long time = 0;
 		while(dataContext.equals("") && time<endDate.getTime()){
@@ -125,7 +125,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * String 				返回
 	 */
 	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws Exception{
-		Date endDate = CommonUtiles.getLastTwoSecondDate();
+		Date endDate = CommonUtiles.getLastDate(20);
 		String dataContext = "";
 		long time = 0;
 		while(dataContext.equals("") && time<endDate.getTime()){

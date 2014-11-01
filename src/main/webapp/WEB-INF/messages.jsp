@@ -14,11 +14,11 @@
 			<jsp:include page="common/left.jsp" />
 			<div class="col-xs-2 col-md-2 border-right hidden-xs" style="height:100%">
 				<ul class="list-group ul-border-bottom">
-  					<a href="#" class="list-group-item active" data-name="project" style="margin-top:20px">项目信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="#" class="list-group-item " data-name="host" style="margin-top:20px">主机信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="#" class="list-group-item " data-name="node" style="margin-top:20px">节点信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="#" class="list-group-item " data-name="danger" style="margin-top:20px">报警信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="#" class="list-group-item " data-name="user" style="margin-top:20px">用户信息管理<i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item active" data-name="project" style="margin-top:20px">项目信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item " data-name="host" style="margin-top:20px">主机信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item " data-name="node" style="margin-top:20px">节点信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item " data-name="danger" style="margin-top:20px">报警信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item " data-name="user" style="margin-top:20px">用户信息管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
 			<div class="col-xs-12 col-md-9">
@@ -81,12 +81,6 @@
     			<label class="col-sm-3 control-label">详细地址：</label>
     			<div class="col-sm-9">
     				<input type="text" class="form-control address" name="address"/>
-    			</div>
-  			</div>
-  			<div class="form-group">
-    			<label class="col-sm-3 control-label">项目面积：</label>
-    			<div class="col-sm-9">
-    				<input type="text" class="form-control"/> 
     			</div>
   			</div>
   			<input type="hidden" name="id" class="id"/>

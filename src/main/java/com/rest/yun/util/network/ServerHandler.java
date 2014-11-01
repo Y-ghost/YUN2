@@ -67,6 +67,8 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 						// 心跳包数据，将信道Channel保存到缓存
 						address = data.substring(12, 20);
 						ChannelSession.put(address, ctx.channel());
+						//保存心跳包到数据库，00表示心跳包类型，用于监测设备是否在线
+						netWorkService.saveNetData(address,"00", data);
 						log.info("服务器接收" + address + "监控主机的注册包或者心跳包 : " + data);
 						buf.clear();
 					} else if (data.substring(22, 24).equals("3B")) {
@@ -83,8 +85,7 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 								|| (date - dt.getReceivetime().getTime()) > 6 * 3600 * 1000) {
 							// 将监控主机返回的数据存储，以备解析调用
 							log.info("服务器接收" + address + "监控主机的报警数据 : " + data);
-							netWorkService
-									.saveNetData(address, contralId, data);
+							netWorkService.saveNetData(address, contralId, data);
 							// 只有超过6个小时间隔的才报警
 							netWorkService.pushMsg(address);// 接到报警，推送给用户
 							return;

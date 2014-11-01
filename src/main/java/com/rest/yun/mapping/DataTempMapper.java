@@ -1,17 +1,19 @@
 package com.rest.yun.mapping;
 
+import java.util.List;
+import java.util.Map;
+
 import com.rest.yun.beans.DataTemp;
 
 public interface DataTempMapper {
-    int deleteByPrimaryKey(Integer id);
+	
+	DataTemp selectDataTemp(Map<String, Object> map) throws Exception;
 
-    int insert(DataTemp record);
+	void insert(DataTemp dataTemp) throws Exception;
 
-    int insertSelective(DataTemp record);
+	List<DataTemp> selectAllOldData() throws Exception;
 
-    DataTemp selectByPrimaryKey(Integer id);
+	void deleteAllOldData(List<DataTemp> list) throws Exception;
 
-    int updateByPrimaryKeySelective(DataTemp record);
-
-    int updateByPrimaryKey(DataTemp record);
+	DataTemp selectDataMax(Map<String, Object> map) throws Exception;
 }

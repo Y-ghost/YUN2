@@ -27,6 +27,13 @@ public class ProjectController {
 	@Autowired
 	private IProjectService projectService;
 
+	/**
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @Description: 添加项目
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody Project project) {
@@ -34,6 +41,13 @@ public class ProjectController {
 		return new ResponseWrapper(true);
 	}
 
+	/**
+	 * @Title:       selectProjects
+	 * @author:      杨贵松
+	 * @Description: 查询项目列表
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectProjects(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
@@ -62,6 +76,13 @@ public class ProjectController {
 		return new ResponseWrapper(page);
 	}
 
+	/**
+	 * @Title:       detailProject
+	 * @author:      杨贵松
+	 * @Description: 查看项目详情 
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@RequestMapping(value = "{projectId}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper detailProject(@PathVariable int projectId) {
@@ -69,6 +90,13 @@ public class ProjectController {
 		return new ResponseWrapper(project);
 	}
 
+	/**
+	 * @Title:       update
+	 * @author:      杨贵松
+	 * @Description: 更新项目
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseWrapper update(@RequestBody Project project) {
@@ -76,6 +104,13 @@ public class ProjectController {
 		return new ResponseWrapper(true);
 	}
 
+	/**
+	 * @Title:       deleteProject
+	 * @author:      杨贵松
+	 * @Description: 删除一个项目 
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@RequestMapping(value = "{projectId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseWrapper deleteProject(@PathVariable int projectId) {

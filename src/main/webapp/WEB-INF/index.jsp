@@ -39,51 +39,50 @@
 			<div class="col-xs-12 col-md-9">
 				<div class="node-container">
 					<div class="node-tools">
-						<label class="checkbox-inline">
-  							<input type="checkbox"/> 全选
-						</label>
-						<span class="col-xs-offset-1 col-md-offset-1"></span>
+						<label class="checkbox-inline"> <input type="checkbox" />
+							全选
+						</label> <span class="col-xs-offset-1 col-md-offset-1"></span>
 						<button type="button" class="btn btn-success">开启</button>
 						<span class="col-xs-offset-1 col-md-offset-1"></span>
 						<button type="button" class="btn btn-warning">关闭</button>
 					</div>
-					
+
 					<div>
 						<div class="col-xs-12 col-md-5">
 							<div class="panel panel-default ">
-  							<div class="panel-heading">
-  							<label>节点1</label>
-  							<span class="float-right">
-  								<input type="checkbox"/>
-  							</span>
-  							</div>
-  							<div class="panel-body">
-    							
- 						 	</div>
+								<div class="panel-heading">
+									<label>节点1</label> <span class="float-right"> <input
+										type="checkbox" />
+									</span>
+								</div>
+								<div class="panel-body">
+									
+								</div>
+							</div>
 						</div>
-						</div>
-						
+
 						<div class="col-md-1"></div>
 						<div class="col-xs-12 col-md-5">
 							<div class="panel panel-default ">
-  							<div class="panel-heading">
-  							 <label>节点2</label>
-  							<span class="float-right">
-  								<input type="checkbox"/>
-  							</span>
-  							</div>
-  							<div class="panel-body">
-    							
- 						 	</div>
-						</div>
+								<div class="panel-heading">
+									<label>节点2</label> 
+									<span class="float-right"> 
+										<input  type="checkbox" />
+									</span>
+								</div>
+								<div class="panel-body">
+									
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			
+
 			</div>
 		</div>
 	</div>
-	
 	<jsp:include page="common/footer.jsp" />
+	
+	<script src="${requestScope.basePath}js/index.js"></script>
 </body>
 </html>
