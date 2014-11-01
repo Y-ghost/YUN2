@@ -14,7 +14,9 @@
 	<!-- 采用注释的方式配置bean -->
 	<context:annotation-config />
 	<!-- 配置要扫描的包 -->
-	<context:component-scan base-package="com.rest.yun.controller"></context:component-scan>
+	<context:component-scan base-package="com.rest.yun">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 
 	<!-- 配置数据源 -->
 	<bean id="propertyConfigrure"
@@ -65,6 +67,7 @@
 	<!-- 配置mybitas SqlSessionFactoryBean -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" /> 
 	</bean>
 
 	<!-- 依赖注入自动加载所有映射类 -->

@@ -11,7 +11,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.rest.yun.beans.User;
-import com.rest.yun.util.AjaxResponseUtil;
 
 /**
  * @project:					yun 
@@ -59,7 +58,7 @@ public class AuthorityAnnotationInterceptor extends HandlerInterceptorAdapter {
                 response.sendRedirect(sb.toString());
             } else if (fireAuthority.resultType() == ResultTypeEnum.json) {
                 //ajax类型的登录提示
-                AjaxResponseUtil.toJson(response, "noRight");
+//                AjaxResponseUtil.toJson(response, "noRight");
             }
             return false;
         }

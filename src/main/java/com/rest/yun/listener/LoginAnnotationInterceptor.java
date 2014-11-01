@@ -12,7 +12,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.rest.yun.beans.User;
-import com.rest.yun.util.AjaxResponseUtil;
 
 /**
  * @project:					yun 
@@ -56,7 +55,7 @@ public class LoginAnnotationInterceptor extends HandlerInterceptorAdapter {
 				}
 			} else if (login.value() == ResultTypeEnum.json) {
 				//采用ajax方式的进行登录提示
-				AjaxResponseUtil.toJson(response, "noLogin");
+//				AjaxResponseUtil.toJson(response, "noLogin");
 			}
 			return false;
 		}
