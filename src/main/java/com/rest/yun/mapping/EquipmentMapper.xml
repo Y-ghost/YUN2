@@ -28,6 +28,24 @@
     <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    
+    <association property="project" column="controlHostId" select="selectProjectByHostId"></association>
+  </resultMap>
+  
+  <!-- 映射关联项目 -->
+  <resultMap id="projectMap" type="com.rest.yun.beans.Project" >
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="ProjectType" property="projecttype" jdbcType="INTEGER" />
+    <result column="Department" property="department" jdbcType="VARCHAR" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="County" property="county" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Createuser" property="createuser" jdbcType="INTEGER" />
+    <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
+    <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, Name, ControlHostId, Code, IrrigationType, SoilWeight, SoilWater, Area, PlantsName, 
@@ -35,12 +53,28 @@
     TimeOneEnd, TimeTwoStart, TimeTwoEnd, TimeThreeStart, TimeThreeEnd, FowParameter, 
     Createuser, Createtime, Modifyuser, Modifytime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!-- 查询关联项目 -->
+  <select id="selectProjectByHostId" resultMap="projectMap">
+  	select project.* from Project 
+  	left join ControlHost on project.id = ControlHost.projectId
+  	where ControlHost.id = #{controlHostId}
+  </select>
+  <!-- 根据节点id查询其状态数据 -->
+  <select id="selectEquipmentStatusByeEid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from Equipment
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{eId,jdbcType=INTEGER}
   </select>
+  <!-- 根据Hcode和Ecode查询节点  -->
+  <select id="selectEquipmentByHcodeAndEcode" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Equipment e left join ControlHost c on e.ControlHostId = c.id
+    where e.Code=#{Ecode} 
+     and c.Code = #{Hcode}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment
     where id = #{id,jdbcType=INTEGER}

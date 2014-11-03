@@ -17,6 +17,17 @@ public class ControlHost {
 
     private Date modifytime;
 
+    private Project project;
+    
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
     public Integer getId() {
         return id;
     }

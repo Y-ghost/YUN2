@@ -130,7 +130,7 @@ rainet.message.view = function(){
 			// Project
 			project : {
 				columns : [
-				           	{ "targets": 0, "orderable": false, "render" : formateSeq},
+				           	{ "sTitle": "序号",  "targets": 0, "orderable": false, "render" : formateSeq},
 				           	{ "sTitle": "项目名称",  "targets": 1, "render" : formateLink},
 				           	{ "sTitle": "项目单位", "targets": 2 },
 				           	{ "sTitle": "项目地址",  "targets": 3 },
@@ -403,10 +403,10 @@ rainet.message.service = {
 				});
 			},
 		}
-		
-		
 };
 
 $(document).ready(function(){
+	$("#homeLab").html("信息中心");
+	$("#homeHref").attr("href","messages");
 	rainet.message.view.init();
 });

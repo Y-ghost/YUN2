@@ -15,9 +15,14 @@ public class Test {
 		
 //		StringBuffer sb = new StringBuffer ("123456789");
 //		System.out.println(sb.reverse());
-		byte[] b = {0x01,0x00,0x01};
-		byte[] c = codingFactory.coding((byte)0x01, "00000002", (byte)0x22, b);
-		System.out.println(codingFactory.bytesToHexString(c));
+//		long a = 30;
+//		String s = "E0";
+//		long times = Long.valueOf(s,16);
+//		String ss = s.substring(4,s.length()-2);
+//		byte[] b = {(byte) 0xE0};
+//		byte[] c = codingFactory.coding((byte)0x01, "00000002", (byte)0x22, b);
+		float f = (float)Math.round(((float)(10+186*0.001))*100)/100;
+		System.out.println(f);
 	}
 	
 	/**
@@ -37,6 +42,20 @@ public class Test {
         return byte_3;  
     }  
     
+    public static long unsigned4BytesToInt(byte[] buf) {  
+        int firstByte = 0;  
+        int secondByte = 0;  
+        int thirdByte = 0;  
+        int fourthByte = 0;  
+        int index =0;  
+        firstByte = (0x000000FF & buf[index]);  
+        secondByte = (0x000000FF & buf[index + 1]);  
+        thirdByte = (0x000000FF & buf[index + 2]);  
+        fourthByte = (0x000000FF & buf[index + 3]);  
+        index = index + 4;  
+        return (firstByte << 24 | secondByte << 16 | thirdByte << 8 | fourthByte) & 0xFFFFFFFFL;  
+    }
+    
 	/** 
 	 * @Title: 				longToByte 
 	 * @author 				杨贵松
@@ -49,7 +68,7 @@ public class Test {
 	public static byte[] longToByte(long number) { 
 		long temp = number; 
 		byte[] b = new byte[4]; 
-		for (int i = 0; i < b.length; i++) { 
+		for (int i = 3; i >=0 ; i--) { 
 			b[i] = new Long(temp & 0xff).byteValue();// 将最低位保存在最低位 
 			temp = temp >> 8; // 向右移8位 
 		} 

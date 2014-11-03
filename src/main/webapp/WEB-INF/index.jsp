@@ -34,7 +34,13 @@
 	  					<li><a href="#">&raquo;</a></li>
 					</ul>
 				</div>
-				
+				<div class="gigantic pagination">
+					<a href="#" class="first" data-action="first">&laquo;</a>
+					<a href="#" class="previous" data-action="previous">&lsaquo;</a>
+					<input type="text" readonly="readonly" />
+					<a href="#" class="next" data-action="next">&rsaquo;</a>
+					<a href="#" class="last" data-action="last">&raquo;</a>
+				</div>
 			</div>
 			<div class="col-xs-12 col-md-9">
 				<div class="node-container">
@@ -84,5 +90,6 @@
 	<jsp:include page="common/footer.jsp" />
 	
 	<script src="${requestScope.basePath}js/index.js"></script>
+	<script src="${requestScope.basePath}js/lib/jquery.jqpagination.min.js"></script>
 </body>
 </html>

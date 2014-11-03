@@ -30,6 +30,15 @@
     from User
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 根据主机id查询用户信息 -->
+  <select id="selectUserByHostCode" resultMap="BaseResultMap" parameterType="String" >
+    select u.*
+    from User u 
+	left join UserProjectRel up on u.id = up.UserId
+	left join Project p on up.ProjectId = p.id 
+	left join ControlHost c on c.ProjectId = p.id
+	where c.code = #{hostCode,jdbcType=VARCHAR} 
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from User
     where id = #{id,jdbcType=INTEGER}

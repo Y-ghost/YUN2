@@ -13,7 +13,7 @@ public class SystemLog {
 
     private Date logtime;
 
-    private String systemlogcol;
+    private String logstatus;
 
     public Integer getId() {
         return id;
@@ -55,11 +55,11 @@ public class SystemLog {
         this.logtime = logtime;
     }
 
-    public String getSystemlogcol() {
-        return systemlogcol;
-    }
+	public String getLogstatus() {
+		return logstatus;
+	}
 
-    public void setSystemlogcol(String systemlogcol) {
-        this.systemlogcol = systemlogcol == null ? null : systemlogcol.trim();
-    }
+	public void setLogstatus(String logstatus) {
+		this.logstatus = logstatus;
+	}
 }

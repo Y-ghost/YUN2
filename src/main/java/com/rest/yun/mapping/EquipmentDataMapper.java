@@ -1,11 +1,13 @@
 package com.rest.yun.mapping;
 
+import java.util.List;
+
 import com.rest.yun.beans.EquipmentData;
 
 public interface EquipmentDataMapper {
     int deleteByPrimaryKey(Integer id);
-
-    int insert(EquipmentData record);
+//批量添加传感器数据
+    int insert(List<EquipmentData> listData);
 
     int insertSelective(EquipmentData record);
 

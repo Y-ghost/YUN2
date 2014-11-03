@@ -19,6 +19,13 @@
     from UserProjectRel
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- 根据项目id查询关联关系 -->
+  <select id="selectRelByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from UserProjectRel
+    where ProjectId = #{pId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from UserProjectRel
     where id = #{id,jdbcType=INTEGER}

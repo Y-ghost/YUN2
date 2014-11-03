@@ -9,15 +9,48 @@
     <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    
+    <association property="project" column="projectId" select="selectProjectById"></association>
   </resultMap>
+  
+  
+  <!-- 映射关联项目 -->
+  <resultMap id="projectMap" type="com.rest.yun.beans.Project" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Name" property="name" jdbcType="VARCHAR" />
+    <result column="ProjectType" property="projecttype" jdbcType="INTEGER" />
+    <result column="Department" property="department" jdbcType="VARCHAR" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="County" property="county" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="Createuser" property="createuser" jdbcType="INTEGER" />
+    <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
+    <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
   <sql id="Base_Column_List" >
     id, ProjectId, Code, Createuser, Createtime, Modifyuser, Modifytime
   </sql>
+  
+  <!-- 查询关联项目 -->
+  <select id="selectProjectById" resultMap="projectMap">
+  	select * from project where id = #{projectId}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from ControlHost
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!-- 根据通讯地址查询主机信息 -->
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ControlHost
+    where Code = #{code,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from ControlHost
