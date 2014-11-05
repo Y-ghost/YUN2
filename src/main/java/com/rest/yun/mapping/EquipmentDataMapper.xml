@@ -10,17 +10,18 @@
   <sql id="Base_Column_List" >
     id, SensorId, Humidity, CreateTime
   </sql>
+  <!-- 根据传感器id查询最新的一条数据  -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from Equipment_Data
-    where id = #{id,jdbcType=INTEGER}
+    where SensorId = #{sId,jdbcType=INTEGER}
+    order by Createtime desc limit 1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment_Data
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  
   <!-- 批量插入节点采集的数据 -->
   <insert id="insert" parameterType="java.util.List" >
   	<![CDATA[

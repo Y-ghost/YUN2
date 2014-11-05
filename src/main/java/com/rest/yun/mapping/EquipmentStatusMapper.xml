@@ -19,6 +19,14 @@
     from Equipment_Status
     where id = #{id,jdbcType=INTEGER}
   </select>
+   <!-- 根据节点id查询节点采集的数据 -->
+  <select id="selectEquipmentStatusByeEid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  	select 
+    <include refid="Base_Column_List" />
+    from Equipment_Status
+    where EquipmentId = #{eId,jdbcType=INTEGER}
+  	order by createTime desc limit 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment_Status
     where id = #{id,jdbcType=INTEGER}

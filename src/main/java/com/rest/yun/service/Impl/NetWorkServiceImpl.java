@@ -172,8 +172,8 @@ public class NetWorkServiceImpl implements NetWorkService{
 								EquipmentData dataVal = new EquipmentData();
 								for(int i=1;i<=sensorNum;i++){
 									Map<String,Object> sensorMap = new HashMap<String, Object>();
-									sensorMap.put("eId", code);
-									sensorMap.put("num", eCode);
+									sensorMap.put("eId", equipment.getId());
+									sensorMap.put("num", i);
 									SensorInfo sensorInfo = sensorInfoMapper.selectByEidAndNum(sensorMap);
 									dataVal.setCreatetime(date);
 									dataVal.setHumidity((float)Math.round(((float)(receiveData[numTmp/2+11+i]+receiveData[numTmp/2+12+i]*0.01))*100)/100);

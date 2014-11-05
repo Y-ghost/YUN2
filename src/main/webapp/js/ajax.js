@@ -31,7 +31,11 @@ rainet.ajax = {
 							  isContinue = options.customHandleError(data);
 						  }
 						  if (isContinue){
-							  rainet.utils.notification.error(data.message);
+							  if (data.code == 'A105') {
+								  rainet.utils.notification.warning(data.message);
+							  }else{
+								  rainet.utils.notification.error(data.message);
+							  }
 						  }
 						  return ;
 					  }

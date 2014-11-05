@@ -59,12 +59,12 @@
   	left join ControlHost on project.id = ControlHost.projectId
   	where ControlHost.id = #{controlHostId}
   </select>
-  <!-- 根据节点id查询其状态数据 -->
-  <select id="selectEquipmentStatusByeEid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from Equipment
-    where id = #{eId,jdbcType=INTEGER}
+  <!-- 根据项目id查询节点 -->
+  <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select e.*
+    from Equipment e
+    left join ControlHost c on e.ControlHostId = c.id
+    where c.projectId = #{pId,jdbcType=INTEGER}
   </select>
   <!-- 根据Hcode和Ecode查询节点  -->
   <select id="selectEquipmentByHcodeAndEcode" resultMap="BaseResultMap" parameterType="Map" >

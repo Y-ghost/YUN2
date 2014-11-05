@@ -25,5 +25,5 @@ public interface DataTempMapper {
 	 * @return       int
 	 * @throws 
 	 */
-	int selectDataCount(Map<String, Object> dataTmp);
+	int selectDataCount(Map<String, Object> dataTmp) throws Exception;
 }

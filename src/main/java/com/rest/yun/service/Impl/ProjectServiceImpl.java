@@ -163,18 +163,26 @@ public class ProjectServiceImpl implements IProjectService {
 		}
 		List<Project> listTmp = projectMapper.selectProjectForList(params);
 		List<Project> list = null;
-		if (!CollectionUtils.isEmpty(listTmp)) {
-			list = new ArrayList<Project>();
-			for (Project project : listTmp) {
-				dataTmp.put("pId", project.getId());
-				int dataCount = dataTempMapper.selectDataCount(dataTmp);
-				if (dataCount > 0) {
-					project.setWifiStatus("在线");
-				} else {
-					project.setWifiStatus("离线");
+		try {
+			if (!CollectionUtils.isEmpty(listTmp)) {
+				list = new ArrayList<Project>();
+				for (Project project : listTmp) {
+					dataTmp.put("pId", project.getId());
+					int dataCount = dataTempMapper.selectDataCount(dataTmp);
+					if (dataCount > 0) {
+						project.setWifiStatus("在线");
+					} else {
+						project.setWifiStatus("离线");
+					}
+					list.add(project);
 				}
-				list.add(project);
+			}else{
+				LOG.warn("project is null exception");
+				throw new ServerException(ErrorCode.PROJECT_LIST_NULL);
 			}
+		} catch (Exception e) {
+			LOG.error("get project exception",e);
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
 		page.setResult(list);
 		return page;

@@ -24,13 +24,21 @@
     from SensorInfo
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <!--  -->
+  <!-- 根据节点id和传感器序号查询节点 -->
   <select id="selectByEidAndNum" resultMap="BaseResultMap" parameterType="Map" >
     select 
     <include refid="Base_Column_List" />
     from SensorInfo
     where EquipmentId = #{eId,jdbcType=INTEGER}
     and Number = #{num,jdbcType=INTEGER}
+  </select>
+  <!-- 根据节点id和传感器序号查询节点 -->
+  <select id="selectSensorInfoByEid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from SensorInfo
+    where EquipmentId = #{eId,jdbcType=INTEGER}
+    order by Number asc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from SensorInfo
