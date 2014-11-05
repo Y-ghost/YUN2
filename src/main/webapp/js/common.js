@@ -58,6 +58,9 @@ rainet.utils.notification = {
 	},
 	error : function(text){
 		noty({text : text, type : 'error', theme : 'bootstrapTheme', timeout : 1500});
+	},
+	warning : function(text){
+		noty({text : text, type : 'warning', theme : 'bootstrapTheme', timeout : 1500});
 	}
 };
 
