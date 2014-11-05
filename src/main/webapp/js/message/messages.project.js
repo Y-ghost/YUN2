@@ -219,6 +219,10 @@ rainet.message.controller.project = {
 		bootbox.dialog({
 			message : "确认删除此项目？",
 			title : '删除项目"'+projectName+'"',
+			// 支持ESC
+			onEscape : function(){
+				
+			},
 			buttons :  {
 				cancel: {
 				      label: "取消",
@@ -255,7 +259,7 @@ rainet.message.controller.project = {
   		"<div class=\"form-group\">\n"+
   		"<label class=\"col-sm-3 control-label\">项目地址：</label>\n"+
   				"<div class=\"col-sm-9\">\n"+
-    				"<div class=\"col-sm-5 selectItem\">\n"+
+    				"<div class=\"col-sm-5 selectItem\" style=\"padding-left:0;\">\n"+
     					"<select class=\"form-control provinceItem\" name=\"province\"></select>\n"+
     				"</div>\n"+
     				"<div class=\"col-sm-5 selectItem\">\n"+

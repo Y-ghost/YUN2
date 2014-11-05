@@ -65,11 +65,11 @@
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
-	<script src="${requestScope.basePath}js/messages.service.js"></script>
-	<script src="${requestScope.basePath}js/messages.util.js"></script>
-	<script src="${requestScope.basePath}js/messages.project.js"></script>
-	<script src="${requestScope.basePath}js/messages.host.js"></script>
-	<script src="${requestScope.basePath}js/messages.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.service.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.project.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	
 	
 </body>
