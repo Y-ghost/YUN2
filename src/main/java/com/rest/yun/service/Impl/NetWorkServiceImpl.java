@@ -1,18 +1,43 @@
 package com.rest.yun.service.Impl;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import com.gexin.rp.sdk.base.IIGtPush;
+import com.gexin.rp.sdk.base.impl.ListMessage;
+import com.gexin.rp.sdk.base.impl.Target;
+import com.gexin.rp.sdk.http.IGtPush;
+import com.gexin.rp.sdk.template.NotificationTemplate;
+import com.rest.yun.beans.ControlHost;
 import com.rest.yun.beans.DataTemp;
+import com.rest.yun.beans.Equipment;
+import com.rest.yun.beans.EquipmentData;
+import com.rest.yun.beans.EquipmentStatus;
+import com.rest.yun.beans.SensorInfo;
+import com.rest.yun.beans.SystemLog;
+import com.rest.yun.beans.User;
+import com.rest.yun.beans.UserProjectRel;
 import com.rest.yun.mapping.ControlHostMapper;
 import com.rest.yun.mapping.DataTempMapper;
+import com.rest.yun.mapping.EquipmentDataMapper;
+import com.rest.yun.mapping.EquipmentMapper;
+import com.rest.yun.mapping.EquipmentStatusMapper;
+import com.rest.yun.mapping.SensorInfoMapper;
 import com.rest.yun.mapping.SystemLogMapper;
 import com.rest.yun.mapping.UserMapper;
+import com.rest.yun.mapping.UserProjectRelMapper;
 import com.rest.yun.service.NetWorkService;
+import com.rest.yun.util.CheckReceiveCodingUtil;
+import com.rest.yun.util.CodingFactoryUtil;
 import com.rest.yun.util.CommonUtiles;
 
 /**
@@ -27,12 +52,24 @@ import com.rest.yun.util.CommonUtiles;
 @Service
 public class NetWorkServiceImpl implements NetWorkService{
 	private static final Logger log = Logger.getLogger(NetWorkServiceImpl.class.getName());
+	private CodingFactoryUtil codingFactory = new CodingFactoryUtil();
+	private CheckReceiveCodingUtil checkCoding = new CheckReceiveCodingUtil();
 	@Autowired
 	private DataTempMapper dataTempMapper;
 	@Autowired
 	private UserMapper userMapper;
 	@Autowired
 	private ControlHostMapper controlHostMapper;
+	@Autowired
+	private EquipmentMapper equipmentMapper;
+	@Autowired
+	private EquipmentStatusMapper equipmentStatusMapper;
+	@Autowired
+	private EquipmentDataMapper equipmentDataMapper;
+	@Autowired
+	private UserProjectRelMapper userProjectRelMapper;
+	@Autowired
+	private SensorInfoMapper sensorInfoMapper;
 	@Autowired
 	private SystemLogMapper systemLogMapper;
 	
@@ -44,15 +81,137 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @param data 
 	 * void 				返回
 	 */
-	public void saveNetData(String code,String controlType,String data){
+	public void saveNetData(String code,String controlType,String Rdata){
 		try {
 			Date date = CommonUtiles.getSystemDateTime();
 			DataTemp dataTemp = new DataTemp();
 			dataTemp.setCode(code);
 			dataTemp.setContraltype(controlType);
-			dataTemp.setDatacontext(data);
+			dataTemp.setDatacontext(Rdata);
 			dataTemp.setReceivetime(date);
 			dataTempMapper.insert(dataTemp);
+			
+			//解析接收的节点数据存储到状态表中
+			if(controlType.equals("15")){
+				
+				byte[] data = {};
+				
+				byte[] sendData = codingFactory.coding((byte) 0x01, code, (byte) 0x05, data);
+				boolean flag = false;
+				byte[] receiveData = null;
+				if (!Rdata.equals("")) {
+					receiveData = codingFactory.string2BCD(Rdata);
+					flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+				}
+				if (flag) {
+					int num = receiveData[12];
+					String usingData = Rdata.substring(26,Rdata.length()-6);
+					List<EquipmentStatus> listStatus = new ArrayList<EquipmentStatus>();
+					List<EquipmentData> listData = new ArrayList<EquipmentData>();
+					int numTmp = 0;
+					while(numTmp <= 2*num){
+						String eCode = usingData.substring(numTmp,numTmp+4);
+						Map<String,Object> map = new HashMap<String, Object>();
+						map.put("hCode", code);
+						map.put("eCode", eCode);
+						Equipment equipment = equipmentMapper.selectEquipmentByHcodeAndEcode(map);
+						
+						long waterVal = Long.valueOf(usingData.substring(numTmp+10,numTmp+18),16);
+						
+						if(equipment!=null){
+							//查询数据库中最新的一条采集数据
+							EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByeEid(equipment.getId());
+							
+							if(equipmentStatus!=null && equipmentStatus.getWatervalue() > waterVal){//采集异常保存系统日志
+								List<UserProjectRel> relList = userProjectRelMapper.selectRelByPid(equipment.getProject().getId());
+								List<SystemLog> sysLogList = new ArrayList<SystemLog>();
+								for(UserProjectRel Rel:relList){
+									SystemLog systemLog = new SystemLog();
+									systemLog.setUserid(Rel.getUserid());
+									systemLog.setLogcontext("采集异常：【" + equipment.getProject().getName() + "】项目下【" + equipment.getName() + "】监控节点数据异常，当天采集的数据小于历史数据!");
+									systemLog.setLogtime(date);
+									systemLog.setLogtype(0);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志
+									systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+									sysLogList.add(systemLog);
+								}
+								systemLogMapper.insert(sysLogList);
+								log.error("数据采集异常:【" + equipment.getProject().getName() + "】项目下【" + equipment.getName() + "】监控节点数据异常，当天采集的数据小于历史数据!");
+								numTmp += receiveData[numTmp/2+11]*2+24;
+							}else{//当天采集的数据合理，保存或者这是块新节点，没有采集的数据，开始保存
+								//节点状态
+								EquipmentStatus statusVal = new EquipmentStatus();
+								statusVal.setEquipmentid(equipment.getId());
+								statusVal.setCreatetime(date);
+								statusVal.setWatervalue(waterVal);
+								String status = "";
+								switch (receiveData[numTmp / 2 + 4]) {
+								case 0x0F:
+									status = "阀门关闭";
+								case (byte) 0xF0:
+									status = "阀门开启";
+								case (byte) 0xF1:
+									status = "等待出水";
+								case 0x02:
+									status = "等待关水";
+								case (byte) 0xFF:
+									status = "供水故障";
+								case 0x00:
+									status = "水阀故障";
+								}
+								statusVal.setStatus(status);
+								if(receiveData[numTmp/2+2]<0){
+									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+2]-receiveData[numTmp/2+3]*0.01))*10)/10);
+								}else{
+									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+2]+receiveData[numTmp/2+3]*0.01))*10)/10);
+								}
+								statusVal.setVelocity((float)Math.round(((float)(receiveData[numTmp/2+9]+receiveData[numTmp/2+10]*0.01))*10)/10);
+								listStatus.add(statusVal);
+								
+								//传感器湿度数据
+								int sensorNum = receiveData[numTmp/2+11];
+								EquipmentData dataVal = new EquipmentData();
+								for(int i=1;i<=sensorNum;i++){
+									Map<String,Object> sensorMap = new HashMap<String, Object>();
+									sensorMap.put("eId", code);
+									sensorMap.put("num", eCode);
+									SensorInfo sensorInfo = sensorInfoMapper.selectByEidAndNum(sensorMap);
+									dataVal.setCreatetime(date);
+									dataVal.setHumidity((float)Math.round(((float)(receiveData[numTmp/2+11+i]+receiveData[numTmp/2+12+i]*0.01))*100)/100);
+									dataVal.setSensorid(sensorInfo.getId());
+									listData.add(dataVal);
+								}
+								numTmp += sensorNum*2+24;
+							}
+						}else{
+							log.error("数据采集--" + code + " 号主机下【" + eCode + "】监控节点数据采集失败，节点信息为空，可能未注册!");
+							numTmp += receiveData[numTmp/2+11]*2+24;
+						}
+					}
+					//将采集的节点数据保存到数据库
+					if(!CollectionUtils.isEmpty(listStatus)){
+						equipmentStatusMapper.insert(listStatus);
+					}
+					if(!CollectionUtils.isEmpty(listData)){
+						equipmentDataMapper.insert(listData);
+					}
+				} else {
+					// 数据采集失败
+					ControlHost host = controlHostMapper.selectByCode(code);
+					List<UserProjectRel> relList = userProjectRelMapper.selectRelByPid(host.getProjectid());
+					List<SystemLog> sysLogList = new ArrayList<SystemLog>();
+					for(UserProjectRel Rel:relList){
+						SystemLog systemLog = new SystemLog();
+						systemLog.setUserid(Rel.getUserid());
+						systemLog.setLogcontext("采集：" + code + "号主机的数据失败(未接收到指令或者接收的指令格式不对)!");
+						systemLog.setLogtime(date);
+						systemLog.setLogtype(0);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志
+						systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+						sysLogList.add(systemLog);
+					}
+					systemLogMapper.insert(sysLogList);
+					log.error("数据采集--" + code + "号主机数据采集失败(未接收到指令或者接收的指令格式不对)!");
+				}
+			}
 		} catch (Exception e) {
 			log.error("服务器保存接收的数据到DataTemp表中异常!"+e);
 		}
@@ -68,16 +227,16 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 */
 	public DataTemp getNetData(String address,String controlId,Date dateTime,Date startDate){
 		DataTemp dateTemp = new DataTemp();
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		map.put("address", address);
-//		map.put("controlId", controlId);
-//		map.put("startDate", startDate);
-//		map.put("endDate", dateTime);
-//		try {
-//			dateTemp = dataTempMapper.selectDataTemp(map);
-//		} catch (Exception e) {
-//			log.error("获取服务器保存的DataTemp临时数据异常!"+e);
-//		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("address", address);
+		map.put("controlId", controlId);
+		map.put("startDate", startDate);
+		map.put("endDate", dateTime);
+		try {
+			dateTemp = dataTempMapper.selectDataTemp(map);
+		} catch (Exception e) {
+			log.error("获取服务器保存的DataTemp临时数据异常!"+e);
+		}
 		return dateTemp;
 	}
 	
@@ -155,65 +314,65 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * void 				返回
 	 */
 	public void pushMsg(String hostCode) {
-//		String APPID = "djUGtMrQ8A64fC664vH137";
-//		String APPKEY = "hKGLMQHjGr88YgzVlEzkb8";
-//		String MASTERSECRET = "1vCOsPMlFu7dUzZZWVm1c9";
-//		String CLIENTID = "";
-//		String API = "http://sdk.open.api.igexin.com/apiex.htm"; // OpenService接口地址
-//		// 推送主类
-//		IIGtPush push = new IGtPush(API, APPKEY, MASTERSECRET);
-//		try {
-//			List<User> list = new ArrayList<User>();
-//			list = userMapper.selectUserByHostCode(hostCode);
-//			ControlHost host = controlHostMapper.selectHostByCode(hostCode); 
-//			if (!CollectionUtils.isEmpty(list)) {
-//				// 接收者
-//				List<Target> targets = new ArrayList<Target>();
-//				ListMessage message = new ListMessage();
-//				
-//				// 通知模版：NotificationTemplate
-//				NotificationTemplate template = new NotificationTemplate();
-//				template.setAppId(APPID);
-//				template.setAppkey(APPKEY);
-//				template.setTitle("警告【Rainet云灌溉】"); // 通知标题
-//				template.setText("项目【"+host.getProject().getName()+"】下有一个节点监测的湿度过低!");//通知内容
-//				template.setLogo("push.png");//通知logo
-//				
-//				// 收到消息是否立即启动应用，1为立即启动，2则广播等待客户端自启动
-//				template.setTransmissionType(1);
-//				
-//				message.setData(template);
-//				message.setOffline(true); // 用户当前不在线时，是否离线存储,可选
-//				message.setOfflineExpireTime(72 * 3600 * 1000); // 离线有效时间，单位为毫秒，可选
-//				List<SystemLog> sysLogList = new ArrayList<SystemLog>();
-//				Date date = CommonUtiles.getSystemDateTime();
-//				for (User user : list) {
-//					//保存日志
-//					SystemLog systemLog = new SystemLog();
-//					systemLog.setUserid(user.getId());
-//					systemLog.setLogcontext("项目【"+host.getProject().getName()+"】下有一个节点监测的湿度过低,请及时查看!");
-//					systemLog.setLogtime(date);
-//					systemLog.setLogtype(1);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志 
-//					systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
-//					sysLogList.add(systemLog);
-//					
-//					//声明推送用户对象
-//					CLIENTID = user.getClientid();
-//
-//					Target target = new Target();
-//					target.setAppId(APPID);
-//					target.setClientId(CLIENTID);
-//					targets.add(target);
-//				}
-//				systemLogMapper.insert(sysLogList);
-//				
-//				String contentId = push.getContentId(message);
-//				push.pushMessageToList(contentId, targets);
-//				log.error("警告推送完成!");
-//			}
-//		} catch (Exception e) {
-//			log.error("通知推送异常!"+e);
-//		}
+		String APPID = "djUGtMrQ8A64fC664vH137";
+		String APPKEY = "hKGLMQHjGr88YgzVlEzkb8";
+		String MASTERSECRET = "1vCOsPMlFu7dUzZZWVm1c9";
+		String CLIENTID = "";
+		String API = "http://sdk.open.api.igexin.com/apiex.htm"; // OpenService接口地址
+		// 推送主类
+		IIGtPush push = new IGtPush(API, APPKEY, MASTERSECRET);
+		try {
+			List<User> list = new ArrayList<User>();
+			list = userMapper.selectUserByHostCode(hostCode);
+			ControlHost host = controlHostMapper.selectByCode(hostCode); 
+			if (!CollectionUtils.isEmpty(list)) {
+				// 接收者
+				List<Target> targets = new ArrayList<Target>();
+				ListMessage message = new ListMessage();
+				
+				// 通知模版：NotificationTemplate
+				NotificationTemplate template = new NotificationTemplate();
+				template.setAppId(APPID);
+				template.setAppkey(APPKEY);
+				template.setTitle("警告【Rainet云灌溉】"); // 通知标题
+				template.setText("项目【"+host.getProject().getName()+"】下有一个节点监测的湿度过低!");//通知内容
+				template.setLogo("push.png");//通知logo
+				
+				// 收到消息是否立即启动应用，1为立即启动，2则广播等待客户端自启动
+				template.setTransmissionType(1);
+				
+				message.setData(template);
+				message.setOffline(true); // 用户当前不在线时，是否离线存储,可选
+				message.setOfflineExpireTime(72 * 3600 * 1000); // 离线有效时间，单位为毫秒，可选
+				List<SystemLog> sysLogList = new ArrayList<SystemLog>();
+				Date date = CommonUtiles.getSystemDateTime();
+				for (User user : list) {
+					//保存日志
+					SystemLog systemLog = new SystemLog();
+					systemLog.setUserid(user.getId());
+					systemLog.setLogcontext("项目【"+host.getProject().getName()+"】下有一个节点监测的湿度过低,请及时查看!");
+					systemLog.setLogtime(date);
+					systemLog.setLogtype(1);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志 
+					systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+					sysLogList.add(systemLog);
+					
+					//声明推送用户对象
+					CLIENTID = user.getClientid();
+
+					Target target = new Target();
+					target.setAppId(APPID);
+					target.setClientId(CLIENTID);
+					targets.add(target);
+				}
+				systemLogMapper.insert(sysLogList);
+				
+				String contentId = push.getContentId(message);
+				push.pushMessageToList(contentId, targets);
+				log.error("警告推送完成!");
+			}
+		} catch (Exception e) {
+			log.error("通知推送异常!"+e);
+		}
 	}
 
 	/**
@@ -226,10 +385,10 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 */
 	public DataTemp selectData(String address, String controlId) throws Exception {
 		DataTemp dateTemp = new DataTemp();
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		map.put("address", address);
-//		map.put("controlId", controlId);
-//		dateTemp = dataTempMapper.selectDataMax(map);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("address", address);
+		map.put("controlId", controlId);
+		dateTemp = dataTempMapper.selectDataMax(map);
 		return dateTemp;
 	}
 }

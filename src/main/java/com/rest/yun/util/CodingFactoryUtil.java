@@ -275,6 +275,26 @@ public class CodingFactoryUtil {
 	}
 	
 	/**
+	 * @Title:       unsigned4BytesToInt
+	 * @author:      杨贵松
+	 * @Description: 将byte[]数据转化成long 
+	 * @return       long
+	 * @throws
+	 */
+	public static long unsigned4BytesToInt(byte[] buf) {  
+        int firstByte = 0;  
+        int secondByte = 0;  
+        int thirdByte = 0;  
+        int fourthByte = 0;  
+        int index =0;  
+        firstByte = (0x000000FF & buf[index]);  
+        secondByte = (0x000000FF & buf[index + 1]);  
+        thirdByte = (0x000000FF & buf[index + 2]);  
+        fourthByte = (0x000000FF & buf[index + 3]);  
+        index = index + 4;  
+        return (firstByte << 24 | secondByte << 16 | thirdByte << 8 | fourthByte) & 0xFFFFFFFFL;  
+    }
+	/**
 	 * @Title: 				longToByte 
 	 * @author 				杨贵松
 	 * @date 				2014年7月3日 下午12:10:13

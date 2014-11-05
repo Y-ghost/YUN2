@@ -41,4 +41,14 @@ public interface ControlHostMapper {
 	 * @return
 	 */
 	Map<String, Object> getHostAndProjectByHostId(int hostId);
+
+	/**
+	 * @Title: selectByCode
+	 * @author: 杨贵松
+	 * @time 2014年11月4日 上午4:30:28
+	 * @Description: 根据通讯地址查询主机信息
+	 * @return ControlHost
+	 * @throws
+	 */
+	ControlHost selectByCode(String code);
 }

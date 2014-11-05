@@ -21,6 +21,17 @@
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[>=]]> DATE_FORMAT(#{startDate} ,'%Y-%m-%d %H:%i:%s')
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[<=]]> DATE_FORMAT(#{endDate} ,'%Y-%m-%d %H:%i:%s')
   </select>
+  <!-- 通过检查心跳包，监测判断主机是否在线 -->
+  <select id="selectDataCount" resultType="java.lang.Integer" parameterType="Map" >
+    select count(*) as num
+    from Data_temp d
+    left join ControlHost c 
+    on d.code = c.code
+    left join Project p
+    on c.ProjectId = p.id
+    where p.id = #{pId}
+    and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[>=]]> DATE_FORMAT(#{lastTime} ,'%Y-%m-%d %H:%i:%s')
+  </select>
   <!-- 获取最新的报警指令 -->
   <select id="selectDataMax" resultMap="BaseResultMap" parameterType="Map" >
     select 

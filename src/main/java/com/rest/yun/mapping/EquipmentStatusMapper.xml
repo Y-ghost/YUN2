@@ -23,14 +23,17 @@
     delete from Equipment_Status
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rest.yun.beans.EquipmentStatus" >
-    insert into Equipment_Status (id, EquipmentId, Temperature, 
-      WaterValue, Velocity, Status, 
-      CreateTime)
-    values (#{id,jdbcType=INTEGER}, #{equipmentid,jdbcType=INTEGER}, #{temperature,jdbcType=REAL}, 
-      #{watervalue,jdbcType=DECIMAL}, #{velocity,jdbcType=REAL}, #{status,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP})
+  <!-- 批量插入节点采集的数据 -->
+  <insert id="insert" parameterType="java.util.List" >
+  	<![CDATA[
+	  	insert into Equipment_Status (EquipmentId, Temperature, WaterValue, Velocity, Status, CreateTime)
+	    values
+	]]>
+	<foreach collection="list" item="item" index="index" separator="," >
+         (#{item.equipmentid}, #{item.temperature}, #{item.watervalue}, #{item.velocity}, #{item.status}, #{item.createtime})
+	</foreach>
   </insert>
+  
   <insert id="insertSelective" parameterType="com.rest.yun.beans.EquipmentStatus" >
     insert into Equipment_Status
     <trim prefix="(" suffix=")" suffixOverrides="," >

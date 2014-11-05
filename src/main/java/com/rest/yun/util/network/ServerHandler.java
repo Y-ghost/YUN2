@@ -58,70 +58,69 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 				String data = codingFactory.bytesToHexString(message);
 
 				// 监控主机地址
-				String address = null;
-				String contralId = null;
+				String code = "";
+				String contralType = "";
 				try {
 					int length = data.length();
 
 					if (length == 22) {
 						// 心跳包数据，将信道Channel保存到缓存
-						address = data.substring(12, 20);
-						ChannelSession.put(address, ctx.channel());
+						code = data.substring(12, 20);
+						ChannelSession.put(code, ctx.channel());
 						//保存心跳包到数据库，00表示心跳包类型，用于监测设备是否在线
-						netWorkService.saveNetData(address,"00", data);
-						log.info("服务器接收" + address + "监控主机的注册包或者心跳包 : " + data);
+						netWorkService.saveNetData(code,"00", data);
+						log.info("服务器接收" + code + "监控主机的注册包或者心跳包 : " + data);
 						buf.clear();
-					} else if (data.substring(22, 24).equals("3B")) {
+					} else if (data.substring(22, 24).equals("30")) {
 
-						address = data.substring(14, 22);
-						contralId = data.substring(22, 24);
+						code = data.substring(14, 22);
+						contralType = data.substring(22, 24);
 
 						long date = System.currentTimeMillis();
 
-						DataTemp dt = netWorkService.selectData(address,
-								contralId);
+						DataTemp dt = netWorkService.selectData(code,
+								contralType);
 
-						if (dt == null
-								|| (date - dt.getReceivetime().getTime()) > 6 * 3600 * 1000) {
+						if (dt == null || (date - dt.getReceivetime().getTime()) > 6 * 3600 * 1000) {
 							// 将监控主机返回的数据存储，以备解析调用
-							log.info("服务器接收" + address + "监控主机的报警数据 : " + data);
-							netWorkService.saveNetData(address, contralId, data);
+							log.info("服务器接收" + code + "监控主机的报警数据 : " + data);
+							netWorkService.saveNetData(code, contralType, data);
 							// 只有超过6个小时间隔的才报警
-							netWorkService.pushMsg(address);// 接到报警，推送给用户
+							netWorkService.pushMsg(code);// 接到报警，推送给用户
 							return;
 						}
 
-						log.info("服务器接收" + address + "监控主机的报警数据为满足推送条件!");
+						log.info("服务器接收" + code + "监控主机的报警数据为满足推送条件!");
 
 					} else if (data.substring(length - 2, length).equals("36")) {// 若末尾字节为36，表示客户端要通过服务器向监控主机发送指令
 
-						address = data.substring(14, 22);
-						contralId = data.substring(22, 24);
+						code = data.substring(14, 22);
+						contralType = data.substring(22, 24);
 
 						byte[] newMsg = codingFactory.string2BCD(data
 								.substring(0, length - 2) + "35");// 将36更换成35发送
 
 						// 根据地址找到改地址的监控主机信道Channel,并发送指令
-						Channel channel = ChannelSession.get(address);
+						Channel channel = ChannelSession.get(code);
 
 						if (channel != null) {
 							buf.writeBytes(newMsg);
 							channel.writeAndFlush(buf);
-							log.info("服务器向" + address + "监控主机转发的数据 : "
+							log.info("服务器向" + code + "监控主机转发的数据 : "
 									+ data.substring(0, length - 2) + "35");
 							return;
 						}
 
-						log.info("服务器未找到" + address + "监控主机的信道，该信道可能未注册或者已关闭!");
+						log.info("服务器未找到" + code + "监控主机的信道，该信道可能未注册或者已关闭!");
 
 					} else if (data.substring(length - 2, length).equals("35")) {
-						address = data.substring(14, 22);
-						contralId = data.substring(22, 24);
+						code = data.substring(14, 22);
+						contralType = data.substring(22, 24);
 
-						log.info("服务器接收" + address + "监控主机的数据 : " + data);
+						log.info("服务器接收" + code + "监控主机的数据 : " + data);
 
 						// 将监控主机返回的数据存储，以备解析调用
-						netWorkService.saveNetData(address, contralId, data);
+						netWorkService.saveNetData(code, contralType, data);
 					} else {
 						log.info("服务器接收到的脏数据 : " + data);
 					}

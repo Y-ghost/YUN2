@@ -1,11 +1,14 @@
 package com.rest.yun.mapping;
 
+import java.util.List;
+
 import com.rest.yun.beans.SystemLog;
 
 public interface SystemLogMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(SystemLog record);
+//    记录日志
+    int insert(List<SystemLog> sysLogList);
 
     int insertSelective(SystemLog record);
 

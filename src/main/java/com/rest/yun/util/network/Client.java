@@ -37,7 +37,7 @@ public class Client {
 
 	public static void sendToServer(byte[] bytes) {
 		try {
-			Client client = new Client("115.28.143.115", 8888);
+			Client client = new Client("115.28.143.115", 8090);
 			final Channel channel = client.connect();
 			if(channel==null){
 				log.info("手动连接服务器失败!");

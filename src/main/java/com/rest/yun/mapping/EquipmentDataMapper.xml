@@ -20,11 +20,16 @@
     delete from Equipment_Data
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rest.yun.beans.EquipmentData" >
-    insert into Equipment_Data (id, SensorId, Humidity, 
-      CreateTime)
-    values (#{id,jdbcType=INTEGER}, #{sensorid,jdbcType=INTEGER}, #{humidity,jdbcType=REAL}, 
-      #{createtime,jdbcType=TIMESTAMP})
+  
+  <!-- 批量插入节点采集的数据 -->
+  <insert id="insert" parameterType="java.util.List" >
+  	<![CDATA[
+	  	insert into Equipment_Data (SensorId, Humidity, CreateTime)
+	    values
+	]]>
+	<foreach collection="list" item="item" index="index" separator="," >
+         (#{item.sensorid}, #{item.humidity}, #{item.createtime})
+	</foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.rest.yun.beans.EquipmentData" >
     insert into Equipment_Data

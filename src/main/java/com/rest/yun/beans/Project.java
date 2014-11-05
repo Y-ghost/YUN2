@@ -27,7 +27,17 @@ public class Project {
 
     private Date modifytime;
 
-    public Integer getId() {
+    private String wifiStatus;//监测主机是否在线
+    
+    public String getWifiStatus() {
+		return wifiStatus;
+	}
+
+	public void setWifiStatus(String wifiStatus) {
+		this.wifiStatus = wifiStatus;
+	}
+
+	public Integer getId() {
         return id;
     }
 

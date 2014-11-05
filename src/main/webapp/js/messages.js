@@ -8,7 +8,7 @@ rainet.message = rainet.message || {};
 rainet.message.view = function(){
 	var defaultView = 'project';
 	var $golabDataTable = null;
-	// 点击不同的模块，切换不同的视图
+	
 	var handlMenuView = function(currentEle){
 		var $ele = $(currentEle);
 		$ele.siblings().removeClass('active');
@@ -122,5 +122,7 @@ rainet.message.view = function(){
 }();
 
 $(document).ready(function(){
+	$("#homeLab").html("信息中心");
+	$("#homeHref").attr("href","messages");
 	rainet.message.view.init();
 });

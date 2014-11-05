@@ -24,6 +24,14 @@
     from SensorInfo
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!--  -->
+  <select id="selectByEidAndNum" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from SensorInfo
+    where EquipmentId = #{eId,jdbcType=INTEGER}
+    and Number = #{num,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from SensorInfo
     where id = #{id,jdbcType=INTEGER}
