@@ -8,4 +8,6 @@ public interface Constants {
 
 	String CITY = "city";
 
+	String USER = "user";
+
 }

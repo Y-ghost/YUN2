@@ -87,7 +87,9 @@ rainet.utils.busy = function(){
 	}
 	
 	var remove = function() {
-		$template.remove();
+		if ($template){
+			$template.remove();
+		}
 	}
 	
 	return {

@@ -24,7 +24,7 @@
 			<div class="col-xs-12 col-md-9">
 				<div class="node-container">
 					<form class="form-horizontal" role="form" id="searchForm">
-						<div class="form-group">
+						<div class="form-group project">
 							<label class="col-sm-2 control-label">项目信息查询</label>
 							<div class="col-sm-2">
 								<select class="form-control" id="province">
@@ -32,6 +32,14 @@
 							</div>
 							<div class="col-sm-2">
 								<select class="form-control" id="city">
+								</select>
+							</div>
+						</div>
+						<div class="form-group host" style="display:none;">
+							<label class="col-sm-2 control-label">主机信息查询</label>
+							<div class="col-sm-2">
+								<select class="form-control" id="projectNameList">
+									<option value="-1">--请选择项目--</option>
 								</select>
 							</div>
 						</div>
@@ -50,43 +58,6 @@
 		</div>
 	</div>
 	
-	<!-- Template -->
-	
-	<div id="projectInfo" style="display:none;">
-		<form class="form-horizontal" role="form">
-			 <div class="form-group">
-    			<label class="col-sm-3 control-label">项目名称：</label>
-    			<div class="col-sm-9">
-    				<input type="text" class="form-control projectName" name="name"/>
-    			</div>
-  			</div>
-  			<div class="form-group">
-    			<label class="col-sm-3 control-label">负责单位：</label>
-    			<div class="col-sm-9">
-    				<input type="text" class="form-control department" name="department"/>
-    			</div>
-  			</div>
-  			<div class="form-group">
-    			<label class="col-sm-3 control-label">项目地址：</label>
-    			<div class="col-sm-9">
-    				<div class="col-sm-5 selectItem" style="padding-left:0">
-    					<select class="form-control provinceItem" name="province"></select>
-    				</div>
-    				<div class="col-sm-5 selectItem">
-    					<select class="form-control cityItem" name="city"></select>
-    				</div>
-    			</div>
-  			</div>
-  			<div class="form-group">
-    			<label class="col-sm-3 control-label">详细地址：</label>
-    			<div class="col-sm-9">
-    				<input type="text" class="form-control address" name="address"/>
-    			</div>
-  			</div>
-  			<input type="hidden" name="id" class="id"/>
-		</form>
-	</div>
-	
 	<jsp:include page="common/footer.jsp" />
 	<script src="${requestScope.basePath}datatable/js/jquery.dataTables.js"></script>
 	<script src="${requestScope.basePath}datatable/js/dataTables.bootstrap.js"></script>
@@ -94,6 +65,10 @@
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
+	<script src="${requestScope.basePath}js/messages.service.js"></script>
+	<script src="${requestScope.basePath}js/messages.util.js"></script>
+	<script src="${requestScope.basePath}js/messages.project.js"></script>
+	<script src="${requestScope.basePath}js/messages.host.js"></script>
 	<script src="${requestScope.basePath}js/messages.js"></script>
 	
 	

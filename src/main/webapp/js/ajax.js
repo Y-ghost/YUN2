@@ -6,6 +6,7 @@ rainet.ajax = {
 		execute : function(options) {
 			$.ajax({
 				  beforeSend : function(){
+					  rainet.utils.busy.remove();
 					  rainet.utils.busy.loading(options.busyMsg, options.$busyEle);
 					  if (options.beforeSend) {
 						  options.beforeSend();
@@ -23,7 +24,15 @@ rainet.ajax = {
 					  rainet.utils.busy.remove();
 					  var status = data.code;
 					  if (status != '200') {
-						  rainet.utils.notification.error(data.message);
+						  var isContinue = true;
+						  // 自定义处理错误
+						  if (options.customHandleError) {
+							  // 如果返回false，说明不会用统一的错误处理
+							  isContinue = options.customHandleError(data);
+						  }
+						  if (isContinue){
+							  rainet.utils.notification.error(data.message);
+						  }
 						  return ;
 					  }
 					  if (options.success) {

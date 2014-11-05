@@ -10,6 +10,19 @@
     <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <!-- Select list result map -->
+   <resultMap id="listResultMap" type="map" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="ProjectId" property="projectid" jdbcType="INTEGER" />
+    <result column="Code" property="code" jdbcType="VARCHAR" />
+    <result column="projectName" property="projectName" jdbcType="VARCHAR" />
+    <result column="Createuser" property="createuser" jdbcType="INTEGER" />
+    <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
+    <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
   <sql id="Base_Column_List" >
     id, ProjectId, Code, Createuser, Createtime, Modifyuser, Modifytime
   </sql>
@@ -114,4 +127,61 @@
       Modifytime = #{modifytime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- Select by project id -->
+  <select id="selectByProjectId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ControlHost
+    where  ProjectId = #{projectId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- Select host list by some parameters -->
+  <select id="selectHostForList" parameterType="map" resultMap="listResultMap">
+	
+	 select c.id, c.ProjectId, c.Code, c.Createuser, c.Createtime, c.Modifyuser, c.Modifytime, p.Name as projectName from ControlHost as c inner join project as p on p.id = c.ProjectId
+	 <where>
+	 	<if test="projectId !=null and projectId != 0">
+		  	c.ProjectId = #{projectId}
+		</if>
+	 </where>
+	 
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		c.${sortField}
+	 	</when>
+	 	<otherwise>
+	 		c.Createtime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+	</select>
+	
+	<select id="validHostCodeExceptById" resultType="boolean">
+		select exists (select Code from ControlHost
+		
+		<where>
+	 	 Code = #{code}
+		<if test="hostId != 0">
+    	  	AND id != #{hostId}
+      </if>  
+	 </where>
+	 )
+	</select>
+	
+	<select id="getHostAndProjectByHostId" resultType="map" parameterType="java.lang.Integer" >
+    select c.id, c.ProjectId as projectId, c.Code as code, c.Createuser as createuser, c.Createtime as createtime, 
+    c.Modifyuser as modifyuser, c.Modifytime as modifytime, p.Name as projectName 
+    from ControlHost as c inner join project as p on p.id = c.ProjectId
+    where c.id = #{hostId}
+  </select>
 </mapper>

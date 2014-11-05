@@ -1,5 +1,6 @@
 package com.rest.yun.service.Impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +10,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.rest.yun.beans.Project;
+import com.rest.yun.beans.User;
+import com.rest.yun.beans.UserProjectRel;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.exception.ErrorCode;
 import com.rest.yun.exception.ServerException;
 import com.rest.yun.mapping.ProjectMapper;
+import com.rest.yun.mapping.UserMapper;
+import com.rest.yun.mapping.UserProjectRelMapper;
 import com.rest.yun.service.IProjectService;
 
 @Service
@@ -26,17 +32,53 @@ public class ProjectServiceImpl implements IProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
+	@Autowired
+	private UserMapper userMapper;
+
+	@Autowired
+	private UserProjectRelMapper userProjectRelMapper;
+
 	@Override
-	public void saveProject(Project project) {
+	public void saveProject(Project project, int userId) {
 		if (project == null) {
 			LOG.warn("Project is null");
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
 
 		// Validation parameters
+		User user = userMapper.selectByPrimaryKey(userId);
+		if (user == null) {
+			LOG.warn("The user {#" + userId + "} is not exists when saving project");
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+
+		if (StringUtils.isEmpty(project.getName())) {
+			LOG.warn("Project Name is not empty");
+			throw new ServerException(ErrorCode.PROJECT_NAME_EMPTY);
+		}
+
+		boolean isExistName = projectMapper.validProjectName(project.getName(), 0);
+
+		if (isExistName) {
+			LOG.warn("The project name {" + project.getName() + "} is  exists when updating project");
+			throw new ServerException(ErrorCode.PROJECT_NAME_DUPLICATE);
+		}
 
 		try {
-			projectMapper.insertSelective(project);
+			project.setCreateuser(userId);
+			project.setModifyuser(userId);
+
+			int projectId = projectMapper.insertSelective(project);
+			if (projectId > 0) {
+				UserProjectRel upr = new UserProjectRel();
+				upr.setUserid(userId);
+				upr.setProjectid(projectId);
+				upr.setCreatetime(new Date());
+				upr.setModifytime(new Date());
+				upr.setCreateuser(userId);
+				upr.setModifyuser(userId);
+			}
+			LOG.info("用户[" + user.getUsername() + "] 添加了新项目，名为：" + project.getName());
 		} catch (DataAccessException e) {
 			LOG.error("Save project appear exception", e);
 			throw new ServerException(ErrorCode.SAVE_PROJECT_FAILED);
@@ -59,13 +101,34 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public void updateProject(Project project) {
+	public void updateProject(Project project, int userId) {
 		if (project == null) {
 			LOG.warn("Project is null");
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
 
+		// 验证参数
+		User user = userMapper.selectByPrimaryKey(userId);
+		if (user == null) {
+			LOG.warn("The user {#" + userId + "} is not exists when saving project");
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+
+		if (StringUtils.isEmpty(project.getName())) {
+			LOG.warn("Project Name is not empty");
+			throw new ServerException(ErrorCode.PROJECT_NAME_EMPTY);
+		}
+
+		// 验证项目名称是否存在
+		boolean isExistName = projectMapper.validProjectName(project.getName(), project.getId());
+
+		if (isExistName) {
+			LOG.warn("The project name {" + project.getName() + "} is  exists when updating project");
+			throw new ServerException(ErrorCode.PROJECT_NAME_DUPLICATE);
+		}
+
 		try {
+			project.setModifyuser(userId);
 			projectMapper.updateByPrimaryKeySelective(project);
 		} catch (DataAccessException e) {
 			LOG.error("Update project appear exception", e);
@@ -89,11 +152,21 @@ public class ProjectServiceImpl implements IProjectService {
 	@Override
 	public Project getProjectById(int projectId) {
 		if (projectId == 0) {
-			LOG.warn("Project is null");
+			LOG.warn("Project Id is empty");
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
 
 		return projectMapper.selectByPrimaryKey(projectId);
+	}
+
+	@Override
+	public boolean validProjectName(String projectName, int projectId) {
+		return projectMapper.validProjectName(projectName, projectId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllProjectName() {
+		return projectMapper.getAllProjectName();
 	}
 
 }

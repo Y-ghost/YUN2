@@ -1,6 +1,9 @@
 package com.rest.yun.controller;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.Project;
+import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
@@ -28,24 +32,26 @@ public class ProjectController {
 	private IProjectService projectService;
 
 	/**
-	 * @Title:       save
-	 * @author:      杨贵松
+	 * @Title: save
+	 * @author: 杨贵松
 	 * @Description: 添加项目
-	 * @return       ResponseWrapper
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseWrapper save(@RequestBody Project project) {
-		projectService.saveProject(project);
+	public ResponseWrapper save(@RequestBody Project project, HttpSession session) {
+		// 获取当前登录用户
+		User user = (User) session.getAttribute(Constants.USER);
+		projectService.saveProject(project, user.getId());
 		return new ResponseWrapper(true);
 	}
 
 	/**
-	 * @Title:       selectProjects
-	 * @author:      杨贵松
+	 * @Title: selectProjects
+	 * @author: 杨贵松
 	 * @Description: 查询项目列表
-	 * @return       ResponseWrapper
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(method = RequestMethod.GET)
@@ -77,10 +83,10 @@ public class ProjectController {
 	}
 
 	/**
-	 * @Title:       detailProject
-	 * @author:      杨贵松
-	 * @Description: 查看项目详情 
-	 * @return       ResponseWrapper
+	 * @Title: detailProject
+	 * @author: 杨贵松
+	 * @Description: 查看项目详情
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(value = "{projectId}", method = RequestMethod.GET)
@@ -91,24 +97,25 @@ public class ProjectController {
 	}
 
 	/**
-	 * @Title:       update
-	 * @author:      杨贵松
+	 * @Title: update
+	 * @author: 杨贵松
 	 * @Description: 更新项目
-	 * @return       ResponseWrapper
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
-	public ResponseWrapper update(@RequestBody Project project) {
-		projectService.updateProject(project);
+	public ResponseWrapper update(@RequestBody Project project, HttpSession session) {
+		User user = (User) session.getAttribute(Constants.USER);
+		projectService.updateProject(project, user.getId());
 		return new ResponseWrapper(true);
 	}
 
 	/**
-	 * @Title:       deleteProject
-	 * @author:      杨贵松
-	 * @Description: 删除一个项目 
-	 * @return       ResponseWrapper
+	 * @Title: deleteProject
+	 * @author: 杨贵松
+	 * @Description: 删除一个项目
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(value = "{projectId}", method = RequestMethod.DELETE)
@@ -117,4 +124,19 @@ public class ProjectController {
 		projectService.deleteProject(projectId);
 		return new ResponseWrapper(true);
 	}
+
+	@RequestMapping(value = "validation", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper validProjectName(@RequestParam String projectName, @RequestParam(required = false, defaultValue = "0") int projectId) {
+		boolean result = projectService.validProjectName(projectName, projectId);
+		return new ResponseWrapper(result);
+	}
+
+	@RequestMapping(value = "names", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper getAllProjectName() {
+		List<Map<String, Object>> result = projectService.getAllProjectName();
+		return new ResponseWrapper(result);
+	}
+
 }
