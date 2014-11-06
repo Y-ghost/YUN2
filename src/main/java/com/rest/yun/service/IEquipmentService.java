@@ -16,4 +16,14 @@ public interface IEquipmentService {
 	 */
 	List<EquipmentExt> selectEquipmentExt(Integer pId);
 
+	/** 
+	 * @Title:       openEquipments
+	 * @author:      杨贵松
+	 * @time         2014年11月6日 下午11:37:55
+	 * @Description: 开启灌溉
+	 * @return       boolean
+	 * @throws 
+	 */
+	boolean openEquipments(Integer optionType,String id);
+
 }

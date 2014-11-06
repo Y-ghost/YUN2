@@ -74,6 +74,16 @@
     where e.Code=#{Ecode} 
      and c.Code = #{Hcode}
   </select>
+  <!-- 根据多个节点id查询节点信息  -->
+  <select id="selectByIdStr" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Equipment 
+    where id in
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+  		#{item}  
+ 	</foreach>  
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment

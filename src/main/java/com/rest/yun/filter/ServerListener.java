@@ -17,7 +17,7 @@ import com.rest.yun.util.network.Server;
  */
 @WebListener
 public class ServerListener implements ServletContextListener {
-	private final Server server = new Server(8888);
+	private final Server server = new Server(8090);
 
     /**
      * Default constructor. 
@@ -30,14 +30,14 @@ public class ServerListener implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent arg0) {
-//    	server.start();
+    	server.start();
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent arg0) {
-//    	server.stop();
+    	server.stop();
     }
 	
 }

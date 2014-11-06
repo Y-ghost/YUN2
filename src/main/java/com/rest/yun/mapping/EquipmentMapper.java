@@ -36,4 +36,14 @@ public interface EquipmentMapper {
 	 * @throws 
 	 */
 	List<Equipment> selectByPid(Integer pId) throws Exception;
+
+	/** 
+	 * @Title:       selectByIdStr
+	 * @author:      杨贵松
+	 * @time         2014年11月6日 下午11:40:22
+	 * @Description: 根据多个节点id查询节点信息
+	 * @return       List<Equipment>
+	 * @throws 
+	 */
+	List<Equipment> selectByIdStr(Map<String,Object> map) throws Exception;
 }
