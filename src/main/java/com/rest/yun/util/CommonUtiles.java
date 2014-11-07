@@ -1,5 +1,6 @@
 package com.rest.yun.util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,9 @@ import java.util.Date;
  * @version V1.0
  */
 public class CommonUtiles {
+
+	public final static String ISO_8859_1 = "ISO-8859-1";
+	public final static String UTF_8 = "UTF-8";
 
 	/**
 	 * @Title: getSystemDateTime
@@ -53,8 +57,16 @@ public class CommonUtiles {
 	 */
 	public static String decodeUrl(String value) {
 		try {
-			value = URLDecoder.decode(value, "UTF-8");
+			value = URLDecoder.decode(value, UTF_8);
 		} catch (Exception e) {
+		}
+		return value;
+	}
+
+	public static String fixedChinaCode(String value) {
+		try {
+			value = new String(value.getBytes(ISO_8859_1), UTF_8);
+		} catch (UnsupportedEncodingException e) {
 		}
 		return value;
 	}
