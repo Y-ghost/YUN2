@@ -35,4 +35,18 @@ public class EquipmentController {
 		return new ResponseWrapper(list);
 	}
 
+	/**
+	 * @Title:       openEquipments
+	 * @author:      杨贵松
+	 * @time         2014年11月6日 下午11:35:40
+	 * @Description: 开启灌溉 optionType为判断开启还是关闭操作，optionType=0表示开启，optionType=1表示关闭
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="/openOrCloseEquipments" , method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper openOrCloseEquipments(@RequestParam Integer optionType,@RequestParam String id) {
+		boolean flag = equipmentService.openEquipments(optionType,id);
+		return new ResponseWrapper(flag);
+	}
 }

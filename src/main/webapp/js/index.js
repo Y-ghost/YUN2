@@ -6,15 +6,17 @@ rainet.controlCenter = rainet.controlCenter || {};
 var pageNum = 1;
 var pages = 1;
 rainet.controlCenter.view = function() {
-
 	var checked = function(){
 		// 全选
 		$(".checkAll").change(function() {
-			alert($(":checkbox").attr("class"));
 			if($(this).is(':checked')){
-				$(":checkbox").attr("checked", true);
+				$("[id='equipmentCheckbox']").each(function(){
+					$(this).attr("checked", true);
+				});
             }else{
-            	$(":checkbox").attr("checked", false);
+            	$("[id='equipmentCheckbox']").each(function(){
+					$(this).attr("checked", false);
+				});
             }
 		}); 
 
@@ -82,7 +84,7 @@ rainet.controlCenter.view = function() {
 					"<div class=\"panel panel-default \">" +
 					"<div class=\"panel-heading\">" +
 					"<label>"+item.name+"</label> <span class=\"float-right\"> " +
-					"<input type=\"checkbox\" class=\"cursor\" id=\"equipmentCheckbox\"/>" +
+					"<input type=\"checkbox\" class=\"cursor\" name=\""+item.id+"\" id=\"equipmentCheckbox\"/>" +
 					"</span>" +
 					"</div>" +
 					"<div class=\"panel-body\">" +
@@ -112,7 +114,6 @@ rainet.controlCenter.view = function() {
 					"</div>" +
 					"</div>" +
 					sensorStr +
-					"<input type=\"hidden\" name=\"id\" class=\"id\" value=\""+item.id+"\"/>" +
 					"</form>" +
 					"</div>" +
 					"</div>" +
@@ -121,10 +122,24 @@ rainet.controlCenter.view = function() {
 		$EquipmentList.find("div").remove();
 		$EquipmentList.append(str);
 	}
-	
+	var handlMenuView = function(currentEle){
+		var $ele = $(currentEle);
+		$ele.siblings().removeClass('active');
+		$ele.addClass('active');
+	}
 	// 查看项目下节点信息
 	var setView = function() {
+		//首次加载项目第一个的节点信息
+		var id = $("#projectList a:first").attr("id");
+		if(id!=undefined){
+			var param = {pId : id};
+			rainet.controlCenter.service["equipment"].list(param, function(data){
+				initEquipmentList(data);
+			});
+		}
+		
 		$('.projectLink').off('click').on('click', function() {
+			handlMenuView(this);
 			var projectId =$(this).attr("id");
 			var param = {pId : projectId};
 			rainet.controlCenter.service["equipment"].list(param, function(data){
@@ -141,13 +156,19 @@ rainet.controlCenter.view = function() {
 		pageNum = data.pageNum;
 		pages = data.pages;
 		$.each(data.result,function(index,item){
-			if(item.wifiStatus=="在线"){
-				str = str + "<li class='list-group-item' style='margin-top:10px'><a href='javascript:void(0);' class='projectLink' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"</a><span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></li>";
+			var linkActive = "";
+			if(index==0){
+				linkActive = " active";
 			}else{
-				str = str + "<li class='list-group-item' style='margin-top:10px'><a href='javascript:void(0);' class='projectLink' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"</a><span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></li>";
+				linkActive = "";
+			}
+			if(item.wifiStatus=="在线"){
+				str = str + "<a href='javascript:void(0);' class='list-group-item projectLink "+linkActive+"' style='margin-top:10px;' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></a>";
+			}else{
+				str = str + "<a href='javascript:void(0);' class='list-group-item projectLink "+linkActive+"' style='margin-top:10px;' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
 			}
 		});
-		$projectList.find("li").remove();
+		$projectList.find("a").remove();
 		$projectList.append($(str));
 		//分页查询
 		$(".pagination").jqPagination({
@@ -193,12 +214,61 @@ rainet.controlCenter.view = function() {
 			});
 		});
 	}
+	//开启灌溉
+	var open = function(){
+		var flag = true;
+			$(".openBtn").click(function(){
+				if(flag){
+					flag = false;
+					var idStr = "";
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							idStr = idStr + $(this).attr("name")+",";
+						}
+					});
+					if(idStr != ""){
+						idStr = idStr.substring(0,idStr.length-1);
+						var param  = {optionType: 0, id: idStr };
+						rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
+							alert(data);
+							flag = true;
+						});
+					}else{
+						alert("请先选择节点！");
+						flag = true;
+					}
+				}
+			});
+			$(".closeBtn").click(function(){
+				if(flag){
+					flag = false;
+					var idStr = "";
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							idStr = idStr + $(this).attr("name")+",";
+						}
+					});
+					if(idStr != ""){
+						idStr = idStr.substring(0,idStr.length-1);
+						var param  = {optionType: 1, id: idStr };
+						rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
+							alert(data);
+							flag = true;
+						});
+					}else{
+						alert("请先选择节点！");
+						flag = true;
+					}
+				}
+			});
+	}
 	
 	var init = function() {
 		var param  = { pageSize: 10, pageNow : pageNum };
 		rainet.controlCenter.service["project"].list(param, function(data){
 			initProjectList(data);
 		});
+		open();
 	}
 
 	return {
@@ -224,7 +294,7 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.project.url,
 				data : param,
-				$busyEle : $('#tableContainer'),
+				$busyEle : $('#projectList'),
 				success : function(data) {
 					callback(data);
 				}
@@ -236,7 +306,17 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.equipment.url+"selectEquipmentExt/",
 				data : param,
-				$busyEle : $('#tableContainer'),
+				$busyEle : $('.EquipmentList'),
+				success : function(data) {
+					callback(data);
+				}
+			});
+		},
+		openOrClose : function(param, callback) {
+			rainet.ajax.execute({
+				url : rainet.controlCenter.url.equipment.url+"openOrCloseEquipments/",
+				data : param,
+				$busyEle : $('.EquipmentList'),
 				success : function(data) {
 					callback(data);
 				}
