@@ -41,7 +41,7 @@
 						class="last" data-action="last">&raquo;</a>
 				</div>
 			</div>
-			<div class="col-xs-12 col-md-9">
+			<div class="col-xs-9 col-md-9">
 				<div class="node-container">
 					<div class="node-tools">
 						<label class="checkbox-inline"> <input type="checkbox"

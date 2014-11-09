@@ -21,23 +21,23 @@
   					<a href="javascript:void(0);" class="list-group-item " data-name="user" style="margin-top:10px">用户信息管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-md-9">
+			<div class="col-xs-9 col-md-9">
 				<div class="node-container">
 					<form class="form-horizontal" role="form" id="searchForm">
 						<div class="form-group project">
-							<label class="col-sm-2 control-label">项目信息查询</label>
-							<div class="col-sm-2">
+							<label class="col-xs-2 col-md-2 control-label">项目信息查询</label>
+							<div class="col-xs-2 col-md-2">
 								<select class="form-control" id="province">
 								</select>
 							</div>
-							<div class="col-sm-2">
+							<div class="col-xs-2 col-md-2">
 								<select class="form-control" id="city">
 								</select>
 							</div>
 						</div>
 						<div class="form-group host" style="display:none;">
-							<label class="col-sm-2 control-label">主机信息查询</label>
-							<div class="col-sm-2">
+							<label class="col-xs-2 col-md-2 control-label">主机信息查询</label>
+							<div class="col-xs-2 col-md-2">
 								<select class="form-control" id="projectNameList">
 									<option value="-1">--请选择项目--</option>
 								</select>

@@ -92,7 +92,7 @@ public class EquipmentServiceImpl implements IEquipmentService{
 				throw new ServerException(ErrorCode.EQUIPMENT_LIST_NULL);
 			}
 		} catch (Exception e) {
-			LOG.error("查询实时现场数据异常",e);
+			LOG.error("查询实时现场数据异常");
 			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
 		}
 		return list;
