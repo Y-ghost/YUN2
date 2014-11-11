@@ -19,6 +19,9 @@ rainet.message.view = function(){
 	}
 	// 根据不同的模块，加载不用的列表信息
 	var setView = function(module){
+		if ($golabDataTable) {
+			$('thead','#table').empty();
+		}
 		$golabDataTable = $('#table').dataTable({
 			processing: true,
 	        serverSide: true,

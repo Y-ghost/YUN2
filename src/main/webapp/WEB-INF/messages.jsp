@@ -69,6 +69,7 @@
 	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.project.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.eqt.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	
 	

@@ -382,4 +382,34 @@
       Modifytime = #{modifytime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!-- Select equipment by some parameters -->
+  <select id="selectEqtForList" parameterType="map" resultMap="BaseResultMap">
+	
+	 select <include refid="Base_Column_List"/> from Equipment
+	 
+	 <if test="projectId !=null and projectId != ''">
+    		left join Controlhost c on c.id = ControlHostId
+    		 where c.ProjectId = #{projectId}
+     </if>  
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		${sortField}
+	 	</when>
+	 	<otherwise>
+	 		Createtime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+	</select>
+  
 </mapper>

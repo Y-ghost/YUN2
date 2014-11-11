@@ -11,6 +11,9 @@ rainet.message.url = {
 		},
 		host : {
 			url : rainet.settings.baseUrl + 'host/'
+		},
+		node : {
+			url : rainet.settings.baseUrl + 'equipment/'
 		}
 };
 
@@ -160,6 +163,61 @@ rainet.message.service = {
 					}
 				});
 			},
+		},
+		
+		node : {
+			get: function(projectId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.node.url + projectId,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.node.url,
+					data : param,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			update: function(config, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.node.url,
+					$busyEle : $('#tableContainer'),
+					method : 'PUT',
+					customHandleError : function(result){
+						if (config.handleError){
+							return config.handleError(result);
+						}
+						return true;
+					},
+					data : JSON.stringify(config.jsonData),
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			del: function(projectId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.node.url + projectId,
+					$busyEle : $('#tableContainer'),
+					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			
 		}
 		
 		
