@@ -162,10 +162,9 @@ public class ProjectServiceImpl implements IProjectService {
 			params.putAll(criteria);
 		}
 		List<Project> listTmp = projectMapper.selectProjectForList(params);
-		List<Project> list = null;
+		List<Project> list  = new ArrayList<Project>();
 		try {
 			if (!CollectionUtils.isEmpty(listTmp)) {
-				list = new ArrayList<Project>();
 				for (Project project : listTmp) {
 					dataTmp.put("pId", project.getId());
 					int dataCount = dataTempMapper.selectDataCount(dataTmp);
@@ -176,9 +175,6 @@ public class ProjectServiceImpl implements IProjectService {
 					}
 					list.add(project);
 				}
-			}else{
-				LOG.warn("project is null exception");
-				throw new ServerException(ErrorCode.PROJECT_LIST_NULL);
 			}
 		} catch (DataAccessException e) {
 			LOG.error("get project exception",e);

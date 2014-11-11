@@ -41,7 +41,7 @@ public class YunDispatcherServlet extends DispatcherServlet {
 		try {
 			super.doService(request, response);
 		} catch (ServerException e) {
-			logger.error("Catch custom server exception: " + e);
+			// Catch custom exception to not print console
 		}
 		long end = System.currentTimeMillis();
 		long takeTime = end - start;

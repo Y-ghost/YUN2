@@ -168,14 +168,25 @@ rainet.message.controller.project = {
 			$.initProv("#province","#city","-省份-","-城市-");
 			
 			// Bind search event
-			$('#city').off('change').on('change', function(){
+			$('#city').off('change.rainet').on('change.rainet', function(){
 				if($datatable){
 					var city = $('#city').val();
 					var province = $('#province').val();
-					if ($.trim(province) != -1 && $.trim(city) == -1) {
+					if ($.trim(province) == -1 && $.trim(city) == -1) {
 						return ;
 					}
 					$datatable.api().ajax.reload();
+				}
+			});
+			
+			
+			$('#province').off('change.rainet').on('change.rainet', function(){
+				if($datatable){
+					var province = $('#province').val();
+					if ($.trim(province) == -1) {
+						// Reload all data, clear search criteria
+						$datatable.api().ajax.reload();
+					}
 				}
 			});
 			rainet.message.util.setSearchForm('project');
@@ -189,10 +200,11 @@ rainet.message.controller.project = {
 	// 在共用table的js方法提交参数给后台之前，添加不同模块特有的参数信息
 	updateParam : function(param){
 		var city = $.trim($('#city').val());
-		if (city != -1) {
+		var province = $.trim($('#province').val());
+		if (city != -1 && province != -1) {
 			// 处理中文
 			param.city = encodeURIComponent(city);
-			param.province = encodeURIComponent($.trim($('#province').val()));
+			param.province = encodeURIComponent(province);
 		}
 	},
 	
