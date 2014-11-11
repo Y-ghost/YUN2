@@ -3,15 +3,22 @@ package com.rest.yun.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.Equipment;
+import com.rest.yun.beans.Project;
+import com.rest.yun.beans.User;
+import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
@@ -57,7 +64,7 @@ public class EquipmentController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseWrapper selectProjects(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
+	public ResponseWrapper selectEqts(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
 			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
 
 		Map<String, Object> criteriaMap = null;
@@ -69,5 +76,60 @@ public class EquipmentController {
 		Page<Equipment> page = equipmentService.selectEqtForList(pageNow, pageSize, criteriaMap);
 
 		return new ResponseWrapper(page);
+	}
+
+	/**
+	 * @Title: save
+	 * @author: 杨贵松
+	 * @Description: 添加节点
+	 * @return ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper save(@RequestBody Equipment equipment, HttpSession session) {
+		// TODO add Save code
+		return new ResponseWrapper(true);
+	}
+
+	/**
+	 * 节点详细信息
+	 * 
+	 * @param projectId
+	 * @return
+	 */
+	@RequestMapping(value = "{eqtId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper detail(@PathVariable int eqtId) {
+		Equipment equipment = equipmentService.getEquipmentById(eqtId);
+		return new ResponseWrapper(equipment);
+	}
+
+	/**
+	 * 更新节点
+	 * 
+	 * @param equipment
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseWrapper update(@RequestBody Equipment equipment, HttpSession session) {
+		User user = (User) session.getAttribute(Constants.USER);
+		equipmentService.updateEquipment(equipment, user.getId());
+		return new ResponseWrapper(true);
+	}
+
+	/**
+	 * 删除节点
+	 * 
+	 * @param eqtId
+	 * @return
+	 */
+	@RequestMapping(value = "{eqtId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseWrapper delete(@PathVariable int eqtId) {
+		equipmentService.deleteEquipment(eqtId);
+		return new ResponseWrapper(true);
 	}
 }

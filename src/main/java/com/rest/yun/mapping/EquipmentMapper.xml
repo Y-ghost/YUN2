@@ -386,7 +386,7 @@
   <!-- Select equipment by some parameters -->
   <select id="selectEqtForList" parameterType="map" resultMap="BaseResultMap">
 	
-	 select <include refid="Base_Column_List"/> from Equipment
+	 select e.* from Equipment e
 	 
 	 <if test="projectId !=null and projectId != ''">
     		left join Controlhost c on c.id = ControlHostId
@@ -411,5 +411,12 @@
 	 	</otherwise>
 	 </choose>
 	</select>
+	
+	 <!-- 根据节点id查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select e.*
+    from Equipment e
+    where id = #{id,jdbcType=INTEGER}
+  </select>
   
 </mapper>

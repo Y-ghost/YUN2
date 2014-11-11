@@ -39,4 +39,26 @@ public interface IEquipmentService {
 	 */
 	Page<Equipment> selectEqtForList(int pageNow, int pageSize, Map<String, Object> criteria);
 
+	/**
+	 * 查询节点的详细信息
+	 * 
+	 * @param eqtId
+	 * @return
+	 */
+	Equipment getEquipmentById(int eqtId);
+
+	/**
+	 * 更新节点的信息
+	 * 
+	 * @param equipment
+	 */
+	void updateEquipment(Equipment equipment, int userId);
+
+	/**
+	 * 删除节点信息
+	 * 
+	 * @param eqtId
+	 */
+	void deleteEquipment(int eqtId);
+
 }

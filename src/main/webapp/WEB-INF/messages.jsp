@@ -43,6 +43,14 @@
 								</select>
 							</div>
 						</div>
+						<div class="form-group node" style="display:none;">
+							<label class="col-xs-2 col-md-2 control-label">节点信息查询</label>
+							<div class="col-xs-2 col-md-2">
+								<select class="form-control" id="projectNameListForNode">
+									<option value="-1">--请选择项目--</option>
+								</select>
+							</div>
+						</div>
 					</form>
 					<div class="table-responsive" id="tableContainer">
 						<table class="table table-striped table-hover" id="table">

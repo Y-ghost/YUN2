@@ -20,7 +20,9 @@ rainet.message.view = function(){
 	// 根据不同的模块，加载不用的列表信息
 	var setView = function(module){
 		if ($golabDataTable) {
+			// 修复切换模块时，不同table的column个数不同时出现部分column不显示的问题
 			$('thead','#table').empty();
+			$golabDataTable.fnClearTable();
 		}
 		$golabDataTable = $('#table').dataTable({
 			processing: true,

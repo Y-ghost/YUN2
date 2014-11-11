@@ -166,9 +166,9 @@ rainet.message.service = {
 		},
 		
 		node : {
-			get: function(projectId, callback){
+			get: function(nodeId, callback){
 				rainet.ajax.execute({
-					url : rainet.message.url.node.url + projectId,
+					url : rainet.message.url.node.url + nodeId,
 					$busyEle : $('#tableContainer'),
 					success : function(data){
 						callback(data);
@@ -206,9 +206,9 @@ rainet.message.service = {
 				});
 			},
 			
-			del: function(projectId, callback){
+			del: function(nodeId, callback){
 				rainet.ajax.execute({
-					url : rainet.message.url.node.url + projectId,
+					url : rainet.message.url.node.url + nodeId,
 					$busyEle : $('#tableContainer'),
 					method : 'DELETE',
 					success : function(data){

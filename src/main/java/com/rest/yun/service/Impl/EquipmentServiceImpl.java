@@ -207,4 +207,41 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		page.setResult(list);
 		return page;
 	}
+
+	@Override
+	public Equipment getEquipmentById(int eqtId) {
+		try {
+			return equipmentMapper.selectByPrimaryKey(eqtId);
+		} catch (DataAccessException e) {
+			LOG.error("获取节点信息失败", e);
+			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
+		}
+
+	}
+
+	@Override
+	public void updateEquipment(Equipment equipment, int userId) {
+		try {
+			int projectId = equipment.getProject().getId();
+			ControlHost host = controlHostMapper.selectByProjectId(projectId);
+			equipment.setControlhostid(host.getId());
+			equipment.setModifyuser(userId);
+			equipment.setModifytime(new Date());
+			equipmentMapper.updateByPrimaryKeySelective(equipment);
+		} catch (DataAccessException e) {
+			LOG.error("更新节点信息失败", e);
+			throw new ServerException(ErrorCode.UPDATE_EQUIPMENT_FAILED);
+		}
+	}
+
+	@Override
+	public void deleteEquipment(int eqtId) {
+		try {
+			equipmentMapper.deleteByPrimaryKey(eqtId);
+		} catch (DataAccessException e) {
+			LOG.error("删除节点信息失败", e);
+			throw new ServerException(ErrorCode.DELETE_EQUIPMENT_FAILED);
+		}
+
+	}
 }
