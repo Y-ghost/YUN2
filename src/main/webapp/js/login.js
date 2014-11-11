@@ -5,7 +5,7 @@ var rainet = rainet || {};
 rainet.login = rainet.login || {};
 rainet.login.view = function() {
 		var init = function(){
-			rainet.login.controller.register;
+			rainet.login.controller.register();
 		};
 
 		return {

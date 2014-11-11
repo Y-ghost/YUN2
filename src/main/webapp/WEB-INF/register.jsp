@@ -16,6 +16,7 @@
 #headLine{
 	display:none;
 }
+.input-group-container .form-control-feedback{top:35px !important; right:0px !important;}
 </style>
 </head>
 <body>
@@ -24,25 +25,37 @@
 	<div class="container">
 		<form class="form-horizontal form-signin" role="form">
 			<div class="text-center"><h2>用户注册</h2></div>
-			<div class="input-group input-group-lg">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
-				<input type="text" class="form-control" placeholder="用户名" name="loginname" id="loginname">
+			<div class="form-group input-group-container">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
+					<input type="text" class="form-control" placeholder="用户名" name="loginname" id="loginname">
+				</div>
 			</div>
-			<div class="input-group input-group-lg">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
-				<input type="password" class="form-control" placeholder="密码" name="password" id="password">
+			
+			<div class="form-group input-group-container">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
+					<input type="password" class="form-control" placeholder="密码" name="password" id="password">
+				</div>
 			</div>
-			<div class="input-group input-group-lg">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span> 
-				<input type="text" class="form-control" placeholder="邮箱" name="email" id="email">
+			
+			<div class="form-group input-group-container">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span> 
+					<input type="email" class="form-control" placeholder="邮箱" name="email" id="email">
+				</div>
 			</div>
-			<div class="input-group input-group-lg">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span> 
-				<input type="text" class="form-control" placeholder="电话" name="phone" id="phone">
+			<div class="form-group input-group-container">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span> 
+					<input type="tel" class="form-control" placeholder="电话" name="phone" id="phone">
+				</div>
 			</div>
-			<div class="input-group input-group-lg">
-				<span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span> 
-				<input type="text" class="form-control" placeholder="地址" name="address" id="address">
+			<div class="form-group input-group-container">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span> 
+					<input type="text" class="form-control" placeholder="地址" name="address" id="address">
+				</div>
 			</div>
 			<div>
 				<button type="submit" class="btn btn-primary btn-lg btn-block">免费注册</button>
