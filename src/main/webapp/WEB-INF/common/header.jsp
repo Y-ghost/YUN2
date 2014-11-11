@@ -35,12 +35,12 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#" title="退出"><i class="fa fa-power-off fa-2x"></i></a></li>
+				<li><a href="${requestScope.basePath}indexs/login" title="退出"><i class="fa fa-power-off fa-2x"></i></a></li>
 			</ul>
 		</div>
 	</div>
 	</nav>
-	<div class="container-fluid" style="height:100%">
+	<div class="container-fluid" style="height:100%" id="headLine">
 	<!-- Container Header -->
 		<div class="row border-bottom hidden-xs" style="padding-bottom:10px;">
 			<div class="col-xs-1 col-md-1 border-right text-center"><a href="#"><i class="fa fa-bars fa-2x"></i></a></div>

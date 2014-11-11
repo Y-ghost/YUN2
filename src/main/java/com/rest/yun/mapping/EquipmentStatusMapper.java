@@ -5,18 +5,18 @@ import java.util.List;
 import com.rest.yun.beans.EquipmentStatus;
 
 public interface EquipmentStatusMapper {
-    int deleteByPrimaryKey(Integer id) throws Exception;
+    int deleteByPrimaryKey(Integer id);
 
 //    批量添加节点状态数据
-    int insert(List<EquipmentStatus> listStatus) throws Exception;
+    int insert(List<EquipmentStatus> listStatus);
 
-    int insertSelective(EquipmentStatus record) throws Exception;
+    int insertSelective(EquipmentStatus record);
 
-    EquipmentStatus selectByPrimaryKey(Integer id) throws Exception;
+    EquipmentStatus selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(EquipmentStatus record) throws Exception;
+    int updateByPrimaryKeySelective(EquipmentStatus record);
 
-    int updateByPrimaryKey(EquipmentStatus record) throws Exception;
+    int updateByPrimaryKey(EquipmentStatus record);
 
 	/** 
 	 * @Title:       selectEquipmentStatusByeEid
@@ -26,6 +26,6 @@ public interface EquipmentStatusMapper {
 	 * @return       EquipmentStatus
 	 * @throws
 	 */
-	EquipmentStatus selectEquipmentStatusByeEid(Integer eId) throws Exception;
+	EquipmentStatus selectEquipmentStatusByeEid(Integer eId);
 
 }

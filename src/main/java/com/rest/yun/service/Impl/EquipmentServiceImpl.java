@@ -1,5 +1,6 @@
 package com.rest.yun.service.Impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -91,7 +93,7 @@ public class EquipmentServiceImpl implements IEquipmentService{
 				LOG.warn("Equipment is null");
 				throw new ServerException(ErrorCode.EQUIPMENT_LIST_NULL);
 			}
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			LOG.error("查询实时现场数据异常",e);
 			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
 		}
@@ -141,7 +143,18 @@ public class EquipmentServiceImpl implements IEquipmentService{
 				Date startDate = new Date();
 				Client.sendToServer(sendData);
 				//等待获取主机返回的指令，等待10秒
-				String dataContext = netWorkService.waitData(host.getCode(), "38",startDate);
+				String dataContext = "";
+				try {
+					dataContext = netWorkService.waitData(host.getCode(), "38",startDate);
+				} catch (ParseException e1) {
+					LOG.error("获取10秒后的时间时异常",e1);
+					mark = false;
+					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+				} catch (InterruptedException e1) {
+					LOG.error("获取10秒后的时间时sleep异常",e1);
+					mark = false;
+					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+				}
 				
 				boolean flag = false;
 				byte[] receiveData = null;
@@ -168,12 +181,14 @@ public class EquipmentServiceImpl implements IEquipmentService{
 						
 			}
 			
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			if(optionType==1){
 				LOG.error("关闭实时灌溉异常",e);
+				mark = false;
 				throw new ServerException(ErrorCode.CLOSE_EQUIPMENT_FAILED);
 			}else{
 				LOG.error("开启实时灌溉异常",e);
+				mark = false;
 				throw new ServerException(ErrorCode.OPEN_EQUIPMENT_FAILED);
 			}
 		}

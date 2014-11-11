@@ -180,7 +180,7 @@ public class ProjectServiceImpl implements IProjectService {
 				LOG.warn("project is null exception");
 				throw new ServerException(ErrorCode.PROJECT_LIST_NULL);
 			}
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			LOG.error("get project exception",e);
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}

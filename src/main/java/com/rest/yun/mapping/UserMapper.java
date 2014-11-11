@@ -26,4 +26,14 @@ public interface UserMapper {
 	 * @throws 
 	 */
 	List<User> selectUserByHostCode(String hostCode);
+
+	/** 
+	 * @Title:       saveUser
+	 * @author:      杨贵松
+	 * @time         2014年11月9日 上午11:32:52
+	 * @Description: 用户注册
+	 * @return       void
+	 * @throws 
+	 */
+	void saveUser(User user);
 }

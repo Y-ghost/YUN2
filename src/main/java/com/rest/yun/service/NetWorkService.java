@@ -1,5 +1,6 @@
 package com.rest.yun.service;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import com.rest.yun.beans.DataTemp;
@@ -10,7 +11,7 @@ public interface NetWorkService {
 	
 	public DataTemp getNetData(String address,String contralId,Date dateTime,Date startDate);
 	
-	public String waitData(String address,String ContralCode,Date startDate) throws Exception;
+	public String waitData(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
 	
 	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws Exception;
 	

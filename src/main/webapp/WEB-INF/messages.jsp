@@ -71,6 +71,5 @@
 	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	
-	
 </body>
 </html>

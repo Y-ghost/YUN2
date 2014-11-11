@@ -7,15 +7,15 @@ import com.rest.yun.beans.DataTemp;
 
 public interface DataTempMapper {
 	
-	DataTemp selectDataTemp(Map<String, Object> map) throws Exception;
+	DataTemp selectDataTemp(Map<String, Object> map);
 
-	void insert(DataTemp dataTemp) throws Exception;
+	void insert(DataTemp dataTemp);
 
-	List<DataTemp> selectAllOldData() throws Exception;
+	List<DataTemp> selectAllOldData();
 
-	void deleteAllOldData(List<DataTemp> list) throws Exception;
+	void deleteAllOldData(List<DataTemp> list);
 
-	DataTemp selectDataMax(Map<String, Object> map) throws Exception;
+	DataTemp selectDataMax(Map<String, Object> map);
 
 	/** 
 	 * @Title:       selectDataCount
@@ -25,5 +25,5 @@ public interface DataTempMapper {
 	 * @return       int
 	 * @throws 
 	 */
-	int selectDataCount(Map<String, Object> dataTmp) throws Exception;
+	int selectDataCount(Map<String, Object> dataTmp);
 }
