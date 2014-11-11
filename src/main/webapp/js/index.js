@@ -227,14 +227,41 @@ rainet.controlCenter.view = function() {
 						}
 					});
 					if(idStr != ""){
-						idStr = idStr.substring(0,idStr.length-1);
-						var param  = {optionType: 0, id: idStr };
-						rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
-							alert(data);
-							flag = true;
+						bootbox.dialog({
+							message : "确认开启？",
+							title : '开启实时灌溉',
+							// 支持ESC
+							onEscape : function(){
+								
+							},
+							buttons :  {
+								cancel: {
+								      label: "取消",
+								      className: "btn-warning",
+								      callback : function(){
+								    	  flag = true;
+								      }
+								},
+								success: {
+								      label: "确定",
+								      className: "btn-success",
+								      callback : function(){
+								    	  idStr = idStr.substring(0,idStr.length-1);
+											var param  = {optionType: 0, id: idStr };
+											rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
+												if(data){
+													rainet.utils.notification.success("开启实时灌溉成功!");
+												}else{
+													rainet.utils.notification.error("开启实时灌溉失败!");
+												}
+												flag = true;
+											});
+								      }
+								}
+						}
 						});
 					}else{
-						alert("请先选择节点！");
+						rainet.utils.notification.warning("请先选择节点!");
 						flag = true;
 					}
 				}
@@ -249,14 +276,41 @@ rainet.controlCenter.view = function() {
 						}
 					});
 					if(idStr != ""){
-						idStr = idStr.substring(0,idStr.length-1);
-						var param  = {optionType: 1, id: idStr };
-						rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
-							alert(data);
-							flag = true;
+						bootbox.dialog({
+							message : "确认关闭？",
+							title : '关闭实时灌溉',
+							// 支持ESC
+							onEscape : function(){
+								
+							},
+							buttons :  {
+								cancel: {
+								      label: "取消",
+								      className: "btn-warning",
+								      callback : function(){
+								    	  flag = true;
+								      }
+								},
+								success: {
+								      label: "确定",
+								      className: "btn-success",
+								      callback : function(){
+								    	  	idStr = idStr.substring(0,idStr.length-1);
+											var param  = {optionType: 1, id: idStr };
+											rainet.controlCenter.service["equipment"].openOrClose(param, function(data){
+												if(data){
+													rainet.utils.notification.success("关闭实时灌溉成功!");
+												}else{
+													rainet.utils.notification.error("关闭实时灌溉失败!");
+												}
+												flag = true;
+											});
+								      }
+								}
+						}
 						});
 					}else{
-						alert("请先选择节点！");
+						rainet.utils.notification.warning("请先选择节点!");
 						flag = true;
 					}
 				}

@@ -248,8 +248,9 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @return 
 	 * String 				返回
 	 * @throws ParseException 
+	 * @throws InterruptedException 
 	 */
-	public String waitData(String address,String ContralCode,Date startDate) throws Exception{
+	public String waitData(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
 		Date endDate = CommonUtiles.getLastDate(10);
 		String dataContext = "";
 		long time = 0;

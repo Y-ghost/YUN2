@@ -59,13 +59,10 @@
 
 		</div>
 	</div>
-
-	</div>
-	</div>
-	</div>
 	<jsp:include page="common/footer.jsp" />
 
 	<script src="${requestScope.basePath}js/index.js"></script>
 	<script src="${requestScope.basePath}js/lib/jquery.jqpagination.min.js"></script>
+	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 </body>
 </html>

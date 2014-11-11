@@ -6,17 +6,17 @@ import java.util.Map;
 import com.rest.yun.beans.SensorInfo;
 
 public interface SensorInfoMapper {
-    int deleteByPrimaryKey(Integer id) throws Exception;
+    int deleteByPrimaryKey(Integer id);
 
-    int insert(SensorInfo record) throws Exception;
+    int insert(SensorInfo record);
 
-    int insertSelective(SensorInfo record) throws Exception;
+    int insertSelective(SensorInfo record);
 
-    SensorInfo selectByPrimaryKey(Integer id) throws Exception;
+    SensorInfo selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(SensorInfo record) throws Exception;
+    int updateByPrimaryKeySelective(SensorInfo record);
 
-    int updateByPrimaryKey(SensorInfo record) throws Exception;
+    int updateByPrimaryKey(SensorInfo record);
 
 	/** 
 	 * @Title:       selectByEidAndNum
@@ -25,7 +25,7 @@ public interface SensorInfoMapper {
 	 * @return       SensorInfo
 	 * @throws 
 	 */
-	SensorInfo selectByEidAndNum(Map<String,Object> map) throws Exception;
+	SensorInfo selectByEidAndNum(Map<String,Object> map);
 
 	/** 
 	 * @Title:       selectSensorInfoByEid
@@ -35,5 +35,5 @@ public interface SensorInfoMapper {
 	 * @return       List<SensorInfo>
 	 * @throws 
 	 */
-	List<SensorInfo> selectSensorInfoByEid(Integer eId) throws Exception;
+	List<SensorInfo> selectSensorInfoByEid(Integer eId);
 }

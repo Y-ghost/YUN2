@@ -8,17 +8,17 @@ import org.springframework.dao.DataAccessException;
 import com.rest.yun.beans.Equipment;
 
 public interface EquipmentMapper {
-	int deleteByPrimaryKey(Integer id) throws Exception;
+	int deleteByPrimaryKey(Integer id);
 
-	int insert(Equipment record) throws Exception;
+	int insert(Equipment record);
 
-	int insertSelective(Equipment record) throws Exception;
+	int insertSelective(Equipment record);
 
-	Equipment selectByPrimaryKey(Integer id) throws Exception;
+	Equipment selectByPrimaryKey(Integer id);
 
-	int updateByPrimaryKeySelective(Equipment record) throws Exception;
+	int updateByPrimaryKeySelective(Equipment record);
 
-	int updateByPrimaryKey(Equipment record) throws Exception;
+	int updateByPrimaryKey(Equipment record);
 
 	/**
 	 * @Title: selectEquipmentByHcodeAndEcode
@@ -27,7 +27,7 @@ public interface EquipmentMapper {
 	 * @return Equipment
 	 * @throws
 	 */
-	Equipment selectEquipmentByHcodeAndEcode(Map<String, Object> map) throws Exception;
+	Equipment selectEquipmentByHcodeAndEcode(Map<String, Object> map);
 
 	/**
 	 * @Title: selectByPid
@@ -37,7 +37,7 @@ public interface EquipmentMapper {
 	 * @return List<Equipment>
 	 * @throws
 	 */
-	List<Equipment> selectByPid(Integer pId) throws Exception;
+	List<Equipment> selectByPid(Integer pId);
 
 	/**
 	 * @Title: selectByIdStr
@@ -47,7 +47,7 @@ public interface EquipmentMapper {
 	 * @return List<Equipment>
 	 * @throws
 	 */
-	List<Equipment> selectByIdStr(Map<String, Object> map) throws Exception;
+	List<Equipment> selectByIdStr(Map<String, Object> map);
 
 	/**
 	 * 查询节点列表分页数据

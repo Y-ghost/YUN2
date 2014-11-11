@@ -176,7 +176,7 @@ public class ProjectServiceImpl implements IProjectService {
 					list.add(project);
 				}
 			}
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			LOG.error("get project exception",e);
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
