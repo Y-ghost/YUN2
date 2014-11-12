@@ -2,6 +2,9 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
+<!-- Header -->
+<!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
+<jsp:include page="common/header.jsp" />
 <head>
 <link rel="stylesheet" href="${requestScope.basePath}css/jqpagination.css" />
 <style type="text/css">
@@ -22,8 +25,6 @@
 </style>
 </head>
 <body>
-	<!-- Header -->
-	<jsp:include page="common/header.jsp" />
 	<div class="container-fluid" style="height: 100%">
 		<!-- Container body -->
 		<div class="row">

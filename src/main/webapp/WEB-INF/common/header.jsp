@@ -16,6 +16,10 @@
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/validation/css/bootstrapValidator.min.css" />
 <link rel="stylesheet" href="${requestScope.basePath}css/message.css" />
+<!--[if lt IE 9]>
+  <script src="${requestScope.basePath}js/lib/html5shiv.min.js"></script>
+  <script src="${requestScope.basePath}js/lib/respond.min.js"></script>
+<![endif]-->
 </head>
 <body>
 	<!-- Header -->

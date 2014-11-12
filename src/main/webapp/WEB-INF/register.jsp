@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<!-- Header -->
+<!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
+<jsp:include page="common/header.jsp" />
 <head>
 <style type="text/css">
 .form-signin {
@@ -20,8 +23,6 @@
 </style>
 </head>
 <body>
-	<!-- header -->
-	<jsp:include page="common/header.jsp" />
 	<div class="container">
 		<form class="form-horizontal form-signin" role="form">
 			<div class="text-center"><h2>用户注册</h2></div>
