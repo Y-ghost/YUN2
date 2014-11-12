@@ -14,6 +14,10 @@ rainet.message.url = {
 		},
 		node : {
 			url : rainet.settings.baseUrl + 'equipment/'
+		},
+		
+		systemLog : {
+			url : rainet.settings.baseUrl + 'message/'
 		}
 };
 
@@ -211,6 +215,50 @@ rainet.message.service = {
 					url : rainet.message.url.node.url + nodeId,
 					$busyEle : $('#tableContainer'),
 					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			
+		},
+		
+		systemLog : {
+			get: function(logId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.systemLog.url + logId,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.systemLog.url,
+					data : param,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			update: function(config, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.systemLog.url,
+					$busyEle : $('#tableContainer'),
+					method : 'PUT',
+					customHandleError : function(result){
+						if (config.handleError){
+							return config.handleError(result);
+						}
+						return true;
+					},
+					data : JSON.stringify(config.jsonData),
+					contentType : 'application/json; charset=utf-8',
 					success : function(data){
 						callback(data);
 					}

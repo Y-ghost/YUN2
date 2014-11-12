@@ -18,7 +18,7 @@
   					<a href="javascript:void(0);" class="list-group-item active" data-name="project" style="margin-top:10px">项目信息管理 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item " data-name="host" style="margin-top:10px">主机信息管理 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item " data-name="node" style="margin-top:10px">节点信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item " data-name="danger" style="margin-top:10px">报警信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item " data-name="systemLog" style="margin-top:10px">报警信息管理 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item " data-name="user" style="margin-top:10px">用户信息管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
@@ -79,6 +79,7 @@
 	<script src="${requestScope.basePath}js/message/messages.project.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.eqt.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.systemLog.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	
 </body>

@@ -109,4 +109,40 @@
 		logStatus = #{logstatus,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	
+	<update id="updateStatusByPrimaryKey" >
+		update SystemLog
+		set logStatus = #{logstatus,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- Select system log by some parameters -->
+  <select id="selectSystemLogForListBy" parameterType="map" resultMap="BaseResultMap">
+	
+	 select <include refid="Base_Column_List" /> from SystemLog
+	 
+	 <where>
+	 	<if test="logType !=null and logType != ''">
+    		logType = #{LogType}
+     	</if>  
+	 </where>
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		${sortField}
+	 	</when>
+	 	<otherwise>
+	 		LogTime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+	</select>
 </mapper>

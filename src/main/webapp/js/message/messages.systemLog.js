@@ -5,8 +5,8 @@ var rainet = rainet || {};
 rainet.message = rainet.message || {};
 rainet.message.controller = rainet.message.controller || {}; 
 
-// 节点信息
-rainet.message.controller.node = {
+// 报警信息
+rainet.message.controller.systemLog = {
 		
 		// 添加校验信息 当保存或修改节点的时候
 		setValidate : function($form, operate){
@@ -154,43 +154,25 @@ rainet.message.controller.node = {
 	table : {
 	  columns : [
 		           	{ "sTitle":'', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
-		           	{ "sTitle": "节点名称",  "targets": 1, "render" : rainet.message.util.formateLink },
-		           	{ "sTitle": "节点编号", "targets": 2 },
-		           	{ "sTitle": "流量参数",  "targets": 3 },
-		           	{ "sTitle": "所属项目名称", "targets": 4, "orderable": false },
-		        	{ "sTitle": "创建时间",  "targets": 5, "render" : rainet.message.util.formateDate },
-		           	{ "sTitle": "修改时间", "targets": 6, "render" : rainet.message.util.formateDate },
-		           	{ "sTitle": "操作",   "targets": 7, "orderable": false, "data": null,
+		           	{ "sTitle": "消息标题",  "targets": 1, "orderable": false, "render" : rainet.message.util.formateLink },
+		           	{ "sTitle": "消息类型", "targets": 2 },
+		           	{ "sTitle": "接受时间",  "targets": 3, "render" : rainet.message.util.formateDate  },
+		           	{ "sTitle": "消息状态", "targets": 4, },
+		           	{ "sTitle": "操作",   "targets": 5, "orderable": false, "data": null,
 		    			"defaultContent": rainet.message.util.operaterHtml }
 		],
-		order : [5, 'desc'],
+		order : [3, 'desc'],
 		
 		dataRef : [
 		           {'data':'id'},
-		           {'data':'name'},
-		           {'data':'code'},
-		           {'data':'fowparameter'},
-		           {'data':'project.name'},
-		           {'data':'createtime'},
-		           {'data':'modifytime'},
+		           {'data':'logcontext'},
+		           {'data':'logtype'},
+		           {'data':'logtime'},
+		           {'data':'logstatus'},
 		],
 		
 		initEvent : function($datatable){
-			rainet.message.service.project.getProjectNames(function(data){
-				var length = data.length;
-				$('#projectNameListForNode').empty();
-				$('#projectNameListForNode').append('<option value=-1>-请选择项目-</option>');
-				for (var i = 0; i < length; i++) {
-					$('#projectNameListForNode').append('<option value='+data[i].id+'>'+data[i].name+'</option>');
-				}
-				$('#projectNameListForNode').off('change.rainet').on('change.rainet', function(){
-					if($datatable){
-						var projectId = $('#projectNameListForNode').val();
-						$datatable.api().ajax.reload();
-					}
-				});
 				rainet.message.util.setSearchForm('node');
-			});
 			
 		},
 		

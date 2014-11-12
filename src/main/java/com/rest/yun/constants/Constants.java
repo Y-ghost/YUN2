@@ -10,4 +10,6 @@ public interface Constants {
 
 	String USER = "user";
 
+	String LOG_STATUS_READ = "已读";
+
 }

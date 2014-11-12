@@ -18,7 +18,7 @@ rainet.message.util = {
 		},
 
 		formateLink : function(data, type, full, meta){
-			return "<a class='detail' href='javascipt:;' data-id="+full.id+">"+data+"</a>";
+			return "<a class='detail' title="+data+" href='javascipt:;' data-id="+full.id+">"+data+"</a>";
 		},
 	
 		formateDate : function(data){
