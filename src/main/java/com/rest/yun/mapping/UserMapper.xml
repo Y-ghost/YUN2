@@ -240,4 +240,34 @@
       Modifytime = #{modifytime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+    <!-- Select Users by some parameters -->
+  <select id="selectUserForList" parameterType="map" resultMap="BaseResultMap">
+	
+	 select <include refid="Base_Column_List"/> from User 
+	 <where>
+	 	<if test="loginName != null and loginName != ''">
+		  	LoginName = #{projectName}
+		</if>
+	 </where>
+	 
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		${sortField}
+	 	</when>
+	 	<otherwise>
+	 		Createtime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+	</select>
 </mapper>

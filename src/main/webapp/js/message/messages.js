@@ -22,7 +22,8 @@ rainet.message.view = function(){
 		if ($golabDataTable) {
 			// 修复切换模块时，不同table的column个数不同时出现部分column不显示的问题
 			$('thead','#table').empty();
-			$golabDataTable.fnClearTable();
+			var oSettings = $golabDataTable.fnSettings();
+			oSettings.aoData.length = 0;
 		}
 		$golabDataTable = $('#table').dataTable({
 			processing: true,
@@ -66,7 +67,9 @@ rainet.message.view = function(){
 				};
 				
 				//Update criteria
-				rainet.message.controller[module].updateParam(criteria)
+				if (rainet.message.controller[module].updateParam) {
+					rainet.message.controller[module].updateParam(criteria)
+				}
 				
 				var param  = {pageSize : 10, pageNow : pageNow}
 				

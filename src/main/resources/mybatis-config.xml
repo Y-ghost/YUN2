@@ -7,7 +7,7 @@
 	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.rest.yun.mapping.interceptor.PaginationInterceptor">
-			<property name="sqlRegex" value="(.*ForList*.)"/>
+			<property name="sqlRegex" value="(.*ForList.*)"/>
 		</plugin>
 	</plugins>
 

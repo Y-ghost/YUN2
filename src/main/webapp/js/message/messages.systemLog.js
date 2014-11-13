@@ -8,158 +8,64 @@ rainet.message.controller = rainet.message.controller || {};
 // 报警信息
 rainet.message.controller.systemLog = {
 		
-		// 添加校验信息 当保存或修改节点的时候
-		setValidate : function($form, operate){
-			var _this = this;
-			$form.bootstrapValidator({
-				feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
-		        },
-				fields : {
-					projectId : {
-						validators : {
-							notEmpty : {
-								message: '项目名称不能为空'
-							}
-						}
-					},
-					name: {
-						validators : {
-							notEmpty : {
-								message: '节点名称不能为空'
-							}
-						}
-					},
-					code : {
-						validators : {
-							notEmpty : {
-								 message : ' '
-							},
-							regexp: {
-		                        regexp: /^[0-9]{4}$/i,
-		                        message : ' '
-		                    }
-						}
-					},
-					fowparameter : {
-						validators : {
-							notEmpty : {
-								message : ' '
-							},
-							between: {
-								min: 200,
-		                        max: 1000,
-		                        message : ' '
-		                    }
-						}
-					},
-				}
-			})
-			
-			$form.data('bootstrapValidator').disableSubmitButtons(true);
+		formateLogType : function(data){
+			if (data == 0) {
+   				return "采集异常";
+   			}
+   			if (data == 1) {
+   				return "湿度报警";
+   			}
 		},
 		
-		// 从后台获取数据之后，设置对应节点信息的值，以弹出框的形式展示
-		setNodeInfo : function(data, readonly, $dataTable){
-			var $nodeHtml = $(this.infoTemplate).attr('id', 'nodeInfo'+data.id).css('display','block');
-			$('.code',$nodeHtml).val(data.code);
-			$(".id", $nodeHtml).val(data.id);
-			$(".fowparameter", $nodeHtml).val(data.fowparameter);
-			$(".name", $nodeHtml).val(data.name);
+		setOperateHtml : function(data){
+			if (data == '未读') {
+   				return "<button class=\"btn btn-info edit\">标记已读</button>";
+   			}
+   			if (data == '已读') {
+   				return "<button class=\"btn btn-info\" disabled>标记已读</button>";
+   			}
+		},
+		
+		// 从后台获取数据之后，设置对应报警信息的值，以弹出框的形式展示
+		setLogInfo : function(data, readonly, $dataTable){
+			var $logHtml = $(this.infoTemplate).attr('id', 'logInfo'+data.id);
+			$('.type',$logHtml).empty().append('<option>'+this.formateLogType(data.logtype)+'</option>');
+			$(".status", $logHtml).val(data.logstatus);
+			$(".logTime", $logHtml).val(rainet.utils.formateDate(data.logtime));
 			
 			if (readonly) {
-				$("input", $nodeHtml).attr('disabled', true);
-				$("select", $nodeHtml).attr('disabled', true);
-				$('.projectName',$nodeHtml).append('<option>'+data.project.name+'</option>');
-				$('button[type=submit]', $nodeHtml).hide();
+				$("input", $logHtml).attr('disabled', true);
+				$("select", $logHtml).attr('disabled', true);
 			}
 			
-			// 如果是更新操作，就添加修改按钮，并绑定修改函数，如果是查看详情，则没有修改按钮
-			var $form = $("form", $nodeHtml);
+			var $form = $("form", $logHtml);
 			$('button[data-bb-handler=cancel]', $form).off('click').on('click', function(){
 				bootbox.hideAll();
 			});
 			
-			if (!readonly) {
-				// 初始化项目列表
-				var $projectList = $('.projectName',$nodeHtml);
-				var projectId = data.project.id;
-				rainet.message.service.project.getProjectNames(function(data){
-					var length = data.length;
-					$projectList.empty();
-					for (var i = 0; i < length; i++) {
-						$projectList.append('<option value='+data[i].id+'>'+data[i].name+'</option>');
-					}
-					$projectList.val(projectId);
-				});
-				
-				
-				// 绑定提交事件
-				$('button[type=submit]', $form).off('click').on('click', function(e){
-					// 检查验证是否通过
-					var bv = $form.data('bootstrapValidator');
-					if (bv.$invalidFields.length > 0) {
-						return false;
-					}
-					var formData = $form.serializeArray();
-					var jsonData = rainet.utils.serializeObject(formData);
-					jsonData.project = {id : jsonData.projectId};
-					jsonData.projectId = undefined;
-					var config = {jsonData : jsonData};
-					// 自定义处理错误信息
-					config.handleError = function(result){
-						$form.data('bootstrapValidator').disableSubmitButtons(true);
-						return false;
-					}
-					// 更新node
-					rainet.message.service.node.update(config, function(data){
-						if (data) {
-							bootbox.hideAll();
-							rainet.utils.notification.success('修改成功');
-							$dataTable.api().ajax.reload();
-						}
-					});
-				});
-				
-				$form.attr('data-id', data.id);
-				this.setValidate($form, 'update');
-			}
 			bootbox.dialog({
-				message : $nodeHtml,
-				title : '节点信息',
+				message : $logHtml,
+				title : '报警信息',
 				// 支持ESC
 				onEscape : function(){
 					
 				}
 			});
 		},
-	
-	initProjectList : function(data){
-		var length = data.length;
-		$('#projectNameListForNode').empty();
-		$('#projectNameListForNode').append('<option value=-1>-请选择项目-</option>');
-		for (var i = 0; i < length; i++) {
-			$('#projectNameListForNode').append('<option value='+data[i].id+'>'+data[i].name+'</option>');
-		}
-		$('#projectNameListForNode').off('change.rainet').on('change.rainet', function(){
-			if($datatable){
-				var projectId = $('#projectNameListForNode').val();
-				$datatable.api().ajax.reload();
-			}
-		});
-	},
-	
 	table : {
 	  columns : [
 		           	{ "sTitle":'', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
 		           	{ "sTitle": "消息标题",  "targets": 1, "orderable": false, "render" : rainet.message.util.formateLink },
-		           	{ "sTitle": "消息类型", "targets": 2 },
-		           	{ "sTitle": "接受时间",  "targets": 3, "render" : rainet.message.util.formateDate  },
+		           	{ "sTitle": "消息类型", "targets": 2, "render" : function(data){
+		           			return rainet.message.controller.systemLog.formateLogType(data);
+		           		}
+		           	},
+		           	{ "sTitle": "接受时间",  "targets": 3, "render" : rainet.message.util.formateDate },
 		           	{ "sTitle": "消息状态", "targets": 4, },
-		           	{ "sTitle": "操作",   "targets": 5, "orderable": false, "data": null,
-		    			"defaultContent": rainet.message.util.operaterHtml }
+		           	{ "sTitle": "操作",   "targets": 5, "orderable": false, "render" : function(data){
+		           			return rainet.message.controller.systemLog.setOperateHtml(data);
+		           		}
+		           	}
 		],
 		order : [3, 'desc'],
 		
@@ -169,103 +75,60 @@ rainet.message.controller.systemLog = {
 		           {'data':'logtype'},
 		           {'data':'logtime'},
 		           {'data':'logstatus'},
+		           {'data':'logstatus'},
 		],
 		
 		initEvent : function($datatable){
-				rainet.message.util.setSearchForm('node');
-			
+			rainet.message.util.setSearchForm('log');
 		},
 		
 		row : function(row, data, index){
 			$(row).attr('id', data.id);
-			$(row).attr('data-name', data.name);
 		}
 	},
 	
-	// 在共用table的js方法提交参数给后台之前，添加不同模块特有的参数信息
-	updateParam : function(param){
-		var projectId = $.trim($('#projectNameListForNode').val());
-		if (projectId != -1) {
-			param.projectId = projectId;
-		}
-	},
-	// 获取单个节点的详细信息
+	// 获取单个报警的详细信息
 	detail : function(self){
-		var nodeId = $(self).attr('data-id');
+		var logId = $(self).attr('data-id');
 		var _this = this;
-		rainet.message.service.node.get(nodeId, function(data){
-			_this.setNodeInfo(data, true);
+		rainet.message.service.systemLog.get(logId, function(data){
+			_this.setLogInfo(data, true);
 		});
 	},
 	// 更新单个节点信息
 	edit : function(self, $dataTable){
-		var nodeId = $(self).parent().parent().attr('id');
-		var _this = this;
-		rainet.message.service.node.get(nodeId, function(data){
-			_this.setNodeInfo(data, false, $dataTable);
-		});
-	},
-	// 删除某个节点
-	del : function(self, $datatable){
-		var nodeId = $(self).parent().parent().attr('id');
-		var code = $(self).parent().parent().attr('data-name');
-		bootbox.dialog({
-			message : "确认删除此节点？",
-			title : '删除节点"' + code + '"',
-			onEscape : function(){
-				
-			},
-			buttons :  {
-				cancel: {
-				      label: "取消",
-				      className: "btn-warning",
-				},
-				success: {
-				      label: "确定",
-				      className: "btn-success",
-				      callback : function(){
-				    	  rainet.message.service.node.del(nodeId, function(data){
-				    		rainet.utils.notification.success('删除成功');
-				    		$datatable.api().ajax.reload();
-				    	  });
-				      }
-				}
-		}
+		var logId = $(self).parent().parent().attr('id');
+		rainet.message.service.systemLog.markLogRead({logId : logId}, function(data){
+			if (data) {
+				bootbox.hideAll();
+				rainet.utils.notification.success('标记成功');
+				$dataTable.api().ajax.reload();
+			}
 		});
 	},
 	
 	infoTemplate : "<div>\n"+
-		"<form class=\"form-horizontal\" role=\"form\" style=\"padding-right:15px;\" onsubmit=\"return false;\">\n"+
+		"<form class=\"form-horizontal\" role=\"form\" onsubmit=\"return false;\">\n"+
 			"<div class=\"form-group\">\n"+
-				"<label class=\"col-sm-3 control-label\">所属项目：</label>\n"+
-				"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<select class=\"form-control projectName\" name=\"projectId\"></select>\n"+
+				"<label class=\"col-sm-3 control-label\">类型：</label>\n"+
+				"<div class=\"col-sm-9\">\n"+
+    				"<select class=\"form-control type\" name=\"type\"></select>\n"+
     			"</div>\n"+
     		"</div>\n"+
     		"<div class=\"form-group\">\n"+
-    			"<label class=\"col-sm-3 control-label\">节点名称：</label>\n"+
-    			"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<input type=\"text\" class=\"form-control name\" name=\"name\"/>\n"+
+    			"<label class=\"col-sm-3 control-label\">状态：</label>\n"+
+    			"<div class=\"col-sm-9\">\n"+
+    				"<input type=\"text\" class=\"form-control status\" name=\"status\"/>\n"+
     			"</div>\n"+
     		"</div>\n"+
     		"<div class=\"form-group\">\n"+
-				"<label class=\"col-sm-3 control-label\">节点地址：</label>\n"+
-				"<div class=\"col-sm-9 selectItem\">\n"+
-					"<input type=\"text\" class=\"form-control code\" name=\"code\"/>\n"+
-					"<p class=\"help-block js-placehoder\">*节点地址为4位纯数字</p>\n"+
+				"<label class=\"col-sm-3 control-label\">时间：</label>\n"+
+				"<div class=\"col-sm-9\">\n"+
+					"<input type=\"text\" class=\"form-control logTime\" name=\"logTime\"/>\n"+
 				"</div>\n"+
 			"</div>\n"+
-			"<div class=\"form-group\">\n"+
-			"<label class=\"col-sm-3 control-label\">流量参数：</label>\n"+
-			"<div class=\"col-sm-9 selectItem\">\n"+
-				"<input type=\"text\" class=\"form-control fowparameter\" name=\"fowparameter\"/>\n"+
-				"<p class=\"help-block js-placehoder\">*参数为【200,1000】的整数</p>\n"+
-			"</div>\n"+
-		"</div>\n"+
-  			"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+
   			 "<div class=\"dialog-footer\">\n"+
 				"<button data-bb-handler=\"cancel\" type=\"button\" class=\"btn btn-warning\">取消</button>\n"+
-				"<button type=\"submit\" class=\"btn btn-success\">修改</button>\n"+
 		     "</div>\n"+
 		"</form>\n"+
 	"</div>\n",

@@ -3,6 +3,8 @@ package com.rest.yun.mapping;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.rest.yun.beans.SystemLog;
 
 public interface SystemLogMapper {
@@ -19,7 +21,7 @@ public interface SystemLogMapper {
 
 	int updateByPrimaryKey(SystemLog record);
 
-	int updateStatusByPrimaryKey(String logstatus, int id);
+	int updateStatusByPrimaryKey(@Param("logstatus") String logstatus, @Param("id") int id);
 
 	List<SystemLog> selectSystemLogForListBy(Map<String, Object> params);
 }

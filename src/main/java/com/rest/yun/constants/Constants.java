@@ -12,4 +12,6 @@ public interface Constants {
 
 	String LOG_STATUS_READ = "已读";
 
+	String LOGIN_UNAME = "loginName";
+
 }

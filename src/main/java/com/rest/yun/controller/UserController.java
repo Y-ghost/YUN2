@@ -1,15 +1,26 @@
 package com.rest.yun.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.User;
+import com.rest.yun.constants.Constants;
+import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
 import com.rest.yun.service.IUserService;
+import com.rest.yun.util.CommonUtiles;
+import com.rest.yun.util.JSONConver;
 
 @Controller
 @RequestMapping("/User")
@@ -19,11 +30,11 @@ public class UserController {
 	private IUserService userService;
 
 	/**
-	 * @Title:       save
-	 * @author:      杨贵松
-	 * @time         2014年11月8日 下午9:49:15
+	 * @Title: save
+	 * @author: 杨贵松
+	 * @time 2014年11月8日 下午9:49:15
 	 * @Description: 用户注册
-	 * @return       ResponseWrapper
+	 * @return ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(method = RequestMethod.POST)
@@ -31,5 +42,72 @@ public class UserController {
 	public ResponseWrapper save(@RequestBody User user) {
 		boolean flag = userService.saveUser(user);
 		return new ResponseWrapper(flag);
+	}
+
+	/**
+	 * 更新用户信息
+	 * 
+	 * @param user
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseWrapper update(@RequestBody User user, HttpSession session) {
+		// 获取当前登录用户
+		User currentUser = (User) session.getAttribute(Constants.USER);
+		userService.updateUser(user, currentUser.getId());
+		return new ResponseWrapper(true);
+	}
+
+	@RequestMapping(value = "{userId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseWrapper deleteUser(@PathVariable int userId) {
+		userService.deleteUser(userId);
+		return new ResponseWrapper(true);
+	}
+
+	/**
+	 * 获取用户详细信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "{userId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper detail(@PathVariable int userId) {
+		User user = userService.getUserById(userId);
+		return new ResponseWrapper(user);
+	}
+
+	/**
+	 * 获取用户列表
+	 * 
+	 * @param pageNow
+	 * @param pageSize
+	 * @param criteria
+	 * @return
+	 */
+
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper selectUsers(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
+
+		Map<String, Object> criteriaMap = null;
+
+		if (!StringUtils.isEmpty(criteria)) {
+			criteriaMap = JSONConver.conver(criteria, Map.class);
+			// 处理中文乱码
+			if (criteriaMap.containsKey(Constants.LOGIN_UNAME)) {
+				String loginName = (String) criteriaMap.get(Constants.LOGIN_UNAME);
+				loginName = CommonUtiles.decodeUrl(loginName);
+				criteriaMap.put(Constants.LOGIN_UNAME, loginName);
+			}
+		}
+
+		Page<User> page = userService.selectUsersBy(pageNow, pageSize, criteriaMap);
+
+		return new ResponseWrapper(page);
 	}
 }

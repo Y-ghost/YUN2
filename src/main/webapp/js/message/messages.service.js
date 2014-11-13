@@ -246,9 +246,9 @@ rainet.message.service = {
 				});
 			},
 			
-			update: function(config, callback){
+			markLogRead: function(config, callback){
 				rainet.ajax.execute({
-					url : rainet.message.url.systemLog.url,
+					url : rainet.message.url.systemLog.url + config.logId,
 					$busyEle : $('#tableContainer'),
 					method : 'PUT',
 					customHandleError : function(result){
@@ -257,8 +257,6 @@ rainet.message.service = {
 						}
 						return true;
 					},
-					data : JSON.stringify(config.jsonData),
-					contentType : 'application/json; charset=utf-8',
 					success : function(data){
 						callback(data);
 					}
