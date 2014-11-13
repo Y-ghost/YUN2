@@ -14,12 +14,13 @@
 }
 
 .form-signin div {
-	padding : 15px 0;
+	padding : 5px 15px 0px 15px;
 }
 #headLine{
 	display:none;
 }
-.input-group-container .form-control-feedback{top:35px !important; right:0px !important;}
+.input-group-container .form-control-feedback{top:15px !important; right:30px !important;}
+.input-group-container .help-block{padding : 0 15px;}
 </style>
 </head>
 <body>
@@ -43,13 +44,13 @@
 			<div class="form-group input-group-container">
 				<div class="input-group input-group-lg">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span> 
-					<input type="email" class="form-control" placeholder="邮箱" name="email" id="email">
+					<input type="text" class="form-control" placeholder="邮箱" name="email" id="email">
 				</div>
 			</div>
 			<div class="form-group input-group-container">
 				<div class="input-group input-group-lg">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span> 
-					<input type="tel" class="form-control" placeholder="电话" name="phone" id="phone">
+					<input type="text" class="form-control" placeholder="电话" name="phone" id="phone">
 				</div>
 			</div>
 			<div class="form-group input-group-container">
@@ -61,15 +62,15 @@
 			<div>
 				<button type="submit" class="btn btn-primary btn-lg btn-block">免费注册</button>
 			</div>
-			<div>
-				<div class="col-sm-6">
-					<input type="checkbox" checked name="serviceAgreement"/>&nbsp;&nbsp;接受<a href="${requestScope.basePath}indexs/login">用户服务协议</a>
+		</form>
+			<div class="form-horizontal form-signin">
+				<div class="col-sm-6 ">
+					<input type="checkbox" checked name="serviceAgreement" id="serviceAgreement"/>&nbsp;&nbsp;接受<a href="${requestScope.basePath}indexs/login" target="_blank">用户服务协议</a>
 				</div>
 				<div class="col-sm-6 text-right" style="margin-bottom:20%;">
 					已有账号，<a href="${requestScope.basePath}indexs/login">立马登录</a>
 				</div>
 			</div>
-		</form>
 	</div>
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp" />

@@ -1,10 +1,15 @@
 package com.rest.yun.service.Impl;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +26,7 @@ import com.rest.yun.mapping.UserMapper;
 import com.rest.yun.service.IUserService;
 import com.rest.yun.util.CommonUtiles;
 import com.rest.yun.util.MD5;
+import com.rest.yun.util.mail.MailSender;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -36,8 +42,7 @@ public class UserServiceImpl implements IUserService {
 	 * @Description: 用户注册
 	 */
 	@Override
-	public boolean saveUser(User user) {
-		boolean flag = false;
+	public void saveUser(User user) {
 		Date date = null;
 		try {
 			date = CommonUtiles.getSystemDateTime();
@@ -47,15 +52,124 @@ public class UserServiceImpl implements IUserService {
 			user.setRole(1);
 			user.setRightcontent("01");
 			userMapper.saveUser(user);
-			flag = true;
 		} catch (DataAccessException e) {
-			flag = false;
-			LOG.error("register a User exception", e);
+			LOG.error("register a new User exception",e);
 			throw new ServerException(ErrorCode.REGISTER_USER_FAILED);
 		} catch (ParseException e) {
-			flag = false;
-			LOG.error("get system time exception", e);
+			LOG.error("get system time exception",e);
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+	}
+
+	/** 
+	 * @Title:       login
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 上午11:25:07
+	 * @Description: 用户登录
+	 */
+	@Override
+	public boolean login(String loginname, String password, HttpSession session) {
+		boolean flag = false; 
+		User user = new User();
+		try {
+			user = userMapper.validUser(loginname);
+			if (user == null) {
+				LOG.error("the loginname does not exist ! ");
+				throw new ServerException(ErrorCode.LOGIN_LOGINNAME_NOT_EXIST);
+			} else if(user.getPassword().equals(MD5.getMD5Str(password.trim()))){
+				session.setAttribute("user", user);
+				flag = true;
+			}else{
+				LOG.error("loginname or password error ! ");
+				throw new ServerException(ErrorCode.LOGIN_LOGINNAME_PASSWORD_ERROR);
+			}
+		} catch (DataAccessException e) {
+			LOG.error("user login system exception ! ",e);
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+		return flag;
+	}
+
+	/** 
+	 * @Title:       validLoginName
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 下午12:43:06
+	 * @Description: 验证登录名是否存在
+	 */
+	@Override
+	public boolean validLoginName(String loginname) {
+		boolean flag = false; 
+		User user = new User();
+		try {
+			user = userMapper.validUser(loginname);
+			if (user == null) {
+				flag = true;
+			}else{
+				flag = false;
+			}
+		} catch (DataAccessException e) {
+			LOG.error("validLoginName exception ! ",e);
+			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+		}
+		return flag;
+	}
+
+	/** 
+	 * @Title:       modifyPassword
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 下午12:51:02
+	 * @Description: 修改用户密码  
+	 */
+	@Override
+	public void modifyPassword(int userId, String password) {
+		try {
+			Map<String,Object> map = new HashMap<String, Object>();
+			map.put("userId", userId);
+			map.put("password", MD5.getMD5Str(password.trim()));
+			userMapper.modifyPassword(map);
+		} catch (DataAccessException e) {
+			LOG.error("modifyPassword exception ! ",e);
+			throw new ServerException(ErrorCode.MODIFY_PASSWORD_FAILED);
+		}
+	}
+
+	/** 
+	 * @Title:       sendEmail
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 下午1:04:17
+	 * @Description: 找回密码发送验证邮件
+	 */
+	@Override
+	public boolean sendEmail(String loginname, HttpServletRequest request) {
+		User user = new User();
+		boolean flag = false;
+		try {
+			user = userMapper.validUser(loginname);
+			if(user==null){
+				LOG.error("The user does not exist ! ");
+				throw new ServerException(ErrorCode.LOGIN_LOGINNAME_NOT_EXIST);
+			}else if(user.getEmail().equals("")){
+				LOG.error("The e_mail is null ! ");
+				throw new ServerException(ErrorCode.USER_EMAIL_NULL);
+			}else{
+				String secretKey= UUID.randomUUID().toString();  //密钥
+	            Date outDate = new Date(System.currentTimeMillis()+60*60*1000);//60分钟后过期
+	            long date = outDate.getTime()/1000*1000;        //忽略毫秒数
+	            
+	            String key = user.getLoginname()+"$"+date+"$"+secretKey;
+	            String validCode = MD5.getMD5Str(key);
+	            user.setValidcode(validCode);
+	            user.setOutdate(outDate);
+	            userMapper.update(user);    //保存到数据库
+	            
+	            String path = request.getContextPath();
+	            String basePath = request.getScheme()+"://"+request.getServerName()+path+"/";
+	            String urlStr =  basePath+"user/reset_password?userName="+user.getLoginname()+"&sid="+validCode;
+	            flag = MailSender.iForgetPassword(user.getEmail(), urlStr, user.getLoginname(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(outDate));
+			}
+		} catch (Exception e) {
+			LOG.error("send e_mail exception ! ",e);
+			throw new ServerException(ErrorCode.SEND_EMAIL_FAILED);
 		}
 		return flag;
 	}
@@ -69,7 +183,7 @@ public class UserServiceImpl implements IUserService {
 		try {
 			user.setModifyuser(modifierId);
 			user.setModifytime(new Date());
-			userMapper.updateByPrimaryKeySelective(user);
+			userMapper.update(user);
 		} catch (DataAccessException e) {
 			LOG.error("Updating a User exception", e);
 			throw new ServerException(ErrorCode.UPDATE_USER_FAILED);

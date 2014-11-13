@@ -2,6 +2,7 @@ package com.rest.yun.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +30,77 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 
+
 	/**
-	 * @Title: save
-	 * @author: 杨贵松
-	 * @time 2014年11月8日 下午9:49:15
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @time         2014年11月8日 下午9:49:15
 	 * @Description: 用户注册
-	 * @return ResponseWrapper
+	 * @return       ResponseWrapper
 	 * @throws
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody User user) {
-		boolean flag = userService.saveUser(user);
+		userService.saveUser(user);
+		return new ResponseWrapper(true);
+	}
+	/**
+	 * @Title:       login
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 上午11:16:36
+	 * @Description: 用户登录
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="login" , method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper login(@RequestParam String loginname , @RequestParam String password, HttpSession session) {
+		boolean flag = userService.login(loginname,password,session);
+		return new ResponseWrapper(flag);
+	}
+	
+	/**
+	 * @Title:       validLoginName
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 上午11:47:36
+	 * @Description: 验证登录名是否正确 
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="validLoginName" , method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper validLoginName(@RequestParam String loginname ) {
+		boolean flag = userService.validLoginName(loginname);
+		return new ResponseWrapper(flag);
+	}
+	/**
+	 * @Title:       modifyPassword
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 下午12:49:27
+	 * @Description: 修改用户密码 
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="modifyPassword" , method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper modifyPassword(@RequestParam int userId , @RequestParam String password ) {
+		userService.modifyPassword(userId,password);
+		return new ResponseWrapper(true);
+	}
+	/**
+	 * @Title:       sendEmail
+	 * @author:      杨贵松
+	 * @time         2014年11月11日 下午1:00:17
+	 * @Description: 找回密码发送验证邮件
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="sendEmail" , method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper sendEmail(@RequestParam String loginname ,HttpServletRequest request) {
+		System.out.println("loginname");
+		boolean flag = userService.sendEmail(loginname,request);
 		return new ResponseWrapper(flag);
 	}
 
