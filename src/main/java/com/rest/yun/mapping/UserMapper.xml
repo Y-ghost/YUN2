@@ -21,7 +21,7 @@
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, LoginName, Password, Username, Role, Email, Phone, Address, Website, RightContent, 
+    id, LoginName, Username, Role, Email, Phone, Address, Website, RightContent, 
     validCode, outdate, clientID, Createuser, Createtime, Modifyuser, Modifytime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -247,7 +247,7 @@
 	 select <include refid="Base_Column_List"/> from User 
 	 <where>
 	 	<if test="loginName != null and loginName != ''">
-		  	LoginName = #{projectName}
+		  	LoginName = #{loginName}
 		</if>
 	 </where>
 	 

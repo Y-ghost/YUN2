@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-xs-9 col-md-9">
 				<div class="node-container">
-					<form class="form-horizontal" role="form" id="searchForm">
+					<form class="form-horizontal" role="form" id="searchForm" onsubmit="return false;">
 						<div class="form-group project">
 							<label class="col-xs-2 col-md-2 control-label">项目信息查询</label>
 							<div class="col-xs-2 col-md-2">
@@ -64,6 +64,16 @@
 							</div>
 						</div>
 						
+						<div class="form-group user" style="display:none;">
+							<label class="col-xs-2 col-md-2 control-label">用户信息查询:</label>
+							<div class="col-xs-4 col-md-4">
+								<input id="loginName" type="text" class="form-control" name="loginname" placeholder="登录名"/>
+							</div>
+							<div class="col-xs-2 col-md-2">
+								<button id="userSearchBtn" type="button" class="btn btn-success">查询</button>
+							</div>
+						</div>
+						
 					</form>
 					<div class="table-responsive" id="tableContainer">
 						<table class="table table-striped table-hover" id="table">
@@ -92,6 +102,7 @@
 	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.eqt.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.systemLog.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.users.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	
 </body>

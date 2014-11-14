@@ -18,6 +18,9 @@ rainet.message.url = {
 		
 		systemLog : {
 			url : rainet.settings.baseUrl + 'message/'
+		},
+		user : {
+			url : rainet.settings.baseUrl + 'User/'
 		}
 };
 
@@ -264,7 +267,59 @@ rainet.message.service = {
 			},
 			
 			
+		},
+		
+		user : {
+			get: function(userId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.user.url + userId,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.user.url,
+					data : param,
+					$busyEle : $('#tableContainer'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			update: function(config, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.user.url,
+					$busyEle : $('#tableContainer'),
+					method : 'PUT',
+					customHandleError : function(result){
+						if (config.handleError){
+							return config.handleError(result);
+						}
+						return true;
+					},
+					data : JSON.stringify(config.jsonData),
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			del: function(userId, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.user.url + userId,
+					$busyEle : $('#tableContainer'),
+					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+		
 		}
-		
-		
 };
