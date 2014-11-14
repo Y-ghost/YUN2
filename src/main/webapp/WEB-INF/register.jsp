@@ -7,6 +7,7 @@
 <!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
 <jsp:include page="common/header.jsp" />
 <head>
+<title>服务条款</title>
 <style type="text/css">
 .form-signin {
 	width : 500px;
@@ -25,7 +26,7 @@
 </head>
 <body>
 	<div class="container">
-		<form class="form-horizontal form-signin " id="form" role="form">
+		<form class="form-horizontal form-signin " id="form" role="form" onsubmit="return false;">
 			<div class="text-center"><h2>用户注册</h2></div>
 			<div class="form-group input-group-container">
 				<div class="input-group input-group-lg">
@@ -65,7 +66,7 @@
 		</form>
 			<div class="form-horizontal form-signin">
 				<div class="col-sm-6 ">
-					<input type="checkbox" checked name="serviceAgreement" id="serviceAgreement"/>&nbsp;&nbsp;接受<a href="${requestScope.basePath}indexs/login" target="_blank">用户服务协议</a>
+					<input type="checkbox" checked name="serviceAgreement" id="serviceAgreement"/>&nbsp;&nbsp;接受<a href="${requestScope.basePath}indexs/userAgreement" target="_blank">用户服务协议</a>
 				</div>
 				<div class="col-sm-6 text-right" style="margin-bottom:20%;">
 					已有账号，<a href="${requestScope.basePath}indexs/login">立马登录</a>

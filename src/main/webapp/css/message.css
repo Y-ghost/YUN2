@@ -70,3 +70,16 @@
   text-overflow: ellipsis;
   display: inline-block;
 }
+.footer-bottom {
+	clear: both;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 20px 0;
+	text-align: center;
+	word-wrap: break-word;
+}
+body{
+	font: 12px/18px "\5FAE\8F6F\96C5\9ED1", Helvetica, Arial, Verdana,
+		"\5B8B\4F53";
+	color: #666666;
+}
