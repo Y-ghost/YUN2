@@ -39,6 +39,13 @@
 	left join ControlHost c on c.ProjectId = p.id
 	where c.code = #{hostCode,jdbcType=VARCHAR} 
   </select>
+  <!-- 根据登录名查询用户是否存在 -->
+  <select id="validUser" resultMap="BaseResultMap" parameterType="String" >
+    select u.*
+    from User u 
+	where u.LoginName = #{loginname,jdbcType=VARCHAR} 
+	or u.Email = #{loginname,jdbcType=VARCHAR} 
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from User
     where id = #{id,jdbcType=INTEGER}
@@ -57,7 +64,8 @@
       #{clientid,jdbcType=VARCHAR}, #{createuser,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.rest.yun.beans.User" >
+  <!-- 注册新用户 -->
+  <insert id="saveUser" parameterType="com.rest.yun.beans.User" >
     insert into User
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -166,7 +174,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.rest.yun.beans.User" >
+  <!-- 更新用户信息 -->
+  <update id="update" parameterType="com.rest.yun.beans.User" >
     update User
     <set >
       <if test="loginname != null" >
@@ -220,25 +229,11 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.rest.yun.beans.User" >
+  <!-- 修改用户密码 -->
+  <update id="modifyPassword" parameterType="Map" >
     update User
-    set LoginName = #{loginname,jdbcType=VARCHAR},
-      Password = #{password,jdbcType=VARCHAR},
-      Username = #{username,jdbcType=VARCHAR},
-      Role = #{role,jdbcType=INTEGER},
-      Email = #{email,jdbcType=VARCHAR},
-      Phone = #{phone,jdbcType=VARCHAR},
-      Address = #{address,jdbcType=VARCHAR},
-      Website = #{website,jdbcType=VARCHAR},
-      RightContent = #{rightcontent,jdbcType=VARCHAR},
-      validCode = #{validcode,jdbcType=VARCHAR},
-      outdate = #{outdate,jdbcType=TIMESTAMP},
-      clientID = #{clientid,jdbcType=VARCHAR},
-      Createuser = #{createuser,jdbcType=INTEGER},
-      Createtime = #{createtime,jdbcType=TIMESTAMP},
-      Modifyuser = #{modifyuser,jdbcType=INTEGER},
-      Modifytime = #{modifytime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    set Password = #{password,jdbcType=VARCHAR},
+    where id = #{userId,jdbcType=INTEGER}
   </update>
   
     <!-- Select Users by some parameters -->
