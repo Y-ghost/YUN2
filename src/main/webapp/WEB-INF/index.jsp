@@ -22,6 +22,9 @@
 	padding-left: 3px;
 	padding-right: 3px;
 }
+.projectLink , .panel-heading{
+	font-size:14px;
+}
 </style>
 </head>
 <body>

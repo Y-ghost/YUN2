@@ -19,6 +19,9 @@
 #headLine{
 	display:none;
 }
+.input-group-lg > .form-control{
+font-size: 16px;
+}
 .input-group-container .form-control-feedback{top:15px !important; right:30px !important;}
 .input-group-container .help-block{padding : 0 15px;}
 </style>
@@ -26,7 +29,7 @@
 <body>
 	<div class="container">
 		<form class="form-horizontal form-signin" id="form" role="form" onsubmit="return false;">
-			<div class="text-center"><h2>欢迎登录</h2></div>
+			<div class="text-center"><h2 style="margin-bottom:30px;">欢迎登录</h2></div>
 			<div class="form-group input-group-container">
 				<div class="input-group input-group-lg">
 					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
