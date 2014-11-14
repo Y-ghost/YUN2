@@ -39,7 +39,7 @@ public class UserController {
 	 * @return       ResponseWrapper
 	 * @throws
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value="register",method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody User user) {
 		userService.saveUser(user);

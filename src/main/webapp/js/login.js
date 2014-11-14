@@ -109,17 +109,42 @@ rainet.login.controller = {
 					if($("#serviceAgreement").is(':checked')){
 						// 检查验证是否通过
 						var bv = $form.data('bootstrapValidator');
-						alert(bv.$invalidFields);
 						if (bv.$invalidFields.length > 0) {
 							return false;
 						}
 						var formData = $form.serializeArray();
 						var jsonData = rainet.utils.serializeObject(formData);
-						//更新项目
+						//注册用户
 						rainet.login.service["User"].register(jsonData, function(data){
 							if (data) {
-								rainet.utils.notification.success('注册成功,马上跳转!');
-								//
+								redirect(data);
+							}else{
+								return false;
+							}
+						});
+					}else{
+						alert("请选择接受用户服务协议!");
+						return false;
+					}
+				});
+				// Add validation
+				this.setValidateForUser($form);
+		},
+		login : function(){
+			var $form = $(".form-signin");
+				$('button[type=submit]',$form).off('click').on('click', function(){
+					if($("#serviceAgreement").is(':checked')){
+						// 检查验证是否通过
+						var bv = $form.data('bootstrapValidator');
+						if (bv.$invalidFields.length > 0) {
+							return false;
+						}
+						var formData = $form.serializeArray();
+						var jsonData = rainet.utils.serializeObject(formData);
+						//注册用户
+						rainet.login.service["User"].register(jsonData, function(data){
+							if (data) {
+								redirect(data,"register");
 							}else{
 								return false;
 							}
@@ -133,6 +158,16 @@ rainet.login.controller = {
 				this.setValidateForUser($form);
 		}
 };
+
+//注册成功跳转
+var redirect = function(data,type){
+	if(type="register"){
+		location.href=rainet.settings.baseUrl+'indexs/login';
+	}else if(type="login"){
+		location.href=rainet.settings.baseUrl+'indexs/index';
+	}
+}
+
 
 rainet.login.url = {
 	User : {
@@ -157,9 +192,10 @@ rainet.login.service = {
 		register : function(param, callback) {
 			rainet.ajax.execute({
 				url : rainet.login.url.User.url+"register/",
-				data : param,
-				$busyEle : $('.container'),
-				method : 'POST',
+				data : JSON.stringify(param),
+				$busyEle : $('#form'),
+				method : 'PUT',
+				contentType : 'application/json; charset=utf-8',
 				success : function(data) {
 					callback(data);
 				}
@@ -172,8 +208,7 @@ rainet.login.service = {
 				$busyEle : $('#passport-title'),
 				method : 'GET',
 				success : function(data) {
-//					callback(data);
-					alert(data);
+					callback(data);
 				}
 			});
 		},
@@ -183,6 +218,7 @@ rainet.login.service = {
 				data : param,
 				$busyEle : $('#passport-title'),
 				method : 'POST',
+				contentType : 'application/json; charset=utf-8',
 				success : function(data) {
 					callback(data);
 				}

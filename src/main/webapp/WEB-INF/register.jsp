@@ -25,7 +25,7 @@
 </head>
 <body>
 	<div class="container">
-		<form class="form-horizontal form-signin" role="form">
+		<form class="form-horizontal form-signin " id="form" role="form">
 			<div class="text-center"><h2>用户注册</h2></div>
 			<div class="form-group input-group-container">
 				<div class="input-group input-group-lg">
