@@ -13,13 +13,13 @@
 	<!-- Container body -->
 		<div class="row">
 			<jsp:include page="common/left.jsp" />
-			<div class="col-xs-2 col-md-2 border-right hidden-xs" style="height:100%">
+			<div class="col-xs-2 col-md-2 border-right hidden-xs border-bottom" style="height:643px;">
 				<ul class="list-group ul-border-bottom">
-  					<a href="javascript:void(0);" class="list-group-item active" data-name="project" style="margin-top:10px">项目信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item " data-name="host" style="margin-top:10px">主机信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item " data-name="node" style="margin-top:10px">节点信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item " data-name="systemLog" style="margin-top:10px">报警信息管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item " data-name="user" style="margin-top:10px">用户信息管理<i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">项目信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">主机信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="node">节点信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="systemLog">报警信息管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="user">用户信息管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
 			<div class="col-xs-9 col-md-9">

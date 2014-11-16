@@ -22,8 +22,9 @@
 	padding-left: 3px;
 	padding-right: 3px;
 }
-.projectLink , .panel-heading{
-	font-size:14px;
+
+.panel-heading {
+	font-size: 14px;
 }
 </style>
 </head>
@@ -34,7 +35,7 @@
 			<jsp:include page="common/left.jsp" />
 			<div class="col-xs-2 col-md-2 border-right border-bottom hidden-xs">
 				<ul class="list-group ul-border-bottom" id="projectList"
-					style="height: 500px;">
+					style="height: 490px;">
 				</ul>
 				<div class="gigantic pagination" style="margin-bottom: 50px;">
 					<a href="#" class="first" data-action="first">&laquo;</a> <a

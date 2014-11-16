@@ -158,14 +158,14 @@ rainet.controlCenter.view = function() {
 		$.each(data.result,function(index,item){
 			var linkActive = "";
 			if(index==0){
-				linkActive = " active";
+				linkActive = " link-heading active";
 			}else{
 				linkActive = "";
 			}
 			if(item.wifiStatus=="在线"){
-				str = str + "<a href='javascript:void(0);' class='list-group-item projectLink "+linkActive+"' style='margin-top:10px;' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></a>";
+				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></a>";
 			}else{
-				str = str + "<a href='javascript:void(0);' class='list-group-item projectLink "+linkActive+"' style='margin-top:10px;' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
+				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
 			}
 		});
 		$projectList.find("a").remove();

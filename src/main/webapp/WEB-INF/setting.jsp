@@ -21,9 +21,7 @@
 	padding-left: 3px;
 	padding-right: 3px;
 }
-.projectLink , .panel-heading{
-	font-size:14px;
-}
+
 </style>
 </head>
 <body>
@@ -33,12 +31,12 @@
 			<jsp:include page="common/left.jsp" />
 			<div class="col-xs-2 col-md-2 border-right border-bottom hidden-xs">
 				<ul class="list-group ul-border-bottom" id="projectList"
-					style="height: 612px;">
-  					<a href="javascript:void(0);" class="list-group-item projectLink panel-heading active" data-name="project" style="margin-top:10px">添加项目信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="host" style="margin-top:10px">添加主机信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="node" style="margin-top:10px">搜索节点信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="systemLog" style="margin-top:10px">节点赋值管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="user" style="margin-top:10px">主机校时管理<i class="fa fa-angle-right"></i></a>
+					style="height: 602px;">
+  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="node">搜索节点信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="systemLog">节点赋值管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="user">主机校时管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
 			<div class="col-xs-9 col-md-9">
