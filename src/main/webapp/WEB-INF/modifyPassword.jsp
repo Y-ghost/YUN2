@@ -10,7 +10,7 @@
 	href="${requestScope.basePath}/css/findAccount.css" />
 </head>
 <body>
-<input type="hidden" id="pageType" value="findAccount"/>
+<input type="hidden" id="pageType" value="modifyPassword"/>
 	<div class="container">
 		<div id="passport-title">
 			<div class="wrap">
@@ -20,8 +20,8 @@
 		<div id="passport-finder" class="wrap">
 			<div class="passport-progress">
 				<ul>
-					<li class="current">验证身份</li>
-					<li>设置新密码<em></em></li>
+					<li>验证身份</li>
+					<li class="current">设置新密码<em></em></li>
 					<li>完成<em></em></li>
 				</ul>
 			</div>
@@ -32,30 +32,22 @@
 				<div class="form-group input-group-container">
 					<div class="input-group input-group-lg">
 						<span class="input-group-addon"><span
-							class="glyphicon glyphicon-user"></span></span> <input type="text"
-							class="form-control" placeholder="用户名/登录邮箱" name="loginname"
-							id="loginname">
+							class="glyphicon glyphicon-lock"></span></span> 
+							<input type="password" class="form-control" placeholder="新密码" name="newPassword" id="newPassword">
 					</div>
 				</div>
-
 				<div class="form-group input-group-container">
 					<div class="input-group input-group-lg">
 						<span class="input-group-addon"><span
-							class="glyphicon glyphicon-lock"></span></span> <input type="text"
-							class="form-control" placeholder="验证码" name="validNum"
-							id="validNum">
-					</div>
-				</div>
-				<div class="form-group input-group-container">
-					<div class="input-group input-group-lg">
-						<img class="very-image" src="">
-						<a class="very-link" href="javascript:;">看不清，换一张</a>
+							class="glyphicon glyphicon-lock"></span></span> 
+							<input type="password" class="form-control" placeholder="确认密码" name="rePassword" id="rePassword">
 					</div>
 				</div>
 				<div>
 					<button type="submit" class="btn btn-primary btn-lg btn-block">下一步</button>
 				</div>
 			</form>
+					<input type="hidden" id="userId" value="1"/>
 		</div>
 	</div>
 	<!-- footer -->

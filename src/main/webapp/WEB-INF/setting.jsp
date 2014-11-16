@@ -5,86 +5,67 @@
 <!-- Header -->
 <!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
 <jsp:include page="common/header.jsp" />
+<head>
+<style type="text/css">
+#form-group {
+	margin-bottom: 5px;
+	margin-right: -5px;
+	margin-left: -5px;
+}
+
+#has-error {
+	color: #a94442;
+}
+
+#inputLab {
+	padding-left: 3px;
+	padding-right: 3px;
+}
+.projectLink , .panel-heading{
+	font-size:14px;
+}
+</style>
+</head>
 <body>
-	<div class="container-fluid" style="height:100%">
-	<!-- Container body -->
+	<div class="container-fluid" style="height: 100%">
+		<!-- Container body -->
 		<div class="row">
 			<jsp:include page="common/left.jsp" />
-			<div class="col-xs-2 col-md-2 border-right hidden-xs" style="height:100%">
-				<ul class="list-group ul-border-bottom">
-  					<li class="list-group-item" style="margin-top:20px"><a href="#"><span>万科集团1</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团2</span> <span class="navbar-right"><i class="fa fa-exclamation-triangle text-danger"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团3</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团4</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团5</span> <span class="navbar-right"><i class="fa fa-exclamation-triangle text-danger"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团6</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团7</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团8</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团9</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团10</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团11</span> <span class="navbar-right"><i class="fa fa-exclamation-triangle text-danger"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团12</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团13</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团14</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
-  					<li class="list-group-item"><a href="#"><span>万科集团15</span> <span class="navbar-right"><i class="fa fa-wifi text-success"></i></span></a></li>
+			<div class="col-xs-2 col-md-2 border-right border-bottom hidden-xs">
+				<ul class="list-group ul-border-bottom" id="projectList"
+					style="height: 612px;">
+  					<a href="javascript:void(0);" class="list-group-item projectLink panel-heading active" data-name="project" style="margin-top:10px">添加项目信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="host" style="margin-top:10px">添加主机信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="node" style="margin-top:10px">搜索节点信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="systemLog" style="margin-top:10px">节点赋值管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item projectLink " data-name="user" style="margin-top:10px">主机校时管理<i class="fa fa-angle-right"></i></a>
 				</ul>
-				<div class="text-center" style="margin-top:50px">
-					<ul class="pagination" style="margin:0;">
-	  					<li><a href="#">&laquo;</a></li>
-	 				    <li><a href="#">1</a></li>
-	  					<li><a href="#">&raquo;</a></li>
-					</ul>
-				</div>
-				
 			</div>
-			<div class="col-xs-12 col-md-9">
+			<div class="col-xs-9 col-md-9">
 				<div class="node-container">
 					<div class="node-tools">
-						<label class="checkbox-inline">
-  							<input type="checkbox"/> 全选
-						</label>
+						<label class="checkbox-inline"> <input type="checkbox"
+							class="cursor checkAll" /> 全选
+						</label> <span class="col-xs-offset-1 col-md-offset-1"></span>
+						<button type="button" class="btn btn-success openBtn">开启</button>
 						<span class="col-xs-offset-1 col-md-offset-1"></span>
-						<button type="button" class="btn btn-success">开启</button>
-						<span class="col-xs-offset-1 col-md-offset-1"></span>
-						<button type="button" class="btn btn-warning">关闭</button>
+						<button type="button" class="btn btn-warning closeBtn">关闭</button>
 					</div>
-					
-					<div>
-						<div class="col-xs-12 col-md-5">
-							<div class="panel panel-default ">
-  							<div class="panel-heading">
-  							<label>节点1</label>
-  							<span class="float-right">
-  								<input type="checkbox"/>
-  							</span>
-  							</div>
-  							<div class="panel-body">
-    							
- 						 	</div>
-						</div>
-						</div>
-						
-						<div class="col-md-1"></div>
-						<div class="col-xs-12 col-md-5">
-							<div class="panel panel-default ">
-  							<div class="panel-heading">
-  							 <label>节点2</label>
-  							<span class="float-right">
-  								<input type="checkbox"/>
-  							</span>
-  							</div>
-  							<div class="panel-body">
-    							
- 						 	</div>
-						</div>
-						</div>
+
+					<div class="EquipmentList">
 					</div>
 				</div>
-			
 			</div>
+
 		</div>
 	</div>
-	
 	<jsp:include page="common/footer.jsp" />
+
+	<script src="${requestScope.basePath}datatable/js/jquery.dataTables.js"></script>
+	<script src="${requestScope.basePath}datatable/js/dataTables.bootstrap.js"></script>
+	<!-- Fix IE 6-9  JSON object-->
+	<script src="${requestScope.basePath}js/lib/json2.js"></script>
+	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
+	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 </body>
 </html>

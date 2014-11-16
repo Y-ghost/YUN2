@@ -277,7 +277,7 @@ public class MailSender {
 		sb.append("<br>用户服务支持：<a href='mailto:service@rainet.com.cn'>service@rainet.com.cn</a><br><br><br>");
 		String mailbody = sb.toString();
 		// 设置SMTP主机
-		MailSender themail = new MailSender("115.28.143.115");
+		MailSender themail = new MailSender("smtp.exmail.qq.com");
 		themail.setNeedAuth(true);
 		// 设置邮件标题
 		if (themail.setSubject("Rainet云灌溉找回密码") == false)

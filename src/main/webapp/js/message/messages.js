@@ -121,6 +121,8 @@ rainet.message.view = function(){
 	var init = function(){
 		bindEvent();
 		setView(defaultView);
+		//退出系统
+		rainet.utils.exist();
 	}
 	
 	return {

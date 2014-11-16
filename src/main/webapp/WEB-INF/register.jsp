@@ -23,13 +23,13 @@
 .input-group-lg > .form-control{
 font-size: 16px;
 }
-h3{color:#666666;}
 .input-group-container .form-control-feedback{top:15px !important; right:30px !important;}
 .input-group-container .help-block{padding : 0 15px;}
 </style>
 </head>
 <body>
 	<div class="container">
+	<input type="hidden" id="pageType" value="register"/>
 		<form class="form-horizontal form-signin " id="form" role="form" onsubmit="return false;">
 			<div class="text-center"><h3>用户注册</h3></div>
 			<div class="form-group input-group-container">

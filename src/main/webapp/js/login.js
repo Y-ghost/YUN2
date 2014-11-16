@@ -3,10 +3,12 @@
 
 var rainet = rainet || {};
 rainet.login = rainet.login || {};
+rainet.login.controller = rainet.login.controller || {};
+
 rainet.login.view = function() {
 		var init = function(){
-			rainet.login.controller.register();
-			rainet.login.controller.login();
+			var pageType = $("#pageType").val();
+			rainet.login.controller[pageType].send();
 		};
 
 		return {
@@ -16,9 +18,9 @@ rainet.login.view = function() {
 }();
 
 
-rainet.login.controller = {
+rainet.login.controller.register= {
 		// 添加校验信息 注册新用户的时候
-		setValidateForUser : function($form){
+		setValidate : function($form){
 			$form.bootstrapValidator({
 				feedbackIcons: {
 		            valid: 'glyphicon glyphicon-ok',
@@ -104,57 +106,7 @@ rainet.login.controller = {
 			
 			$form.data('bootstrapValidator').disableSubmitButtons(true);
 		},
-		// 用户登录校验
-		setValidateForLogin : function($form){
-			$form.bootstrapValidator({
-				feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
-		        },
-				fields : {
-					loginname : {
-						validators : {
-							notEmpty : {
-								message: '登录名不能为空!'
-							}
-						}
-					},
-					password : {
-						validators : {
-							notEmpty : {
-								message: '密码不能为空!'
-							},
-		                    stringLength: {
-		                        min: 6,
-		                        max: 30,
-		                        message: '密码长度为6~30!'
-		                    }
-						}
-					}
-				}
-			}).on('blur', '#loginname', function(){
-				// 验证项目名称是否存在
-				var bv = $form.data('bootstrapValidator');
-				$field = bv.getFieldElements('loginname');
-				var value = $field.val();
-				if ($.trim(value) === '') {
-					bv.updateMessage($field, 'notEmpty');
-					return ;
-				}
-				var param = {loginname : value};
-				rainet.login.service["User"].validLoginName(param, function(data){
-					if (data) {
-						// 存在，更新错误信息的提示
-						bv.updateMessage($field, 'notEmpty', '登录名称不存在!');
-						bv.updateStatus($field, 'INVALID');
-					}
-				});
-			});
-			
-			$form.data('bootstrapValidator').disableSubmitButtons(true);
-		},
-		register : function(){
+		send : function(){
 				var $form = $("#form");
 				$("body").keydown(function() {
 			        if (event.keyCode == "13") {
@@ -203,33 +155,66 @@ rainet.login.controller = {
 					}
 				});
 				// Add validation
-				this.setValidateForUser($form);
-		},
-		login : function(){
-				var $form = $("#form");
-				//keyCode=13是回车键
-				$("body").keydown(function() {
-			        if (event.keyCode == "13") {
-			        	// 检查验证是否通过
-						var bv = $form.data('bootstrapValidator');
-						if (bv.$invalidFields.length > 0) {
-							return false;
-						}
-						var loginname = bv.getFieldElements('loginname').val();
-						var password = bv.getFieldElements('password').val();
-						
-						var param = {loginname : loginname , password : password};
-						//用户登录
-						rainet.login.service["User"].login(param, function(data){
-							if (data) {
-								redirect(data,"login");
-							}else{
-								return false;
+				this.setValidate($form);
+		}
+};
+
+rainet.login.controller.login = {
+		// 用户登录校验
+		setValidate : function($form){
+			$form.bootstrapValidator({
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields : {
+					loginname : {
+						validators : {
+							notEmpty : {
+								message: '登录名不能为空!'
 							}
-						});
-			        }
-			    });
-				$('button[type=submit]',$form).off('click').on('click', function(){
+						}
+					},
+					password : {
+						validators : {
+							notEmpty : {
+								message: '密码不能为空!'
+							},
+							stringLength: {
+								min: 6,
+								max: 30,
+								message: '密码长度为6~30!'
+							}
+						}
+					}
+				}
+			}).on('blur', '#loginname', function(){
+				// 验证项目名称是否存在
+				var bv = $form.data('bootstrapValidator');
+				$field = bv.getFieldElements('loginname');
+				var value = $field.val();
+				if ($.trim(value) === '') {
+					bv.updateMessage($field, 'notEmpty');
+					return ;
+				}
+				var param = {loginname : value};
+				rainet.login.service["User"].validLoginName(param, function(data){
+					if (data) {
+						// 不存在，更新错误信息的提示
+						bv.updateMessage($field, 'notEmpty', '登录名称不存在!');
+						bv.updateStatus($field, 'INVALID');
+					}
+				});
+			});
+			
+			$form.data('bootstrapValidator').disableSubmitButtons(true);
+		},
+		send : function(){
+			var $form = $("#form");
+			//keyCode=13是回车键
+			$("body").keydown(function() {
+				if (event.keyCode == "13") {
 					// 检查验证是否通过
 					var bv = $form.data('bootstrapValidator');
 					if (bv.$invalidFields.length > 0) {
@@ -247,9 +232,29 @@ rainet.login.controller = {
 							return false;
 						}
 					});
+				}
+			});
+			$('button[type=submit]',$form).off('click').on('click', function(){
+				// 检查验证是否通过
+				var bv = $form.data('bootstrapValidator');
+				if (bv.$invalidFields.length > 0) {
+					return false;
+				}
+				var loginname = bv.getFieldElements('loginname').val();
+				var password = bv.getFieldElements('password').val();
+				
+				var param = {loginname : loginname , password : password};
+				//用户登录
+				rainet.login.service["User"].login(param, function(data){
+					if (data) {
+						redirect(data,"login");
+					}else{
+						return false;
+					}
 				});
-				// Add validation
-				this.setValidateForLogin($form);
+			});
+			// Add validation
+			this.setValidate($form);
 		}
 };
 
@@ -295,29 +300,6 @@ rainet.login.service = {
 				}
 			});
 		},
-		sendEmail : function(param, callback) {
-			rainet.ajax.execute({
-				url : rainet.login.url.User.url+"sendEmail/",
-				data : param,
-				$busyEle : $('#passport-title'),
-				method : 'GET',
-				success : function(data) {
-					callback(data);
-				}
-			});
-		},
-		modifyPassword : function(param, callback) {
-			rainet.ajax.execute({
-				url : rainet.login.url.User.url+"modifyPassword/",
-				data : param,
-				$busyEle : $('#passport-title'),
-				method : 'POST',
-				contentType : 'application/json; charset=utf-8',
-				success : function(data) {
-					callback(data);
-				}
-			});
-		},
 		validLoginName : function(param, callback) {
 			rainet.ajax.execute({
 				url : rainet.login.url.User.url+"validLoginName/",
@@ -334,7 +316,7 @@ rainet.login.service = {
 
 $(document).ready(function() {
 	//隐藏退出按钮
-	$(".fa-power-off").css("display","none");
+	$("#exist").css("display","none");
 	//添加底部年限
 	var myDate = new Date();
 	$(".copyYear").html(myDate.getFullYear());

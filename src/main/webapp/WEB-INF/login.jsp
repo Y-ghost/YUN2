@@ -28,6 +28,7 @@ font-size: 16px;
 </head>
 <body>
 	<div class="container">
+	<input type="hidden" id="pageType" value="login"/>
 		<form class="form-horizontal form-signin" id="form" role="form" onsubmit="return false;">
 			<div class="text-center"><h2 style="margin-bottom:30px;">欢迎登录</h2></div>
 			<div class="form-group input-group-container">

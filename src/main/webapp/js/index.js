@@ -323,6 +323,8 @@ rainet.controlCenter.view = function() {
 			initProjectList(data);
 		});
 		open();
+		//退出系统
+		rainet.utils.exist();
 	}
 
 	return {

@@ -100,3 +100,21 @@ rainet.utils.busy = function(){
 		remove : remove
 	};
 }();
+
+//退出系统
+rainet.utils.exist = function(){
+	$("#exist").click(function(){
+		if(confirm("确定退出?")){
+			rainet.ajax.execute({
+				url : rainet.settings.baseUrl+"User/exist/",
+				success : function(data) {
+					if(data){
+						location.href=rainet.settings.baseUrl+'indexs/login';
+					}
+				}
+			});
+		}else{
+			return false;
+		}
+	});
+}

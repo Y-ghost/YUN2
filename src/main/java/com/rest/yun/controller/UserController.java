@@ -61,6 +61,21 @@ public class UserController {
 	}
 	
 	/**
+	 * @Title:       exist
+	 * @author:      杨贵松
+	 * @time         2014年11月16日 下午7:51:40
+	 * @Description: 退出系统
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@RequestMapping(value="exist" , method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper exist(HttpSession session) {
+		session.setAttribute("user", null);
+		return new ResponseWrapper(true);
+	}
+	
+	/**
 	 * @Title:       validLoginName
 	 * @author:      杨贵松
 	 * @time         2014年11月11日 上午11:47:36
@@ -84,8 +99,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="modifyPassword" , method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseWrapper modifyPassword(@RequestParam int userId , @RequestParam String password ) {
-		userService.modifyPassword(userId,password);
+	public ResponseWrapper modifyPassword(@RequestParam String userId , @RequestParam String password ) {
+		userService.modifyPassword(Integer.parseInt(userId),password);
 		return new ResponseWrapper(true);
 	}
 	/**

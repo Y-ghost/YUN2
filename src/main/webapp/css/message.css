@@ -85,11 +85,15 @@
 }
 
 body {
-	font: 12px/16px "Î¢ÈíÑÅºÚ", Arial, "ËÎÌå";
-	color: #666666;
+	color: #333;
+	font-size: 12px;
+	line-height: 22px;
+	font-family: 'Microsoft YaHei', "ËÎÌå", Arial, Helvetica, STHeiti;
+	background: #fff;
+	_height: 100%;
 }
 
 input {
 	font: 12px/16px "Î¢ÈíÑÅºÚ", Arial, "ËÎÌå";
-	color: #666666;
+	color: #333;
 }

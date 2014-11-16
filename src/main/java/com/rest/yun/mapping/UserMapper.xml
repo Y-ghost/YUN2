@@ -232,7 +232,7 @@
   <!-- 修改用户密码 -->
   <update id="modifyPassword" parameterType="Map" >
     update User
-    set Password = #{password,jdbcType=VARCHAR},
+    set Password = #{password,jdbcType=VARCHAR}
     where id = #{userId,jdbcType=INTEGER}
   </update>
   

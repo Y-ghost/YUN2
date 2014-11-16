@@ -39,7 +39,7 @@
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="${requestScope.basePath}indexs/login" title="退出"><i class="fa fa-power-off fa-2x"></i></a></li>
+				<li><a href="${requestScope.basePath}indexs/login" id="exist" title="退出"><i class="fa fa-power-off fa-2x"></i></a></li>
 			</ul>
 		</div>
 	</div>
