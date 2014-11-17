@@ -68,7 +68,7 @@ public class UserController {
 	 * @return       ResponseWrapper
 	 * @throws
 	 */
-	@RequestMapping(value="exist" , method = RequestMethod.POST)
+	@RequestMapping(value="exist" , method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper exist(HttpSession session) {
 		session.setAttribute("user", null);

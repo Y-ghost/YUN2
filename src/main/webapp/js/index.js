@@ -138,7 +138,7 @@ rainet.controlCenter.view = function() {
 			});
 		}
 		
-		$('.projectLink').off('click').on('click', function() {
+		$('.panelLink').off('click').on('click', function() {
 			handlMenuView(this);
 			var projectId =$(this).attr("id");
 			var param = {pId : projectId};

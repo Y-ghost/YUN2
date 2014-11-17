@@ -35,22 +35,13 @@
   					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="node">搜索节点信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="systemLog">节点赋值管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="user">主机校时管理<i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
-			<div class="col-xs-9 col-md-9">
-				<div class="node-container">
+			<div class="col-xs-7 col-md-7">
+			<div class="node-container">
 					<div class="node-tools">
-						<label class="checkbox-inline"> <input type="checkbox"
-							class="cursor checkAll" /> 全选
-						</label> <span class="col-xs-offset-1 col-md-offset-1"></span>
-						<button type="button" class="btn btn-success openBtn">开启</button>
-						<span class="col-xs-offset-1 col-md-offset-1"></span>
-						<button type="button" class="btn btn-warning closeBtn">关闭</button>
-					</div>
-
-					<div class="EquipmentList">
 					</div>
 				</div>
 			</div>
@@ -65,5 +56,9 @@
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
+	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 </body>
 </html>
