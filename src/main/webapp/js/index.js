@@ -119,8 +119,7 @@ rainet.controlCenter.view = function() {
 					"</div>" +
 					"</div>";
 		});
-		$EquipmentList.find("div").remove();
-		$EquipmentList.append(str);
+		$EquipmentList.empty().append(str);
 	}
 	var handlMenuView = function(currentEle){
 		var $ele = $(currentEle);
@@ -168,8 +167,7 @@ rainet.controlCenter.view = function() {
 				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
 			}
 		});
-		$projectList.find("a").remove();
-		$projectList.append($(str));
+		$projectList.empty().append($(str));
 		//分页查询
 		$(".pagination").jqPagination({
 			link_string : "/?page={page_number}",

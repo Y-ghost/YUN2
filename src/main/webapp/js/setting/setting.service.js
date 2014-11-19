@@ -46,6 +46,16 @@ rainet.setting.service = {
 						callback(data);
 					}
 				});
+			},
+			
+			getProjectNames : function(callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.project.url + 'names',
+					method : 'GET',
+					success : function(data){
+						callback(data);
+					}
+				});
 			}
 		},
 		

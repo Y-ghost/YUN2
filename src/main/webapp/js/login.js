@@ -144,7 +144,7 @@ rainet.login.controller.register= {
 						//注册用户
 						rainet.login.service["User"].register(jsonData, function(data){
 							if (data) {
-								redirect(data);
+								redirect(data,"register");
 							}else{
 								return false;
 							}

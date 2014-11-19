@@ -59,6 +59,7 @@
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 </body>
 </html>

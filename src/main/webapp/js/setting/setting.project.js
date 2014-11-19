@@ -20,14 +20,14 @@ rainet.setting.controller.project = {
 				name : {
 					validators : {
 						notEmpty : {
-							setting: '项目名称不能为空'
+							message: '项目名称不能为空'
 						}
 					}
 				},
 				department : {
 					validators : {
 						notEmpty : {
-							setting: '负责单位不能为空'
+							message: '负责单位不能为空'
 						}
 					}
 				},
@@ -35,7 +35,7 @@ rainet.setting.controller.project = {
 					validators : {
 						regexp: {
 	                        regexp: /^[^1]+$/i,
-	                        setting: '省份不能为空'
+	                        message: '省份不能为空'
 	                    }
 					}
 				},
@@ -43,7 +43,7 @@ rainet.setting.controller.project = {
 					validators : {
 						regexp: {
 	                        regexp: /^[^1]+$/i,
-	                        setting: '城市不能为空'
+	                        message: '城市不能为空'
 	                    }
 					}
 				},
@@ -51,10 +51,10 @@ rainet.setting.controller.project = {
 				address : {
 					validators : {
 						notEmpty : {
-							setting: '详细地址不能为空'
+							message: '详细地址不能为空'
 						}
 					}
-				},
+				}
 			}
 		})
 		
@@ -114,7 +114,7 @@ rainet.setting.controller.project = {
 	// 更新单个项目信息
 	add : function(){
 		var $projectHtml = $(this.infoTempate);
-		$(".node-tools").append($projectHtml);
+		$(".node-tools").empty().append($projectHtml);
 		this.setProvinceCity($projectHtml);
 	},
 	
@@ -151,7 +151,7 @@ rainet.setting.controller.project = {
     			"</div>\n"+
     		"</div>\n"+
   			"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+
-  			 "<div class=\"modal-footer\" style=\"border:0px #000 solid\">\n"+
+  			 "<div class=\"modal-footer\">\n"+
 					"<button data-bb-handler=\"success\" type=\"submit\" class=\"btn btn-success\">添加</button>\n"+
 			"</div>\n"+
 		"</form>\n"+
