@@ -20,6 +20,7 @@ import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.listener.Login;
 import com.rest.yun.service.IProjectService;
 import com.rest.yun.util.CommonUtiles;
 import com.rest.yun.util.JSONConver;
@@ -38,7 +39,8 @@ public class ProjectController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@Login
+	@RequestMapping(value="save",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody Project project, HttpSession session) {
 		// 获取当前登录用户
@@ -54,6 +56,7 @@ public class ProjectController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectProjects(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
@@ -103,6 +106,7 @@ public class ProjectController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseWrapper update(@RequestBody Project project, HttpSession session) {
@@ -118,6 +122,7 @@ public class ProjectController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(value = "{projectId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseWrapper deleteProject(@PathVariable int projectId) {
@@ -128,10 +133,11 @@ public class ProjectController {
 	@RequestMapping(value = "validation", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper validProjectName(@RequestParam String projectName, @RequestParam(required = false, defaultValue = "0") int projectId) {
-		boolean result = projectService.validProjectName(projectName, projectId);
+		boolean result = projectService.validProjectName(CommonUtiles.fixedChinaCode(projectName), projectId);
 		return new ResponseWrapper(result);
 	}
 
+	@Login
 	@RequestMapping(value = "names", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper getAllProjectName() {

@@ -24,6 +24,13 @@ rainet.setting.controller.project = {
 						}
 					}
 				},
+				projecttype : {
+					validators : {
+						notEmpty : {
+							message: '项目类型不能为空'
+						}
+					}
+				},
 				department : {
 					validators : {
 						notEmpty : {
@@ -73,11 +80,11 @@ rainet.setting.controller.project = {
 				bv.updatesetting($field, 'notEmpty');
 				return ;
 			}
-			var data = {name : value};
+			var data = {projectName : value,projectId:0};
 			rainet.setting.service.project.validName(data, function(data){
 				if (data) {
 					// 存在，更新错误信息的提示
-					bv.updatesetting($field, 'notEmpty', '项目名称已存在');
+					bv.updateMessage($field, 'notEmpty', '项目名称已存在');
 					bv.updateStatus($field, 'INVALID');
 				}
 			});
@@ -120,7 +127,7 @@ rainet.setting.controller.project = {
 	
 	infoTempate : "<div class=\"modal-header\"><h4 class=\"modal-title\">项目信息</h4></div>\n"+
 		"<div class=\"modal-body\">\n"+
-		"<form class=\"form-horizontal\" role=\"form\">\n"+
+		"<form class=\"form-horizontal\" role=\"form\" onsubmit=\"return false;\">\n"+
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">项目名称：</label>\n"+
     			"<div class=\"col-sm-9\">\n"+
@@ -128,10 +135,25 @@ rainet.setting.controller.project = {
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
-    			"<label class=\"col-sm-3 control-label\">负责单位：</label>\n"+
-    			"<div class=\"col-sm-9\">\n"+
-    				"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
-    			"</div>\n"+
+    			"<label class=\"col-sm-3 control-label\">项目类型：</label>\n"+
+    			"<div class=\"col-sm-9 \" style=\"text-align:left;\">\n"+
+	    			"<div class=\"radio-inline\">"+
+						"<label>"+
+		    				"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=0 checked/>绿化"+
+		    			"</label>"+
+	        		"</div>"+	
+	        		"<div class=\"radio-inline\">"+
+		        		"<label>"+
+		        			"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=1/>农业"+
+		        		"</label>"+
+	        		"</div>"+		
+        		"</div>"+		
+  			"</div>\n"+
+  			"<div class=\"form-group\">\n"+
+	  			"<label class=\"col-sm-3 control-label\">负责单位：</label>\n"+
+	  			"<div class=\"col-sm-9\">\n"+
+	  				"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+	  			"</div>\n"+
   			"</div>\n"+
   		"<div class=\"form-group\">\n"+
   		"<label class=\"col-sm-3 control-label\">项目地址：</label>\n"+
@@ -150,7 +172,6 @@ rainet.setting.controller.project = {
     				"<input type=\"text\" class=\"form-control address\" name=\"address\"/>\n"+
     			"</div>\n"+
     		"</div>\n"+
-  			"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+
   			 "<div class=\"modal-footer\">\n"+
 					"<button data-bb-handler=\"success\" type=\"submit\" class=\"btn btn-success\">添加</button>\n"+
 			"</div>\n"+

@@ -19,6 +19,7 @@ import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.listener.Login;
 import com.rest.yun.service.IUserService;
 import com.rest.yun.util.CommonUtiles;
 import com.rest.yun.util.JSONConver;
@@ -164,6 +165,7 @@ public class UserController {
 	 * @return
 	 */
 
+	@Login
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectUsers(@RequestParam(required = false, defaultValue = "1") Integer pageNow,

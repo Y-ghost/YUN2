@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.rest.yun.beans.User;
 import com.rest.yun.exception.ServerException;
 import com.rest.yun.util.CommonUtiles;
 
@@ -50,11 +49,11 @@ public class YunDispatcherServlet extends DispatcherServlet {
 
 		// TODO delete the code
 		// Mock user
-		User user = new User();
-		user.setId(1);
-		user.setLoginname("owen");
-		user.setUsername("owen");
-		request.getSession().setAttribute("user", user);
+//		User user = new User();
+//		user.setId(1);
+//		user.setLoginname("owen");
+//		user.setUsername("owen");
+//		request.getSession().setAttribute("user", user);
 	}
 
 }

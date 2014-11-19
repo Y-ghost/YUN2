@@ -12,19 +12,22 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.rest.yun.beans.User;
+import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.exception.ErrorCode;
+import com.rest.yun.util.JSONConver;
 
 /**
  * @project:					yun 
- * @Title: 						a.java 		
- * @Package 					com.rest.yun.listener		
+ * @Title: 						LoginAnnotationInterceptor.java 		
+ * @Package 					com.rest.yun.listener
  * @Description: 				检查是否已经登录
  * @author 						杨贵松   
- * @date 						2014年2月21日 上午12:43:06 
- * @version 					V1.0
+ * @date 						2014年11月19日 下午8:22:43
+ * @version 					V2.0
  */
 public class LoginAnnotationInterceptor extends HandlerInterceptorAdapter {
 
-	final Logger logger = Logger.getLogger(LoginAnnotationInterceptor.class);
+	final Logger LOG = Logger.getLogger(LoginAnnotationInterceptor.class);
 
 	/**
 	 * 验证用户是否登录
@@ -55,12 +58,27 @@ public class LoginAnnotationInterceptor extends HandlerInterceptorAdapter {
 				}
 			} else if (login.value() == ResultTypeEnum.json) {
 				//采用ajax方式的进行登录提示
-//				AjaxResponseUtil.toJson(response, "noLogin");
+				ResponseWrapper wrapper = new ResponseWrapper();
+				wrapper.setCode(ErrorCode.NO_LOGIN.getCode());
+				wrapper.setMessage(ErrorCode.NO_LOGIN.getMessage());
+				String result = JSONConver.converToJson(wrapper);
+				responseData(response, result);
 			}
 			return false;
 		}
-
 		return true;
 
 	}
+	
+	private void responseData(HttpServletResponse response, String result) {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		try {
+			response.getWriter().println(result);
+			response.getWriter().flush();
+		} catch (IOException e) {
+			LOG.error(e.getMessage());
+		}
+	}
+
 }

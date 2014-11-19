@@ -19,6 +19,7 @@ import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.listener.Login;
 import com.rest.yun.service.IControlHostService;
 import com.rest.yun.util.JSONConver;
 
@@ -36,6 +37,7 @@ public class HostController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody ControlHost host, HttpSession session) {
@@ -52,6 +54,7 @@ public class HostController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectHosts(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
@@ -89,6 +92,7 @@ public class HostController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseWrapper update(@RequestBody ControlHost host, HttpSession session) {
@@ -104,6 +108,7 @@ public class HostController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(value = "{hostId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseWrapper deleteProject(@PathVariable int hostId) {

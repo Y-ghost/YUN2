@@ -23,7 +23,7 @@ rainet.setting.service = {
 		project : {
 			add: function(param, callback){
 				rainet.ajax.execute({
-					url : rainet.setting.url.project.url,
+					url : rainet.setting.url.project.url+"save/",
 					$busyEle : $('.node-container'),
 					data : JSON.stringify(param),
 					method : 'POST',
@@ -33,15 +33,12 @@ rainet.setting.service = {
 					}
 				});
 			},
-			//................
-			validName: function(data, callback){
+			
+			validName: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.project.url + 'validation',
 					method : 'GET',
-					data : {
-						projectName : data.name,
-						projectId : 1
-					},
+					data : param,
 					success : function(data){
 						callback(data);
 					}

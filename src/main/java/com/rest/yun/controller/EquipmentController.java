@@ -21,6 +21,7 @@ import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.listener.Login;
 import com.rest.yun.service.IEquipmentService;
 import com.rest.yun.util.JSONConver;
 
@@ -38,6 +39,7 @@ public class EquipmentController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(value = "/selectEquipmentExt", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectEquipmentExt(@RequestParam Integer pId) {
@@ -54,6 +56,7 @@ public class EquipmentController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(value = "/openOrCloseEquipments", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper openOrCloseEquipments(@RequestParam Integer optionType, @RequestParam String id) {
@@ -61,6 +64,7 @@ public class EquipmentController {
 		return new ResponseWrapper(flag);
 	}
 
+	@Login
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectEqts(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
@@ -84,6 +88,7 @@ public class EquipmentController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper save(@RequestBody Equipment equipment, HttpSession session) {
@@ -111,6 +116,7 @@ public class EquipmentController {
 	 * @param session
 	 * @return
 	 */
+	@Login
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseWrapper update(@RequestBody Equipment equipment, HttpSession session) {
@@ -125,6 +131,7 @@ public class EquipmentController {
 	 * @param eqtId
 	 * @return
 	 */
+	@Login
 	@RequestMapping(value = "{eqtId}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseWrapper delete(@PathVariable int eqtId) {

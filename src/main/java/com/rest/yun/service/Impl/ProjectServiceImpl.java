@@ -74,6 +74,8 @@ public class ProjectServiceImpl implements IProjectService {
 		try {
 			project.setCreateuser(userId);
 			project.setModifyuser(userId);
+			project.setCreatetime(new Date());
+			project.setModifytime(new Date());
 
 			int projectId = projectMapper.insertSelective(project);
 			if (projectId > 0) {

@@ -76,17 +76,17 @@ rainet.setting.controller.host = {
 					filed = 'projectid'
 					$('.js-placehoder', $form).show();
 				}
-				console.log(filed);
 				$field = bv.getFieldElements(filed);
 				bv.updateMessage($field, 'notEmpty', result.message);
 				bv.updateStatus($field, 'INVALID');
-				console.log(bv);
 				return false;
 			}
 			// 更新host
 			rainet.setting.service.host.add(jsonData, function(data){
 				if (data) {
 					rainet.utils.notification.success('添加成功');
+				}else if(data=="noLogin"){
+					rainet.utils.notification.warning('您还没登陆，请先登录!');
 				}
 			});
 		});
