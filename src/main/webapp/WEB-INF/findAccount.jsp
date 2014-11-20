@@ -7,7 +7,7 @@
 <jsp:include page="common/header.jsp" />
 <head>
 <link rel="stylesheet"
-	href="${requestScope.basePath}/css/findAccount.css" />
+	href="${requestScope.basePath}css/findAccount.css" />
 </head>
 <body>
 <input type="hidden" id="pageType" value="findAccount"/>

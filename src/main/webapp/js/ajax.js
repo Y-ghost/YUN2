@@ -27,14 +27,7 @@ rainet.ajax = {
 					  if (status != '200') {
 						  // 自定义处理错误
 						  if(status == 'A409'){
-							  bootbox.dialog({
-									message : $loginHtml,
-									title : '欢迎登录',
-									// 支持ESC
-									onEscape : function(){
-										
-									}
-								});
+							  rainet.ajax.controller.send($loginHtml);
 						  }
 						  var isContinue = true;
 						  if (options.customHandleError) {
@@ -58,17 +51,17 @@ rainet.ajax = {
 				});
 		},
 		infoTempate : "<div style=\"margin-top:20px;\">\n"+
-		"<form class=\"form-horizontal\" role=\"form\">\n"+
+		"<form class=\"form-horizontal\" id=\"loginForm\" role=\"form\">\n"+
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">登录名/邮箱：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"text\" class=\"form-control\" name=\"loginname\"/>\n"+
+    				"<input type=\"text\" class=\"form-control\" name=\"loginname\" id=\"loginname\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">密码：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"text\"  class=\"form-control\" name=\"password\"/>\n"+
+    				"<input type=\"password\"  class=\"form-control\" name=\"password\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
@@ -96,4 +89,138 @@ rainet.ajax = {
 			"</div>\n"+
 		"</form>\n"+
 	"</div>"
+};
+
+rainet.ajax.controller = {
+		// 用户登录校验
+		setValidate : function($form){
+			$form.bootstrapValidator({
+				feedbackIcons: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
+					validating: 'glyphicon glyphicon-refresh'
+				},
+				fields : {
+					loginname : {
+						validators : {
+							notEmpty : {
+								message: '登录名不能为空!'
+							}
+						}
+					},
+					password : {
+						validators : {
+							notEmpty : {
+								message: '密码不能为空!'
+							},
+							stringLength: {
+								min: 6,
+								max: 30,
+								message: '密码长度为6~30!'
+							}
+						}
+					}
+				}
+			}).on('blur', '#loginname', function(){
+				// 验证项目名称是否存在
+				var bv = $form.data('bootstrapValidator');
+				$field = bv.getFieldElements('loginname');
+				var value = $field.val();
+				if ($.trim(value) === '') {
+					bv.updateMessage($field, 'notEmpty');
+					return ;
+				}
+				var param = {loginname : value};
+				rainet.ajax.service["User"].validLoginName(param, function(data){
+					if (data) {
+						// 不存在，更新错误信息的提示
+						bv.updateMessage($field, 'notEmpty', '登录名称不存在!');
+						bv.updateStatus($field, 'INVALID');
+					}
+				});
+			});
+			bootbox.dialog({
+				message : $form,
+				title : '欢迎登录',
+				// 支持ESC
+				onEscape : function(){
+					
+				}
+			});
+			$form.data('bootstrapValidator').disableSubmitButtons(true);
+		},
+		send : function($loginHtml){
+			var $form = $loginHtml;
+			//keyCode=13是回车键
+			$("body").keydown(function() {
+				if (event.keyCode == "13") {
+					// 检查验证是否通过
+					var bv = $form.data('bootstrapValidator');
+					if (bv.$invalidFields.length > 0) {
+						return false;
+					}
+					var loginname = bv.getFieldElements('loginname').val();
+					var password = bv.getFieldElements('password').val();
+					
+					var param = {loginname : loginname , password : password};
+					//用户登录
+					rainet.ajax.service["User"].login(param, function(data){
+						if (data) {
+							redirect(data,"login");
+						}else{
+							return false;
+						}
+					});
+				}
+			});
+			$('button[type=submit]',$form).off('click').on('click', function(){
+				// 检查验证是否通过
+				var bv = $form.data('bootstrapValidator');
+				if (bv.$invalidFields.length > 0) {
+					return false;
+				}
+				var loginname = bv.getFieldElements('loginname').val();
+				var password = bv.getFieldElements('password').val();
+				
+				var param = {loginname : loginname , password : password};
+				//用户登录
+				rainet.ajax.service["User"].login(param, function(data){
+					if (data) {
+						rainet.utils.notification.success("登录成功!");
+					}else{
+						return false;
+					}
+				});
+			});
+			// Add validation
+			this.setValidate($form);
+		}
+};
+
+
+rainet.ajax.service = {
+	User : {
+		login : function(param, callback) {
+			rainet.ajax.execute({
+				url : rainet.settings.baseUrl + "User/" + "login/",
+				data : param,
+				$busyEle : $('#form'),
+				method : 'POST',
+				success : function(data) {
+					callback(data);
+				}
+			});
+		},
+		validLoginName : function(param, callback) {
+			rainet.ajax.execute({
+				url : rainet.settings.baseUrl + "User/" + "validLoginName/",
+				data : param,
+				$busyEle : $('#form'),
+				method : 'GET',
+				success : function(data) {
+					callback(data);
+				}
+			});
+		}
+	}
 };

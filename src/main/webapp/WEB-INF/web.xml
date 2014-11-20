@@ -142,6 +142,10 @@
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
 	-->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>YUN.root</param-value>
+	</context-param>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

@@ -8,7 +8,7 @@
 <jsp:include page="common/header.jsp" />
 <head>
 <link rel="stylesheet"
-	href="${requestScope.basePath}/css/userAgreement.css" />
+	href="${requestScope.basePath}css/userAgreement.css" />
 <style type="text/css">
 #headLine {
 	display: none;
