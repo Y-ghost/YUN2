@@ -87,11 +87,10 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 							netWorkService.saveNetData(code, contralType, data);
 							// 只有超过6个小时间隔的才报警
 							netWorkService.pushMsg(code);// 接到报警，推送给用户
-							return;
+						}else{
+							log.info("服务器接收" + code + "监控主机的报警数据为满足推送条件!");
 						}
-
-						log.info("服务器接收" + code + "监控主机的报警数据为满足推送条件!");
-
+						buf.clear();
 					} else if (data.substring(length - 2, length).equals("36")) {// 若末尾字节为36，表示客户端要通过服务器向监控主机发送指令
 
 						code = data.substring(14, 22);
@@ -109,11 +108,9 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 							channel.writeAndFlush(buf);
 							log.info("服务器向" + code + "监控主机转发的数据 : "
 									+ data.substring(0, length - 2) + "35");
-							return;
+						}else{
+							log.info("服务器未找到" + code + "监控主机的信道，该信道可能未注册或者已关闭!");
 						}
-
-						log.info("服务器未找到" + code + "监控主机的信道，该信道可能未注册或者已关闭!");
-
 					} else if (data.substring(length - 2, length).equals("35")) {
 						code = data.substring(14, 22);
 						contralType = data.substring(22, 24);
@@ -122,15 +119,15 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 
 						// 将监控主机返回的数据存储，以备解析调用
 						netWorkService.saveNetData(code, contralType, data);
+						buf.clear();
 					} else {
 						log.info("服务器接收到的脏数据 : " + data);
+						buf.clear();
 					}
 				} catch (Exception e) {
 					buf.clear();
 					ctx.close();
 					log.error("服务器接收数据异常！" + e);
-				} finally {
-					buf.clear();
 				}
 			}
 		});

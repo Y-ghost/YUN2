@@ -16,8 +16,8 @@
     select 
     <include refid="Base_Column_List" />
     from Data_temp
-    where code = #{code} 
-    and ContralType = #{ContralType} 
+    where code = #{address} 
+    and ContralType = #{controlId} 
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[>=]]> DATE_FORMAT(#{startDate} ,'%Y-%m-%d %H:%i:%s')
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[<=]]> DATE_FORMAT(#{endDate} ,'%Y-%m-%d %H:%i:%s')
   </select>
