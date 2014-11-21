@@ -83,7 +83,7 @@ rainet.setting.service = {
 			}
 		},
 		
-		node : {
+		equipment : {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url,

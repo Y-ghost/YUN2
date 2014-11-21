@@ -34,16 +34,12 @@
 					style="height: 602px;">
   					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="node">搜索节点信息 <i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <i class="fa fa-angle-right"></i></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<i class="fa fa-angle-right"></i></a>
 				</ul>
 			</div>
-			<div class="col-xs-7 col-md-7">
-			<div class="node-container">
-					<div class="node-tools">
-					</div>
-				</div>
+			<div class="equipment-container">
 			</div>
 
 		</div>
@@ -60,6 +56,7 @@
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.equipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 </body>
 </html>

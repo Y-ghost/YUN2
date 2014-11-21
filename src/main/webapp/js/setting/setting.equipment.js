@@ -6,7 +6,7 @@ rainet.setting = rainet.setting || {};
 rainet.setting.controller = rainet.setting.controller || {}; 
 
 // 主机信息
-rainet.setting.controller.host = {
+rainet.setting.controller.equipment = {
 	
 	// 添加校验信息 当保存或修改project的时候
 	setValidHost : function($form){
@@ -46,7 +46,7 @@ rainet.setting.controller.host = {
 		// 如果是更新操作，就添加修改按钮，并绑定修改函数，如果是查看详情，则没有修改按钮
 		var $form = $("form", $hostHtml);
 		
-		// 初始化项目列表
+		// 初始化主机列表
 		var $projectList = $('.projectName',$hostHtml);
 		rainet.setting.service.project.getProjectNames(function(data){
 			var length = data.length;
@@ -101,34 +101,24 @@ rainet.setting.controller.host = {
 		this.setHostInfo($projectHtml);
 	},
 	
-	infoTempate : "<div class=\"col-xs-7 col-md-7\">"+
-		"<div class=\"node-container\">"+
-		"<div class=\"node-tools\">"+
-		"<div class=\"modal-header\"><h4 class=\"modal-title\">主机信息</h4></div>\n"+
-		"<div class=\"modal-body\">\n"+
-		"<form class=\"form-horizontal\" role=\"form\" style=\"padding-right:15px;\" onsubmit=\"return false;\">\n"+
-			"<div class=\"form-group\">\n"+
-				"<label class=\"col-sm-3 control-label\">所属项目：</label>\n"+
-				"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<select class=\"form-control projectName\" name=\"projectid\"></select>\n"+
-    			"</div>\n"+
-    		"</div>\n"+
-    		"<div class=\"form-group\">\n"+
-    			"<label class=\"col-sm-3 control-label\">主机编号：</label>\n"+
-    			"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<input type=\"text\" class=\"form-control code\" name=\"code\"/>\n"+
-    				"<p class=\"help-block js-placehoder\">只允许8位数字</p>\n"+
-    			"</div>\n"+
-    		"</div>\n"+
-  			"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+
-  			 "<div class=\"dialog-footer\">\n"+
-				"<button type=\"submit\" class=\"btn btn-success\">添加</button>\n"+
-		     "</div>\n"+
-		"</form>\n"+
-	"</div>\n"+
-	"</div>\n"+
-	"</div>\n"+
-	"</div>\n",
+	infoTempate : "<div class=\"col-xs-9 col-md-9\">" +
+					"<div class=\"node-container\">" +
+						"<div class=\"node-tools\" style=\"font-size:14px;\">" +
+							"<label class=\"col-xs-2 col-md-2 text-center\" style=\"line-height: 34px;\">" +
+							"所属项目:" +
+							"</label>" +
+							"<select class=\"col-xs-4 col-md-4 input-sm projectName\" style=\"margin-top: 2px;font-size:14px;\" name=\"projectid\" data-bv-field=\"projectid\"></select>" +
+							"<div class=\"col-xs-3 col-md-3 text-center\">" +
+							"<button type=\"button\" class=\"btn btn-success searchBtn \">搜索</button>" +
+							"</div>" +
+							"<div class=\"col-xs-3 col-md-3\">" +
+							"<button type=\"button\" class=\"btn btn-warning addBtn\">添加</button>" +
+							"</div>" +
+							"</div>" +
+							"<div class=\"EquipmentList\">" +
+							"</div>" +
+							"</div>" +
+							"</div>",
 	
 };
 

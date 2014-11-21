@@ -64,20 +64,6 @@ rainet.ajax = {
     				"<input type=\"password\"  class=\"form-control\" name=\"password\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
-  			"<div class=\"form-group\">\n"+
-    			"<label class=\"col-sm-3 control-label\">验证码：</label>\n"+
-    			"<div class=\"col-sm-3\">\n"+
-    				"<input type=\"text\" class=\"form-control\" name=\"validNum\"/>\n"+
-    			"</div>\n"+
-    			"<div>\n"+
-    				"<div class=\"control-label col-sm-2\" style=\"text-align:center;background-color:blue;color:white;font-size:20px;\">\n"+
-    				"<label >1234</label>\n"+
-    				"</div>\n"+
-    				"<div class=\"control-label col-sm-3\" style=\"text-align:center;\">\n"+
-    				"<a href=\"javascript:void(0);\">看不清，换一张</a>\n"+
-    				"</div>\n"+
-    			"</div>\n"+
-    		"</div>\n"+
   			 "<div class=\"modal-footer\" style=\"margin-top:30px;\">\n"+
 		  			 "<div class=\"col-sm-4 control-label\" style=\"text-align:center;\">" +
 		  			 "<a href=\"findAccount\">忘记密码?</a>" +

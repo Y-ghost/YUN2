@@ -121,11 +121,14 @@ rainet.setting.controller.project = {
 	// 更新单个项目信息
 	add : function(){
 		var $projectHtml = $(this.infoTempate);
-		$(".node-tools").empty().append($projectHtml);
+		$(".equipment-container").empty().append($projectHtml);
 		this.setProvinceCity($projectHtml);
 	},
 	
-	infoTempate : "<div class=\"modal-header\"><h4 class=\"modal-title\">项目信息</h4></div>\n"+
+	infoTempate : "<div class=\"col-xs-7 col-md-7\">"+
+		"<div class=\"node-container\">"+
+		"<div class=\"node-tools\">"+
+		"<div class=\"modal-header\"><h4 class=\"modal-title\">项目信息</h4></div>\n"+
 		"<div class=\"modal-body\">\n"+
 		"<form class=\"form-horizontal\" role=\"form\" onsubmit=\"return false;\">\n"+
 			"<div class=\"form-group\">\n"+
@@ -176,6 +179,9 @@ rainet.setting.controller.project = {
 					"<button data-bb-handler=\"success\" type=\"submit\" class=\"btn btn-success\">添加</button>\n"+
 			"</div>\n"+
 		"</form>\n"+
+		"</div>\n"+
+		"</div>\n"+
+		"</div>\n"+
 	"</div>"
 	
 };

@@ -104,6 +104,7 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 						Channel channel = ChannelSession.get(code);
 
 						if (channel != null) {
+							buf.clear();
 							buf.writeBytes(newMsg);
 							channel.writeAndFlush(buf);
 							log.info("服务器向" + code + "监控主机转发的数据 : "
@@ -130,7 +131,6 @@ public class ServerHandler extends ChannelInitializer<SocketChannel> {
 					log.error("服务器接收数据异常！" + e);
 				} finally {
 					buf.clear();
-					ctx.close();
 				}
 			}
 		});
