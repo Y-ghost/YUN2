@@ -9,40 +9,40 @@ rainet.setting.controller = rainet.setting.controller || {};
 rainet.setting.controller.equipment = {
 	
 	// 添加校验信息 当保存或修改project的时候
-	setValidHost : function($form){
-		$form.bootstrapValidator({
-			feedbackIcons: {
-	            valid: 'glyphicon glyphicon-ok',
-	            invalid: 'glyphicon glyphicon-remove',
-	            validating: 'glyphicon glyphicon-refresh'
-	        },
-	        fields : {
-				projectid : {
-					validators : {
-						notEmpty : {
-							message: '主机名称不能为空'
-						}
+	searchEquipments : function($projectList){
+		$(".searchBtn").off('click').on('click', function(e){
+			// 检查验证是否通过
+			var projectId = $projectList.val();
+			$projectList.off('change.rainet').on('change.rainet', function(){
+				$(".EquipmentList").css("color","#333");
+			});
+			
+			if(projectId=="-1"){
+				$(".EquipmentList").css("color","#CC0033");
+			}else if(confirm("该操作最多需要30秒钟的时间，确定搜索?")){
+				rainet.setting.service.equipment.searchEquipment(projectId, function(data){
+					if (data) {
+						rainet.utils.notification.success('添加成功');
+					}else if(data=="noLogin"){
+						rainet.utils.notification.warning('您还没登陆，请先登录!');
 					}
-				},
-				code : {
-					validators : {
-						notEmpty : {
-							message: '主机编号不能为空'
-						},
-						regexp: {
-	                        regexp: /^[0-9]{8}$/i,
-	                        message : ' '
-	                    }
-					}
-				}
+				});
 			}
+			
+			// 更新host
+//			rainet.setting.service.host.add(jsonData, function(data){
+//				if (data) {
+//					rainet.utils.notification.success('添加成功');
+//				}else if(data=="noLogin"){
+//					rainet.utils.notification.warning('您还没登陆，请先登录!');
+//				}
+//			});
 		});
 		
-		$form.data('bootstrapValidator').disableSubmitButtons(true);
 	},
 	
 	// 从后台获取数据之后，设置对应主机信息的值，以弹出框的形式展示
-	setHostInfo : function($hostHtml){
+	setEquipmentInfo : function($hostHtml){
 		// 如果是更新操作，就添加修改按钮，并绑定修改函数，如果是查看详情，则没有修改按钮
 		var $form = $("form", $hostHtml);
 		
@@ -56,49 +56,15 @@ rainet.setting.controller.equipment = {
 				$projectList.append('<option value='+data[i].id+'>'+data[i].name+'</option>');
 			}
 		});
-			
 		// 绑定提交事件
-		$('button[type=submit]', $form).off('click').on('click', function(e){
-			// 检查验证是否通过
-			var bv = $form.data('bootstrapValidator');
-			if (bv.$invalidFields.length > 0) {
-				return false;
-			}
-			var formData = $form.serializeArray();
-			var jsonData = rainet.utils.serializeObject(formData);
-			var config = {jsonData : jsonData};
-			config.handleError = function(result){
-				// code已存在或主机已有主机，更新错误信息的提示
-				$form.data('bootstrapValidator').disableSubmitButtons(true);
-				var filed = 'code';
-				$('.help-block', $form).hide();
-				if (result.message.indexOf('主机') > -1) {
-					filed = 'projectid'
-					$('.js-placehoder', $form).show();
-				}
-				$field = bv.getFieldElements(filed);
-				bv.updateMessage($field, 'notEmpty', result.message);
-				bv.updateStatus($field, 'INVALID');
-				return false;
-			}
-			// 更新host
-			rainet.setting.service.host.add(jsonData, function(data){
-				if (data) {
-					rainet.utils.notification.success('添加成功');
-				}else if(data=="noLogin"){
-					rainet.utils.notification.warning('您还没登陆，请先登录!');
-				}
-			});
-		});
-		
-		this.setValidHost($form);
+		this.searchEquipments($projectList);
 	},
 	
 	// 更新单个主机信息
 	add : function(){
 		var $projectHtml = $(this.infoTempate);
 		$(".equipment-container").empty().append($projectHtml);
-		this.setHostInfo($projectHtml);
+		this.setEquipmentInfo($projectHtml);
 	},
 	
 	infoTempate : "<div class=\"col-xs-9 col-md-9\">" +
@@ -107,7 +73,7 @@ rainet.setting.controller.equipment = {
 							"<label class=\"col-xs-2 col-md-2 text-center\" style=\"line-height: 34px;\">" +
 							"所属项目:" +
 							"</label>" +
-							"<select class=\"col-xs-4 col-md-4 input-sm projectName\" style=\"margin-top: 2px;font-size:14px;\" name=\"projectid\" data-bv-field=\"projectid\"></select>" +
+							"<select class=\"col-xs-4 col-md-4 input-sm projectName\" name=\"projectid\" data-bv-field=\"projectid\"></select>" +
 							"<div class=\"col-xs-3 col-md-3 text-center\">" +
 							"<button type=\"button\" class=\"btn btn-success searchBtn \">搜索</button>" +
 							"</div>" +
@@ -116,6 +82,8 @@ rainet.setting.controller.equipment = {
 							"</div>" +
 							"</div>" +
 							"<div class=\"EquipmentList\">" +
+							"<label class=\"fa fa-hand-o-up fa-5\"></label>"+
+							"<label class=\"fa-1\"> 请先选择项目，搜索正确连接的节点信息!</label>"+
 							"</div>" +
 							"</div>" +
 							"</div>",

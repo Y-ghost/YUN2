@@ -80,6 +80,16 @@ rainet.controlCenter.view = function() {
 			if(iTmp!=10 && iTmp%2 == 0){
 				sensorStr = sensorStr + "</div>";
 			}
+			var eTemperature = "";
+			var eStatus = "";
+			if(item.equipmentStatus == null){
+				eTemperature = "null";
+				eStatus = "null";
+			}else{
+				eTemperature = item.equipmentStatus.temperature;
+				eStatus = item.equipmentStatus.status;
+			}
+			
 			str = str + "<div class=\"col-xs-12 col-md-6\">" +
 					"<div class=\"panel panel-default \">" +
 					"<div class=\"panel-heading\">" +
@@ -93,12 +103,12 @@ rainet.controlCenter.view = function() {
 					"<label class=\"col-sm-3 control-label\">土壤温度：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control projectName\"" +
-					"id=\"inputLab\" data-bv-field=\"name\" value=\""+item.equipmentStatus.temperature+" ℃\"/>" +
+					"id=\"inputLab\" data-bv-field=\"name\" value=\""+eTemperature+" ℃\"/>" +
 					"</div>" +
 					"<label class=\"col-sm-3 control-label\">阀门状态：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\""+item.equipmentStatus.status+"\"/>" +
+					"id=\"inputLab\" data-bv-field=\"department\" value=\""+eStatus+"\"/>" +
 					"</div>" +
 					"</div>" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +

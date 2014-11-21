@@ -22,6 +22,24 @@
 	padding-right: 3px;
 }
 
+.fa-5 {
+	font-size: 4em;
+	margin-top: 50px;
+	margin-right: 20px;
+}
+
+.fa-1 {
+	font-size: 16px;
+}
+
+.projectName {
+	color: #555;
+	border-radius: 4px;
+	background-color: #fff;
+	margin-top: 2px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+}
 </style>
 </head>
 <body>
@@ -32,14 +50,15 @@
 			<div class="col-xs-2 col-md-2 border-right border-bottom hidden-xs">
 				<ul class="list-group ul-border-bottom" id="projectList"
 					style="height: 602px;">
-  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <i class="fa fa-angle-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<i class="fa fa-angle-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right navbar-right "></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right navbar-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <i class="fa fa-angle-right navbar-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <i class="fa fa-angle-right navbar-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<i class="fa fa-angle-right navbar-right"></i></a>
 				</ul>
 			</div>
 			<div class="equipment-container">
+			<label class="fa fa-hand-o-up fa-5"></label>
 			</div>
 
 		</div>

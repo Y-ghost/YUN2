@@ -20,7 +20,7 @@ rainet.setting.controller.host = {
 				projectid : {
 					validators : {
 						notEmpty : {
-							message: '主机名称不能为空'
+							message: '请选择项目'
 						}
 					}
 				},
@@ -61,6 +61,12 @@ rainet.setting.controller.host = {
 		$('button[type=submit]', $form).off('click').on('click', function(e){
 			// 检查验证是否通过
 			var bv = $form.data('bootstrapValidator');
+			$projectId = bv.getFieldElements('projectid');
+			var projectId = $projectId.val();
+			if ($.trim(projectId) === '-1') {
+				bv.updateMessage($projectId, 'notEmpty',"请先选择项目!");
+				bv.updateStatus($projectId, 'INVALID');
+			}
 			if (bv.$invalidFields.length > 0) {
 				return false;
 			}
@@ -85,8 +91,6 @@ rainet.setting.controller.host = {
 			rainet.setting.service.host.add(jsonData, function(data){
 				if (data) {
 					rainet.utils.notification.success('添加成功');
-				}else if(data=="noLogin"){
-					rainet.utils.notification.warning('您还没登陆，请先登录!');
 				}
 			});
 		});

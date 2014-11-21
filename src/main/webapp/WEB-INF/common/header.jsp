@@ -23,7 +23,7 @@
 </head>
 <body>
 	<!-- Header -->
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-default header" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"  data-toggle="collapse" data-target="#navbar">
@@ -32,10 +32,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index" style="padding-top:12px;">
+			<a class="navbar-brand" href="index" style="padding-top:10px;">
 				<img src="${requestScope.basePath}images/logo.png" style="width:120px;height:30px;"/>
-				<span style="color: #000;font-size:18px;border:#000 0px solid;"> 云灌溉</span>
 			</a>
+			<label  class="navbar-right" > 云灌溉</label>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
@@ -48,7 +48,7 @@
 	<!-- Container Header -->
 		<div class="row border-bottom hidden-xs" style="padding-bottom:10px;">
 			<div class="col-xs-1 col-md-1 border-right text-center"><a href="#"><i class="fa fa-bars fa-2x"></i></a></div>
-			<div class="col-xs-2 col-md-2 border-right"><a href="#" id="homeHref"><i class="fa fa-home fa-2x" >&nbsp;<span style="font-size:18px;" id="homeLab"></span></i></a></div>
+			<div class="col-xs-2 col-md-2 border-right"><a href="#" id="homeHref"><i class="fa fa-home fa-2x" >&nbsp;<span id="homeLab"></span></i></a></div>
 			<div class="col-xs-9 col-md-9"><a href="#"><i class="fa fa-envelope fa-2x"><span class="badge">4</span></i></a>
 			
 			<span class="float-right font-size-18">2014-10-13 14:30:56</span>

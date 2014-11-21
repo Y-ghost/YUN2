@@ -121,7 +121,9 @@ rainet.login.controller.register= {
 							//注册用户
 							rainet.login.service["User"].register(jsonData, function(data){
 								if (data) {
-									redirect(data);
+									if(confirm("注册成功，现在就去登录?")){
+										redirect(data,"register");
+									}
 								}else{
 									return false;
 								}
@@ -144,7 +146,9 @@ rainet.login.controller.register= {
 						//注册用户
 						rainet.login.service["User"].register(jsonData, function(data){
 							if (data) {
-								redirect(data,"register");
+								if(confirm("注册成功，现在就去登录?")){
+									redirect(data,"register");
+								}
 							}else{
 								return false;
 							}

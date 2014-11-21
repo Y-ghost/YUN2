@@ -6,7 +6,6 @@
 <body>
 <footer class="footer">
   <div class="container">
-    <hr>
     <div class="row footer-bottom">
       <ul class="list-inline text-center">
         <li>&copy;2012-<span class="copyYear">2014</span></li>
