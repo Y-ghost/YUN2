@@ -13,6 +13,7 @@ rainet.ajax = {
 						  options.beforeSend();
 					  }
 				  },
+				  cache : false,
 				  async : options.async || true,
 				  type: options.method || 'GET',
 				  url: options.url,
