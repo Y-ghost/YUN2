@@ -11,11 +11,11 @@ rainet.controlCenter.view = function() {
 		$(".checkAll").change(function() {
 			if($(this).is(':checked')){
 				$("[id='equipmentCheckbox']").each(function(){
-					$(this).attr("checked", true);
+					$(this)[0].checked = true;
 				});
             }else{
             	$("[id='equipmentCheckbox']").each(function(){
-					$(this).attr("checked", false);
+            		$(this)[0].checked = false;
 				});
             }
 		}); 
