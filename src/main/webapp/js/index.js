@@ -28,7 +28,7 @@ rainet.controlCenter.view = function() {
 		$.each(data,function(index,item){
 			var sensorStr = "";
 			var iTmp = 10;
-			$.each(item.equipmentData,function(i,data){
+			$.each(item.result,function(i,data){
 				iTmp = i;
 				var headTmp = ""; 
 				var endTmp = ""; 

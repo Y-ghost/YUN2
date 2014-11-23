@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rest.yun.beans.Equipment;
+import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
 
@@ -17,7 +18,7 @@ public interface IEquipmentService {
 	 * @return List<EquipmentExt>
 	 * @throws
 	 */
-	List<EquipmentExt> selectEquipmentExt(Integer pId);
+	List<EquipmentExt<EquipmentData>> selectEquipmentExt(Integer pId);
 
 	/**
 	 * @Title: openEquipments

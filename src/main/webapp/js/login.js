@@ -111,23 +111,7 @@ rainet.login.controller.register= {
 				$("body").keydown(function() {
 			        if (event.keyCode == "13") {
 			        	if($("#serviceAgreement").is(':checked')){
-							// 检查验证是否通过
-							var bv = $form.data('bootstrapValidator');
-							if (bv.$invalidFields.length > 0) {
-								return false;
-							}
-							var formData = $form.serializeArray();
-							var jsonData = rainet.utils.serializeObject(formData);
-							//注册用户
-							rainet.login.service["User"].register(jsonData, function(data){
-								if (data) {
-									if(confirm("注册成功，现在就去登录?")){
-										redirect(data,"register");
-									}
-								}else{
-									return false;
-								}
-							});
+			        		$('button[type=submit]',$form).click();
 						}else{
 							alert("请选择接受用户服务协议!");
 							return false;
@@ -219,23 +203,7 @@ rainet.login.controller.login = {
 			//keyCode=13是回车键
 			$("body").keydown(function() {
 				if (event.keyCode == "13") {
-					// 检查验证是否通过
-					var bv = $form.data('bootstrapValidator');
-					if (bv.$invalidFields.length > 0) {
-						return false;
-					}
-					var loginname = bv.getFieldElements('loginname').val();
-					var password = bv.getFieldElements('password').val();
-					
-					var param = {loginname : loginname , password : password};
-					//用户登录
-					rainet.login.service["User"].login(param, function(data){
-						if (data) {
-							redirect(data,"login");
-						}else{
-							return false;
-						}
-					});
+					$('button[type=submit]',$form).click();
 				}
 			});
 			$('button[type=submit]',$form).off('click').on('click', function(){

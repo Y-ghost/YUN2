@@ -32,10 +32,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index" style="padding-top:10px;">
+			<a class="navbar-brand" href="index">
 				<img src="${requestScope.basePath}images/logo.png" style="width:120px;height:30px;"/>
+				<span class="navbar-right" style="margin-top:10px;">云灌溉</span>
 			</a>
-			<label  class="navbar-right" > 云灌溉</label>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">

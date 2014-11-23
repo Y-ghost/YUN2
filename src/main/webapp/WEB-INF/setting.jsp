@@ -50,11 +50,11 @@
 			<div class="col-xs-2 col-md-2 border-right border-bottom hidden-xs">
 				<ul class="list-group ul-border-bottom" id="projectList"
 					style="height: 602px;">
-  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <i class="fa fa-angle-right navbar-right "></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <i class="fa fa-angle-right navbar-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <i class="fa fa-angle-right navbar-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <i class="fa fa-angle-right navbar-right"></i></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<i class="fa fa-angle-right navbar-right"></i></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <span class="fa fa-angle-right navbar-right "></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<span class="fa fa-angle-right navbar-right"></span></a>
 				</ul>
 			</div>
 			<div class="equipment-container">

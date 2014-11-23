@@ -61,13 +61,13 @@ public class EquipmentServiceImpl implements IEquipmentService {
 	 * @Description: 查询实时现场数据
 	 */
 	@Override
-	public List<EquipmentExt> selectEquipmentExt(Integer pId) {
-		List<EquipmentExt> list = new ArrayList<EquipmentExt>();
+	public List<EquipmentExt<EquipmentData>> selectEquipmentExt(Integer pId) {
+		List<EquipmentExt<EquipmentData>> list = new ArrayList<EquipmentExt<EquipmentData>>();
 		try {
 			List<Equipment> eList = equipmentMapper.selectByPid(pId);
 			if (!CollectionUtils.isEmpty(eList)) {
 				for (Equipment equipment : eList) {
-					EquipmentExt equipmentExt = new EquipmentExt();
+					EquipmentExt<EquipmentData> equipmentExt = new EquipmentExt<EquipmentData>();
 					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByeEid(equipment.getId());
 					List<SensorInfo> sList = sensorInfoMapper.selectSensorInfoByEid(equipment.getId());
 					List<EquipmentData> edList = new ArrayList<EquipmentData>();
@@ -86,7 +86,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					equipmentExt.setCode(equipment.getCode());
 					equipmentExt.setControlHostId(equipment.getControlhostid());
 					equipmentExt.setEquipmentStatus(equipmentStatus);
-					equipmentExt.setEquipmentData(edList);
+					equipmentExt.setResult(edList);
 
 					list.add(equipmentExt);
 				}

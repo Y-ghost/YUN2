@@ -38,12 +38,11 @@
 					style="height: 490px;">
 				</ul>
 				<div class="gigantic pagination" style="margin-bottom: 50px;">
-					<a href="#" class="first" data-action="first">&laquo;</a> <a
-						href="#" class="previous" data-action="previous">&lsaquo;</a> <input
-						type="text" readonly="readonly"
-						style="width: 50px; text-align: center;" /> <a href="#"
-						class="next" data-action="next">&rsaquo;</a> <a href="#"
-						class="last" data-action="last">&raquo;</a>
+					<a href="javascript:void(0);" class="first" data-action="first">&laquo;</a>
+					<a href="javascript:void(0);" class="previous" data-action="previous">&lsaquo;</a>
+					<input type="text" readonly="readonly" style="width: 50px; text-align: center;padding:8px 0;" />
+					<a href="javascript:void(0);" class="next" data-action="next">&rsaquo;</a>
+					<a href="javascript:void(0);" class="last" data-action="last">&raquo;</a>
 				</div>
 			</div>
 			<div class="col-xs-9 col-md-9">

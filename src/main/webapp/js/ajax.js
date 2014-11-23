@@ -4,7 +4,7 @@ var rainet = rainet || {};
 
 rainet.ajax = {
 		execute : function(options) {
-			var $loginHtml = $(this.infoTempate).css('display','block');
+			var $loginHtml = $(this.infoTempate);
 			$.ajax({
 				  beforeSend : function(){
 					  rainet.utils.busy.remove();
@@ -51,7 +51,7 @@ rainet.ajax = {
 				});
 		},
 		infoTempate : "<div style=\"margin-top:20px;\">\n"+
-		"<form class=\"form-horizontal\" id=\"loginForm\" role=\"form\">\n"+
+		"<form class=\"form-horizontal\" id=\"loginForm\" role=\"form\" onsubmit=\"return false;\">\n"+
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">登录名/邮箱：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
@@ -68,7 +68,7 @@ rainet.ajax = {
 		  			 "<div class=\"col-sm-4 control-label\" style=\"text-align:center;\">" +
 		  			 "<a href=\"findAccount\">忘记密码?</a>" +
 		  			 "</div>" +
-		  			 "<button data-bb-handler=\"success\" type=\"submit\" class=\"col-sm-4 btn btn-success\">登录</button>\n"+
+		  			 "<button data-bb-handler=\"success\" type=\"button\" id=\"loginButton\" class=\"col-sm-4 btn btn-success\">登录</button>\n"+
 		  			 "<div class=\"col-sm-4 control-label\" style=\"text-align:center;\">" +
 		  			 "没有账号？<a href=\"register\">立即注册</a>" +
 		  			 "</div>" +
@@ -140,34 +140,17 @@ rainet.ajax.controller = {
 			//keyCode=13是回车键
 			$("body").keydown(function() {
 				if (event.keyCode == "13") {
-					// 检查验证是否通过
-					var bv = $form.data('bootstrapValidator');
-					if (bv.$invalidFields.length > 0) {
-						return false;
-					}
-					var loginname = bv.getFieldElements('loginname').val();
-					var password = bv.getFieldElements('password').val();
-					
-					var param = {loginname : loginname , password : password};
-					//用户登录
-					rainet.ajax.service["User"].login(param, function(data){
-						if (data) {
-							redirect(data,"login");
-						}else{
-							return false;
-						}
-					});
+					$('button[id=loginButton]',$form).click();
 				}
 			});
-			$('button[type=submit]',$form).off('click').on('click', function(){
-				// 检查验证是否通过
+			$('button[id=loginButton]',$form).off('click').on('click', function(){
 				var bv = $form.data('bootstrapValidator');
 				if (bv.$invalidFields.length > 0) {
 					return false;
 				}
 				var loginname = bv.getFieldElements('loginname').val();
 				var password = bv.getFieldElements('password').val();
-				
+
 				var param = {loginname : loginname , password : password};
 				//用户登录
 				rainet.ajax.service["User"].login(param, function(data){

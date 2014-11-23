@@ -77,7 +77,7 @@ public class UserServiceImpl implements IUserService {
 				LOG.error("the loginname does not exist ! ");
 				throw new ServerException(ErrorCode.LOGIN_LOGINNAME_NOT_EXIST);
 			} else if(user.getPassword().equals(MD5.getMD5Str(password.trim()))){
-				session.setAttribute("user", user);
+				session.setAttribute(Constants.USER, user);
 				flag = true;
 			}else{
 				LOG.error("loginname or password error ! ");

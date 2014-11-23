@@ -12,6 +12,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.rest.yun.beans.User;
+import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.ResponseWrapper;
 import com.rest.yun.exception.ErrorCode;
 import com.rest.yun.util.JSONConver;
@@ -44,7 +45,7 @@ public class LoginAnnotationInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
+		User user = (User) session.getAttribute(Constants.USER);
 		if (null == user) {
 			// 需要登录
 			if (login.value() == ResultTypeEnum.page) {

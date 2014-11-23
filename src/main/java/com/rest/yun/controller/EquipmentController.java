@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.Equipment;
+import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
@@ -43,7 +44,7 @@ public class EquipmentController {
 	@RequestMapping(value = "/selectEquipmentExt", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectEquipmentExt(@RequestParam Integer pId) {
-		List<EquipmentExt> list = equipmentService.selectEquipmentExt(pId);
+		List<EquipmentExt<EquipmentData>> list = equipmentService.selectEquipmentExt(pId);
 		return new ResponseWrapper(list);
 	}
 
@@ -63,6 +64,22 @@ public class EquipmentController {
 		boolean flag = equipmentService.openEquipments(optionType, id);
 		return new ResponseWrapper(flag);
 	}
+	
+	/**
+	 * @Title:       searchEquipment
+	 * @author:      杨贵松
+	 * @time         2014年11月22日 下午3:11:27
+	 * @Description: 搜索节点
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+//	@Login
+//	@RequestMapping(value = "/searchEquipment", method = RequestMethod.GET)
+//	@ResponseBody
+//	public ResponseWrapper searchEquipment(@RequestParam Integer pId ) {
+//		List<Equipment> flag = equipmentService.searchEquipment(pId);
+//		return new ResponseWrapper(flag);
+//	}
 
 	@Login
 	@RequestMapping(method = RequestMethod.GET)

@@ -6,6 +6,10 @@
 	font-size: 14px;
 	padding-top: 10px;
 	margin-top: 3px;
+	color:#000;
+}
+.panelLink span{
+	line-height:22px;
 }
 
 .link-heading {
@@ -22,10 +26,12 @@
 	background-color: #f5f5f5;
 }
 
-.header label{
+.header a{
+	padding-top:10px;
+}
+
+.header span{
 	color: #000;
-	margin-top: 22px;
-	margin-left: -11px;
 	font-size: 16px;
 }
 #homeLab{
@@ -120,7 +126,7 @@
 }
 
 body {
-	color: #333;
+	color: #000;
 	font-size: 12px;
 	line-height: 22px;
 	font-family: 'Microsoft YaHei', Arial, "ËÎÌו", Helvetica, STHeiti;
@@ -130,5 +136,5 @@ body {
 
 input {
 	font: 12px/16px "Microsoft YaHei", Arial, "ËÎÌו";
-	color: #333;
+	color: #000;
 }

@@ -3,10 +3,9 @@ package com.rest.yun.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.EquipmentStatus;
 
-public class EquipmentExt implements Serializable {
+public class EquipmentExt<T> implements Serializable {
 
 	private static final long serialVersionUID = -9111114856097767106L;
 
@@ -15,7 +14,7 @@ public class EquipmentExt implements Serializable {
 	private String code;
 	private int controlHostId;
 	private EquipmentStatus equipmentStatus;
-	private List<EquipmentData> equipmentData;
+	private List<T> result;
 
 	public int getId() {
 		return id;
@@ -57,12 +56,12 @@ public class EquipmentExt implements Serializable {
 		this.equipmentStatus = equipmentStatus;
 	}
 
-	public List<EquipmentData> getEquipmentData() {
-		return equipmentData;
+	public List<T> getResult() {
+		return result;
 	}
 
-	public void setEquipmentData(List<EquipmentData> equipmentData) {
-		this.equipmentData = equipmentData;
+	public void setResult(List<T> result) {
+		this.result = result;
 	}
 
 	@Override
@@ -78,8 +77,8 @@ public class EquipmentExt implements Serializable {
 		builder.append(controlHostId);
 		builder.append(", equipmentStatus=");
 		builder.append(equipmentStatus);
-		builder.append(", equipmentData=");
-		builder.append(equipmentData);
+		builder.append(", result=");
+		builder.append(result);
 		builder.append("]");
 		return builder.toString();
 	}
