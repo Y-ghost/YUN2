@@ -17,6 +17,9 @@
 	color: #a94442;
 }
 
+.panel-heading {
+	font-size: 14px;
+}
 #inputLab {
 	padding-left: 3px;
 	padding-right: 3px;
@@ -24,12 +27,11 @@
 
 .fa-5 {
 	font-size: 4em;
-	margin-top: 50px;
-	margin-right: 20px;
 }
 
 .fa-1 {
 	font-size: 16px;
+	margin-top:25px;
 }
 
 .projectName {
@@ -39,6 +41,15 @@
 	margin-top: 2px;
 	font-size: 14px;
 	border: 1px solid #ccc;
+}
+#projectName {
+	padding:1 0;
+	margin-top: 0px;
+}
+
+select.input-sm {
+height: 34px;
+line-height: 34px;
 }
 </style>
 </head>
@@ -53,12 +64,12 @@
   					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <span class="fa fa-angle-right navbar-right "></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="setEquipment">节点传感器参数设置 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<span class="fa fa-angle-right navbar-right"></span></a>
 				</ul>
 			</div>
 			<div class="equipment-container">
-			<label class="fa fa-hand-o-up fa-5"></label>
 			</div>
 
 		</div>

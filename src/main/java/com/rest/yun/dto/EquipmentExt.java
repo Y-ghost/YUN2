@@ -13,6 +13,9 @@ public class EquipmentExt<T> implements Serializable {
 	private String name;
 	private String code;
 	private int controlHostId;
+	private int irrigationType;//灌溉控制类型
+	private double area;//节点控制面积
+	private int fowParameter;//电磁阀流量参数
 	private EquipmentStatus equipmentStatus;
 	private List<T> result;
 
@@ -46,6 +49,30 @@ public class EquipmentExt<T> implements Serializable {
 
 	public void setControlHostId(int controlHostId) {
 		this.controlHostId = controlHostId;
+	}
+
+	public int getIrrigationType() {
+		return irrigationType;
+	}
+
+	public void setIrrigationType(int irrigationType) {
+		this.irrigationType = irrigationType;
+	}
+
+	public double getArea() {
+		return area;
+	}
+
+	public void setArea(double area) {
+		this.area = area;
+	}
+
+	public int getFowParameter() {
+		return fowParameter;
+	}
+
+	public void setFowParameter(int fowParameter) {
+		this.fowParameter = fowParameter;
 	}
 
 	public EquipmentStatus getEquipmentStatus() {

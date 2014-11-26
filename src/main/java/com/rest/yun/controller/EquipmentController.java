@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
+import com.rest.yun.beans.SensorInfo;
 import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
@@ -73,14 +74,22 @@ public class EquipmentController {
 	 * @return       ResponseWrapper
 	 * @throws
 	 */
-//	@Login
-//	@RequestMapping(value = "/searchEquipment", method = RequestMethod.GET)
-//	@ResponseBody
-//	public ResponseWrapper searchEquipment(@RequestParam Integer pId ) {
-//		List<Equipment> flag = equipmentService.searchEquipment(pId);
-//		return new ResponseWrapper(flag);
-//	}
+	@Login
+	@RequestMapping(value = "/searchEquipment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper searchEquipment(@RequestParam Integer pId ) {
+		List<EquipmentExt<SensorInfo>> list = equipmentService.searchEquipment(pId);
+		return new ResponseWrapper(list);
+	}
 
+	/**
+	 * @Title:       selectEqts
+	 * @author:      杨贵松
+	 * @time         2014年11月26日 下午12:04:41
+	 * @Description: 分页查询节点列表
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@Login
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
@@ -99,17 +108,18 @@ public class EquipmentController {
 	}
 
 	/**
-	 * @Title: save
-	 * @author: 杨贵松
-	 * @Description: 添加节点
-	 * @return ResponseWrapper
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @time         2014年11月26日 下午12:05:09
+	 * @Description: 注册节点
+	 * @return       ResponseWrapper
 	 * @throws
 	 */
 	@Login
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseWrapper save(@RequestBody Equipment equipment, HttpSession session) {
-		// TODO add Save code
+	public ResponseWrapper save(@RequestBody List<EquipmentExt<SensorInfo>> list, HttpSession session) {
+		equipmentService.save(list,session);
 		return new ResponseWrapper(true);
 	}
 

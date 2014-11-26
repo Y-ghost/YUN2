@@ -109,13 +109,17 @@ public class NetWorkServiceImpl implements NetWorkService{
 					List<EquipmentStatus> listStatus = new ArrayList<EquipmentStatus>();
 					List<EquipmentData> listData = new ArrayList<EquipmentData>();
 					int numTmp = 0;
-					while(numTmp <= 2*num){
+					while(num>0){
 						String eCode = usingData.substring(numTmp,numTmp+4);
 						Map<String,Object> map = new HashMap<String, Object>();
 						map.put("hCode", code);
 						map.put("eCode", eCode);
 						Equipment equipment = equipmentMapper.selectEquipmentByHcodeAndEcode(map);
 						
+						//传感器个数
+						int sNum = Integer.parseInt(usingData.substring(numTmp+22,numTmp+24));
+						
+						//水流脉冲数
 						long waterVal = Long.valueOf(usingData.substring(numTmp+10,numTmp+18),16);
 						
 						if(equipment!=null){
@@ -136,7 +140,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 								}
 								systemLogMapper.insert(sysLogList);
 								log.error("数据采集异常:【" + equipment.getProject().getName() + "】项目下【" + equipment.getName() + "】监控节点数据异常，当天采集的数据小于历史数据!");
-								numTmp += receiveData[numTmp/2+11]*2+24;
+								numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
 							}else{//当天采集的数据合理，保存或者这是块新节点，没有采集的数据，开始保存
 								//节点状态
 								EquipmentStatus statusVal = new EquipmentStatus();
@@ -144,48 +148,48 @@ public class NetWorkServiceImpl implements NetWorkService{
 								statusVal.setCreatetime(date);
 								statusVal.setWatervalue(waterVal);
 								String status = "";
-								switch (receiveData[numTmp / 2 + 4]) {
+								switch (Integer.parseInt(usingData.substring(numTmp+8,numTmp+10))) {
 								case 0x0F:
 									status = "阀门关闭";
-								case (byte) 0xF0:
+								case 0xF0:
 									status = "阀门开启";
-								case (byte) 0xF1:
+								case 0xF1:
 									status = "等待出水";
 								case 0x02:
 									status = "等待关水";
-								case (byte) 0xFF:
+								case 0xFF:
 									status = "供水故障";
 								case 0x00:
 									status = "水阀故障";
 								}
 								statusVal.setStatus(status);
-								if(receiveData[numTmp/2+2]<0){
-									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+2]-receiveData[numTmp/2+3]*0.01))*10)/10);
+								if(receiveData[numTmp/2+12]<0){
+									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+12+3]-receiveData[numTmp/2+12+4]*0.01))*10)/10);
 								}else{
-									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+2]+receiveData[numTmp/2+3]*0.01))*10)/10);
+									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+12+3]+receiveData[numTmp/2+12+4]*0.01))*10)/10);
 								}
-								statusVal.setVelocity((float)Math.round(((float)(receiveData[numTmp/2+9]+receiveData[numTmp/2+10]*0.01))*10)/10);
+								statusVal.setVelocity((float)Math.round(((float)(receiveData[numTmp/2+12+10]+receiveData[numTmp/2+12+11]*0.01))*10)/10);
 								listStatus.add(statusVal);
 								
 								//传感器湿度数据
-								int sensorNum = receiveData[numTmp/2+11];
 								EquipmentData dataVal = new EquipmentData();
-								for(int i=1;i<=sensorNum;i++){
+								for(int i=1;i<=sNum;i++){
 									Map<String,Object> sensorMap = new HashMap<String, Object>();
 									sensorMap.put("eId", equipment.getId());
 									sensorMap.put("num", i);
 									SensorInfo sensorInfo = sensorInfoMapper.selectByEidAndNum(sensorMap);
 									dataVal.setCreatetime(date);
-									dataVal.setHumidity((float)Math.round(((float)(receiveData[numTmp/2+11+i]+receiveData[numTmp/2+12+i]*0.01))*100)/100);
+									dataVal.setHumidity((float)Math.round(((float)(receiveData[numTmp/2+12+12+i]+receiveData[numTmp/2+12+13+i]*0.01))*100)/100);
 									dataVal.setSensorid(sensorInfo.getId());
 									listData.add(dataVal);
 								}
-								numTmp += sensorNum*2+24;
+								numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
 							}
 						}else{
 							log.error("数据采集--" + code + " 号主机下【" + eCode + "】监控节点数据采集失败，节点信息为空，可能未注册!");
-							numTmp += receiveData[numTmp/2+11]*2+24;
+							numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
 						}
+						num -- ;
 					}
 					//将采集的节点数据保存到数据库
 					if(!CollectionUtils.isEmpty(listStatus)){
@@ -281,10 +285,11 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @param ContralCode
 	 * @param startDate
 	 * @return
-	 * @throws Exception 
+	 * @throws ParseException 
+	 * @throws InterruptedException 
 	 * String 				返回
 	 */
-	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws Exception{
+	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
 		Date endDate = CommonUtiles.getLastDate(20);
 		String dataContext = "";
 		long time = 0;

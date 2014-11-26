@@ -3,8 +3,11 @@ package com.rest.yun.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
+import com.rest.yun.beans.SensorInfo;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
 
@@ -61,5 +64,25 @@ public interface IEquipmentService {
 	 * @param eqtId
 	 */
 	void deleteEquipment(int eqtId);
+
+	/**
+	 * @Title:       searchEquipment
+	 * @author:      杨贵松
+	 * @time         2014年11月24日 下午11:25:04
+	 * @Description: 
+	 * @return       List<EquipmentExt<SensorInfo>>
+	 * @throws
+	 */
+	List<EquipmentExt<SensorInfo>> searchEquipment(Integer pId);
+
+	/**
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @time         2014年11月26日 下午12:06:21
+	 * @Description: 注册节点
+	 * @return       void
+	 * @throws
+	 */
+	void save(List<EquipmentExt<SensorInfo>> list, HttpSession session);
 
 }

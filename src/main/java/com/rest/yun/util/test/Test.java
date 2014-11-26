@@ -22,7 +22,15 @@ public class Test {
 //		byte[] b = {(byte) 0xE0};
 //		byte[] c = codingFactory.coding((byte)0x01, "00000002", (byte)0x22, b);
 		float f = (float)Math.round(((float)(10+186*0.001))*100)/100;
-		System.out.println(f);
+		System.out.println(Math.pow(2,3));
+	}
+	
+	public static float[] function(float x,float y){
+		float[] param = new float[4];
+		
+		y = (float) (param[0]*Math.pow(x,3) + param[1]*Math.pow(x,2)+param[2]*Math.pow(x,1) + param[3]);
+		
+		return param;
 	}
 	
 	/**

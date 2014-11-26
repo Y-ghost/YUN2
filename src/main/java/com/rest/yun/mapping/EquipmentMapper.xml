@@ -109,7 +109,8 @@
       #{fowparameter,jdbcType=INTEGER}, #{createuser,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.rest.yun.beans.Equipment" >
+  <!-- 节点注册 -->
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.yun.beans.Equipment" >
     insert into Equipment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -44,16 +44,18 @@
     delete from SensorInfo
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rest.yun.beans.SensorInfo" >
-    insert into SensorInfo (id, EquipmentId, Number, 
-      ParameterA, ParameterB, ParameterC, 
-      ParameterD, Createuser, Createtime, 
-      Modifyuser, Modifytime)
-    values (#{id,jdbcType=INTEGER}, #{equipmentid,jdbcType=INTEGER}, #{number,jdbcType=INTEGER}, 
-      #{parametera,jdbcType=REAL}, #{parameterb,jdbcType=REAL}, #{parameterc,jdbcType=REAL}, 
-      #{parameterd,jdbcType=REAL}, #{createuser,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
+  <!-- 批量注册传感器 -->
+  <insert id="save" parameterType="java.util.List" >
+    <![CDATA[
+	    insert into SensorInfo (EquipmentId, Number, Createuser, Createtime, Modifyuser, Modifytime)
+	    values 
+    ]]>
+    <foreach collection="list" item="item" index="index" separator=",">
+		(#{item.equipmentid}, #{item.number}, #{item.createuser},
+		#{item.createtime},#{item.modifyuser},#{item.modifytime})
+	</foreach>
   </insert>
+  
   <insert id="insertSelective" parameterType="com.rest.yun.beans.SensorInfo" >
     insert into SensorInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >

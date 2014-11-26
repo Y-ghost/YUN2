@@ -13,7 +13,7 @@ public interface NetWorkService {
 	
 	public String waitData(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
 	
-	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws Exception;
+	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
 	
 	public void pushMsg(String hostCode) throws Exception;
 

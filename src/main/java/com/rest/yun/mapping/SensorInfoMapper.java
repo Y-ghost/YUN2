@@ -8,7 +8,15 @@ import com.rest.yun.beans.SensorInfo;
 public interface SensorInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(SensorInfo record);
+    /**
+     * @Title:       save
+     * @author:      杨贵松
+     * @time         2014年11月26日 下午5:21:45
+     * @Description: 批量保存传感器数据
+     * @return       int
+     * @throws
+     */
+    int save(List<SensorInfo> list);
 
     int insertSelective(SensorInfo record);
 

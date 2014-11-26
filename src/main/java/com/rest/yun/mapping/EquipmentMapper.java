@@ -12,7 +12,7 @@ public interface EquipmentMapper {
 
 	int insert(Equipment record);
 
-	int insertSelective(Equipment record);
+	int save(Equipment record);
 
 	Equipment selectByPrimaryKey(Integer id);
 

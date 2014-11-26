@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.EquipmentStatus;
 import com.rest.yun.beans.SensorInfo;
+import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
@@ -33,6 +36,7 @@ import com.rest.yun.service.IEquipmentService;
 import com.rest.yun.service.NetWorkService;
 import com.rest.yun.util.CheckReceiveCodingUtil;
 import com.rest.yun.util.CodingFactoryUtil;
+import com.rest.yun.util.CommonUtiles;
 import com.rest.yun.util.network.Client;
 
 @Service
@@ -148,11 +152,9 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					dataContext = netWorkService.waitData(host.getCode(), "38", startDate);
 				} catch (ParseException e1) {
 					LOG.error("获取10秒后的时间时异常", e1);
-					mark = false;
 					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 				} catch (InterruptedException e1) {
 					LOG.error("获取10秒后的时间时sleep异常", e1);
-					mark = false;
 					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 				}
 
@@ -184,11 +186,9 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		} catch (DataAccessException e) {
 			if (optionType == 1) {
 				LOG.error("关闭实时灌溉异常", e);
-				mark = false;
 				throw new ServerException(ErrorCode.CLOSE_EQUIPMENT_FAILED);
 			} else {
 				LOG.error("开启实时灌溉异常", e);
-				mark = false;
 				throw new ServerException(ErrorCode.OPEN_EQUIPMENT_FAILED);
 			}
 		}
@@ -243,5 +243,235 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			throw new ServerException(ErrorCode.DELETE_EQUIPMENT_FAILED);
 		}
 
+	}
+
+	/**
+	 * @Title:       searchEquipment
+	 * @author:      杨贵松
+	 * @time         2014年11月24日 下午11:26:42
+	 * @Description: 搜索现场节点信息
+	 * @throws
+	 */
+	@Override
+	public List<EquipmentExt<SensorInfo>> searchEquipment(Integer pId) {
+		List<EquipmentExt<SensorInfo>> list = new ArrayList<EquipmentExt<SensorInfo>>();
+		// 查询节点信息
+		try {
+			ControlHost host = controlHostMapper.selectByProjectId(pId);
+			if (host == null) {
+				LOG.error("该项目下无主机");
+				throw new ServerException(ErrorCode.PROJECT_HAS_NO_HOST);
+			}
+
+			byte[] data = {};
+
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, host.getCode(), (byte) 0x0B, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待20秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitDataForSearchEquipment(host.getCode(), "1B", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取20秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取20秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}else{
+				LOG.error("未获取到返回的指令!");
+				throw new ServerException(ErrorCode.SEARCH_EQUIPMENT_FAILED);
+			}
+			if (flag) {
+				int num = receiveData[12];
+				String usingData = dataContext.substring(26, dataContext.length() - 6);
+				int numTmp = 0;
+				while (num > 0) {
+					String eCode = usingData.substring(numTmp, numTmp + 4);
+					EquipmentExt<SensorInfo> equipmentExt = new EquipmentExt<SensorInfo>();
+					equipmentExt.setCode(eCode);
+					equipmentExt.setControlHostId(host.getId());
+
+					int sNum = Integer.parseInt(usingData.substring(numTmp + 4, numTmp + 6));
+
+					List<SensorInfo> slist = new ArrayList<SensorInfo>();
+					for (int i = 0; i < sNum; i++) {
+						SensorInfo si = new SensorInfo();
+						si.setNumber(Integer.parseInt(usingData.substring( numTmp + 6 + 2 * i, numTmp + 6 + 2 * (i + 1))));
+						slist.add(si);
+					}
+					equipmentExt.setResult(slist);
+					list.add(equipmentExt);
+
+					numTmp += 4 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
+					num--;
+				}
+			}else{
+				LOG.error("返回的指令格式不正确!");
+				throw new ServerException(ErrorCode.SEARCH_EQUIPMENT_FAILED);
+			}
+		} catch (DataAccessException e) {
+			LOG.error("搜索节点异常", e);
+			throw new ServerException(ErrorCode.SEARCH_EQUIPMENT_FAILED);
+		}
+		return list;
+	}
+
+	/**
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @time         2014年11月26日 下午12:17:14
+	 * @Description: 节点注册
+	 * @throws
+	 */
+	@Override
+	public void save(List<EquipmentExt<SensorInfo>> list, HttpSession session) {
+		if(CollectionUtils.isEmpty(list)){
+			LOG.error("节点信息为空");
+			throw new ServerException(ErrorCode.SAVE_EQUIPMENT_LIST_NULL);
+		}else if(registerEquipment(list)){//registerEquipment方法是向现场主机发送注册指令，现场注册完成才开始注册节点信息到数据库
+			Date date;
+			User user;
+			try {
+				date = CommonUtiles.getSystemDateTime();
+				user = (User) session.getAttribute(Constants.USER);
+			} catch (ParseException e) {
+				LOG.error("获取系统时间异常!"+e);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			try {
+				for(EquipmentExt<SensorInfo> equipmentExt:list){
+					Equipment equipment = new Equipment();
+					equipment.setName(equipmentExt.getName());
+					equipment.setCode(equipmentExt.getCode());
+					equipment.setArea(equipmentExt.getArea());
+					equipment.setControlhostid(equipmentExt.getControlHostId());
+					equipment.setFowparameter(equipmentExt.getFowParameter());
+					equipment.setIrrigationtype(1);
+					equipment.setCreatetime(date);
+					equipment.setCreateuser(user.getId());
+					equipment.setModifytime(date);
+					equipment.setModifyuser(user.getId());
+					//保存节点信息到数据库
+					int tmp = equipmentMapper.save(equipment);
+					
+					List<SensorInfo> sList = equipmentExt.getResult();
+					List<SensorInfo> sensorList = new ArrayList<SensorInfo>();
+					if(tmp>0 && !CollectionUtils.isEmpty(sList)){
+						for(SensorInfo sensorInfo : sList){
+							sensorInfo.setEquipmentid(equipment.getId());
+							sensorInfo.setCreateuser(user.getId());
+							sensorInfo.setCreatetime(date);
+							sensorInfo.setModifytime(date);
+							sensorInfo.setModifyuser(user.getId());
+							
+							sensorList.add(sensorInfo);
+						}
+						//保存传感器到数据库
+						sensorInfoMapper.save(sensorList);
+					}else{
+						LOG.warn("该节点下无传感器");
+					}
+				}
+			} catch (DataAccessException e) {
+				LOG.error("注册节点异常", e);
+				throw new ServerException(ErrorCode.SAVE_EQUIPMENT_FAILED);
+			}
+		}else{
+			LOG.error("向主机注册节点信失败!");
+			throw new ServerException(ErrorCode.SAVE_EQUIPMENT_FAILED);
+		}
+	}
+
+	
+	/**
+	 * @Title:       registerEquipment
+	 * @author:      杨贵松
+	 * @time         2014年11月26日 下午5:35:38
+	 * @Description: 注册节点信息到现场主机
+	 * @return       boolean
+	 * @throws
+	 */
+	private boolean registerEquipment(List<EquipmentExt<SensorInfo>> list){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			ControlHost host = controlHostMapper.selectByPrimaryKey(list.get(0).getControlHostId());
+			// 组装节点传感器地址,即指令的data位
+			String codeData = "";
+			if(list.size()<10){
+				codeData += "0"+list.size();
+			}else{
+				codeData += list.size();
+			}
+			for (EquipmentExt<SensorInfo> e : list) {
+				codeData += e.getCode();
+				List<SensorInfo> sList = e.getResult();
+				if(!CollectionUtils.isEmpty(sList)){
+					if(sList.size()<10){
+						codeData += "0"+sList.size();
+					}else{
+						codeData += sList.size();
+					}
+					for(SensorInfo si:sList){
+						codeData += "0"+si.getNumber();
+					}
+				}
+			}
+			
+			byte[] data = codingFactory.string2BCD(codeData);
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, host.getCode(), (byte) 0x08, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(host.getCode(), "18", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0x0A:
+					mark = true;
+					break;
+				case (byte) 0xA0:
+					mark = false;
+					break;
+				default:
+					break;
+				}
+			}
+
+		} catch (DataAccessException e) {
+			LOG.error("向主机注册节点信息异常", e);
+			throw new ServerException(ErrorCode.SAVE_EQUIPMENT_FAILED);
+		}
+		return mark;
 	}
 }

@@ -81,11 +81,12 @@ public class ProjectServiceImpl implements IProjectService {
 			if (projectId > 0) {
 				UserProjectRel upr = new UserProjectRel();
 				upr.setUserid(userId);
-				upr.setProjectid(projectId);
+				upr.setProjectid(project.getId());
 				upr.setCreatetime(new Date());
 				upr.setModifytime(new Date());
 				upr.setCreateuser(userId);
 				upr.setModifyuser(userId);
+				userProjectRelMapper.insertSelective(upr);
 			}
 			LOG.info("用户[" + user.getUsername() + "] 添加了新项目，名为：" + project.getName());
 		} catch (DataAccessException e) {
