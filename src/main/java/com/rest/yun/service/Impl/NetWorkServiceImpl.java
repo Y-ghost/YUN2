@@ -290,7 +290,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * String 				返回
 	 */
 	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
-		Date endDate = CommonUtiles.getLastDate(20);
+		Date endDate = CommonUtiles.getLastDate(5);
 		String dataContext = "";
 		long time = 0;
 		while(dataContext.equals("") && time<endDate.getTime()){

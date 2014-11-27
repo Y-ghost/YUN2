@@ -90,6 +90,12 @@ rainet.setting.service = {
 					$busyEle : $('.equipment-container'),
 					data : param,
 					method : 'GET',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
 					success : function(data){
 						callback(data);
 					}
@@ -101,6 +107,12 @@ rainet.setting.service = {
 					$busyEle : $('.node-container'),
 					data : JSON.stringify(param),
 					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
 					contentType : 'application/json; charset=utf-8',
 					success : function(data){
 						callback(data);

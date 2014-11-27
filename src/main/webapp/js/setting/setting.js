@@ -18,7 +18,6 @@ rainet.setting.view = function(){
 	}
 	// 根据不同的模块，加载不用的列表信息
 	var setView = function(module){
-//		if(module=="")
 		rainet.setting.controller[module].add();
 	}
 	

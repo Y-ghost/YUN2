@@ -87,6 +87,7 @@ line-height: 34px;
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipment.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.setEquipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 </body>
 </html>
