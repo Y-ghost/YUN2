@@ -4,12 +4,119 @@
 var rainet = rainet || {};
 rainet.setting = rainet.setting || {};
 rainet.setting.controller = rainet.setting.controller || {}; 
-var flag = true;
 
 // 主机信息
-rainet.setting.controller.equipment = {
+rainet.setting.controller.setEquipment = {
 		// 搜索事件
 		searchEquipments : function($projectList){
+			var flag = true;
+			//注册节点
+			$(".addBtn").off('click').on('click', function(e){
+				flag = false;
+				var $forms = $(".form-horizontal");
+				var paramArr=[];
+				var mark = true;
+				var RegEx = /^[0-9]+(\.[0-9]{1,2})?$/;
+				var RegEx2 = /^[1-9]\d*$/;
+				$($forms).each(function(){
+					var $form = $(this)[0];
+					var $name = $form.name;
+					var $code = $form.code;
+					var $area = $form.area;
+					var $fowParameter = $form.fowParameter;
+					var $controlHostId = $form.controlHostId;
+					var $address = $form.address;
+					var str = [];
+					if($address != undefined){
+						$($address).each(function(){
+							str.push({number:$(this).val()});
+						});
+					}
+					if($($name).val()==""){
+						$($name).parent().addClass("has-error");
+						$($name).parent().parent().find("label").eq(0).attr("id","has-error");
+						mark = false;
+					}else{
+						$($name).parent().removeClass("has-error");
+						$($name).parent().parent().find("label").eq(0).removeAttr("id");
+					}
+					if($($area).val()=="" || !RegEx.test($($area).val())){
+						$($area).parent().addClass("has-error");
+						$($area).parent().parent().find("label").eq(0).attr("id","has-error");
+						mark = false;
+					}else{
+						$($area).parent().removeClass("has-error");
+						$($area).parent().parent().find("label").eq(0).removeAttr("id");
+					}
+					if($($fowParameter).val()=="" || !RegEx.test($($fowParameter).val())){
+						$($fowParameter).parent().addClass("has-error");
+						$($fowParameter).parent().parent().find("label").eq(1).attr("id","has-error");
+						mark = false;
+					}else{
+						$($fowParameter).parent().removeClass("has-error");
+						$($fowParameter).parent().parent().find("label").eq(1).removeAttr("id");
+					}
+					
+					var param =  {name:$($name).val(),code:$($code).val(),area : $($area).val(),fowParameter : $($fowParameter).val(),controlHostId : $($controlHostId).val()
+									,result:str};
+					paramArr.push(param);
+				});
+				if(!mark){
+					rainet.utils.notification.warning("请填写正确的节点信息!");
+				}else{
+					bootbox.dialog({
+						message : "<label style=\"color:red;\">特别注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作将删除该主机下所有的数据，包括节点传感器信息、采集的历史数据等，确定注册?",
+						title : '注册节点到现场',
+						// 支持ESC
+						onEscape : function(){
+							
+						},
+						buttons :  {
+							cancel: {
+							      label: "取消",
+							      className: "btn-warning",
+							      callback : function(){
+							    	  flag = true;
+							      }
+							},
+							success: {
+							      label: "确定",
+							      className: "btn-success",
+							      callback : function(){
+							    	  bootbox.dialog({
+											message : "<label style=\"color:red;\">注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作特别，将会删除该主机下所有的数据，请再次确认?",
+											title : '再次确认',
+											// 支持ESC
+											onEscape : function(){
+												
+											},
+											buttons :  {
+												cancel: {
+												      label: "取消",
+												      className: "btn-warning",
+												      callback : function(){
+												    	  flag = true;
+												      }
+												},
+												success: {
+												      label: "确定",
+												      className: "btn-success",
+												      callback : function(){
+												    	  rainet.setting.service.equipment.add(paramArr, function(data){
+												    		  if(data){
+												    			  rainet.utils.notification.success("添加节点成功!");
+												    		  }
+												    	  });
+												      }
+												}
+											}
+										});
+							      }
+							}
+						}
+					});
+				}
+			});
 			//搜索节点
 			$(".searchBtn").off('click').on('click', function(e){
 				if(flag){
@@ -40,10 +147,6 @@ rainet.setting.controller.equipment = {
 								      className: "btn-success",
 								      callback : function(){
 											var param = {pId:projectId};
-											param.handleError = function(result){
-												flag = true;
-												return true;
-											};
 											rainet.setting.service.equipment.searchEquipment(param, function(data){
 												var $EquipmentList = $(".EquipmentList");
 												var str = "";
@@ -151,124 +254,6 @@ rainet.setting.controller.equipment = {
 			});
 			
 		},
-		//注册事件
-		registerEquipments : function($projectList){
-			//注册节点
-			$(".addBtn").off('click').on('click', function(e){
-				if(flag){
-					flag = false;
-					var $forms = $(".form-horizontal");
-					var paramArr=[];
-					var mark = true;
-					var RegEx = /^[0-9]+(\.[0-9]{1,2})?$/;
-					var RegEx2 = /^[1-9]\d*$/;
-					$($forms).each(function(){
-						var $form = $(this)[0];
-						var $name = $form.name;
-						var $code = $form.code;
-						var $area = $form.area;
-						var $fowParameter = $form.fowParameter;
-						var $controlHostId = $form.controlHostId;
-						var $address = $form.address;
-						var str = [];
-						if($address != undefined){
-							$($address).each(function(){
-								str.push({number:$(this).val()});
-							});
-						}
-						if($($name).val()==""){
-							$($name).parent().addClass("has-error");
-							$($name).parent().parent().find("label").eq(0).attr("id","has-error");
-							mark = false;
-						}else{
-							$($name).parent().removeClass("has-error");
-							$($name).parent().parent().find("label").eq(0).removeAttr("id");
-						}
-						if($($area).val()=="" || !RegEx.test($($area).val())){
-							$($area).parent().addClass("has-error");
-							$($area).parent().parent().find("label").eq(0).attr("id","has-error");
-							mark = false;
-						}else{
-							$($area).parent().removeClass("has-error");
-							$($area).parent().parent().find("label").eq(0).removeAttr("id");
-						}
-						if($($fowParameter).val()=="" || !RegEx.test($($fowParameter).val())){
-							$($fowParameter).parent().addClass("has-error");
-							$($fowParameter).parent().parent().find("label").eq(1).attr("id","has-error");
-							mark = false;
-						}else{
-							$($fowParameter).parent().removeClass("has-error");
-							$($fowParameter).parent().parent().find("label").eq(1).removeAttr("id");
-						}
-						
-						var param =  {name:$($name).val(),code:$($code).val(),area : $($area).val(),fowParameter : $($fowParameter).val(),controlHostId : $($controlHostId).val()
-								,result:str};
-						paramArr.push(param);
-					});
-					if(!mark){
-						rainet.utils.notification.warning("请填写正确的节点信息!");
-					}else{
-						bootbox.dialog({
-							message : "<label style=\"color:red;\">特别注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作将删除该主机下所有的数据，包括节点传感器信息、采集的历史数据等，确定注册?",
-							title : '注册节点到现场',
-							// 支持ESC
-							onEscape : function(){
-								
-							},
-							buttons :  {
-								cancel: {
-									label: "取消",
-									className: "btn-warning",
-									callback : function(){
-										flag = true;
-									}
-								},
-								success: {
-									label: "确定",
-									className: "btn-success",
-									callback : function(){
-										bootbox.dialog({
-											message : "<label style=\"color:red;\">注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作特别，将会删除该主机下所有的数据，请再次确认?",
-											title : '再次确认',
-											// 支持ESC
-											onEscape : function(){
-												
-											},
-											buttons :  {
-												cancel: {
-													label: "取消",
-													className: "btn-warning",
-													callback : function(){
-														flag = true;
-													}
-												},
-												success: {
-													label: "确定",
-													className: "btn-success",
-													callback : function(){
-														paramArr.handleError = function(result){
-															alert(flag);
-															flag = true;
-															return true;
-														};
-														rainet.setting.service.equipment.add(paramArr, function(data){
-															if(data){
-																rainet.utils.notification.success("添加节点成功!");
-															}
-															flag = true;
-														});
-													}
-												}
-											}
-										});
-									}
-								}
-							}
-						});
-					}
-				}
-			});
-		},
 		
 		setEquipmentInfo : function($hostHtml){
 			var $form = $("form", $hostHtml);
@@ -283,9 +268,8 @@ rainet.setting.controller.equipment = {
 					$projectList.append('<option value='+data[i].id+'>'+data[i].name+'</option>');
 				}
 			});
-			// 绑定事件
+			// 绑定搜索事件
 			this.searchEquipments($projectList);
-			this.registerEquipments($projectList);
 		},
 		
 		// 搜索节点信息
@@ -297,21 +281,35 @@ rainet.setting.controller.equipment = {
 		
 		infoTempate : "<div class=\"col-xs-9 col-md-9\">" +
 						"<div class=\"node-container\">" +
-						"<div class=\"node-tools\" style=\"font-size:14px;height:55px;\">" +
-						"<label class=\"col-xs-2 col-md-2 text-center\" style=\"line-height: 34px;\">" +
+						"<div class=\"node-tools\" style=\"font-size:14px;\">" +
+						"<label class=\"col-xs-3 col-md-3 text-center\" style=\"line-height: 34px;\">" +
+						"<input type=\"checkbox\" class=\"cursor checkAll\"/> 全选&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
 						"所属项目:" +
 						"</label>" +
-						"<select class=\"col-xs-4 col-md-4 input-sm projectName\" id=\"projectName\" name=\"projectid\"></select>" +
+						"<select class=\"col-xs-3 col-md-3 input-sm projectName\" id=\"projectName\" name=\"projectid\"></select>" +
 						"<div class=\"col-xs-3 col-md-3 text-center\">" +
-						"<button type=\"button\" class=\"btn btn-success searchBtn \">搜索</button>" +
+						"<button type=\"button\" class=\"btn btn-success searchBtn \">查询</button>" +
 						"</div>" +
 						"<div class=\"col-xs-3 col-md-3\">" +
-						"<button type=\"button\" class=\"btn btn-warning addBtn\">添加</button>" +
+						"<button type=\"button\" class=\"btn btn-warning modifyBtn\">修改</button>" +
+						"</div>" +
+						"</div>" +
+						"</div>" +
+						"</div>"+
+						"<div class=\"col-xs-9 col-md-9\">" +
+						"<div class=\"node-container\">" +
+						"<div class=\"node-tools\" style=\"font-size:14px;height:55px;\">" +
+						"<div class=\"col-xs-4 col-md-4 text-center\">" +
+						"<a href=\"javascript:void(0);\" class=\"setModel\">模式设置</a>" +
+						"</div>" +
+						"<div class=\"col-xs-4 col-md-3 text-left\">" +
+						"<a href=\"javascript:void(0);\" class=\"setAutoParam\">自控参数设置</a>" +
+						"</div>" +
+						"<div class=\"col-xs-4 col-md-5 text-left\">" +
+						"<a href=\"javascript:void(0);\" class=\"setTimeLen\">时段设置</a>" +
 						"</div>" +
 						"</div>" +
 						"<div class=\"EquipmentList\">" +
-						"<label class=\"fa fa-hand-o-up fa-5 col-xs-3 col-md-3 text-right\"></label>"+
-						"<label class=\"fa-1 col-xs-7 col-md-7\"> 请先选择项目，搜索正确连接的节点信息!</label>"+
 						"</div>" +
 						"</div>" +
 						"</div>",
