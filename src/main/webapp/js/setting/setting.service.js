@@ -88,7 +88,7 @@ rainet.setting.service = {
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"searchEquipment/",
 					$busyEle : $('.equipment-container'),
-					data : param,
+					data : {pId:param.pId},
 					method : 'GET',
 					customHandleError : function(result){
 						if (param.handleError){

@@ -65,7 +65,7 @@ rainet.ajax = {
     				"<input type=\"password\"  class=\"form-control\" name=\"password\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
-  			 "<div class=\"modal-footer\" style=\"margin-top:30px;\">\n"+
+  			 "<div class=\"dialog-footer\" style=\"margin-top:30px;\">\n"+
 		  			 "<div class=\"col-sm-4 control-label\" style=\"text-align:center;\">" +
 		  			 "<a href=\"findAccount\">忘记密码?</a>" +
 		  			 "</div>" +
@@ -156,6 +156,7 @@ rainet.ajax.controller = {
 				//用户登录
 				rainet.ajax.service["User"].login(param, function(data){
 					if (data) {
+						bootbox.hideAll();
 						rainet.utils.notification.success("登录成功!");
 					}else{
 						return false;
