@@ -146,3 +146,12 @@ input {
 	font: 12px/16px "Microsoft YaHei", Arial, "ËÎÌו";
 	color: #000;
 }
+
+.dialog-footer:after {
+	clear: both;
+}
+
+.dialog-footer:before, .dialog-footer:after {
+	display: table;
+	content: " ";
+}

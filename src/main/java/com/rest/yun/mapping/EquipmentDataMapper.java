@@ -16,4 +16,6 @@ public interface EquipmentDataMapper {
     int updateByPrimaryKeySelective(EquipmentData record);
 
     int updateByPrimaryKey(EquipmentData record);
+    //根据主机id删除其关联的所有节点数据信息
+	void deleteAllByHid(int controlHostId);
 }

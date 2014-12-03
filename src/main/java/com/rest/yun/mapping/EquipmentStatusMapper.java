@@ -28,4 +28,14 @@ public interface EquipmentStatusMapper {
 	 */
 	EquipmentStatus selectEquipmentStatusByeEid(Integer eId);
 
+	/**
+	 * @Title:       deleteAllByHid
+	 * @author:      杨贵松
+	 * @time         2014年11月30日 下午4:14:12
+	 * @Description: 删除主机下所有节点及其相关联数据
+	 * @return       void
+	 * @throws
+	 */
+	void deleteAllByHid(int controlHostId);
+
 }

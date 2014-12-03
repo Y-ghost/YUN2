@@ -247,7 +247,6 @@ rainet.setting.controller.equipment = {
 													className: "btn-success",
 													callback : function(){
 														paramArr.handleError = function(result){
-															alert(flag);
 															flag = true;
 															return true;
 														};
