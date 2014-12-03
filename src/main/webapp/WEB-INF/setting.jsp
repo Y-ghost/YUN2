@@ -82,7 +82,6 @@ line-height: 34px;
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
-	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>

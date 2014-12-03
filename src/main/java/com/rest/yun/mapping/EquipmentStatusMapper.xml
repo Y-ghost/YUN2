@@ -31,6 +31,12 @@
     delete from Equipment_Status
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!-- 删除主机下所有节点及其相关联数据 -->
+  <delete id="deleteAllByHid" parameterType="java.lang.Integer" >
+    delete from Equipment_Status es
+    left join equipment e on es.EquipmentId = e.id
+    where e.ControlHostId = #{controlHostId,jdbcType=INTEGER};
+  </delete>
   <!-- 批量插入节点采集的数据 -->
   <insert id="insert" parameterType="java.util.List" >
   	<![CDATA[

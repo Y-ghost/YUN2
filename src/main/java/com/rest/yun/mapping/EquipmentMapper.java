@@ -9,6 +9,16 @@ import com.rest.yun.beans.Equipment;
 
 public interface EquipmentMapper {
 	int deleteByPrimaryKey(Integer id);
+	
+	/**
+	 * @Title:       deleteAllByHid
+	 * @author:      杨贵松
+	 * @time         2014年11月30日 下午3:20:02
+	 * @Description: 删除主机下所有节点及其相关联数据
+	 * @return       int
+	 * @throws
+	 */
+	int deleteAllByHid(Integer id);
 
 	int insert(Equipment record);
 

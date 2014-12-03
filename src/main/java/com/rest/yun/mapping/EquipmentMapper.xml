@@ -89,6 +89,14 @@
     delete from Equipment
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <!-- 删除主机下所有节点及其相关联数据 -->
+  <delete id="deleteAllByHid" parameterType="java.lang.Integer" >
+    
+    delete from Equipment
+    where id = #{id,jdbcType=INTEGER};
+    delete from EquipmentData
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.rest.yun.beans.Equipment" >
     insert into Equipment (id, Name, ControlHostId, 
       Code, IrrigationType, SoilWeight, 

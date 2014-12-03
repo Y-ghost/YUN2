@@ -44,4 +44,14 @@ public interface SensorInfoMapper {
 	 * @throws 
 	 */
 	List<SensorInfo> selectSensorInfoByEid(Integer eId);
+
+	/**
+	 * @Title:       deleteAllByHid
+	 * @author:      杨贵松
+	 * @time         2014年11月30日 下午3:59:41
+	 * @Description: 根据主机id删除其关联的所有传感器信息
+	 * @return       void
+	 * @throws
+	 */
+	void deleteAllByHid(int controlHostId);
 }

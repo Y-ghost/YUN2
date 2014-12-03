@@ -350,6 +350,12 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			}
 			
 			try {
+				//删除主机下所有节点及其相关联数据
+				sensorInfoMapper.deleteAllByHid(list.get(0).getControlHostId());
+				equipmentDataMapper.deleteAllByHid(list.get(0).getControlHostId());
+				equipmentStatusMapper.deleteAllByHid(list.get(0).getControlHostId());
+				equipmentMapper.deleteAllByHid(list.get(0).getControlHostId());
+				
 				for(EquipmentExt<SensorInfo> equipmentExt:list){
 					Equipment equipment = new Equipment();
 					equipment.setName(equipmentExt.getName());
