@@ -9,15 +9,16 @@ var flag = true;
 // 主机信息
 rainet.setting.controller.setEquipment = {
 		//自定义植物信息
-		addPlants:function($plantsInfo,$growthCycle){
-			
+		addPlants:function($plantsInfo,$growthCycleHeader,$growthCycle){
 			$(".plantsLink").off('click').on('click', function(e){
 				var gcs = $(".growthCycles",$plantsInfo);
-					gcs.append($growthCycle);
+					gcs.append($growthCycleHeader.html());
 				
 				$(".addNewCycle",$plantsInfo).off('click').on('click', function(e){
-					console.log(gcs.children());
-					gcs.append(gcs.children());
+					gcs.append($growthCycle.html());
+					$(".closeCycle",$plantsInfo).off('click').on('click', function(e){
+						$(this).parent().remove();
+					});
 				});
 				bootbox.dialog({
 					message : $plantsInfo,
@@ -355,7 +356,7 @@ rainet.setting.controller.setEquipment = {
 			this.modifyEquipments($projectList);
 			this.radioChange();
 			this.addSoil($(this.soilInfoTempate));
-			this.addPlants($(this.plantsInfoTempate),$(this.growthCycle));
+			this.addPlants($(this.plantsInfoTempate),$(this.growthCycleHeader),$(this.growthCycle));
 		},
 		
 		// 搜索节点信息
@@ -555,7 +556,8 @@ rainet.setting.controller.setEquipment = {
 						"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+
 						"</form>\n"+
 						"</div>",
-		growthCycle : "<div class=\"growthCycle\">"+
+		growthCycleHeader : "<div>"+
+						"<div class=\"growthCycle\">"+
 						"<hr/>"+
 						"<div class=\"form-group\">\n"+
 						"<label class=\"col-sm-3 control-label\">植物生长周期名：</label>\n"+
@@ -591,6 +593,48 @@ rainet.setting.controller.setEquipment = {
 						"<label class=\"col-sm-3 control-label\">温度下限：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
 						"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+						"</div>\n"+
+						"</div>\n"+
+						"</div>\n"+
+						"</div>\n",
+		growthCycle : "<div>"+
+						"<div class=\"growthCycle\">"+
+						"<hr style='width:95%;float:left;'/><button type=\"button\" class=\"closeCycle\" style='color:red;line-height:39px;width:5%;' aria-hidden=\"true\">-</button>"+
+						"<div class=\"form-group\">\n"+
+						"<label class=\"col-sm-3 control-label\">植物生长周期名：</label>\n"+
+						"<div class=\"col-sm-9\">\n"+
+						"<input type=\"text\" class=\"form-control plantsName\" name=\"name\"/>\n"+
+						"</div>\n"+
+						"</div>\n"+
+						"<div class=\"form-group\">\n"+
+						"<label class=\"col-sm-3 control-label\">开始日期：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\" class=\"form-control soilName\" name=\"name\"/>\n"+
+						"</div>\n"+
+						"<label class=\"col-sm-3 control-label\">结束日期：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+						"</div>\n"+
+						"</div>\n"+
+						"<div class=\"form-group\">\n"+
+						"<label class=\"col-sm-3 control-label\">湿度上限：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\" class=\"form-control soilName\" name=\"name\"/>\n"+
+						"</div>\n"+
+						"<label class=\"col-sm-3 control-label\">湿度下限：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+						"</div>\n"+
+						"</div>\n"+
+						"<div class=\"form-group\">\n"+
+						"<label class=\"col-sm-3 control-label\">温度上限：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\" class=\"form-control soilName\" name=\"name\"/>\n"+
+						"</div>\n"+
+						"<label class=\"col-sm-3 control-label\">温度下限：</label>\n"+
+						"<div class=\"col-sm-3\">\n"+
+						"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+						"</div>\n"+
 						"</div>\n"+
 						"</div>\n"+
 						"</div>\n",

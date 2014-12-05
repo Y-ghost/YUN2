@@ -5,18 +5,13 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="PlantsName" property="plantsname" jdbcType="VARCHAR" />
     <result column="RootDepth" property="rootdepth" jdbcType="INTEGER" />
-    <result column="HumidityUp" property="humidityup" jdbcType="REAL" />
-    <result column="HumidityDown" property="humiditydown" jdbcType="REAL" />
-    <result column="TemperatureUp" property="temperatureup" jdbcType="REAL" />
-    <result column="TemperatureDown" property="temperaturedown" jdbcType="REAL" />
     <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="CreateUser" property="createuser" jdbcType="INTEGER" />
     <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
     <result column="ModifyUser" property="modifyuser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, PlantsName, RootDepth, HumidityUp, HumidityDown, TemperatureUp, TemperatureDown, 
-    CreateTime, CreateUser, ModifyTime, ModifyUser
+    id, PlantsName, RootDepth, CreateTime, CreateUser, ModifyTime, ModifyUser
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -30,13 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.rest.yun.beans.PlantsInfo" >
     insert into PlantsInfo (id, PlantsName, RootDepth, 
-      HumidityUp, HumidityDown, TemperatureUp, 
-      TemperatureDown, CreateTime, CreateUser, 
-      ModifyTime, ModifyUser)
+      CreateTime, CreateUser, ModifyTime, 
+      ModifyUser)
     values (#{id,jdbcType=INTEGER}, #{plantsname,jdbcType=VARCHAR}, #{rootdepth,jdbcType=INTEGER}, 
-      #{humidityup,jdbcType=REAL}, #{humiditydown,jdbcType=REAL}, #{temperatureup,jdbcType=REAL}, 
-      #{temperaturedown,jdbcType=REAL}, #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, 
-      #{modifytime,jdbcType=TIMESTAMP}, #{modifyuser,jdbcType=INTEGER})
+      #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{modifyuser,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rest.yun.beans.PlantsInfo" >
     insert into PlantsInfo
@@ -49,18 +42,6 @@
       </if>
       <if test="rootdepth != null" >
         RootDepth,
-      </if>
-      <if test="humidityup != null" >
-        HumidityUp,
-      </if>
-      <if test="humiditydown != null" >
-        HumidityDown,
-      </if>
-      <if test="temperatureup != null" >
-        TemperatureUp,
-      </if>
-      <if test="temperaturedown != null" >
-        TemperatureDown,
       </if>
       <if test="createtime != null" >
         CreateTime,
@@ -85,18 +66,6 @@
       <if test="rootdepth != null" >
         #{rootdepth,jdbcType=INTEGER},
       </if>
-      <if test="humidityup != null" >
-        #{humidityup,jdbcType=REAL},
-      </if>
-      <if test="humiditydown != null" >
-        #{humiditydown,jdbcType=REAL},
-      </if>
-      <if test="temperatureup != null" >
-        #{temperatureup,jdbcType=REAL},
-      </if>
-      <if test="temperaturedown != null" >
-        #{temperaturedown,jdbcType=REAL},
-      </if>
       <if test="createtime != null" >
         #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -120,18 +89,6 @@
       <if test="rootdepth != null" >
         RootDepth = #{rootdepth,jdbcType=INTEGER},
       </if>
-      <if test="humidityup != null" >
-        HumidityUp = #{humidityup,jdbcType=REAL},
-      </if>
-      <if test="humiditydown != null" >
-        HumidityDown = #{humiditydown,jdbcType=REAL},
-      </if>
-      <if test="temperatureup != null" >
-        TemperatureUp = #{temperatureup,jdbcType=REAL},
-      </if>
-      <if test="temperaturedown != null" >
-        TemperatureDown = #{temperaturedown,jdbcType=REAL},
-      </if>
       <if test="createtime != null" >
         CreateTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
@@ -151,10 +108,6 @@
     update PlantsInfo
     set PlantsName = #{plantsname,jdbcType=VARCHAR},
       RootDepth = #{rootdepth,jdbcType=INTEGER},
-      HumidityUp = #{humidityup,jdbcType=REAL},
-      HumidityDown = #{humiditydown,jdbcType=REAL},
-      TemperatureUp = #{temperatureup,jdbcType=REAL},
-      TemperatureDown = #{temperaturedown,jdbcType=REAL},
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       CreateUser = #{createuser,jdbcType=INTEGER},
       ModifyTime = #{modifytime,jdbcType=TIMESTAMP},

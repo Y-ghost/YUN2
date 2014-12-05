@@ -20,6 +20,7 @@
 .panel-heading {
 	font-size: 14px;
 }
+
 #inputLab {
 	padding-left: 3px;
 	padding-right: 3px;
@@ -31,7 +32,7 @@
 
 .fa-1 {
 	font-size: 16px;
-	margin-top:25px;
+	margin-top: 25px;
 }
 
 .projectName {
@@ -42,14 +43,42 @@
 	font-size: 14px;
 	border: 1px solid #ccc;
 }
+
 #projectName {
-	padding:1 0;
+	padding: 1 0;
 	margin-top: 0px;
 }
 
 select.input-sm {
-height: 34px;
-line-height: 34px;
+	height: 34px;
+	line-height: 34px;
+}
+
+button.closeCycle {
+	-webkit-appearance: none;
+	padding: 0;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+}
+
+.closeCycle {
+	float: right;
+	font-size: 21px;
+	font-weight: bold;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity = 20);
+	opacity: .2;
+}
+
+.closeCycle:hover, .closeCycle:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	filter: alpha(opacity = 50);
+	opacity: .5;
 }
 </style>
 </head>

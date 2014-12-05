@@ -6,6 +6,10 @@
     <result column="SoilType" property="soiltype" jdbcType="VARCHAR" />
     <result column="SoilWeight" property="soilweight" jdbcType="REAL" />
     <result column="SoilWater" property="soilwater" jdbcType="REAL" />
+    <result column="ParameterA" property="parametera" jdbcType="REAL" />
+    <result column="ParameterB" property="parameterb" jdbcType="REAL" />
+    <result column="ParameterC" property="parameterc" jdbcType="REAL" />
+    <result column="ParameterD" property="parameterd" jdbcType="REAL" />
     <result column="Province" property="province" jdbcType="VARCHAR" />
     <result column="City" property="city" jdbcType="VARCHAR" />
     <result column="County" property="county" jdbcType="VARCHAR" />
@@ -16,8 +20,8 @@
     <result column="ModifyUser" property="modifyuser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, SoilType, SoilWeight, SoilWater, Province, City, County, Address, CreateTime, 
-    CreateUser, ModifyTime, ModifyUser
+    id, SoilType, SoilWeight, SoilWater, ParameterA, ParameterB, ParameterC, ParameterD, 
+    Province, City, County, Address, CreateTime, CreateUser, ModifyTime, ModifyUser
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,15 +35,17 @@
   </delete>
   <insert id="insert" parameterType="com.rest.yun.beans.SoilInfo" >
     insert into SoilInfo (id, SoilType, SoilWeight, 
-      SoilWater, Province, City, 
-      County, Address, CreateTime, 
-      CreateUser, ModifyTime, ModifyUser
-      )
+      SoilWater, ParameterA, ParameterB, 
+      ParameterC, ParameterD, Province, 
+      City, County, Address, 
+      CreateTime, CreateUser, ModifyTime, 
+      ModifyUser)
     values (#{id,jdbcType=INTEGER}, #{soiltype,jdbcType=VARCHAR}, #{soilweight,jdbcType=REAL}, 
-      #{soilwater,jdbcType=REAL}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{county,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, #{modifyuser,jdbcType=INTEGER}
-      )
+      #{soilwater,jdbcType=REAL}, #{parametera,jdbcType=REAL}, #{parameterb,jdbcType=REAL}, 
+      #{parameterc,jdbcType=REAL}, #{parameterd,jdbcType=REAL}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{modifyuser,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.rest.yun.beans.SoilInfo" >
     insert into SoilInfo
@@ -55,6 +61,18 @@
       </if>
       <if test="soilwater != null" >
         SoilWater,
+      </if>
+      <if test="parametera != null" >
+        ParameterA,
+      </if>
+      <if test="parameterb != null" >
+        ParameterB,
+      </if>
+      <if test="parameterc != null" >
+        ParameterC,
+      </if>
+      <if test="parameterd != null" >
+        ParameterD,
       </if>
       <if test="province != null" >
         Province,
@@ -94,6 +112,18 @@
       <if test="soilwater != null" >
         #{soilwater,jdbcType=REAL},
       </if>
+      <if test="parametera != null" >
+        #{parametera,jdbcType=REAL},
+      </if>
+      <if test="parameterb != null" >
+        #{parameterb,jdbcType=REAL},
+      </if>
+      <if test="parameterc != null" >
+        #{parameterc,jdbcType=REAL},
+      </if>
+      <if test="parameterd != null" >
+        #{parameterd,jdbcType=REAL},
+      </if>
       <if test="province != null" >
         #{province,jdbcType=VARCHAR},
       </if>
@@ -132,6 +162,18 @@
       <if test="soilwater != null" >
         SoilWater = #{soilwater,jdbcType=REAL},
       </if>
+      <if test="parametera != null" >
+        ParameterA = #{parametera,jdbcType=REAL},
+      </if>
+      <if test="parameterb != null" >
+        ParameterB = #{parameterb,jdbcType=REAL},
+      </if>
+      <if test="parameterc != null" >
+        ParameterC = #{parameterc,jdbcType=REAL},
+      </if>
+      <if test="parameterd != null" >
+        ParameterD = #{parameterd,jdbcType=REAL},
+      </if>
       <if test="province != null" >
         Province = #{province,jdbcType=VARCHAR},
       </if>
@@ -164,6 +206,10 @@
     set SoilType = #{soiltype,jdbcType=VARCHAR},
       SoilWeight = #{soilweight,jdbcType=REAL},
       SoilWater = #{soilwater,jdbcType=REAL},
+      ParameterA = #{parametera,jdbcType=REAL},
+      ParameterB = #{parameterb,jdbcType=REAL},
+      ParameterC = #{parameterc,jdbcType=REAL},
+      ParameterD = #{parameterd,jdbcType=REAL},
       Province = #{province,jdbcType=VARCHAR},
       City = #{city,jdbcType=VARCHAR},
       County = #{county,jdbcType=VARCHAR},

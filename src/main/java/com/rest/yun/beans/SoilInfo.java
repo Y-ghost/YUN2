@@ -11,6 +11,14 @@ public class SoilInfo {
 
     private Float soilwater;
 
+    private Float parametera;
+
+    private Float parameterb;
+
+    private Float parameterc;
+
+    private Float parameterd;
+
     private String province;
 
     private String city;
@@ -57,6 +65,38 @@ public class SoilInfo {
 
     public void setSoilwater(Float soilwater) {
         this.soilwater = soilwater;
+    }
+
+    public Float getParametera() {
+        return parametera;
+    }
+
+    public void setParametera(Float parametera) {
+        this.parametera = parametera;
+    }
+
+    public Float getParameterb() {
+        return parameterb;
+    }
+
+    public void setParameterb(Float parameterb) {
+        this.parameterb = parameterb;
+    }
+
+    public Float getParameterc() {
+        return parameterc;
+    }
+
+    public void setParameterc(Float parameterc) {
+        this.parameterc = parameterc;
+    }
+
+    public Float getParameterd() {
+        return parameterd;
+    }
+
+    public void setParameterd(Float parameterd) {
+        this.parameterd = parameterd;
     }
 
     public String getProvince() {
