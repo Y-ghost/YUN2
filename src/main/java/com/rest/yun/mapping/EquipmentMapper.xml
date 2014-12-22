@@ -10,7 +10,8 @@
     <result column="SoilWeight" property="soilweight" jdbcType="REAL" />
     <result column="SoilWater" property="soilwater" jdbcType="REAL" />
     <result column="Area" property="area" jdbcType="DOUBLE" />
-    <result column="PlantsName" property="plantsname" jdbcType="VARCHAR" />
+    <result column="PlantsName" property="plantsname" jdbcType="INTEGER" />
+    <result column="soilName" property="soilname" jdbcType="INTEGER" />
     <result column="RootDepth" property="rootdepth" jdbcType="INTEGER" />
     <result column="HumidityUp" property="humidityup" jdbcType="REAL" />
     <result column="HumidityDown" property="humiditydown" jdbcType="REAL" />
@@ -30,6 +31,8 @@
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
     
     <association property="project" column="controlHostId" select="selectProjectByHostId"></association>
+    <association property="plantsInfo" column="PlantsName" select="selectPlantsById"></association>
+    <association property="soilInfo" column="soilName" select="selectSoilById"></association>
   </resultMap>
   
   <!-- 映射关联项目 -->
@@ -47,8 +50,37 @@
     <result column="Modifyuser" property="modifyuser" jdbcType="INTEGER" />
     <result column="Modifytime" property="modifytime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <!-- 映射关联植物 -->
+  <resultMap id="plantsMap" type="com.rest.yun.beans.PlantsInfo" >
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="PlantsName" property="plantsname" jdbcType="VARCHAR" />
+    <result column="RootDepth" property="rootdepth" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateUser" property="createuser" jdbcType="INTEGER" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="ModifyUser" property="modifyuser" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 映射关联植物 -->
+  <resultMap id="soilMap" type="com.rest.yun.beans.SoilInfo" >
+  	<id column="id" property="id" jdbcType="INTEGER" />
+    <result column="SoilType" property="soiltype" jdbcType="VARCHAR" />
+    <result column="SoilWeight" property="soilweight" jdbcType="REAL" />
+    <result column="SoilWater" property="soilwater" jdbcType="REAL" />
+    <result column="ParameterA" property="parametera" jdbcType="REAL" />
+    <result column="ParameterB" property="parameterb" jdbcType="REAL" />
+    <result column="ParameterC" property="parameterc" jdbcType="REAL" />
+    <result column="ParameterD" property="parameterd" jdbcType="REAL" />
+    <result column="Province" property="province" jdbcType="VARCHAR" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="County" property="county" jdbcType="VARCHAR" />
+    <result column="Address" property="address" jdbcType="VARCHAR" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="CreateUser" property="createuser" jdbcType="INTEGER" />
+    <result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="ModifyUser" property="modifyuser" jdbcType="INTEGER" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, Name, ControlHostId, Code, IrrigationType, SoilWeight, SoilWater, Area, PlantsName, 
+    id, Name, ControlHostId, Code, IrrigationType, SoilWeight, SoilWater, Area, PlantsName,soilName 
     RootDepth, HumidityUp, HumidityDown, TemperatureUp, TemperatureDown, Week, TimeOneStart, 
     TimeOneEnd, TimeTwoStart, TimeTwoEnd, TimeThreeStart, TimeThreeEnd, FowParameter, 
     Createuser, Createtime, Modifyuser, Modifytime
@@ -58,6 +90,16 @@
   	select project.* from Project 
   	left join ControlHost on project.id = ControlHost.projectId
   	where ControlHost.id = #{controlHostId}
+  </select>
+  <!-- 查询关联植物信息 -->
+  <select id="selectPlantsById" resultMap="plantsMap">
+  	select PlantsInfo.* from PlantsInfo 
+  	where PlantsInfo.id = #{PlantsName}
+  </select>
+  <!-- 查询关联土壤信息 -->
+  <select id="selectSoilById" resultMap="soilMap">
+  	select SoilInfo.* from SoilInfo 
+  	where SoilInfo.id = #{soilName}
   </select>
   <!-- 根据项目id查询节点 -->
   <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -100,7 +142,7 @@
   <insert id="insert" parameterType="com.rest.yun.beans.Equipment" >
     insert into Equipment (id, Name, ControlHostId, 
       Code, IrrigationType, SoilWeight, 
-      SoilWater, Area, PlantsName, 
+      SoilWater, Area, PlantsName,soilName 
       RootDepth, HumidityUp, HumidityDown, 
       TemperatureUp, TemperatureDown, Week, 
       TimeOneStart, TimeOneEnd, TimeTwoStart, 
@@ -109,7 +151,7 @@
       Modifyuser, Modifytime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{controlhostid,jdbcType=INTEGER}, 
       #{code,jdbcType=VARCHAR}, #{irrigationtype,jdbcType=INTEGER}, #{soilweight,jdbcType=REAL}, 
-      #{soilwater,jdbcType=REAL}, #{area,jdbcType=DOUBLE}, #{plantsname,jdbcType=VARCHAR}, 
+      #{soilwater,jdbcType=REAL}, #{area,jdbcType=DOUBLE}, #{plantsname,jdbcType=INTEGER}, 
       #{rootdepth,jdbcType=INTEGER}, #{humidityup,jdbcType=REAL}, #{humiditydown,jdbcType=REAL}, 
       #{temperatureup,jdbcType=REAL}, #{temperaturedown,jdbcType=REAL}, #{week,jdbcType=VARCHAR}, 
       #{timeonestart,jdbcType=TIMESTAMP}, #{timeoneend,jdbcType=TIMESTAMP}, #{timetwostart,jdbcType=TIMESTAMP}, 
@@ -147,6 +189,9 @@
       </if>
       <if test="plantsname != null" >
         PlantsName,
+      </if>
+      <if test="soilName != null" >
+        soilName,
       </if>
       <if test="rootdepth != null" >
         RootDepth,
@@ -226,7 +271,10 @@
         #{area,jdbcType=DOUBLE},
       </if>
       <if test="plantsname != null" >
-        #{plantsname,jdbcType=VARCHAR},
+        #{plantsname,jdbcType=INTEGER},
+      </if>
+      <if test="soilName != null" >
+        #{soilname,jdbcType=INTEGER},
       </if>
       <if test="rootdepth != null" >
         #{rootdepth,jdbcType=INTEGER},
@@ -306,7 +354,10 @@
         Area = #{area,jdbcType=DOUBLE},
       </if>
       <if test="plantsname != null" >
-        PlantsName = #{plantsname,jdbcType=VARCHAR},
+        PlantsName = #{plantsname,jdbcType=INTEGER},
+      </if>
+      <if test="soilName != null" >
+        soilName = #{soilname,jdbcType=INTEGER},
       </if>
       <if test="rootdepth != null" >
         RootDepth = #{rootdepth,jdbcType=INTEGER},
@@ -371,7 +422,8 @@
       SoilWeight = #{soilweight,jdbcType=REAL},
       SoilWater = #{soilwater,jdbcType=REAL},
       Area = #{area,jdbcType=DOUBLE},
-      PlantsName = #{plantsname,jdbcType=VARCHAR},
+      PlantsName = #{plantsname,jdbcType=INTEGER},
+      soilName = #{soilname,jdbcType=INTEGER},
       RootDepth = #{rootdepth,jdbcType=INTEGER},
       HumidityUp = #{humidityup,jdbcType=REAL},
       HumidityDown = #{humiditydown,jdbcType=REAL},

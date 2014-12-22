@@ -480,4 +480,37 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		}
 		return mark;
 	}
+
+	/**
+	 * @Title:       selectEquipments
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午10:11:08
+	 * @Description: 查询节点详细信息
+	 * @throws
+	 */
+	@Override
+	public List<EquipmentExt<SensorInfo>> selectEquipments(Integer pId) {
+		List<EquipmentExt<SensorInfo>> list = new ArrayList<EquipmentExt<SensorInfo>>();
+		try {
+			List<Equipment> eList = equipmentMapper.selectByPid(pId);
+			if(!CollectionUtils.isEmpty(eList)){
+				for(Equipment equipment:eList){
+					EquipmentExt<SensorInfo> equipmentExt = new EquipmentExt<SensorInfo>();
+					equipmentExt.setEquipment(equipment);
+					List<SensorInfo> sList = sensorInfoMapper.selectSensorInfoByEid(equipment.getId());
+					if(!CollectionUtils.isEmpty(eList)){
+						equipmentExt.setResult(sList);
+					}
+					list.add(equipmentExt);
+				}
+			}else{
+				LOG.error("查询节点信息为空！");
+				throw new ServerException(ErrorCode.EQUIPMENT_LIST_NULL);
+			}
+		} catch (DataAccessException e) {
+			LOG.error("查询节点信息失败", e);
+			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
+		}
+		return list;
+	}
 }

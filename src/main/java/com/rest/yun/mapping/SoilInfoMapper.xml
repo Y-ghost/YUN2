@@ -23,6 +23,24 @@
     id, SoilType, SoilWeight, SoilWater, ParameterA, ParameterB, ParameterC, ParameterD, 
     Province, City, County, Address, CreateTime, CreateUser, ModifyTime, ModifyUser
   </sql>
+  <!-- 查询土壤列表信息 -->
+  <select id="selectSoilInfo" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from SoilInfo
+  </select>
+  <!-- 验证土壤名是否存在 -->
+  <select id="validSoilName" resultType="boolean">
+		select exists (select SoilType from SoilInfo
+		<where>
+	 	 SoilType = #{soiltype}
+		<if test="soilId != 0">
+    	  	AND id != #{soilId}
+      	</if>  
+	 	</where>
+	 	)
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -47,7 +65,8 @@
       #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rest.yun.beans.SoilInfo" >
+  <!-- 添加新的土壤信息 -->
+  <insert id="save" parameterType="com.rest.yun.beans.SoilInfo" >
     insert into SoilInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

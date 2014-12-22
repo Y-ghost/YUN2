@@ -2,6 +2,7 @@ package com.rest.yun.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +48,61 @@ public class CommonUtiles {
 		long t = System.currentTimeMillis();
 		Date date = new Date(t + num * 1000);
 		return date;
+	}
+	/**
+	 * @Title:       caculate
+	 * @author:      杨贵松
+	 * @time         2014年12月15日 下午10:41:01
+	 * @Description: 高斯消元法求四元一次方程
+	 * @return       double[]
+	 * @throws
+	 */
+	public static float[] caculate(double[][] b)
+	{
+		double[][] a = new double[4][5];
+		for(int i=0;i<4;i++){
+			a[i][0] = b[i][0]*b[i][0]*b[i][0]; 
+			a[i][1] = b[i][0]*b[i][0]; 
+			a[i][2] = b[i][0]; 
+			a[i][3] = 1; 
+			a[i][4] = b[i][1]; 
+		}
+		int _rows = a.length;
+		int _cols = a[0].length;
+		int L = _rows - 1;
+		int i, j, l, n, m, k = 0;
+		double[] temp1 = new double[_rows];
+		/* 第一个do-while是将增广矩阵消成上三角形式 */
+		do {
+			n = 0;
+			for (l = k; l < L; l++)
+				temp1[n++] = a[l + 1][k] / a[k][k];
+			for (m = 0, i = k + 1; i < _rows; i++, m++) {
+				for (j = k; j < _cols; j++)
+					a[i][j] -= temp1[m] * a[k][j];
+			}
+			k++;
+		} while (k < _rows);
+		// 第二个do-while是将矩阵消成对角形式，并且重新给k赋值,最后只剩下对角线和最后一列的数，其它都为0
+		k = L - 1;
+		do {
+			n = 0;
+			for (l = k; l >= 0; l--)
+				temp1[n++] = a[k - l][k + 1] / a[k + 1][k + 1];
+			for (m = 0, i = k; i >= 0; i--, m++) {
+				for (j = k; j < _cols; j++)
+					a[k - i][j] -= temp1[m] * a[k + 1][j];
+			}
+			k--;
+		} while (k >= 0);
+		//下一个for是解方程组 
+		float[] newresult = new float[_rows];
+		NumberFormat nf = NumberFormat.getNumberInstance();//保留两位小数
+        nf.setMaximumFractionDigits(2);
+		for (i = 0; i < _rows; i++) {
+			newresult[i] = Float.parseFloat(nf.format((float)(a[i][_rows] / a[i][i])));
+		}
+		return newresult;
 	}
 
 	/**

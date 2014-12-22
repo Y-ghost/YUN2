@@ -85,4 +85,14 @@ public interface IEquipmentService {
 	 */
 	void save(List<EquipmentExt<SensorInfo>> list, HttpSession session);
 
+	/**
+	 * @Title:       selectEquipments
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午10:10:41
+	 * @Description: 查询节点详细信息
+	 * @return       List<EquipmentExt<SensorInfo>>
+	 * @throws
+	 */
+	List<EquipmentExt<SensorInfo>> selectEquipments(Integer pId);
+
 }

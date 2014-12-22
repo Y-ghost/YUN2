@@ -14,6 +14,12 @@ rainet.setting.url = {
 		},
 		node : {
 			url : rainet.settings.baseUrl + 'equipment/'
+		},
+		soil : {
+			url : rainet.settings.baseUrl + 'soil/'
+		},
+		plants : {
+			url : rainet.settings.baseUrl + 'plants/'
 		}
 };
 
@@ -56,7 +62,6 @@ rainet.setting.service = {
 			}
 		},
 		
-		
 		host : {
 			add: function(param, callback){
 				rainet.ajax.execute({
@@ -86,7 +91,24 @@ rainet.setting.service = {
 		equipment : {
 			list : function(param, callback) {
 				rainet.ajax.execute({
-					url : rainet.controlCenter.url.equipment.url+"selectEquipmentExt/",
+					url : rainet.setting.url.node.url+"selectEquipmentExt/",
+					$busyEle : $('.equipment-container'),
+					data : {pId:param.pId},
+					method : 'GET',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					success : function(data) {
+						callback(data);
+					}
+				});
+			},
+			selectEquipments : function(param, callback) {
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"selectEquipments/",
 					$busyEle : $('.equipment-container'),
 					data : {pId:param.pId},
 					method : 'GET',
@@ -148,5 +170,61 @@ rainet.setting.service = {
 					}
 				});
 			}
-		}
+		},
+		soilInfo : {
+			list: function(callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.soil.url+"selectSoilInfo/",
+					method : 'GET',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			validName: function(param,callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.soil.url+"validName/",
+					data : param,
+					method : 'GET',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			add: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.soil.url+"save/",
+					$busyEle : $('.node-container'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			}
+		},
+		plants : {
+			list: function(callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.plants.url+"selectPlantsInfo/",
+					method : 'GET',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			add: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.plants.url+"save/",
+					$busyEle : $('.node-container'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			}
+		},
 };

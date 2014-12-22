@@ -116,13 +116,13 @@ rainet.setting.controller.equipment = {
 															"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 															"<label class=\"col-sm-3 control-label\">灌溉面积：</label>" +
 															"<div class=\"col-sm-3\">" +
-															"<input type=\"text\" class=\"form-control\"" +
+															"<input type=\"text\" style='width:80%;float:left;' class=\"form-control\"" +
 															"id=\"inputLab\" name=\"area\" value=\"\"/>" +
 															"<span class=\"fa fa-exclamation-circle text-primary navbar-right dropdown cursor\" id=\"请输入正整数或保留2位的小数，如：123，123.12 ！\"></span>" +
 															"</div>" +
 															"<label class=\"col-sm-3 control-label\">流量参数：</label>" +
 															"<div class=\"col-sm-3\">" +
-															"<input type=\"text\" class=\"form-control\"" +
+															"<input type=\"text\" style='width:80%;float:left;' class=\"form-control\"" +
 															"id=\"inputLab\" name=\"fowParameter\" value=\"\"/>" +
 															"<span class=\"fa fa-exclamation-circle text-primary navbar-right dropdown cursor\" id=\"请输入正整数，如：123 ！\"></span>" +
 															"<input type=\"hidden\" class=\"form-control\" name=\"controlHostId\" value=\""+item.controlHostId+"\"/>" +

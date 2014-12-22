@@ -1,0 +1,56 @@
+package com.rest.yun.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.rest.yun.beans.PlantsInfo;
+import com.rest.yun.dto.ResponseWrapper;
+import com.rest.yun.listener.Login;
+import com.rest.yun.service.IPlantsInfoService;
+
+@Controller
+@RequestMapping("/plants")
+public class PlantsController {
+	@Autowired
+	private IPlantsInfoService plantsInfoService;
+
+	/**
+	 * @Title:       selectPlantsInfo
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午11:43:06
+	 * @Description: 查询植物列表
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value = "/selectPlantsInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper selectPlantsInfo() {
+		List<PlantsInfo> list = plantsInfoService.selectPlantsInfo();
+		return new ResponseWrapper(list);
+	}
+
+	/**
+	 * @Title:       save
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午11:43:36
+	 * @Description: 添加植物信息
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="/save",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper save(@RequestBody List<PlantsInfo> list, HttpSession session) {
+		//....
+		return new ResponseWrapper(true);
+	}
+}

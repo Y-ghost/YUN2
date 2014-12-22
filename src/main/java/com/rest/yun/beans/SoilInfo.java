@@ -26,6 +26,22 @@ public class SoilInfo {
     private String county;
 
     private String address;
+    //2014-12-15 21:33:04 添加土壤湿度标定四组数据
+    private Float waterVal1;
+    
+    private Float originalVal1;
+    
+    private Float waterVal2;
+    
+    private Float originalVal2;
+    
+    private Float waterVal3;
+    
+    private Float originalVal3;
+    
+    private Float waterVal4;
+    
+    private Float originalVal4;
 
     private Date createtime;
 
@@ -39,7 +55,71 @@ public class SoilInfo {
         return id;
     }
 
-    public void setId(Integer id) {
+	public Float getWaterVal1() {
+		return waterVal1;
+	}
+
+	public void setWaterVal1(Float waterVal1) {
+		this.waterVal1 = waterVal1;
+	}
+
+	public Float getOriginalVal1() {
+		return originalVal1;
+	}
+
+	public void setOriginalVal1(Float originalVal1) {
+		this.originalVal1 = originalVal1;
+	}
+
+	public Float getWaterVal2() {
+		return waterVal2;
+	}
+
+	public void setWaterVal2(Float waterVal2) {
+		this.waterVal2 = waterVal2;
+	}
+
+	public Float getOriginalVal2() {
+		return originalVal2;
+	}
+
+	public void setOriginalVal2(Float originalVal2) {
+		this.originalVal2 = originalVal2;
+	}
+
+	public Float getWaterVal3() {
+		return waterVal3;
+	}
+
+	public void setWaterVal3(Float waterVal3) {
+		this.waterVal3 = waterVal3;
+	}
+
+	public Float getOriginalVal3() {
+		return originalVal3;
+	}
+
+	public void setOriginalVal3(Float originalVal3) {
+		this.originalVal3 = originalVal3;
+	}
+
+	public Float getWaterVal4() {
+		return waterVal4;
+	}
+
+	public void setWaterVal4(Float waterVal4) {
+		this.waterVal4 = waterVal4;
+	}
+
+	public Float getOriginalVal4() {
+		return originalVal4;
+	}
+
+	public void setOriginalVal4(Float originalVal4) {
+		this.originalVal4 = originalVal4;
+	}
+
+	public void setId(Integer id) {
         this.id = id;
     }
 

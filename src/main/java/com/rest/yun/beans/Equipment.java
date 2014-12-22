@@ -19,7 +19,9 @@ public class Equipment {
 
     private Double area;
 
-    private String plantsname;
+    private Integer soilname;
+    
+    private Integer plantsname;
 
     private Integer rootdepth;
 
@@ -57,6 +59,33 @@ public class Equipment {
     
     private Project project;
     
+    private PlantsInfo plantsInfo;
+    
+    private SoilInfo SoilInfo;
+    
+	public Integer getSoilname() {
+		return soilname;
+	}
+
+	public void setSoilname(Integer soilname) {
+		this.soilname = soilname;
+	}
+
+	public SoilInfo getSoilInfo() {
+		return SoilInfo;
+	}
+
+	public void setSoilInfo(SoilInfo soilInfo) {
+		SoilInfo = soilInfo;
+	}
+
+	public PlantsInfo getPlantsInfo() {
+		return plantsInfo;
+	}
+
+	public void setPlantsInfo(PlantsInfo plantsInfo) {
+		this.plantsInfo = plantsInfo;
+	}
 
 	public Project getProject() {
 		return project;
@@ -130,12 +159,12 @@ public class Equipment {
         this.area = area;
     }
 
-    public String getPlantsname() {
+    public Integer getPlantsname() {
         return plantsname;
     }
 
-    public void setPlantsname(String plantsname) {
-        this.plantsname = plantsname == null ? null : plantsname.trim();
+    public void setPlantsname(Integer plantsname) {
+        this.plantsname = plantsname;
     }
 
     public Integer getRootdepth() {

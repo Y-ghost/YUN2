@@ -34,6 +34,21 @@ public class EquipmentController {
 	private IEquipmentService equipmentService;
 
 	/**
+	 * @Title:       selectEquipments
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午10:07:53
+	 * @Description: 查询节点详细信息
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value = "/selectEquipments", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper selectEquipments(@RequestParam Integer pId) {
+		List<EquipmentExt<SensorInfo>> list = equipmentService.selectEquipments(pId);
+		return new ResponseWrapper(list);
+	}
+	/**
 	 * @Title: selectEquipmentExt
 	 * @author: 杨贵松
 	 * @time 2014年11月6日 上午12:08:14
