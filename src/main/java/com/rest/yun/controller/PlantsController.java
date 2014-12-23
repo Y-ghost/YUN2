@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.PlantsInfo;
+import com.rest.yun.dto.PlantsExt;
 import com.rest.yun.dto.ResponseWrapper;
 import com.rest.yun.listener.Login;
 import com.rest.yun.service.IPlantsInfoService;
@@ -49,8 +50,8 @@ public class PlantsController {
 	@Login
 	@RequestMapping(value="/save",method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseWrapper save(@RequestBody List<PlantsInfo> list, HttpSession session) {
-		//....
+	public ResponseWrapper save(@RequestBody PlantsExt plantsExt, HttpSession session) {
+		plantsInfoService.save(plantsExt,session);
 		return new ResponseWrapper(true);
 	}
 }

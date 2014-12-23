@@ -9,8 +9,6 @@ public interface PlantsInfoMapper {
 
     int insert(PlantsInfo record);
 
-    int insertSelective(PlantsInfo record);
-
     PlantsInfo selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(PlantsInfo record);
@@ -26,4 +24,14 @@ public interface PlantsInfoMapper {
      * @throws
      */
     List<PlantsInfo> selectPlantsInfo();
+
+    /**
+     * @Title:       save
+     * @author:      杨贵松
+     * @time         2014年12月22日 下午3:10:43
+     * @Description: 添加植物
+     * @return       int
+     * @throws
+     */
+	int save(PlantsInfo plants);
 }

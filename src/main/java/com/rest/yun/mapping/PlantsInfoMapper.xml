@@ -38,7 +38,8 @@
       #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.rest.yun.beans.PlantsInfo" >
+  <!-- 添加植物信息 -->
+  <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.yun.beans.PlantsInfo" >
     insert into PlantsInfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

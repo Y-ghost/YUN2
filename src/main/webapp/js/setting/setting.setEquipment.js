@@ -564,18 +564,20 @@ var radioChange = function(){
 //自定义植物信息
 var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
 	$(".plantsLink").off('click').on('click', function(e){
-		var $form = $("form",$plantsInfo);
 		var gcs = $(".growthCycles",$plantsInfo);
 			gcs.empty().append($growthCycleHeader.html());
 		
-		setValidateForPlants($form);
 		$(".addNewCycle",$plantsInfo).off('click').on('click', function(e){
 			gcs.append($growthCycle.html());
 			$(".closeCycle",$plantsInfo).off('click').on('click', function(e){
 				$(this).parent().remove();
 			});
-//			setValidateForPlants($form);
+			var $form = $("form",$plantsInfo);
+			setValidateForPlants($form);
 		});
+		
+		var $form = $("form",$plantsInfo);
+		setValidateForPlants($form);
 		
 		$('button[type=submit]', $form).off('click').on('click', function(){
 			// 检查验证是否通过
