@@ -31,7 +31,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <!-- 批量添加植物周期数据 -->
-  <insert id="insert" parameterType="java.util.List" >
+  <insert id="save" parameterType="java.util.List" >
     <![CDATA[
 	    insert into PlantsExp ( PlantsId, PlantsSeason, 
 	      HumidityUp, HumidityDown, TemperatureUp, 

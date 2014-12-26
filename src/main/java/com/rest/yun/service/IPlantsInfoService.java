@@ -14,4 +14,6 @@ public interface IPlantsInfoService {
 
 	void save(PlantsExt plantsExt, HttpSession session);
 
+	boolean validPlantsName(String plantsname, int plantsId);
+
 }

@@ -113,6 +113,7 @@ button.closeCycle {
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>

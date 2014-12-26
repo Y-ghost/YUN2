@@ -331,6 +331,8 @@ rainet.controlCenter.view = function() {
 			initProjectList(data);
 		});
 		open();
+		//获取系统时间
+//		rainet.utils.systime();
 		//退出系统
 		rainet.utils.exist();
 	}

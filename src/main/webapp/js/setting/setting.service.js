@@ -214,6 +214,16 @@ rainet.setting.service = {
 					}
 				});
 			},
+			validName: function(param,callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.plants.url+"validName/",
+					data : param,
+					method : 'GET',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.plants.url+"save/",

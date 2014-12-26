@@ -2,6 +2,8 @@ package com.rest.yun.mapping;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.rest.yun.beans.PlantsInfo;
 
 public interface PlantsInfoMapper {
@@ -34,4 +36,14 @@ public interface PlantsInfoMapper {
      * @throws
      */
 	int save(PlantsInfo plants);
+
+	/**
+	 * @Title:       validPlantsName
+	 * @author:      杨贵松
+	 * @time         2014年12月23日 下午5:58:52
+	 * @Description: 校验植物名是否存在
+	 * @return       boolean
+	 * @throws
+	 */
+	boolean validPlantsName(@Param("plantsname") String plantsname, @Param("plantsId") int plantsId);
 }

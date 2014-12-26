@@ -55,7 +55,6 @@ rainet.setting.controller.setEquipment = {
 							});
 						});
 						rainet.setting.service.equipment.selectEquipments(param, function(data){
-							
 							var $EquipmentList = $(".EquipmentList");
 							var str = "";
 							$.each(data,function(index,item){
@@ -85,6 +84,38 @@ rainet.setting.controller.setEquipment = {
 									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
 									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" checked id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
 									break;
+								}
+								
+								//
+								var week = "";
+								var timeonestart = "";
+								var timeoneend = "";
+								var timetwostart = "";
+								var timetwoend = "";
+								var timethreestart = "";
+								var timethreeend = "";
+								
+								if(item.equipment.week != null){
+									week = item.equipment.week;
+								}
+								
+								if(item.equipment.timeonestart != null){
+									timeonestart = item.equipment.timeonestart;
+								}
+								if(item.equipment.timeoneend != null){
+									timeoneend = item.equipment.timeoneend;
+								}
+								if(item.equipment.timetwostart != null){
+									timetwostart = item.equipment.timetwostart;
+								}
+								if(item.equipment.timetwoend != null){
+									timetwoend = item.equipment.timetwoend;
+								}
+								if(item.equipment.timethreestart != null){
+									timethreestart = item.equipment.timethreestart;
+								}
+								if(item.equipment.timethreeend != null){
+									timethreeend = item.equipment.timethreeend;
 								}
 								
 								str =str + "<div class=\"col-xs-12 col-md-6\">" +
@@ -125,30 +156,39 @@ rainet.setting.controller.setEquipment = {
 												"<hr/>"+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
-													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control week cursor \" id=\"inputLab\" data-bv-field=\"week\" value=\""+item.equipment.week+"\"></div></div>" +
+													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control week cursor \" id=\"inputLab\" data-bv-field=\"week\" name=\"week\" value=\""+week+"\"></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
-													"<div class=\"col-sm-9 input-append\" id='timeone'><input type=\"text\" style='width:80%;float:left;' class=\"form-control cursor\" id=\"inputLab\" data-bv-field=\"department\" value=\""+item.equipment.timeonestart+"-"+item.equipment.timeoneend+"\"/>" +
-															"<span class=\"add-on\"style='width:20%;'><i data-time-icon=\"icon-time\">ddddd" +
-															"</i>" +
-															"</span></div></div>" +
+													"<div class=\"input-group date col-sm-9\">" +
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeonestart\" value=\""+timeonestart+"\"/>" +
+														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeoneend\" value=\""+timeoneend+"\"/>" +
+													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段二：</label>" +
-													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control timetwo cursor\" id=\"inputLab\" data-bv-field=\"department\" value=\""+item.equipment.timeonestart+"-"+item.equipment.timeoneend+"\"></div></div>" +
+													"<div class=\"input-group date col-sm-9\">" +
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwostart\" value=\""+timetwostart+"\"/>" +
+														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwoend\" value=\""+timetwoend+"\"/>" +
+													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段三：</label>" +
-													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control timethree cursor\" id=\"inputLab\" data-bv-field=\"address\" value=\""+item.equipment.timeonestart+"-"+item.equipment.timeoneend+"\"></div></div>" +
+													"<div class=\"input-group date col-sm-9\">" +
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreestart\" value=\""+timethreestart+"\"/>" +
+														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\" value=\""+timethreeend+"\"/>" +
+													"</div></div>" +
 												"</div>"+
 											"</form></div></div></div>";
 							});
 							$EquipmentList.empty().append(str);
 							tipShow();
 							radioChange();
+							dateTime();
 							this.addSoil(_soilInfoTempate);
 							this.addPlants(_plantsInfoTempate,_growthCycleHeader,_growthCycle);
 							flag = true;
 						});
-						//切换时段
 					}else{
 						rainet.utils.notification.warning("请先选择项目!");
 						flag = true;
@@ -455,11 +495,11 @@ rainet.setting.controller.setEquipment = {
 						"<div class=\"form-group\">\n"+
 						"<label class=\"col-sm-3 control-label\">开始日期：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
-						"<input type=\"text\" class=\"form-control startdate\" name=\"startdate\"/>\n"+
+						"<input type=\"text\" class=\"form-control startdate cursor\" id='cycledate' style='padding-right:5px;' name=\"startdate\"/>\n"+
 						"</div>\n"+
 						"<label class=\"col-sm-3 control-label\">结束日期：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
-						"<input type=\"text\"  class=\"form-control enddate\" name=\"enddate\"/>\n"+
+						"<input type=\"text\"  class=\"form-control enddate cursor\" id='cycledate' style='padding-right:5px;' name=\"enddate\"/>\n"+
 						"</div>\n"+
 						"</div>\n"+
 						"<div class=\"form-group\">\n"+
@@ -496,11 +536,11 @@ rainet.setting.controller.setEquipment = {
 						"<div class=\"form-group\">\n"+
 						"<label class=\"col-sm-3 control-label\">开始日期：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
-						"<input type=\"text\" class=\"form-control startdate\" name=\"startdate\"/>\n"+
+						"<input type=\"text\" class=\"form-control startdate cursor\" id='cycledate' style='padding-right:5px;' name=\"startdate\"/>\n"+
 						"</div>\n"+
 						"<label class=\"col-sm-3 control-label\">结束日期：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
-						"<input type=\"text\"  class=\"form-control enddate\" name=\"enddate\"/>\n"+
+						"<input type=\"text\"  class=\"form-control enddate cursor\" id='cycledate' style='padding-right:5px;' name=\"enddate\"/>\n"+
 						"</div>\n"+
 						"</div>\n"+
 						"<div class=\"form-group\">\n"+
@@ -555,7 +595,6 @@ var radioChange = function(){
 	$(".modelClass").change(function() {
 		if($(this).val()==2){
 			$(this).parent().parent().parent().find("div.timeLens").css("display","inline");
-			dateTimePicker();
 		}else{
 			$(this).parent().parent().parent().find("div.timeLens").css("display","none");
 		}
@@ -566,6 +605,8 @@ var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
 	$(".plantsLink").off('click').on('click', function(e){
 		var gcs = $(".growthCycles",$plantsInfo);
 			gcs.empty().append($growthCycleHeader.html());
+			var obj = gcs.find("input[id=cycledate]");
+			cycledate(obj);
 		
 		$(".addNewCycle",$plantsInfo).off('click').on('click', function(e){
 			gcs.append($growthCycle.html());
@@ -573,7 +614,11 @@ var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
 				$(this).parent().remove();
 			});
 			var $form = $("form",$plantsInfo);
+			var validator = $form.data('bootstrapValidator');
+			validator.destroy();
 			setValidateForPlants($form);
+			obj =  $(".growthCycles").find("input[id=cycledate]");
+			cycledate(obj);
 		});
 		
 		var $form = $("form",$plantsInfo);
@@ -588,14 +633,30 @@ var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
 			}
 			var formData = $form.serializeArray();
 			var jsonData = rainet.utils.serializeObject(formData);
-			console.log(JSON.stringify(jsonData));
+			//组装json
+			var plantsname = $('.plantsname', $form).val();
+			var rootdepth = $('.rootdepth', $form).val();
+			var plants = {plantsname : plantsname, rootdepth : rootdepth};
+			var param = {plants: plants};
+			var list = [];
+			var $array = $('.growthCycle', $form);
+			$array.each(function(i,cycle){
+				var d = {};
+				$('input', $(cycle)).each(function(){
+					var name = $(this).attr("name");
+					var value = $(this).val();
+					d[name] = value;
+				});
+				list.push(d);
+			});
+			param.result = list;
 			// 添加植物
-//			rainet.setting.service.plants.add(jsonData, function(data){
-//				if (data) {
-//					bootbox.hideAll();
-//					rainet.utils.notification.success('添加成功!');
-//				}
-//			});
+			rainet.setting.service.plants.add(param, function(data){
+				if (data) {
+					bootbox.hideAll();
+					rainet.utils.notification.success('添加成功!');
+				}
+			});
 		});
 		bootbox.dialog({
 			message : $plantsInfo,
@@ -856,6 +917,10 @@ var setValidateForPlants = function($form){
 				validators : {
 					notEmpty : {
 						message: '开始日期不能为空'
+					},
+					regexp: {
+						regexp: /^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/,
+						message: '日期格式如：2014-01-01'
 					}
 				}
 			},
@@ -863,6 +928,10 @@ var setValidateForPlants = function($form){
 				validators : {
 					notEmpty : {
 						message: '结束日期不能为空'
+					},
+					regexp: {
+						regexp: /^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/,
+						message: '日期格式如：2014-01-01'
 					}
 				}
 			},
@@ -911,26 +980,20 @@ var setValidateForPlants = function($form){
 				}
 			}
 		}
-	})
-	
-	// 修复-->当选择省份时，已经校验过的城市不会重新验证的问题
-	.on('change', '.provinceItem', function(){
-		$form.bootstrapValidator('revalidateField', 'city');
-		
-		// 验证土壤名称是否存在
-	}).on('blur.rainet', '.soiltype', function(){
+		// 验证植物名称是否存在
+	}).on('blur.rainet', '.plantsname', function(){
 		var bv = $form.data('bootstrapValidator');
-		$field = bv.getFieldElements('soiltype');
+		$field = bv.getFieldElements('plantsname');
 		var value = $field.val();
 		if ($.trim(value) === '') {
 			bv.updateMessage($field, 'notEmpty');
 			return ;
 		}
-		var param = {soiltype : value};
-		rainet.setting.service.soilInfo.validName(param, function(data){
+		var param = {plantsname : value};
+		rainet.setting.service.plants.validName(param, function(data){
 			if (data) {
 				// 存在，更新错误信息的提示
-				bv.updateMessage($field, 'notEmpty', '土壤名称已存在');
+				bv.updateMessage($field, 'notEmpty', '植物名称已存在');
 				bv.updateStatus($field, 'INVALID');
 			}
 		});
@@ -939,19 +1002,58 @@ var setValidateForPlants = function($form){
 	$form.data('bootstrapValidator').disableSubmitButtons(true);
 }
 
-var dateTimePicker = function() {
-	$('#timeone').datetimepicker({
-		format : 'HH:mm',
-		weekStart : 1,
-		autoclose : true,
-		pick12HourFormat: true,
-		todayBtn : 'linked',
-		language : 'zh-CN'
-	}).on('changeDate', function(ev) {
-		var startTime = ev.date.valueOf();
-//		if (start < teach) {
-			alert("“评估开始时间 ”不能早于“授课时间 ” ！");
-			$(".timeone").focus();
-//		}
+var dateTime = function() {
+	var obj = $(".EquipmentList").find("input[id=dateTime]");
+	$(obj).off('click').on('click', function(e){
+		$(this).datetimepicker({
+			format : "hh:ii",
+	        language:  'zh-CN',
+	        weekStart: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 1,
+			minView: 2,
+			forceParse: 0
+		});
 	});
+}
+var cycledate = function(obj) {
+	$(obj).off('click').on('click', function(e){
+		$(this).datetimepicker({
+			format : "yyyy-mm-dd",
+			language:  'zh-CN',
+			weekStart: 1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+	});
+//	$('#starttime1').datetimepicker({
+//		format : "hh:ii",
+//        language:  'zh-CN',
+//        weekStart: 1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		minView: 2,
+//		forceParse: 0
+//	});
+//	$('#endtime1').datetimepicker({
+//		format : "hh:ii",
+//		language:  'zh-CN',
+//		weekStart: 1,
+//		autoclose: 1,
+//		todayHighlight: 1,
+//		startView: 2,
+//		minView: 2,
+//		forceParse: 0
+//	}).on('changeDate', function(ev) {
+//		var startTime = ev.date.valueOf();
+////		if (start < teach) {
+//		alert("“评估开始时间 ”不能早于“授课时间 ” ！");
+//		$(".timeone").focus();
+////		}
+//	});
 }

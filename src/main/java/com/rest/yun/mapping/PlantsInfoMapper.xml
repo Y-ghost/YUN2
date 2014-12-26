@@ -38,6 +38,17 @@
       #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER})
   </insert>
+   <!-- 验证植物名是否存在 -->
+  <select id="validPlantsName" resultType="boolean">
+		select exists (select PlantsName from PlantsInfo
+		<where>
+	 	 PlantsName = #{plantsname}
+		<if test="plantsId != 0">
+    	  	AND id != #{plantsId}
+      	</if>  
+	 	</where>
+	 	)
+  </select>
   <!-- 添加植物信息 -->
   <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="com.rest.yun.beans.PlantsInfo" >
     insert into PlantsInfo

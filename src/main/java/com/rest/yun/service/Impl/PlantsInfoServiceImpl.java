@@ -98,4 +98,16 @@ public class PlantsInfoServiceImpl implements IPlantsInfoService {
 			throw new ServerException(ErrorCode.ILLEGAL_PARAM);
 		}
 	}
+
+	/**
+	 * @Title:       validPlantsName
+	 * @author:      杨贵松
+	 * @time         2014年12月23日 下午5:58:05
+	 * @Description: 校验植物名是否存在
+	 * @throws
+	 */
+	@Override
+	public boolean validPlantsName(String plantsname, int plantsId) {
+		return plantsInfoMapper.validPlantsName(plantsname,plantsId);
+	}
 }

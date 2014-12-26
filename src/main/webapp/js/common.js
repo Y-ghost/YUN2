@@ -101,6 +101,24 @@ rainet.utils.busy = function(){
 	};
 }();
 
+//获取系统时间
+rainet.utils.systime = function(){
+	this.current();
+}
+//每秒增加一秒
+rainet.utils.current = function(time){
+	rainet.ajax.execute({
+		url : rainet.settings.baseUrl+"system/getSystemTime/",
+		success : function(data) {
+			$(".systime").html(data);
+		}
+	});
+	
+	setInterval(function() {
+		rainet.utils.current();
+	}, 1000); 
+}
+
 //退出系统
 rainet.utils.exist = function(){
 	$("#exist").click(function(){
