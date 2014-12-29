@@ -96,6 +96,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					equipmentExt.setCode(equipment.getCode());
 					equipmentExt.setControlHostId(equipment.getControlhostid());
 					equipmentExt.setEquipmentStatus(equipmentStatus);
+					equipmentExt.setEquipment(equipment);
 					equipmentExt.setResult(edList);
 
 					list.add(equipmentExt);

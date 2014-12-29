@@ -25,6 +25,7 @@ rainet.controlCenter.view = function() {
 	var initEquipmentList = function(data){
 		var $EquipmentList = $(".EquipmentList");
 		var str = "";
+		var humidity = 0;
 		$.each(data,function(index,item){
 			var sensorStr = "";
 			var iTmp = 10;
@@ -75,6 +76,7 @@ rainet.controlCenter.view = function() {
 					"id=\"inputLab\" data-bv-field=\"address\"value=\""+data.humidity+" %\"/>" +
 					"</div>"
 				}
+				humidity = data.humidity;
 				sensorStr = sensorStr + headTmp + strError + endTmp;
 			});
 			if(iTmp!=10 && iTmp%2 == 0){
@@ -82,13 +84,35 @@ rainet.controlCenter.view = function() {
 			}
 			var eTemperature = "";
 			var eStatus = "";
+			var velocity = "";
 			if(item.equipmentStatus == null){
 				eTemperature = "null";
 				eStatus = "null";
+				velocity = "0";
 			}else{
 				eTemperature = item.equipmentStatus.temperature;
 				eStatus = item.equipmentStatus.status;
+				velocity = item.equipmentStatus.velocity;
 			}
+			
+			var area = item.equipment.area;
+			var soilweight = item.equipment.soilweight;
+			var soilwater = item.equipment.soilwater;
+			var rootdepth = item.equipment.rootdepth;
+			if(area==null){
+				area = 0 ;
+			}
+			if(soilweight==null){
+				soilweight = 1 ;
+			}
+			if(soilwater==null){
+				soilwater = 0 ;
+			}
+			if(rootdepth==null){
+				rootdepth = 0 ;
+			}
+			
+			var water = area*rootdepth*soilweight/10000*(soilwater-(humidity*soilwater)/(soilweight*100));
 			
 			str = str + "<div class=\"col-xs-12 col-md-6\">" +
 					"<div class=\"panel panel-default \">" +
@@ -115,12 +139,12 @@ rainet.controlCenter.view = function() {
 					"<label class=\"col-sm-3 control-label\">预期水量：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\"0 L\"/>" +
+					"id=\"inputLab\" data-bv-field=\"department\" value=\""+(Number(water)).toFixed(3)+" L\"/>" +
 					"</div>" +
-					"<label class=\"col-sm-3 control-label\">实时水量：</label>" +
+					"<label class=\"col-sm-3 control-label\">水流速度：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\"0 L\"/>" +
+					"id=\"inputLab\" data-bv-field=\"department\" value=\""+velocity+" L/min\"/>" +
 					"</div>" +
 					"</div>" +
 					sensorStr +

@@ -28,7 +28,7 @@ rainet.setting.controller.setEquipment = {
 			var _soilInfoTempate = $(this.soilInfoTempate);
 			var _plantsInfoTempate= $(this.plantsInfoTempate);
 			var _growthCycleHeader=$(this.growthCycleHeader);
-			var _growthCycle=$(this.growthCycle)
+			var _growthCycle=$(this.growthCycle);
 			//查询项目下的节点信息
 			$(".findBtn").off('click').on('click', function(e){
 				if(flag){
