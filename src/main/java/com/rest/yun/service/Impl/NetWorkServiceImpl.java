@@ -1,5 +1,6 @@
 package com.rest.yun.service.Impl;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -188,7 +189,11 @@ public class NetWorkServiceImpl implements NetWorkService{
 									sensorMap.put("num", i);
 									SensorInfo sensorInfo = sensorInfoMapper.selectByEidAndNum(sensorMap);
 									dataVal.setCreatetime(date);
-									dataVal.setHumidity((float)Math.round(((float)(receiveData[numTmp/2+12+12+i]+receiveData[numTmp/2+12+13+i]*0.01))*100)/100);
+									float hTmp = (float)Math.round(((float)(receiveData[numTmp/2+12+12+i]+receiveData[numTmp/2+12+13+i]*0.01))*100)/100;
+									float soilWater = equipment.getSoilwater();
+									BigDecimal tmp = new BigDecimal(hTmp/soilWater*100);
+									float humidity = tmp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+									dataVal.setHumidity(humidity);
 									dataVal.setSensorid(sensorInfo.getId());
 									listData.add(dataVal);
 								}
