@@ -158,6 +158,24 @@ rainet.setting.service = {
 					}
 				});
 			},
+			update: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"updateList/",
+					$busyEle : $('.node-container'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
 			
 			putData : function(param, callback){
 				rainet.ajax.execute({

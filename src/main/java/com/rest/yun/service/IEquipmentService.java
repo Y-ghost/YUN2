@@ -95,4 +95,14 @@ public interface IEquipmentService {
 	 */
 	List<EquipmentExt<SensorInfo>> selectEquipments(Integer pId);
 
+	/**
+	 * @Title:       updateList
+	 * @author:      杨贵松
+	 * @time         2014年12月28日 下午4:42:50
+	 * @Description: 批量设置节点及传感器信息
+	 * @return       void
+	 * @throws
+	 */
+	void updateList(List<Equipment> list, HttpSession session);
+
 }

@@ -207,6 +207,7 @@ rainet.setting.controller.equipment = {
 					});
 					if(!mark){
 						rainet.utils.notification.warning("请填写正确的节点信息!");
+						flag = true;
 					}else{
 						bootbox.dialog({
 							message : "<label style=\"color:red;\">特别注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作将删除该主机下所有的数据，包括节点传感器信息、采集的历史数据等，确定注册?",

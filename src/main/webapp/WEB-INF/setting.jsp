@@ -119,6 +119,7 @@ button.closeCycle {
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.setEquipment.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 </body>
 </html>

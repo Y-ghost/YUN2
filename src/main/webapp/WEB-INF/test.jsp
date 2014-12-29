@@ -34,6 +34,9 @@
 			</div>
 			<div class="panel-body">
 				<form class="form-horizontal" role="form">
+					<div class="input-group date col-md-5">
+	                    <input class="form_datetime" size="16" type="text" value="" readonly/>
+	                </div>
 					<div class="form-group"
 						style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: #ddd 1px solid;"
 						id="form-group">
@@ -80,36 +83,6 @@
 						</div>
 						<div class="col-sm-3" style="line-height: 34px;">
 							<a class="cursor soilLink" id="inputLab">自定义</a>
-						</div>
-					</div>
-					<div class="form-group "
-						style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: #ddd 1px solid;"
-						id="form-group">
-						<label class="col-sm-3 control-label">植物：</label>
-						<div class="col-sm-6">
-							<select class="form-control plants" value="0" id="inputLab"><option>-选择植物-</option>
-								<option value="1">1</option>
-								<option value="2">1</option>
-								<option value="3">2</option></select>
-						</div>
-						<div class="col-sm-3" style="line-height: 34px;">
-							<a class="cursor plantsLink" id="inputLab">自定义</a>
-						</div>
-					</div>
-					<div class="form-group " id="form-group">
-						<label class="col-sm-3 control-label">根系深度：</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control rootdepth"
-								style="width: 65%; float: left;" id="inputLab"
-								data-bv-field="rootdepth" value="60"><span
-								style="line-height: 34px;">&nbsp;&nbsp;cm</span>
-						</div>
-						<label class="col-sm-3 control-label">土壤干重：</label>
-						<div class="col-sm-3">
-							<input type="text" class="form-control soilweight"
-								style="width: 35%; float: left;" id="inputLab"
-								data-bv-field="soilweight" value="12"><span
-								style="line-height: 34px; font-size: 6px;">&nbsp;&nbsp;g/cm<sup>3</sup></span>
 						</div>
 					</div>
 					<div class="form-group" id="form-group">

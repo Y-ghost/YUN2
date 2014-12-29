@@ -58,31 +58,22 @@ rainet.setting.controller.setEquipment = {
 							var $EquipmentList = $(".EquipmentList");
 							var str = "";
 							$.each(data,function(index,item){
-								var sensorStr = "";
-								//传感器校准a,b,c,d参数
-								$.each(item.result,function(i,data){
-									sensorStr =sensorStr + "<input type=\"hidden\" class=\"parama"+(i+1)+"\" value=\""+data.parametera+"\"/>"+
-													"<input type=\"hidden\" class=\"paramb"+(i+1)+"\" value=\""+data.parameterb+"\"/>"+
-													"<input type=\"hidden\" class=\"paramc"+(i+1)+"\" value=\""+data.parameterc+"\"/>"+
-													"<input type=\"hidden\" class=\"paramd"+(i+1)+"\" value=\""+data.parameterd+"\"/>";
-								});
-								
 								var radio = "";
 								switch(item.equipment.irrigationtype){
 								case 0:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" checked id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
+									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
 									break;
 								case 1:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" checked id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
+									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
 									break;
 								case 2:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"model\" class=\"modelClass\" checked id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
+									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
 									break;
 								}
 								
@@ -100,58 +91,60 @@ rainet.setting.controller.setEquipment = {
 								}
 								
 								if(item.equipment.timeonestart != null){
-									timeonestart = item.equipment.timeonestart;
+									timeonestart = rainet.utils.formateDate(item.equipment.timeonestart,"hh:mm");
 								}
 								if(item.equipment.timeoneend != null){
-									timeoneend = item.equipment.timeoneend;
+									timeoneend = rainet.utils.formateDate(item.equipment.timeoneend,"hh:mm");
 								}
 								if(item.equipment.timetwostart != null){
-									timetwostart = item.equipment.timetwostart;
+									timetwostart = rainet.utils.formateDate(item.equipment.timetwostart,"hh:mm");
 								}
 								if(item.equipment.timetwoend != null){
-									timetwoend = item.equipment.timetwoend;
+									timetwoend = rainet.utils.formateDate(item.equipment.timetwoend,"hh:mm");
 								}
 								if(item.equipment.timethreestart != null){
-									timethreestart = item.equipment.timethreestart;
+									timethreestart = rainet.utils.formateDate(item.equipment.timethreestart,"hh:mm");
 								}
 								if(item.equipment.timethreeend != null){
-									timethreeend = item.equipment.timethreeend;
+									timethreeend = rainet.utils.formateDate(item.equipment.timethreeend,"hh:mm");
 								}
 								
 								str =str + "<div class=\"col-xs-12 col-md-6\">" +
 											"<div class=\"panel panel-default \">" +
 											"<div class=\"panel-heading\">" +
-											"<label>"+item.equipment.name+"</label> <span class=\"float-right\"> <input type=\"checkbox\" class=\"cursor\" name=\""+item.equipment.id+"\" id=\"equipmentCheckbox\"></span></div>" +
+											"<label>"+item.equipment.name+"</label> <span class=\"float-right\"> <input type=\"checkbox\" class=\"cursor\" name=\"id\" value=\""+item.equipment.id+"\" id=\"equipmentCheckbox\"></span></div>" +
 											"<div class=\"panel-body\">" +
 											"<form class=\"form-horizontal\" role=\"form\">" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
-													sensorStr+radio+
+												"<input type=\"hidden\" name=\"id\" value=\""+item.equipment.id+"\"/>" +
+												"<input type=\"hidden\" name=\"controlhostid\" value=\""+item.equipment.controlhostid+"\"/>"+	
+												radio+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">土壤：</label>" +
-													"<div class=\"col-sm-6\"><select class=\"form-control soil\" value=\""+item.equipment.soilname+"\" id=\"inputLab\"><option>-选择土壤-</option>"+selectSoilStr+"</select></div>" +
+													"<div class=\"col-sm-6\"><select class=\"form-control soilname\" name=\"soilname\" value=\""+item.equipment.soilname+"\" id=\"inputLab\"><option value=\"-1\">-选择土壤-</option>"+selectSoilStr+"</select></div>" +
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor soilLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">植物：</label>" +
-													"<div class=\"col-sm-6\"><select class=\"form-control plants\" value=\""+item.equipment.plantsname+"\" id=\"inputLab\"><option>-选择植物-</option>"+selectPlantsStr+"</select></div>" +
+													"<div class=\"col-sm-6\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"inputLab\"><option value=\"-1\">-选择植物-</option>"+selectPlantsStr+"</select></div>" +
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor plantsLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">根系深度：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"rootdepth\" value=\""+item.equipment.rootdepth+"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" name=\"rootdepth\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"rootdepth\" value=\""+item.equipment.rootdepth+"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
 													"<label class=\"col-sm-3 control-label\">土壤干重：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilweight\" style='width:35%;float:left;' id=\"inputLab\" data-bv-field=\"soilweight\" value=\""+item.equipment.soilweight+"\"><span style='line-height:34px;font-size:6px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilweight\" name=\"soilweight\" style='width:35%;float:left;' id=\"inputLab\" data-bv-field=\"soilweight\" value=\""+item.equipment.soilweight+"\"><span style='line-height:34px;font-size:6px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">湿度上限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humidityup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humidityup\" value=\""+item.equipment.humidityup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humidityup\" name=\"humidityup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humidityup\" value=\""+item.equipment.humidityup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div>" +
 													"<label class=\"col-sm-3 control-label\">湿度下限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humiditydown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humiditydown\" value=\""+item.equipment.humiditydown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humiditydown\" name=\"humiditydown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humiditydown\" value=\""+item.equipment.humiditydown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">温度上限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperatureup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperatureup\" value=\""+item.equipment.temperatureup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperatureup\" name=\"temperatureup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperatureup\" value=\""+item.equipment.temperatureup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div>" +
 													"<label class=\"col-sm-3 control-label\">温度下限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperaturedown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperaturedown\" value=\""+item.equipment.temperaturedown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperaturedown\" name=\"temperaturedown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperaturedown\" value=\""+item.equipment.temperaturedown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">饱和水量：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"soilwater\" value=\""+item.equipment.soilwater+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" name=\"soilwater\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"soilwater\" value=\""+item.equipment.soilwater+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
 												"<div class=\"timeLens\" style=\"display:none;\">"+
 												"<hr/>"+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
@@ -160,33 +153,40 @@ rainet.setting.controller.setEquipment = {
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeonestart\" value=\""+timeonestart+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timeonestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeonestart\" value=\""+timeonestart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeoneend\" value=\""+timeoneend+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timeoneend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeoneend\" value=\""+timeoneend+"\"/>" +
 													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段二：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwostart\" value=\""+timetwostart+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timetwostart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwostart\" value=\""+timetwostart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwoend\" value=\""+timetwoend+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timetwoend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwoend\" value=\""+timetwoend+"\"/>" +
 													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段三：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreestart\" value=\""+timethreestart+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timethreestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreestart\" value=\""+timethreestart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
-														"<input type=\"text\" id='dateTime' class=\"form-control cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\" value=\""+timethreeend+"\"/>" +
+														"<input type=\"text\" id='dateTime' class=\"form-control timethreeend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\" value=\""+timethreeend+"\"/>" +
 													"</div></div>" +
 												"</div>"+
 											"</form></div></div></div>";
 							});
 							$EquipmentList.empty().append(str);
 							tipShow();
+							//控制模式切换
 							radioChange();
+							//select初始选中事件
+							selectVal(data);
+							//日历控件绑定事件
 							dateTime();
+							//添加土壤信息事件
 							this.addSoil(_soilInfoTempate);
+							//添加植物信息事件
 							this.addPlants(_plantsInfoTempate,_growthCycleHeader,_growthCycle);
+							setValidateForEquipmentInfo($EquipmentList);
 							flag = true;
 						});
 					}else{
@@ -198,118 +198,68 @@ rainet.setting.controller.setEquipment = {
 			
 		},
 		//修改事件
-		modifyEquipments : function($projectList){
+		modifyEquipments : function(){
 			//修改节点
 			$(".modifyBtn").off('click').on('click', function(e){
 				if(flag){
 					flag = false;
-					var $forms = $(".form-horizontal");
-					var paramArr=[];
-					var mark = true;
-					var RegEx = /^[0-9]+(\.[0-9]{1,2})?$/;
-					var RegEx2 = /^[1-9]\d*$/;
-					$($forms).each(function(){
-						var $form = $(this)[0];
-						var $name = $form.name;
-						var $code = $form.code;
-						var $area = $form.area;
-						var $fowParameter = $form.fowParameter;
-						var $controlHostId = $form.controlHostId;
-						var $address = $form.address;
-						var str = [];
-						if($address != undefined){
-							$($address).each(function(){
-								str.push({number:$(this).val()});
-							});
+					var mark=false;
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							mark = true;
+							return false;//跳出循环
 						}
-						if($($name).val()==""){
-							$($name).parent().addClass("has-error");
-							$($name).parent().parent().find("label").eq(0).attr("id","has-error");
-							mark = false;
-						}else{
-							$($name).parent().removeClass("has-error");
-							$($name).parent().parent().find("label").eq(0).removeAttr("id");
-						}
-						if($($area).val()=="" || !RegEx.test($($area).val())){
-							$($area).parent().addClass("has-error");
-							$($area).parent().parent().find("label").eq(0).attr("id","has-error");
-							mark = false;
-						}else{
-							$($area).parent().removeClass("has-error");
-							$($area).parent().parent().find("label").eq(0).removeAttr("id");
-						}
-						if($($fowParameter).val()=="" || !RegEx.test($($fowParameter).val())){
-							$($fowParameter).parent().addClass("has-error");
-							$($fowParameter).parent().parent().find("label").eq(1).attr("id","has-error");
-							mark = false;
-						}else{
-							$($fowParameter).parent().removeClass("has-error");
-							$($fowParameter).parent().parent().find("label").eq(1).removeAttr("id");
-						}
-						
-						var param =  {name:$($name).val(),code:$($code).val(),area : $($area).val(),fowParameter : $($fowParameter).val(),controlHostId : $($controlHostId).val()
-								,result:str};
-						paramArr.push(param);
 					});
-					if(!mark){
-						rainet.utils.notification.warning("请填写正确的节点信息!");
-					}else{
+					if(mark){
+						var list = [];
+						$("[id='equipmentCheckbox']").each(function(){
+							if($(this).is(":checked")){
+								var $form = $(this).parent().parent().parent().find("form");
+								$($form).bootstrapValidator('validate');
+								var bv = $form.data('bootstrapValidator');
+//								if (bv.$invalidFields.length > 0) {
+//									return false;
+//								}
+								var formData = $form.serializeArray();
+								var jsonData = rainet.utils.serializeObject(formData);
+								
+								list.push(jsonData);
+							}
+						});
+						console.log(JSON.stringify(list));
+						
 						bootbox.dialog({
-							message : "<label style=\"color:red;\">特别注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作将删除该主机下所有的数据，包括节点传感器信息、采集的历史数据等，确定注册?",
-							title : '注册节点到现场',
+							message : "确认设置？",
+							title : '节点传感器参数设置',
 							// 支持ESC
 							onEscape : function(){
 								
 							},
 							buttons :  {
 								cancel: {
-									label: "取消",
-									className: "btn-warning",
-									callback : function(){
-										flag = true;
-									}
+								      label: "取消",
+								      className: "btn-warning",
+								      callback : function(){
+								    	  flag = true;
+								      }
 								},
 								success: {
-									label: "确定",
-									className: "btn-success",
-									callback : function(){
-										bootbox.dialog({
-											message : "<label style=\"color:red;\">注意：</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该操作特别，将会删除该主机下所有的数据，请再次确认?",
-											title : '再次确认',
-											// 支持ESC
-											onEscape : function(){
-												
-											},
-											buttons :  {
-												cancel: {
-													label: "取消",
-													className: "btn-warning",
-													callback : function(){
-														flag = true;
-													}
-												},
-												success: {
-													label: "确定",
-													className: "btn-success",
-													callback : function(){
-														paramArr.handleError = function(result){
-															flag = true;
-															return true;
-														};
-														rainet.setting.service.equipment.add(paramArr, function(data){
-															if(data){
-																rainet.utils.notification.success("添加节点成功!");
-															}
-															flag = true;
-														});
-													}
+								      label: "确定",
+								      className: "btn-success",
+								      callback : function(){
+								    	  rainet.setting.service.equipment.update(list, function(data){
+												if(data){
+													rainet.utils.notification.error("设置成功!");
 												}
-											}
-										});
-									}
+												flag = true;
+											});
+								      }
 								}
-							}
+						}
 						});
+					}else{
+						rainet.utils.notification.warning("请先选择节点!");
+						flag = true;
 					}
 				}
 			});
@@ -330,7 +280,7 @@ rainet.setting.controller.setEquipment = {
 			});
 			// 绑定搜索事件
 			this.findEquipments($projectList);
-			this.modifyEquipments($projectList);
+			this.modifyEquipments();
 			this.checked();
 		},
 		
@@ -354,7 +304,7 @@ rainet.setting.controller.setEquipment = {
 						"<button type=\"button\" class=\"btn btn-success findBtn \">查询</button>" +
 						"</div>" +
 						"<div class=\"col-xs-3 col-md-3\">" +
-						"<button type=\"button\" class=\"btn btn-warning modifyBtn\">设置</button>" +
+						"<button type=\"button\" class=\"btn btn-warning modifyBtn\">初始化设置</button>" +
 						"</div>" +
 						"</div>" +
 						"</div>" +
@@ -567,493 +517,3 @@ rainet.setting.controller.setEquipment = {
 						"</div>\n",
 	
 };
-
-//通讯状态弹框提示
-var tipShow = function(){
-	var content = "";
-	$(".dropdown").mouseenter(function() {
-		var tmp = $(this).attr("id");
-		content = '<div style="width:180px;text-align:center;font-weight:700;"><font color="#000">'+tmp+'</font></div>';
-		$(this).popover({
-			title:'',
-			trigger:'hover',
-			placement:'top',
-			html: 'true',
-			content : content ,
-			animation: false
-		});
-		var _this = this;
-		$(this).popover("show");
-		$(this).siblings(".popover").on("mouseleave", function () {
-			$(_this).popover('hide');
-		});
-	});
-}
-
-//时段切换
-var radioChange = function(){
-	$(".modelClass").change(function() {
-		if($(this).val()==2){
-			$(this).parent().parent().parent().find("div.timeLens").css("display","inline");
-		}else{
-			$(this).parent().parent().parent().find("div.timeLens").css("display","none");
-		}
-	});
-}
-//自定义植物信息
-var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
-	$(".plantsLink").off('click').on('click', function(e){
-		var gcs = $(".growthCycles",$plantsInfo);
-			gcs.empty().append($growthCycleHeader.html());
-			var obj = gcs.find("input[id=cycledate]");
-			cycledate(obj);
-		
-		$(".addNewCycle",$plantsInfo).off('click').on('click', function(e){
-			gcs.append($growthCycle.html());
-			$(".closeCycle",$plantsInfo).off('click').on('click', function(e){
-				$(this).parent().remove();
-			});
-			var $form = $("form",$plantsInfo);
-			var validator = $form.data('bootstrapValidator');
-			validator.destroy();
-			setValidateForPlants($form);
-			obj =  $(".growthCycles").find("input[id=cycledate]");
-			cycledate(obj);
-		});
-		
-		var $form = $("form",$plantsInfo);
-		setValidateForPlants($form);
-		
-		$('button[type=submit]', $form).off('click').on('click', function(){
-			// 检查验证是否通过
-			$($form).bootstrapValidator('validate');
-			var bv = $form.data('bootstrapValidator');
-			if (bv.$invalidFields.length > 0) {
-				return false;
-			}
-			var formData = $form.serializeArray();
-			var jsonData = rainet.utils.serializeObject(formData);
-			//组装json
-			var plantsname = $('.plantsname', $form).val();
-			var rootdepth = $('.rootdepth', $form).val();
-			var plants = {plantsname : plantsname, rootdepth : rootdepth};
-			var param = {plants: plants};
-			var list = [];
-			var $array = $('.growthCycle', $form);
-			$array.each(function(i,cycle){
-				var d = {};
-				$('input', $(cycle)).each(function(){
-					var name = $(this).attr("name");
-					var value = $(this).val();
-					d[name] = value;
-				});
-				list.push(d);
-			});
-			param.result = list;
-			// 添加植物
-			rainet.setting.service.plants.add(param, function(data){
-				if (data) {
-					bootbox.hideAll();
-					rainet.utils.notification.success('添加成功!');
-				}
-			});
-		});
-		bootbox.dialog({
-			message : $plantsInfo,
-			title : '自定义植物',
-			// 支持ESC
-			onEscape : function(){
-				
-			}
-		});
-	});
-}
-//自定义土壤信息
-var addSoil = function($soilInfo){
-	$(".soilLink").off('click').on('click', function(e){
-		$.initProv($('.provinceItem',$soilInfo), $('.cityItem',$soilInfo), "-省份-", "-城市-");
-		$.initCities($(".provinceItem", $soilInfo),$(".cityItem", $soilInfo));
-		var $form = $("form", $soilInfo);
-		setValidateForSoil($form);
-		$('button[type=submit]', $form).off('click').on('click', function(){
-			// 检查验证是否通过
-			$($form).bootstrapValidator('validate');
-			var bv = $form.data('bootstrapValidator');
-			if (bv.$invalidFields.length > 0) {
-				return false;
-			}
-			var formData = $form.serializeArray();
-			var jsonData = rainet.utils.serializeObject(formData);
-			// 添加土壤
-			rainet.setting.service.soilInfo.add(jsonData, function(data){
-				if (data) {
-					bootbox.hideAll();
-					rainet.utils.notification.success('添加成功!');
-				}
-			});
-		});
-		bootbox.dialog({
-			message : $soilInfo,
-			title : '自定义土壤',
-			// 支持ESC
-			onEscape : function(){
-				
-			}
-		});
-	});
-}
-// 添加校验信息 当保存或修改soil的时候
-var setValidateForSoil = function($form){
-	$form.bootstrapValidator({
-		feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-		fields : {
-			soiltype : {
-				validators : {
-					notEmpty : {
-						message: '土壤名称不能为空'
-					}
-				}
-			},
-			soilweight : {
-				validators : {
-					notEmpty : {
-						message: '土壤干容重不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			soilwater : {
-				validators : {
-					notEmpty : {
-						message: '田间持水量不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			province : {
-				validators : {
-					regexp: {
-                        regexp: /^[^1]+$/i,
-                        message: '省份不能为空'
-                    }
-				}
-			},
-			city : {
-				validators : {
-					regexp: {
-                        regexp: /^[^1]+$/i,
-                        message: '城市不能为空'
-                    }
-				}
-			},
-			address : {
-				validators : {
-					notEmpty : {
-						message: '详细地址不能为空'
-					}
-				}
-			},
-			waterVal1 : {
-				validators : {
-					notEmpty : {
-						message: '实测湿度值1不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			originalVal1 : {
-				validators : {
-					notEmpty : {
-						message: '传感器原始值1不能为空'
-					},
-					regexp: {
-						 regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-	                     message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			waterVal2 : {
-				validators : {
-					notEmpty : {
-						message: '实测湿度值2不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			originalVal2 : {
-				validators : {
-					notEmpty : {
-						message: '传感器原始值2不能为空'
-					},
-					regexp: {
-						 regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-	                     message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			waterVal3 : {
-				validators : {
-					notEmpty : {
-						message: '实测湿度值3不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			originalVal3 : {
-				validators : {
-					notEmpty : {
-						message: '传感器原始值3不能为空'
-					},
-					regexp: {
-						 regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-	                     message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			waterVal4 : {
-				validators : {
-					notEmpty : {
-						message: '实测湿度值4不能为空'
-					},
-					regexp: {
-                        regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-                        message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			},
-			originalVal4 : {
-				validators : {
-					notEmpty : {
-						message: '传感器原始值4不能为空'
-					},
-					regexp: {
-						 regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-	                     message: '只能为整数或者保留两位的小数'
-                    }
-				}
-			}
-		}
-	})
-	
-	// 修复-->当选择省份时，已经校验过的城市不会重新验证的问题
-	.on('change', '.provinceItem', function(){
-		$form.bootstrapValidator('revalidateField', 'city');
-		
-	// 验证土壤名称是否存在
-	}).on('blur.rainet', '.soiltype', function(){
-		var bv = $form.data('bootstrapValidator');
-		$field = bv.getFieldElements('soiltype');
-		var value = $field.val();
-		if ($.trim(value) === '') {
-			bv.updateMessage($field, 'notEmpty');
-			return ;
-		}
-		var param = {soiltype : value};
-		rainet.setting.service.soilInfo.validName(param, function(data){
-			if (data) {
-				// 存在，更新错误信息的提示
-				bv.updateMessage($field, 'notEmpty', '土壤名称已存在');
-				bv.updateStatus($field, 'INVALID');
-			}
-		});
-	});
-	
-	$form.data('bootstrapValidator').disableSubmitButtons(true);
-}
-// 添加校验信息 当保存或修改plants的时候
-var setValidateForPlants = function($form){
-	$form.bootstrapValidator({
-		feedbackIcons: {
-			valid: 'glyphicon glyphicon-ok',
-			invalid: 'glyphicon glyphicon-remove',
-			validating: 'glyphicon glyphicon-refresh'
-		},
-		fields : {
-			plantsname : {
-				validators : {
-					notEmpty : {
-						message: '植物名称不能为空'
-					}
-				}
-			},
-			rootdepth : {
-				validators : {
-					notEmpty : {
-						message: '植物根系长度不能为空'
-					},
-					regexp: {
-						regexp: /^[1-9]*$/,
-						message: '只能为正整数'
-					}
-				}
-			},
-			plantsseason : {
-				validators : {
-					notEmpty : {
-						message: '生长周期名不能为空'
-					}
-				}
-			},
-			startdate : {
-				validators : {
-					notEmpty : {
-						message: '开始日期不能为空'
-					},
-					regexp: {
-						regexp: /^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/,
-						message: '日期格式如：2014-01-01'
-					}
-				}
-			},
-			enddate : {
-				validators : {
-					notEmpty : {
-						message: '结束日期不能为空'
-					},
-					regexp: {
-						regexp: /^(\d{4})-(0\d{1}|1[0-2])-(0\d{1}|[12]\d{1}|3[01])$/,
-						message: '日期格式如：2014-01-01'
-					}
-				}
-			},
-			humidityup : {
-				validators : {
-					notEmpty : {
-						message: '湿度上限不能为空'
-					},
-					regexp: {
-						regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-						message: '只能为整数或者保留两位的小数'
-					}
-				}
-			},
-			humiditydown : {
-				validators : {
-					notEmpty : {
-						message: '湿度下限不能为空'
-					},
-					regexp: {
-						regexp: /^[0-9]+(\.[0-9]{1,2})?$/,
-						message: '只能为整数或者保留两位的小数'
-					}
-				}
-			},
-			temperatureup : {
-				validators : {
-					notEmpty : {
-						message: '温度上限不能为空'
-					},
-					regexp: {
-						regexp: /^[0-9]+(\.[0-9]{1})?$/,
-						message: '只能为整数或者保留一位的小数'
-					}
-				}
-			},
-			temperaturedown : {
-				validators : {
-					notEmpty : {
-						message: '温度下限不能为空'
-					},
-					regexp: {
-						regexp: /^[0-9]+(\.[0-9]{1})?$/,
-						message: '只能为整数或者保留一位的小数'
-					}
-				}
-			}
-		}
-		// 验证植物名称是否存在
-	}).on('blur.rainet', '.plantsname', function(){
-		var bv = $form.data('bootstrapValidator');
-		$field = bv.getFieldElements('plantsname');
-		var value = $field.val();
-		if ($.trim(value) === '') {
-			bv.updateMessage($field, 'notEmpty');
-			return ;
-		}
-		var param = {plantsname : value};
-		rainet.setting.service.plants.validName(param, function(data){
-			if (data) {
-				// 存在，更新错误信息的提示
-				bv.updateMessage($field, 'notEmpty', '植物名称已存在');
-				bv.updateStatus($field, 'INVALID');
-			}
-		});
-	});
-	
-	$form.data('bootstrapValidator').disableSubmitButtons(true);
-}
-
-var dateTime = function() {
-	var obj = $(".EquipmentList").find("input[id=dateTime]");
-	$(obj).off('click').on('click', function(e){
-		$(this).datetimepicker({
-			format : "hh:ii",
-	        language:  'zh-CN',
-	        weekStart: 1,
-			autoclose: 1,
-			todayHighlight: 1,
-			startView: 1,
-			minView: 2,
-			forceParse: 0
-		});
-	});
-}
-var cycledate = function(obj) {
-	$(obj).off('click').on('click', function(e){
-		$(this).datetimepicker({
-			format : "yyyy-mm-dd",
-			language:  'zh-CN',
-			weekStart: 1,
-			autoclose: 1,
-			todayHighlight: 1,
-			startView: 2,
-			minView: 2,
-			forceParse: 0
-		});
-	});
-//	$('#starttime1').datetimepicker({
-//		format : "hh:ii",
-//        language:  'zh-CN',
-//        weekStart: 1,
-//		autoclose: 1,
-//		todayHighlight: 1,
-//		startView: 2,
-//		minView: 2,
-//		forceParse: 0
-//	});
-//	$('#endtime1').datetimepicker({
-//		format : "hh:ii",
-//		language:  'zh-CN',
-//		weekStart: 1,
-//		autoclose: 1,
-//		todayHighlight: 1,
-//		startView: 2,
-//		minView: 2,
-//		forceParse: 0
-//	}).on('changeDate', function(ev) {
-//		var startTime = ev.date.valueOf();
-////		if (start < teach) {
-//		alert("“评估开始时间 ”不能早于“授课时间 ” ！");
-//		$(".timeone").focus();
-////		}
-//	});
-}

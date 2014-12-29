@@ -51,7 +51,7 @@
 			<div class="col-xs-2 col-md-2 border-right"><a href="#" id="homeHref"><i class="fa fa-home fa-2x" >&nbsp;<span id="homeLab"></span></i></a></div>
 			<div class="col-xs-9 col-md-9"><a href="#"><i class="fa fa-envelope fa-2x"><span class="badge">4</span></i></a>
 			
-			<span class="float-right font-size-18 systime">2014-10-13 14:30:56</span>
+			<span class="float-right font-size-18 systime">2014-12-30 09:10:56</span>
 			</div>
 		</div>
 	</div>

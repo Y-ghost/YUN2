@@ -150,6 +150,22 @@ public class EquipmentController {
 		Equipment equipment = equipmentService.getEquipmentById(eqtId);
 		return new ResponseWrapper(equipment);
 	}
+	
+	/**
+	 * @Title:       updateList
+	 * @author:      杨贵松
+	 * @time         2014年12月28日 下午4:42:15
+	 * @Description: 批量设置节点及传感器信息
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="updateList",method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseWrapper updateList(@RequestBody List<Equipment> list, HttpSession session) {
+		equipmentService.updateList(list,session);
+		return new ResponseWrapper(true);
+	}
 
 	/**
 	 * 更新节点

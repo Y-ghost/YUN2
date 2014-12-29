@@ -513,4 +513,19 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		}
 		return list;
 	}
+
+	/**
+	 * @Title:       updateList
+	 * @author:      杨贵松
+	 * @time         2014年12月28日 下午4:43:21
+	 * @Description: 批量设置节点及传感器信息
+	 * @throws
+	 */
+	@Override
+	public void updateList(List<Equipment> list, HttpSession session) {
+		//1.模式设置
+		//2.自控参数设置
+		//3.时段设置
+		
+	}
 }
