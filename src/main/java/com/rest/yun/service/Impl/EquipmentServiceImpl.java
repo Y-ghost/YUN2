@@ -1,6 +1,8 @@
 package com.rest.yun.service.Impl;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.EquipmentStatus;
 import com.rest.yun.beans.SensorInfo;
+import com.rest.yun.beans.SoilInfo;
 import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
 import com.rest.yun.dto.EquipmentExt;
@@ -32,6 +35,7 @@ import com.rest.yun.mapping.EquipmentDataMapper;
 import com.rest.yun.mapping.EquipmentMapper;
 import com.rest.yun.mapping.EquipmentStatusMapper;
 import com.rest.yun.mapping.SensorInfoMapper;
+import com.rest.yun.mapping.SoilInfoMapper;
 import com.rest.yun.service.IEquipmentService;
 import com.rest.yun.service.NetWorkService;
 import com.rest.yun.util.CheckReceiveCodingUtil;
@@ -55,6 +59,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 	private EquipmentStatusMapper equipmentStatusMapper;
 	@Autowired
 	private ControlHostMapper controlHostMapper;
+	@Autowired
+	private SoilInfoMapper soilInfoMapper;
 	@Autowired
 	private NetWorkService netWorkService;
 
@@ -523,9 +529,425 @@ public class EquipmentServiceImpl implements IEquipmentService {
 	 */
 	@Override
 	public void updateList(List<Equipment> list, HttpSession session) {
-		//1.模式设置
-		//2.自控参数设置
-		//3.时段设置
-		
+		try {
+			if(!CollectionUtils.isEmpty(list)){
+				int cId = list.get(0).getControlhostid();
+				ControlHost host = controlHostMapper.selectByPrimaryKey(cId);
+				User user = (User) session.getAttribute(Constants.USER);
+				List<Equipment> listOK = new ArrayList<Equipment>();
+				List<Equipment> listError = new ArrayList<Equipment>();
+				for(Equipment equipment:list){
+					//1.模式设置
+					boolean f1 = setModel(equipment,host.getCode());
+					if(!f1){
+						listError.add(equipment);
+						continue;
+					}
+					//2.自控参数设置
+					boolean f2 = setParam(equipment,host.getCode());
+					if(!f2){
+						listError.add(equipment);
+						continue;
+					}
+					//3.设置ABCD参数值
+					boolean f3 = setCoefficient(equipment,host.getCode());
+					if(!f3){
+						listError.add(equipment);
+						continue;
+					}
+					//4.时段设置
+					boolean f4 = true;
+					if(equipment.getIrrigationtype()==2){
+						f3 = setTimeLen(equipment,host.getCode());
+					}
+					if(f1&&f2&&f3&&f4){
+						equipment.setModifyuser(user.getId());
+						equipment.setModifytime(new Date());
+						listOK.add(equipment);
+						equipmentMapper.updateByPrimaryKeySelective(equipment);
+					}else{
+						listError.add(equipment);
+					}
+				}
+				//将成功的节点信息保存到数据库
+				if(CollectionUtils.isEmpty(listOK)){
+					LOG.error("设置节点及传感器失败");
+					throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_FAILD);
+				}else if(!CollectionUtils.isEmpty(listError)){
+					String name = "";
+					for(Equipment equipment:listError){
+						name += equipment.getName()+"、";
+					}
+					LOG.error("设置【"+name.substring(0,name.length()-1)+"】等共计【"+listError.size()+"】个节点及传感器失败");
+					throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_FAILD);
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置节点及传感器失败", e);
+			throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_FAILD);
+		}
+	}
+	
+	/**
+	 * @Title:       setModel
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午3:07:39
+	 * @Description: 单独设置一个节点的控制模式
+	 * @return       boolean
+	 * @throws
+	 */
+	public boolean setModel(Equipment equipment,String cCode){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			byte[] model = new byte[1];
+			switch(equipment.getIrrigationtype()){
+			case 0 :
+				model[0] = (byte) 0xF2;//手动模式
+				break;
+			case 1 : 
+				model[0] = (byte) 0xF0;//自动模式
+				break;
+			case 2 : 
+				model[0] = (byte) 0xF1;//时段模式
+				break;
+			default:
+				break;
+			}
+			
+			byte[] data = codingFactory.byteMerger(model, codingFactory.string2BCD("01"+equipment.getCode()));
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, cCode, (byte) 0x22, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(cCode, "32", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0:
+					mark = false;
+					break;
+				case (byte) 0xF0:
+					mark = true;
+					break;
+				case (byte) 0xF1:
+					mark = true;
+					break;
+				case (byte) 0xF2:
+					mark = true;
+					break;
+				default:
+					break;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置节点控制模式异常", e);
+			throw new ServerException(ErrorCode.SET_EQUIPMENT_MODEL_FAILD);
+		}
+		return mark;
+	}
+	
+	/**
+	 * @Title:       setParam
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午3:08:17
+	 * @Description: 单独设置一个节点的自控参数
+	 * @return       boolean
+	 * @throws
+	 */
+	public boolean setParam(Equipment equipment,String cCode){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			byte[] model = new byte[8];
+			float humidityUp = equipment.getHumidityup();
+			float humidityDown = equipment.getHumiditydown();
+			float soilWater = equipment.getSoilwater();
+
+			BigDecimal a = new BigDecimal(humidityUp * soilWater);
+			BigDecimal b = new BigDecimal(humidityDown * soilWater);
+			float hUp = a.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+			float hDown = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+			float tUp = equipment.getTemperatureup();
+			float tDown = equipment.getTemperaturedown();
+			
+			model[0] = (byte) ((int) (hUp * 100) / 100);
+			model[1] = (byte) ((int) (hUp * 100) % 100);
+			model[2] = (byte) ((int) (hDown * 100) / 100);
+			model[3] = (byte) ((int) (hDown * 100) % 100);
+
+			// 温度值转换
+			if (tUp < 0) {
+				model[4] = (byte) ((int) (tUp * 100) / 100);
+				model[5] = (byte) ((int) (-tUp * 100) % 100);
+			} else {
+				model[4] = (byte) ((int) (tUp * 100) / 100);
+				model[5] = (byte) ((int) (tUp * 100) % 100);
+			}
+			if (tDown < 0) {
+				model[6] = (byte) ((int) (tDown * 100) / 100);
+				model[7] = (byte) ((int) (-tDown * 100) % 100);
+			} else {
+				model[6] = (byte) ((int) (tDown * 100) / 100);
+				model[7] = (byte) ((int) (tDown * 100) % 100);
+			}
+			
+			byte[] data = codingFactory.byteMerger(model, codingFactory.string2BCD("01"+equipment.getCode()));
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, cCode, (byte) 0x24, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(cCode, "34", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0x0A:
+					mark = true;
+					break;
+				case (byte) 0xA0:
+					mark = false;
+					break;
+				default:
+					break;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置节点自控参数异常", e);
+			throw new ServerException(ErrorCode.SET_EQUIPMENT_PARAM_FAILD);
+		}
+		return mark;
+	}
+	
+	/**
+	 * @Title:       setCoefficient
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午9:36:30
+	 * @Description: 设置a、b、c、d系数到主机
+	 * @return       boolean
+	 * @throws
+	 */
+	public boolean setCoefficient(Equipment equipment,String cCode){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			byte[] param = new byte[8];
+			SoilInfo soil = soilInfoMapper.selectByPrimaryKey(equipment.getSoilname());
+			float paramA = soil.getParametera();
+			float paramB = soil.getParameterb();
+			float paramC = soil.getParameterc();
+			float paramD = soil.getParameterd();
+			
+			// a、b、c、d参数值转换
+			if (paramA < 0) {
+				param[0] = (byte) ((int) (paramA * 100) / 100);
+				param[1] = (byte) ((int) (-paramA * 100) % 100);
+			} else {
+				param[0] = (byte) ((int) (paramA * 100) / 100);
+				param[1] = (byte) ((int) (paramA * 100) % 100);
+			}
+			
+			if (paramB < 0) {
+				param[2] = (byte) ((int) (paramB * 100) / 100);
+				param[3] = (byte) ((int) (-paramB * 100) % 100);
+			} else {
+				param[2] = (byte) ((int) (paramB * 100) / 100);
+				param[3] = (byte) ((int) (paramB * 100) % 100);
+			}
+			
+			if (paramC < 0) {
+				param[4] = (byte) ((int) (paramC * 100) / 100);
+				param[5] = (byte) ((int) (-paramC * 100) % 100);
+			} else {
+				param[4] = (byte) ((int) (paramC * 100) / 100);
+				param[5] = (byte) ((int) (paramC * 100) % 100);
+			}
+			
+			if (paramD < 0) {
+				param[6] = (byte) ((int) (paramD * 100) / 100);
+				param[7] = (byte) ((int) (-paramD * 100) % 100);
+			} else {
+				param[6] = (byte) ((int) (paramD * 100) / 100);
+				param[7] = (byte) ((int) (paramD * 100) % 100);
+			}
+			
+			byte[] data = codingFactory.byteMerger(param, codingFactory.string2BCD("01"+equipment.getCode()));
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, cCode, (byte) 0x29, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(cCode, "39", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0x0A:
+					mark = true;
+					break;
+				case (byte) 0xA0:
+					mark = false;
+				break;
+				default:
+					break;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置土壤传感器精度参数异常", e);
+			throw new ServerException(ErrorCode.SET_EQUIPMENT_ABCD_FAILD);
+		}
+		return mark;
+	}
+	
+	/**
+	 * @Title:       setTimeLen
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午3:08:22
+	 * @Description: 单独设置一个节点的时段
+	 * @return       boolean
+	 * @throws
+	 */
+	public boolean setTimeLen(Equipment equipment,String cCode){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			
+			String startone = equipment.getTimeonestart();
+			String endone = equipment.getTimeoneend();
+			String starttwo = equipment.getTimetwostart();
+			String endtwo = equipment.getTimetwoend();
+			String startthree = equipment.getTimethreestart();
+			String endthree = equipment.getTimethreeend();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("hhmm");
+			String timeone="";
+			String timetwo="";
+			String timethree="";
+			if(!startone.equals("")){
+				timeone = sdf.format(startone)+sdf.format(endone);
+			}else{
+				timeone = "24002400";
+			}
+			
+			if(!starttwo.equals("")){
+				timetwo = sdf.format(starttwo)+sdf.format(endtwo);
+			}else{
+				timetwo = "24002400";
+			}
+			
+			if(!startthree.equals("")){
+				timethree = sdf.format(startthree)+sdf.format(endthree);
+			}else{
+				timethree = "24002400";
+			}
+			
+			String timeLen = "";
+			String[] week = {};
+			int T0 =0;
+			if(!equipment.getWeek().equals("")){
+				week = equipment.getWeek().split(",");
+				T0 = week.length;
+				for(int i=0;i<T0;i++){
+					timeLen += "0"+week[i];
+				}
+			}
+			
+			byte[] data = codingFactory.byteMerger(codingFactory.string2BCD(timeone+timetwo+timethree+"01"+equipment.getCode()),codingFactory.string2BCD("0"+T0+timeLen));
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, cCode, (byte) 0x26, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(cCode, "36", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0x0A:
+					mark = true;
+					break;
+				case (byte) 0xA0:
+					mark = false;
+					break;
+				default:
+					break;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置节点时段控制异常", e);
+			throw new ServerException(ErrorCode.SET_EQUIPMENT_PARAM_FAILD);
+		}
+		return mark;
 	}
 }

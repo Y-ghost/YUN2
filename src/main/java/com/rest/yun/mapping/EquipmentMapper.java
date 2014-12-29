@@ -26,6 +26,7 @@ public interface EquipmentMapper {
 
 	Equipment selectByPrimaryKey(Integer id);
 
+	//	更新节点信息	
 	int updateByPrimaryKeySelective(Equipment record);
 
 	int updateByPrimaryKey(Equipment record);
@@ -68,4 +69,14 @@ public interface EquipmentMapper {
 	 * @throws DataAccessException
 	 */
 	List<Equipment> selectEqtForList(Map<String, Object> map) throws DataAccessException;
+
+	/**
+	 * @Title:       updateList
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午10:13:44
+	 * @Description: 批量更新节点信息
+	 * @return       void
+	 * @throws
+	 */
+	void updateList(List<Equipment> list);
 }

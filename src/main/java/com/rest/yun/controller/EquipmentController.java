@@ -160,12 +160,13 @@ public class EquipmentController {
 	 * @throws
 	 */
 	@Login
-	@RequestMapping(value="updateList",method = RequestMethod.PUT)
+	@RequestMapping(value="/updateList",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper updateList(@RequestBody List<Equipment> list, HttpSession session) {
 		equipmentService.updateList(list,session);
 		return new ResponseWrapper(true);
 	}
+
 
 	/**
 	 * 更新节点

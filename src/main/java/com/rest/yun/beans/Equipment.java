@@ -35,17 +35,17 @@ public class Equipment {
 
     private String week;
 
-    private Date timeonestart;
+    private String timeonestart;
 
-    private Date timeoneend;
+    private String timeoneend;
 
-    private Date timetwostart;
+    private String timetwostart;
 
-    private Date timetwoend;
+    private String timetwoend;
 
-    private Date timethreestart;
+    private String timethreestart;
 
-    private Date timethreeend;
+    private String timethreeend;
 
     private Integer fowparameter;
 
@@ -215,51 +215,51 @@ public class Equipment {
         this.week = week == null ? null : week.trim();
     }
 
-    public Date getTimeonestart() {
+    public String getTimeonestart() {
         return timeonestart;
     }
 
-    public void setTimeonestart(Date timeonestart) {
+    public void setTimeonestart(String timeonestart) {
         this.timeonestart = timeonestart;
     }
 
-    public Date getTimeoneend() {
+    public String getTimeoneend() {
         return timeoneend;
     }
 
-    public void setTimeoneend(Date timeoneend) {
+    public void setTimeoneend(String timeoneend) {
         this.timeoneend = timeoneend;
     }
 
-    public Date getTimetwostart() {
+    public String getTimetwostart() {
         return timetwostart;
     }
 
-    public void setTimetwostart(Date timetwostart) {
+    public void setTimetwostart(String timetwostart) {
         this.timetwostart = timetwostart;
     }
 
-    public Date getTimetwoend() {
+    public String getTimetwoend() {
         return timetwoend;
     }
 
-    public void setTimetwoend(Date timetwoend) {
+    public void setTimetwoend(String timetwoend) {
         this.timetwoend = timetwoend;
     }
 
-    public Date getTimethreestart() {
+    public String getTimethreestart() {
         return timethreestart;
     }
 
-    public void setTimethreestart(Date timethreestart) {
+    public void setTimethreestart(String timethreestart) {
         this.timethreestart = timethreestart;
     }
 
-    public Date getTimethreeend() {
+    public String getTimethreeend() {
         return timethreeend;
     }
 
-    public void setTimethreeend(Date timethreeend) {
+    public void setTimethreeend(String timethreeend) {
         this.timethreeend = timethreeend;
     }
 

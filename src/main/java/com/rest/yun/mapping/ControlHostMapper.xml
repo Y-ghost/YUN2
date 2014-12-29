@@ -45,7 +45,7 @@
   <select id="selectProjectById" resultMap="projectMap">
   	select * from project where id = #{projectId}
   </select>
-  
+  <!-- 根据id查询主机信息 -->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

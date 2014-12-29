@@ -18,12 +18,12 @@
     <result column="TemperatureUp" property="temperatureup" jdbcType="REAL" />
     <result column="TemperatureDown" property="temperaturedown" jdbcType="REAL" />
     <result column="Week" property="week" jdbcType="VARCHAR" />
-    <result column="TimeOneStart" property="timeonestart" jdbcType="TIMESTAMP" />
-    <result column="TimeOneEnd" property="timeoneend" jdbcType="TIMESTAMP" />
-    <result column="TimeTwoStart" property="timetwostart" jdbcType="TIMESTAMP" />
-    <result column="TimeTwoEnd" property="timetwoend" jdbcType="TIMESTAMP" />
-    <result column="TimeThreeStart" property="timethreestart" jdbcType="TIMESTAMP" />
-    <result column="TimeThreeEnd" property="timethreeend" jdbcType="TIMESTAMP" />
+    <result column="TimeOneStart" property="timeonestart" jdbcType="VARCHAR" />
+    <result column="TimeOneEnd" property="timeoneend" jdbcType="VARCHAR" />
+    <result column="TimeTwoStart" property="timetwostart" jdbcType="VARCHAR" />
+    <result column="TimeTwoEnd" property="timetwoend" jdbcType="VARCHAR" />
+    <result column="TimeThreeStart" property="timethreestart" jdbcType="VARCHAR" />
+    <result column="TimeThreeEnd" property="timethreeend" jdbcType="VARCHAR" />
     <result column="FowParameter" property="fowparameter" jdbcType="INTEGER" />
     <result column="Createuser" property="createuser" jdbcType="INTEGER" />
     <result column="Createtime" property="createtime" jdbcType="TIMESTAMP" />
@@ -110,11 +110,10 @@
   </select>
   <!-- 根据Hcode和Ecode查询节点  -->
   <select id="selectEquipmentByHcodeAndEcode" resultMap="BaseResultMap" parameterType="Map" >
-    select 
-    <include refid="Base_Column_List" />
+    select e.*
     from Equipment e left join ControlHost c on e.ControlHostId = c.id
-    where e.Code=#{Ecode} 
-     and c.Code = #{Hcode}
+    where e.Code=#{eCode} 
+     and c.Code = #{hCode}
   </select>
   <!-- 根据多个节点id查询节点信息  -->
   <select id="selectByIdStr" resultMap="BaseResultMap" parameterType="Map" >
@@ -154,8 +153,8 @@
       #{soilwater,jdbcType=REAL}, #{area,jdbcType=DOUBLE}, #{plantsname,jdbcType=INTEGER}, 
       #{rootdepth,jdbcType=INTEGER}, #{humidityup,jdbcType=REAL}, #{humiditydown,jdbcType=REAL}, 
       #{temperatureup,jdbcType=REAL}, #{temperaturedown,jdbcType=REAL}, #{week,jdbcType=VARCHAR}, 
-      #{timeonestart,jdbcType=TIMESTAMP}, #{timeoneend,jdbcType=TIMESTAMP}, #{timetwostart,jdbcType=TIMESTAMP}, 
-      #{timetwoend,jdbcType=TIMESTAMP}, #{timethreestart,jdbcType=TIMESTAMP}, #{timethreeend,jdbcType=TIMESTAMP}, 
+      #{timeonestart,jdbcType=VARCHAR}, #{timeoneend,jdbcType=VARCHAR}, #{timetwostart,jdbcType=VARCHAR}, 
+      #{timetwoend,jdbcType=VARCHAR}, #{timethreestart,jdbcType=VARCHAR}, #{timethreeend,jdbcType=VARCHAR}, 
       #{fowparameter,jdbcType=INTEGER}, #{createuser,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{modifyuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP})
   </insert>
@@ -295,22 +294,22 @@
         #{week,jdbcType=VARCHAR},
       </if>
       <if test="timeonestart != null" >
-        #{timeonestart,jdbcType=TIMESTAMP},
+        #{timeonestart,jdbcType=VARCHAR},
       </if>
       <if test="timeoneend != null" >
-        #{timeoneend,jdbcType=TIMESTAMP},
+        #{timeoneend,jdbcType=VARCHAR},
       </if>
       <if test="timetwostart != null" >
-        #{timetwostart,jdbcType=TIMESTAMP},
+        #{timetwostart,jdbcType=VARCHAR},
       </if>
       <if test="timetwoend != null" >
-        #{timetwoend,jdbcType=TIMESTAMP},
+        #{timetwoend,jdbcType=VARCHAR},
       </if>
       <if test="timethreestart != null" >
-        #{timethreestart,jdbcType=TIMESTAMP},
+        #{timethreestart,jdbcType=VARCHAR},
       </if>
       <if test="timethreeend != null" >
-        #{timethreeend,jdbcType=TIMESTAMP},
+        #{timethreeend,jdbcType=VARCHAR},
       </if>
       <if test="fowparameter != null" >
         #{fowparameter,jdbcType=INTEGER},
@@ -329,6 +328,7 @@
       </if>
     </trim>
   </insert>
+  <!-- 新节点信息 -->
   <update id="updateByPrimaryKeySelective" parameterType="com.rest.yun.beans.Equipment" >
     update Equipment
     <set >
@@ -378,22 +378,22 @@
         Week = #{week,jdbcType=VARCHAR},
       </if>
       <if test="timeonestart != null" >
-        TimeOneStart = #{timeonestart,jdbcType=TIMESTAMP},
+        TimeOneStart = #{timeonestart,jdbcType=VARCHAR},
       </if>
       <if test="timeoneend != null" >
-        TimeOneEnd = #{timeoneend,jdbcType=TIMESTAMP},
+        TimeOneEnd = #{timeoneend,jdbcType=VARCHAR},
       </if>
       <if test="timetwostart != null" >
-        TimeTwoStart = #{timetwostart,jdbcType=TIMESTAMP},
+        TimeTwoStart = #{timetwostart,jdbcType=VARCHAR},
       </if>
       <if test="timetwoend != null" >
-        TimeTwoEnd = #{timetwoend,jdbcType=TIMESTAMP},
+        TimeTwoEnd = #{timetwoend,jdbcType=VARCHAR},
       </if>
       <if test="timethreestart != null" >
-        TimeThreeStart = #{timethreestart,jdbcType=TIMESTAMP},
+        TimeThreeStart = #{timethreestart,jdbcType=VARCHAR},
       </if>
       <if test="timethreeend != null" >
-        TimeThreeEnd = #{timethreeend,jdbcType=TIMESTAMP},
+        TimeThreeEnd = #{timethreeend,jdbcType=VARCHAR},
       </if>
       <if test="fowparameter != null" >
         FowParameter = #{fowparameter,jdbcType=INTEGER},
@@ -430,12 +430,43 @@
       TemperatureUp = #{temperatureup,jdbcType=REAL},
       TemperatureDown = #{temperaturedown,jdbcType=REAL},
       Week = #{week,jdbcType=VARCHAR},
-      TimeOneStart = #{timeonestart,jdbcType=TIMESTAMP},
-      TimeOneEnd = #{timeoneend,jdbcType=TIMESTAMP},
-      TimeTwoStart = #{timetwostart,jdbcType=TIMESTAMP},
-      TimeTwoEnd = #{timetwoend,jdbcType=TIMESTAMP},
-      TimeThreeStart = #{timethreestart,jdbcType=TIMESTAMP},
-      TimeThreeEnd = #{timethreeend,jdbcType=TIMESTAMP},
+      TimeOneStart = #{timeonestart,jdbcType=VARCHAR},
+      TimeOneEnd = #{timeoneend,jdbcType=VARCHAR},
+      TimeTwoStart = #{timetwostart,jdbcType=VARCHAR},
+      TimeTwoEnd = #{timetwoend,jdbcType=VARCHAR},
+      TimeThreeStart = #{timethreestart,jdbcType=VARCHAR},
+      TimeThreeEnd = #{timethreeend,jdbcType=VARCHAR},
+      FowParameter = #{fowparameter,jdbcType=INTEGER},
+      Createuser = #{createuser,jdbcType=INTEGER},
+      Createtime = #{createtime,jdbcType=TIMESTAMP},
+      Modifyuser = #{modifyuser,jdbcType=INTEGER},
+      Modifytime = #{modifytime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 批量更新节点信息 -->
+  <update id="updateList" parameterType="List" >
+    update Equipment
+    set Name = #{name,jdbcType=VARCHAR},
+      ControlHostId = #{controlhostid,jdbcType=INTEGER},
+      Code = #{code,jdbcType=VARCHAR},
+      IrrigationType = #{irrigationtype,jdbcType=INTEGER},
+      SoilWeight = #{soilweight,jdbcType=REAL},
+      SoilWater = #{soilwater,jdbcType=REAL},
+      Area = #{area,jdbcType=DOUBLE},
+      PlantsName = #{plantsname,jdbcType=INTEGER},
+      soilName = #{soilname,jdbcType=INTEGER},
+      RootDepth = #{rootdepth,jdbcType=INTEGER},
+      HumidityUp = #{humidityup,jdbcType=REAL},
+      HumidityDown = #{humiditydown,jdbcType=REAL},
+      TemperatureUp = #{temperatureup,jdbcType=REAL},
+      TemperatureDown = #{temperaturedown,jdbcType=REAL},
+      Week = #{week,jdbcType=VARCHAR},
+      TimeOneStart = #{timeonestart,jdbcType=VARCHAR},
+      TimeOneEnd = #{timeoneend,jdbcType=VARCHAR},
+      TimeTwoStart = #{timetwostart,jdbcType=VARCHAR},
+      TimeTwoEnd = #{timetwoend,jdbcType=VARCHAR},
+      TimeThreeStart = #{timethreestart,jdbcType=VARCHAR},
+      TimeThreeEnd = #{timethreeend,jdbcType=VARCHAR},
       FowParameter = #{fowparameter,jdbcType=INTEGER},
       Createuser = #{createuser,jdbcType=INTEGER},
       Createtime = #{createtime,jdbcType=TIMESTAMP},

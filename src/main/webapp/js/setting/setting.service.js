@@ -158,10 +158,10 @@ rainet.setting.service = {
 					}
 				});
 			},
-			update: function(param, callback){
+			updateList: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"updateList/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('.EquipmentList'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){

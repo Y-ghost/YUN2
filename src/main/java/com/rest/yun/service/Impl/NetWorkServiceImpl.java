@@ -148,19 +148,28 @@ public class NetWorkServiceImpl implements NetWorkService{
 								statusVal.setCreatetime(date);
 								statusVal.setWatervalue(waterVal);
 								String status = "";
-								switch (Integer.parseInt(usingData.substring(numTmp+8,numTmp+10))) {
+								byte result = codingFactory.string2BCD(usingData.substring(numTmp+8,numTmp+10))[0];
+								switch (result) {
 								case 0x0F:
 									status = "阀门关闭";
-								case 0xF0:
+									break;
+								case (byte) 0xF0:
 									status = "阀门开启";
-								case 0xF1:
+									break;
+								case (byte) 0xF1:
 									status = "等待出水";
+									break;
 								case 0x02:
 									status = "等待关水";
-								case 0xFF:
+									break;
+								case (byte) 0xFF:
 									status = "供水故障";
+									break;
 								case 0x00:
 									status = "水阀故障";
+									break;
+								default:
+									break;
 								}
 								statusVal.setStatus(status);
 								if(receiveData[numTmp/2+12]<0){
@@ -218,6 +227,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 			}
 		} catch (Exception e) {
 			log.error("服务器保存接收的数据到DataTemp表中异常!"+e);
+			e.printStackTrace();
 		}
 	}
 	

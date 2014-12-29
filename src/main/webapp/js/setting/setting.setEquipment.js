@@ -91,22 +91,22 @@ rainet.setting.controller.setEquipment = {
 								}
 								
 								if(item.equipment.timeonestart != null){
-									timeonestart = rainet.utils.formateDate(item.equipment.timeonestart,"hh:mm");
+									timeonestart = item.equipment.timeonestart;
 								}
 								if(item.equipment.timeoneend != null){
-									timeoneend = rainet.utils.formateDate(item.equipment.timeoneend,"hh:mm");
+									timeoneend = item.equipment.timeoneend;
 								}
 								if(item.equipment.timetwostart != null){
-									timetwostart = rainet.utils.formateDate(item.equipment.timetwostart,"hh:mm");
+									timetwostart = item.equipment.timetwostart;
 								}
 								if(item.equipment.timetwoend != null){
-									timetwoend = rainet.utils.formateDate(item.equipment.timetwoend,"hh:mm");
+									timetwoend = item.equipment.timetwoend;
 								}
 								if(item.equipment.timethreestart != null){
-									timethreestart = rainet.utils.formateDate(item.equipment.timethreestart,"hh:mm");
+									timethreestart = item.equipment.timethreestart;
 								}
 								if(item.equipment.timethreeend != null){
-									timethreeend = rainet.utils.formateDate(item.equipment.timethreeend,"hh:mm");
+									timethreeend = item.equipment.timethreeend;
 								}
 								
 								str =str + "<div class=\"col-xs-12 col-md-6\">" +
@@ -212,6 +212,7 @@ rainet.setting.controller.setEquipment = {
 					});
 					if(mark){
 						var list = [];
+						var param;
 						$("[id='equipmentCheckbox']").each(function(){
 							if($(this).is(":checked")){
 								var $form = $(this).parent().parent().parent().find("form");
@@ -222,15 +223,16 @@ rainet.setting.controller.setEquipment = {
 //								}
 								var formData = $form.serializeArray();
 								var jsonData = rainet.utils.serializeObject(formData);
-								
 								list.push(jsonData);
 							}
 						});
-						console.log(JSON.stringify(list));
-						
+						list.handleError = function(result){
+							flag = true;
+							return true;
+						};
 						bootbox.dialog({
-							message : "确认设置？",
-							title : '节点传感器参数设置',
+							message : "初始化设置需要最多5分钟才能完成，确认设置？",
+							title : '初始化设置',
 							// 支持ESC
 							onEscape : function(){
 								
@@ -247,9 +249,9 @@ rainet.setting.controller.setEquipment = {
 								      label: "确定",
 								      className: "btn-success",
 								      callback : function(){
-								    	  rainet.setting.service.equipment.update(list, function(data){
+								    	  	rainet.setting.service.equipment.updateList(list, function(data){
 												if(data){
-													rainet.utils.notification.error("设置成功!");
+													rainet.utils.notification.success("设置成功!");
 												}
 												flag = true;
 											});

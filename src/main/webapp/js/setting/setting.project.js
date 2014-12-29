@@ -142,12 +142,12 @@ rainet.setting.controller.project = {
     			"<div class=\"col-sm-9 \" style=\"text-align:left;\">\n"+
 	    			"<div class=\"radio-inline\">"+
 						"<label>"+
-		    				"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=0 checked/>绿化"+
+		    				"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=\"0\" checked/>绿化"+
 		    			"</label>"+
 	        		"</div>"+	
 	        		"<div class=\"radio-inline\">"+
 		        		"<label>"+
-		        			"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=1/>农业"+
+		        			"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=\"1\" />农业"+
 		        		"</label>"+
 	        		"</div>"+		
         		"</div>"+		
