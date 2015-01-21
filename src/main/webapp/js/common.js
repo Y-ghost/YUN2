@@ -121,6 +121,10 @@ rainet.utils.current = function(time){
 
 //退出系统
 rainet.utils.exist = function(){
+	$(".systime").html("<iframe width=\"310\" scrolling=\"no\" height=\"25\" frameborder=\"0\" allowtransparency=\"true\" src=\"http://i.tianqi.com/index.php?c=code&id=40&icon=1&num=3\"></iframe>");
+	//添加底部年限
+	var myDate = new Date();
+	$(".copyYear").html(myDate.getFullYear());
 	$("#exist").click(function(){
 		if(confirm("确定退出?")){
 			rainet.ajax.execute({

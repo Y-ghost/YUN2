@@ -112,6 +112,14 @@ public class EquipmentExt<T> implements Serializable {
 		builder.append(code);
 		builder.append(", controlHostId=");
 		builder.append(controlHostId);
+		builder.append(", irrigationType=");
+		builder.append(irrigationType);
+		builder.append(", area=");
+		builder.append(area);
+		builder.append(", fowParameter=");
+		builder.append(fowParameter);
+		builder.append(", equipment=");
+		builder.append(equipment);
 		builder.append(", equipmentStatus=");
 		builder.append(equipmentStatus);
 		builder.append(", result=");

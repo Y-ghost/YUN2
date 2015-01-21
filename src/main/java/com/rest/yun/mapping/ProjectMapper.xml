@@ -189,6 +189,9 @@
       <if test="city !=null and city != ''">
     		AND City = #{city}
       </if>  
+      <if test="userId !=null and userId != ''">
+    		AND Createuser = #{userId}
+      </if>  
 	 </where>
 	 
 	 order by 

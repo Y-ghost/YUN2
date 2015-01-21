@@ -24,6 +24,14 @@ public interface EquipmentMapper {
 
 	int save(Equipment record);
 
+	/**
+	 * @Title:       selectByPrimaryKey
+	 * @author:      杨贵松
+	 * @time         2014年12月30日 下午12:58:50
+	 * @Description: 根据id查节点信息
+	 * @return       Equipment
+	 * @throws
+	 */
 	Equipment selectByPrimaryKey(Integer id);
 
 	//	更新节点信息	
@@ -79,4 +87,14 @@ public interface EquipmentMapper {
 	 * @throws
 	 */
 	void updateList(List<Equipment> list);
+	
+	/**
+	 * @Title:       selectByPage
+	 * @author:      杨贵松
+	 * @time         2014年12月30日 上午6:37:34
+	 * @Description: 分页统计节点数据
+	 * @return       List<Equipment>
+	 * @throws
+	 */
+	List<Equipment> selectByPage(Map<String, Object> map);
 }

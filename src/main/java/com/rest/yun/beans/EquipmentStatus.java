@@ -10,6 +10,8 @@ public class EquipmentStatus {
     private Float temperature;
 
     private Long watervalue;
+    
+    private Long currentvalue;
 
     private Float velocity;
 
@@ -49,7 +51,15 @@ public class EquipmentStatus {
         this.watervalue = watervalue;
     }
 
-    public Float getVelocity() {
+    public Long getCurrentvalue() {
+		return currentvalue;
+	}
+
+	public void setCurrentvalue(Long currentvalue) {
+		this.currentvalue = currentvalue;
+	}
+
+	public Float getVelocity() {
         return velocity;
     }
 

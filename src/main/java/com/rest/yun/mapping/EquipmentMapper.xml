@@ -125,6 +125,37 @@
   		#{item}  
  	</foreach>  
   </select>
+  <!-- 分页查询节点数据  -->
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="Map" >
+    select e.*
+    from Equipment e
+    left join ControlHost c on e.ControlHostId=c.id
+    left join Project p on c.projectId = p.id
+    <where>
+	 	<if test="pId != null and pId != ''">
+		  	p.id = #{pId}
+		</if>
+	 </where>
+	 
+	 order by 
+	 <choose>
+	 	<when test="sortField != null and sortField != ''">
+	 		${sortField}
+	 	</when>
+	 	<otherwise>
+	 		Createtime
+	 	</otherwise>
+	 </choose>
+	 
+	 <choose>
+	 	<when test="sortDirection != null and sortDirection != ''">
+	 		${sortDirection}
+	 	</when>
+	 	<otherwise>
+	 		desc
+	 	</otherwise>
+	 </choose>
+  </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment
@@ -132,11 +163,9 @@
   </delete>
   <!-- 删除主机下所有节点及其相关联数据 -->
   <delete id="deleteAllByHid" parameterType="java.lang.Integer" >
-    
-    delete from Equipment
-    where id = #{id,jdbcType=INTEGER};
-    delete from EquipmentData
-    where id = #{id,jdbcType=INTEGER}
+    delete e from Equipment e
+	left join ControlHost c on e.controlHostId = c.id
+    where c.id = #{id,jdbcType=INTEGER};
   </delete>
   <insert id="insert" parameterType="com.rest.yun.beans.Equipment" >
     insert into Equipment (id, Name, ControlHostId, 
@@ -150,7 +179,7 @@
       Modifyuser, Modifytime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{controlhostid,jdbcType=INTEGER}, 
       #{code,jdbcType=VARCHAR}, #{irrigationtype,jdbcType=INTEGER}, #{soilweight,jdbcType=REAL}, 
-      #{soilwater,jdbcType=REAL}, #{area,jdbcType=DOUBLE}, #{plantsname,jdbcType=INTEGER}, 
+      #{soilwater,jdbcType=REAL}, #{area,jdbcType=DOUBLE}, #{soilname,jdbcType=INTEGER}, #{plantsname,jdbcType=INTEGER}, 
       #{rootdepth,jdbcType=INTEGER}, #{humidityup,jdbcType=REAL}, #{humiditydown,jdbcType=REAL}, 
       #{temperatureup,jdbcType=REAL}, #{temperaturedown,jdbcType=REAL}, #{week,jdbcType=VARCHAR}, 
       #{timeonestart,jdbcType=VARCHAR}, #{timeoneend,jdbcType=VARCHAR}, #{timetwostart,jdbcType=VARCHAR}, 
@@ -189,7 +218,7 @@
       <if test="plantsname != null" >
         PlantsName,
       </if>
-      <if test="soilName != null" >
+      <if test="soilname != null" >
         soilName,
       </if>
       <if test="rootdepth != null" >
@@ -272,7 +301,7 @@
       <if test="plantsname != null" >
         #{plantsname,jdbcType=INTEGER},
       </if>
-      <if test="soilName != null" >
+      <if test="soilname != null" >
         #{soilname,jdbcType=INTEGER},
       </if>
       <if test="rootdepth != null" >
@@ -356,7 +385,7 @@
       <if test="plantsname != null" >
         PlantsName = #{plantsname,jdbcType=INTEGER},
       </if>
-      <if test="soilName != null" >
+      <if test="soilname != null" >
         soilName = #{soilname,jdbcType=INTEGER},
       </if>
       <if test="rootdepth != null" >

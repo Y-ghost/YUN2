@@ -46,9 +46,10 @@
   </delete>
   <!-- 根据主机id删除其关联的所有传感器信息 -->
   <delete id="deleteAllByHid" parameterType="java.lang.Integer" >
-    delete from SensorInfo s
+    delete s from SensorInfo s
     left join equipment e on s.EquipmentId = e.id
-    where e.ControlHostId = #{controlHostId,jdbcType=INTEGER};
+    left join ControlHost c on e.controlHostId = c.id
+    where c.id = #{controlHostId,jdbcType=INTEGER};
   </delete>
   <!-- 批量注册传感器 -->
   <insert id="save" parameterType="java.util.List" >

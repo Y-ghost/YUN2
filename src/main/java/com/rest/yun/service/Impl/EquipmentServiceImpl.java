@@ -78,11 +78,11 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			if (!CollectionUtils.isEmpty(eList)) {
 				for (Equipment equipment : eList) {
 					EquipmentExt<EquipmentData> equipmentExt = new EquipmentExt<EquipmentData>();
-					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByeEid(equipment.getId());
+					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByEid(equipment.getId());
 					List<SensorInfo> sList = sensorInfoMapper.selectSensorInfoByEid(equipment.getId());
 					List<EquipmentData> edList = new ArrayList<EquipmentData>();
 					for (SensorInfo sensor : sList) {
-						EquipmentData equipmentData = equipmentDataMapper.selectByPrimaryKey(sensor.getId());
+						EquipmentData equipmentData = equipmentDataMapper.selectBySid(sensor.getId());
 						if (equipmentData == null) {
 							equipmentData = new EquipmentData();
 							equipmentData.setHumidity((float) 0);
@@ -358,8 +358,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			
 			try {
 				//删除主机下所有节点及其相关联数据
-				sensorInfoMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentDataMapper.deleteAllByHid(list.get(0).getControlHostId());
+				sensorInfoMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentStatusMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentMapper.deleteAllByHid(list.get(0).getControlHostId());
 				
@@ -538,6 +538,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 				List<Equipment> listOK = new ArrayList<Equipment>();
 				List<Equipment> listError = new ArrayList<Equipment>();
 				for(Equipment equipment:list){
+					Equipment e = equipmentMapper.selectByPrimaryKey(equipment.getId());
+					equipment.setCode(e.getCode());
 					//1.模式设置
 					boolean f1 = setModel(equipment,host.getCode());
 					if(!f1){

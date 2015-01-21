@@ -248,5 +248,11 @@
 	</div>
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp" />
+	<script type="text/javascript">
+$(document).ready(function() {
+	var myDate = new Date();
+	$(".copyYear").html(myDate.getFullYear());
+});
+</script>
 </body>
 </html>

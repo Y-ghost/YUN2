@@ -5,7 +5,10 @@ import java.net.URLDecoder;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @project: yun
@@ -104,7 +107,46 @@ public class CommonUtiles {
 		}
 		return newresult;
 	}
+	
+	/**
+	 * @Title:       printDay
+	 * @author:      杨贵松
+	 * @time         2015年1月14日 上午5:41:04
+	 * @Description: 求两个日期之间的所有日期
+	 * @return       List<Date>
+	 * @throws
+	 */
+	public static List<Date> betweenDayList(Date start, Date end) {
+		List<Date> list = new ArrayList<Date>();
+		Calendar startDay = Calendar.getInstance();
+		Calendar endDay = Calendar.getInstance();
 
+		startDay.setTime(start);
+		endDay.setTime(end);
+		// 给出的日期开始日比终了日大则不执行打印
+		if (startDay.compareTo(endDay) > 0) {
+			return list;
+		}
+		// 给出的日期开始日与终了日相同则打印开始日期后终止
+		if (startDay.compareTo(endDay) == 0) {
+			list.add(start);
+			return list;
+		}
+		// 现在打印中的日期
+		Calendar currentPrintDay = startDay;
+		while (true) {
+			// 打印日期
+			list.add(currentPrintDay.getTime());
+			// 日期加一
+			currentPrintDay.add(Calendar.DATE, 1);
+			// 日期加一后判断是否达到终了日，达到则终止打印
+			if (currentPrintDay.compareTo(endDay) == 0) {
+				list.add(currentPrintDay.getTime());
+				break;
+			}
+		}
+		return list;
+	}
 	/**
 	 * Decode URL by UTF-8
 	 * 

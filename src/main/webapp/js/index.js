@@ -418,9 +418,6 @@ rainet.controlCenter.service = {
 $(document).ready(function() {
 	$("#homeLab").html("控制中心");
 	$("#homeHref").attr("href", "index");
-	//添加底部年限
-	var myDate = new Date();
-	$(".copyYear").html(myDate.getFullYear());
 	rainet.controlCenter.view.init();
 });
 

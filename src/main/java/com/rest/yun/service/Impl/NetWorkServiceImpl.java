@@ -125,7 +125,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 						
 						if(equipment!=null){
 							//查询数据库中最新的一条采集数据
-							EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByeEid(equipment.getId());
+							EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByEid(equipment.getId());
 							
 							if(equipmentStatus!=null && equipmentStatus.getWatervalue() > waterVal){//采集异常保存系统日志
 								List<UserProjectRel> relList = userProjectRelMapper.selectRelByPid(equipment.getProject().getId());
@@ -148,6 +148,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 								statusVal.setEquipmentid(equipment.getId());
 								statusVal.setCreatetime(date);
 								statusVal.setWatervalue(waterVal);
+								statusVal.setCurrentvalue(waterVal-equipmentStatus.getWatervalue());
 								String status = "";
 								byte result = codingFactory.string2BCD(usingData.substring(numTmp+8,numTmp+10))[0];
 								switch (result) {
@@ -305,7 +306,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * String 				返回
 	 */
 	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
-		Date endDate = CommonUtiles.getLastDate(20);
+		Date endDate = CommonUtiles.getLastDate(46);
 		String dataContext = "";
 		long time = 0;
 		while(dataContext.equals("") && time<endDate.getTime()){

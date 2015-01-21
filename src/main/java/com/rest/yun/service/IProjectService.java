@@ -3,6 +3,8 @@ package com.rest.yun.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.rest.yun.beans.Project;
 import com.rest.yun.dto.Page;
 
@@ -46,7 +48,7 @@ public interface IProjectService {
 	 * @param criteria
 	 * @return
 	 */
-	Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria);
+	Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria, HttpSession session);
 
 	/**
 	 * 检查项目名称是否存(除了{projectId}这个项目)
