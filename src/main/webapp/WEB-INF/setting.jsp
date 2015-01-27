@@ -6,8 +6,20 @@
 <!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
 <jsp:include page="common/header.jsp" />
 <head>
-<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.date.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.time.css" />
 <style type="text/css">
+.control-label{
+	padding-left:1px;
+	padding-right:1px;
+}
+.form-control{
+	padding-left:1px;
+	padding-right:1px;
+	width:65%;
+	float:left;
+}
 #form-group {
 	margin-bottom: 5px;
 	margin-right: -5px;
@@ -106,14 +118,10 @@ button.closeCycle {
 	</div>
 	<jsp:include page="common/footer.jsp" />
 
-	<script src="${requestScope.basePath}datatable/js/jquery.dataTables.js"></script>
-	<script src="${requestScope.basePath}datatable/js/dataTables.bootstrap.js"></script>
 	<!-- Fix IE 6-9  JSON object-->
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
-	<script src="${requestScope.basePath}bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="${requestScope.basePath}bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
@@ -121,5 +129,9 @@ button.closeCycle {
 	<script src="${requestScope.basePath}js/setting/setting.setEquipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.js"></script>
+	
+	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.time.js"></script>
 </body>
 </html>

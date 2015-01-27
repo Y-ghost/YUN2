@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
@@ -72,7 +73,7 @@ public class UserController {
 	@RequestMapping(value="exist" , method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper exist(HttpSession session) {
-		session.setAttribute("user", null);
+		session.invalidate();
 		return new ResponseWrapper(true);
 	}
 	
@@ -100,7 +101,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="modifyPassword" , method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseWrapper modifyPassword(@RequestParam String userId , @RequestParam String password ) {
+	public ResponseWrapper modifyPassword(@RequestParam String userId , @RequestParam String password ,HttpSession session) {
 		userService.modifyPassword(Integer.parseInt(userId),password);
 		return new ResponseWrapper(true);
 	}
@@ -115,11 +116,47 @@ public class UserController {
 	@RequestMapping(value="sendEmail" , method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper sendEmail(@RequestParam String loginname ,HttpServletRequest request) {
-		System.out.println("loginname");
-		boolean flag = userService.sendEmail(loginname,request);
-		return new ResponseWrapper(flag);
+		String mail = userService.sendEmail(loginname,request);
+		return new ResponseWrapper(mail);
 	}
 
+	/**
+	 * @Title:       reset_password
+	 * @author:      杨贵松
+	 * @time         2015年1月28日 上午1:29:51
+	 * @Description: 重定向到修改密码页面
+	 * @return       String
+	 * @throws
+	 */
+	@RequestMapping(value="reset_password",method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView reset_password(@RequestParam String userName,@RequestParam String sid,HttpSession session){
+		User user = new User();
+		String url = "";
+		try {
+			user = userService.validUserName(userName);
+			if(user==null){
+				url = "redirect:/indexs/modifyPasswordErr";
+			}else if(user.getValidcode()==null || user.getValidcode().equals("")){
+				url = "redirect:/indexs/modifyPasswordErr";
+			}else if(user.getValidcode().equals(sid)){
+				long date = System.currentTimeMillis();
+				if(user.getOutdate().getTime()<date){
+					url = "redirect:/indexs/modifyPasswordErr";
+				}else{
+					session.setAttribute("name", userName);
+					session.setAttribute("id", user.getId());
+					url = "redirect:/indexs/modifyPassword";
+				}
+			}else{
+				url = "redirect:/indexs/modifyPasswordErr";
+			}
+		} catch (Exception e) {
+			url = "redirect:/indexs/modifyPasswordErr";
+		}
+		return new ModelAndView(url);
+	}
+	
 	/**
 	 * 更新用户信息
 	 * 

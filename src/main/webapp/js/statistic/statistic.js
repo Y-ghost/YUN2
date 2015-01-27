@@ -32,5 +32,17 @@ rainet.statistic.view = function(){
 $(document).ready(function(){
 	$("#homeLab").html("统计分析");
 	$("#homeHref").attr("href","statistic");
+	$(".startDate").pickadate({
+	    today: '今天',
+	    clear: '关闭',
+	    selectYears: true,
+	    selectMonths: true
+		});
+	$(".endDate").pickadate({
+		today: '今天',
+		clear: '关闭',
+		selectYears: true,
+		selectMonths: true
+	});
 	rainet.statistic.view.init();
 });

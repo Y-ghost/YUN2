@@ -35,6 +35,13 @@
     where EquipmentId = #{equipmentid,jdbcType=INTEGER}
   	and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
   </select>
+   <!-- 统计用水量详情 -->
+  <select id="selectEquipmentStatusList" resultMap="BaseResultMap" parameterType="com.rest.yun.beans.EquipmentStatus" >
+  	select *
+    from Equipment_Status
+    where EquipmentId = #{equipmentid,jdbcType=INTEGER}
+  	and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment_Status
     where id = #{id,jdbcType=INTEGER}

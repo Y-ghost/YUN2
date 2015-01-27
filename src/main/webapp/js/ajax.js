@@ -158,7 +158,7 @@ rainet.ajax.controller = {
 					if (data) {
 						bootbox.hideAll();
 						rainet.utils.notification.success("登录成功!");
-//						location.reload() ;
+						location.reload() ;
 					}else{
 						return false;
 					}

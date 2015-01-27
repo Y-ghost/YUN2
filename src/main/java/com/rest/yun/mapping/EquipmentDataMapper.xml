@@ -25,6 +25,13 @@
     where SensorId = #{sensorid,jdbcType=INTEGER}
     and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
   </select>
+  <!-- 湿度详情  -->
+  <select id="selectHumidityList" resultMap="BaseResultMap" parameterType="com.rest.yun.beans.EquipmentData" >
+    select * 
+    from Equipment_Data
+    where SensorId = #{sensorid,jdbcType=INTEGER}
+    and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment_Data
     where id = #{id,jdbcType=INTEGER}

@@ -21,4 +21,7 @@ public interface EquipmentDataMapper {
 	
 	//获取单个传感器当日的湿度值
 	float selectHumidityBySid(EquipmentData equipmentData);
+	
+	//湿度详情
+	List<EquipmentData> selectHumidityList(EquipmentData equipmentData);
 }

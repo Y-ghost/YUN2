@@ -7,13 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>YUN Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<properties>
 		<finalName>YUN</finalName>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.4.RELEASE</spring.version>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -116,13 +116,32 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.0.23.Final</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.10-FINAL</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-core</artifactId>
+			<version>1.0.6</version>
+		</dependency>
 		
+		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-reader</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+
+
 		<!-- 文件lib下的非开源jar引入 -->
 		<dependency>
 			<groupId>com.gexin.rp.sdk</groupId>
@@ -146,24 +165,15 @@
 			<systemPath>${basedir}/lib/gexin-rp-sdk-template-2.0.0.6.jar</systemPath>
 		</dependency>
 	</dependencies>
-	
+
 	<!-- 配置tomcat热部署，注意需要更改maven安装路劲下的setting文件，以及配置tomcat权限 -->
 	<build>
 		<finalName>YUN</finalName>
 		<plugins>
-			<!-- <plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<server>tomcat7</server>
-					<username>admin</username>
-					<password>admin</password>
-					<update>true</update>
-					<path>/${finalName}</path>
-				</configuration>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat7-maven-plugin</artifactId> 
+				<version>2.2</version> <configuration> <url>http://localhost:8080/manager/text</url> 
+				<server>tomcat7</server> <username>admin</username> <password>admin</password> 
+				<update>true</update> <path>/${finalName}</path> </configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>

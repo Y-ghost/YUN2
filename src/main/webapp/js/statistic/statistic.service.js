@@ -49,7 +49,7 @@ rainet.statistic.service = {
 			waterList : function(param, callback) {
 				rainet.ajax.execute({
 					url : rainet.statistic.url.statistic.url+"waterList/",
-					$busyEle : $('.equipment-container'),
+					$busyEle : $('.statistic'),
 					data : param,
 					method : 'GET',
 					success : function(data) {
@@ -60,7 +60,29 @@ rainet.statistic.service = {
 			humidityList : function(param, callback) {
 				rainet.ajax.execute({
 					url : rainet.statistic.url.statistic.url+"humidityList/",
-					$busyEle : $('.equipment-container'),
+					$busyEle : $('.statistic'),
+					data : param,
+					method : 'GET',
+					success : function(data) {
+						callback(data);
+					}
+				});
+			},
+			waterExport : function(param, callback) {
+				rainet.ajax.execute({
+					url : rainet.statistic.url.statistic.url+"waterExport/",
+					$busyEle : $('.statistic'),
+					data : param,
+					method : 'GET',
+					success : function(data) {
+						callback(data);
+					}
+				});
+			},
+			humidityExport : function(param, callback) {
+				rainet.ajax.execute({
+					url : rainet.statistic.url.statistic.url+"humidityExport/",
+					$busyEle : $('.statistic'),
 					data : param,
 					method : 'GET',
 					success : function(data) {

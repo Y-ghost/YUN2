@@ -370,7 +370,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					equipment.setArea(equipmentExt.getArea());
 					equipment.setControlhostid(equipmentExt.getControlHostId());
 					equipment.setFowparameter(equipmentExt.getFowParameter());
-					equipment.setIrrigationtype(1);
+					equipment.setIrrigationtype(0);
 					equipment.setCreatetime(date);
 					equipment.setCreateuser(user.getId());
 					equipment.setModifytime(date);
@@ -779,7 +779,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			float paramD = soil.getParameterd();
 			
 			// a、b、c、d参数值转换
-			if (paramA < 0) {
+			if (-1<paramA && paramA < 0) {
+				param[0] = (byte) 120;
+				param[1] = (byte) ((int) Math.round((-paramA * 100)) % 100);//由于大于-1小于0的小数转化后不整，需要Math.round函数取整
+			}else if (-1>=paramA) {
 				param[0] = (byte) ((int) (paramA * 100) / 100);
 				param[1] = (byte) ((int) (-paramA * 100) % 100);
 			} else {
@@ -787,7 +790,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
 				param[1] = (byte) ((int) (paramA * 100) % 100);
 			}
 			
-			if (paramB < 0) {
+			if (-1<paramB && paramB < 0) {
+				param[2] = (byte) 120;
+				param[3] = (byte) ((int) Math.round((-paramB * 100)) % 100);
+			}else if (-1>=paramB) {
 				param[2] = (byte) ((int) (paramB * 100) / 100);
 				param[3] = (byte) ((int) (-paramB * 100) % 100);
 			} else {
@@ -795,7 +801,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
 				param[3] = (byte) ((int) (paramB * 100) % 100);
 			}
 			
-			if (paramC < 0) {
+			if (-1<paramC && paramC < 0) {
+				param[4] = (byte) 120;
+				param[5] = (byte) ((int) Math.round((-paramC * 100)) % 100);
+			}else if (-1>=paramC) {
 				param[4] = (byte) ((int) (paramC * 100) / 100);
 				param[5] = (byte) ((int) (-paramC * 100) % 100);
 			} else {
@@ -803,7 +812,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
 				param[5] = (byte) ((int) (paramC * 100) % 100);
 			}
 			
-			if (paramD < 0) {
+			if (-1<paramD && paramD < 0) {
+				param[6] = (byte) 120;
+				param[7] = (byte) ((int) Math.round((-paramD * 100)) % 100);
+			}else if (-1>=paramD) {
 				param[6] = (byte) ((int) (paramD * 100) / 100);
 				param[7] = (byte) ((int) (-paramD * 100) % 100);
 			} else {

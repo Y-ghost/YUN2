@@ -126,6 +126,7 @@ public class UserServiceImpl implements IUserService {
 			Map<String,Object> map = new HashMap<String, Object>();
 			map.put("userId", userId);
 			map.put("password", MD5.getMD5Str(password.trim()));
+			map.put("validCode", "000000000000000000000000000000000");
 			userMapper.modifyPassword(map);
 		} catch (DataAccessException e) {
 			LOG.error("modifyPassword exception ! ",e);
@@ -140,9 +141,9 @@ public class UserServiceImpl implements IUserService {
 	 * @Description: 找回密码发送验证邮件
 	 */
 	@Override
-	public boolean sendEmail(String loginname, HttpServletRequest request) {
+	public String sendEmail(String loginname, HttpServletRequest request) {
 		User user = new User();
-		boolean flag = false;
+		String mail = "";
 		try {
 			user = userMapper.validUser(loginname);
 			if(user==null){
@@ -164,14 +165,20 @@ public class UserServiceImpl implements IUserService {
 	            
 	            String path = request.getContextPath();
 	            String basePath = request.getScheme()+"://"+request.getServerName()+path+"/";
-	            String urlStr =  basePath+"user/reset_password?userName="+user.getLoginname()+"&sid="+validCode;
-	            flag = MailSender.iForgetPassword(user.getEmail(), urlStr, user.getLoginname(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(outDate));
+	            String urlStr =  basePath+"User/reset_password?userName="+user.getLoginname()+"&sid="+validCode;
+	            boolean flag = MailSender.iForgetPassword(user.getEmail(), urlStr, user.getLoginname(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(outDate));
+	            if(!flag){
+	            	LOG.error("send e_mail filed ! ");
+	    			throw new ServerException(ErrorCode.SEND_EMAIL_FAILED);
+	            }
 			}
+			String[] mails = user.getEmail().split("@");
+			mail = mails[0].substring(0,2)+"......@"+mails[1];
 		} catch (Exception e) {
 			LOG.error("send e_mail exception ! ",e);
 			throw new ServerException(ErrorCode.SEND_EMAIL_FAILED);
 		}
-		return flag;
+		return mail;
 	}
 
 	@Override
@@ -229,6 +236,19 @@ public class UserServiceImpl implements IUserService {
 		}
 
 		return page;
+	}
+
+	/**
+	 * @Title:       validUserName
+	 * @author:      杨贵松
+	 * @time         2015年1月28日 上午1:39:33
+	 * @Description: 根据用户名查询用户信息
+	 * @throws
+	 */
+	@Override
+	public User validUserName(String userName) {
+		User user = userMapper.validUser(userName);
+		return user;
 	}
 
 }

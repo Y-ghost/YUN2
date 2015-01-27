@@ -207,7 +207,7 @@ public class MailSender {
 	 * @return 
 	 * boolean 				返回
 	 */
-	public boolean setCopyTo(String copyto) throws Exception
+	public boolean setCopyTo(String copyto)
 	{
 		if (copyto == null)
 			return false;
@@ -264,20 +264,31 @@ public class MailSender {
 	 */
 	public static boolean iForgetPassword(String toEmail,String urlStr,String userName,String outDate) throws Exception{
 		StringBuffer sb = new StringBuffer();
-		sb.append("亲爱的用户 "+userName+"：您好！<br><br>");  
-        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;您收到这封这封电子邮件是因为您 (也可能是某人冒充您的名义) 申请了一个新的密码。假如这不是您本人所申请, 请不用理会<br>这封电子邮件, 但是如果您持续收到这类的信件骚扰, 请您尽快联络管理员。<br><br>");  
-        sb.append("要使用新的密码, 请使用以下链接启用密码。<br><br>");  
-        sb.append("&nbsp;&nbsp;&nbsp;&nbsp;<a href='"+urlStr+"'>"+urlStr+"</a>");
-        sb.append("<br><br>&nbsp;&nbsp;&nbsp;&nbsp;(如果无法点击该URL链接地址，请将它复制并粘帖到浏览器的地址输入框，然后单击回车即可。该链接使用后将立即失效。)");
-        sb.append("<br><br>&nbsp;&nbsp;&nbsp;&nbsp;注意:请您在收到邮件1个小时内("+outDate+"前)使用，否则该链接将会失效。");
-		sb.append("<br><br>了解更多云灌溉信息，请访问Rainet官网：<a href='http://www.rainet.com.cn'>http://www.rainet.com.cn</a><br>");
-		sb.append("智能灌溉，请访问云灌溉智能控制系统：<a href='http://yun.rainet.com.cn'>http://yun.rainet.com.cn</a><br>");
-		sb.append("<br><br>我们将一如既往、热忱的为您服务！");
-		sb.append("<br>WWW.RAINET.COM.CN - 智慧生活，开启未来的世界!");
-		sb.append("<br>用户服务支持：<a href='mailto:service@rainet.com.cn'>service@rainet.com.cn</a><br><br><br>");
+		sb.append("<div style=\"font-family: '微软雅黑,宋体';margin:50px;width:850px;font-size: 14px; border: #ccc solid 1px;\">"+
+				"<div style=\"height:70px; color: #999999;line-height: 60px;margin-top: 0px;background-color: #fbfbfb;font-size: 12px;border-bottom: #eeeeee 1px solid;border-top: #1b926c 1px solid;\">"+
+		        "<div style=\"float:left;margin-right:15px;margin-left:15px;padding:5px;font-family: 'Copperplate Gothic Bold'; font-size: 36px; color: #000;\">Rainet</div> "+
+		        "<div style=\"float:left;margin-top: 12px;\">此信为系统邮件，请不要直接回复。</div>"+
+		        "<div style=\"float:right;margin-right:60px; margin-top: 12px;\"><a href=\"http://www.rainet.com.cn/contact.jsp\" style=\"font-family: 'Copperplate Gothic Bold';\"><strong><font color=\"#666666\">服务中心</font></strong></a></div>"+
+		        "<div style=\"float:right;margin-right:30px; margin-top: 12px;\"><a href=\"http://www.rainet.com.cn/service.jsp\" style=\"font-family: 'Copperplate Gothic Bold';\"><strong><font color=\"#666666\">产品中心</font></strong></a></div>"+
+		        "<div style=\"float:right;margin-right:30px; margin-top: 12px;\"><a href=\"http://www.rainet.com.cn\" style=\"font-family: 'Copperplate Gothic Bold';\"><strong><font color=\"#666666\">首页</font></strong></a></div>"+
+		        "</div><div style=\"padding:20px;\">"+
+		        "<div style=\"height:30px;line-height: 30px;margin-top: 10px;\">亲爱的 <span style=\"font-size: 18px;font-weight:700;\">"+userName+"</span> 用户：</div>"+
+		        "<div style=\"height:40px;padding-left:28px;line-height: 40px;\">您好！</div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;\">您收到这封这封电子邮件是因为您 (也可能是某人冒充您的名义) 申请了一个新的密码。假如这不是您本人所申请, 请不用理会</div>"+
+		        "<div style=\"height:30px;line-height: 30px;\">这封电子邮件, 但是如果您持续收到这类的信件骚扰, 请您尽快联络管理员。</div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;\">要使用新的密码,请点击以下链接启用密码:</div>"+
+		        "<div style=\"height:60px;text-align:center;line-height: 60px;\"><a href=\""+urlStr+"\" style=\"font-family: 'Copperplate Gothic Bold'; font-size: 20px; color: #1b926c;\">点击我重设密码</a></div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;\">(如果无法点击该URL链接地址，请将它复制并粘帖到浏览器的地址输入框，然后单击回车即可。该链接使用后将立即失效。)</div>"+
+		        "<div style=\"height:30px;line-height: 30px;padding-left:28px;\">注意:请您在收到邮件1个小时内( <span style=\"font-size: 18px;font-weight:700;\">"+outDate+"</span> 前 )使用，否则该链接将会失效。想了解更多云灌溉信息，请访问</div>"+
+		        "<div style=\"height:30px;line-height: 30px;\"> <a href=\"http://www.rainet.com.cn\" style=\"font-family: 'Copperplate Gothic Bold'; font-size: 16px; color: #1b926c;\">官网首页</a>或者登录 <a href=\"http://yun.rainet.com.cn\" style=\"font-family: 'Copperplate Gothic Bold'; font-size: 16px; color: #1b926c;\">云灌溉系统</a>。</div>"+
+		        "<div style=\"height:1px;margin-top:20px;margin-bottom:20px;border-top: #e7e7e7 solid 1px;\"></div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;\">锐利特科技将一如既往、热忱的为您服务！</div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;\">与您携手共创智慧生活，开启未来的世界!</div>"+
+		        "<div style=\"height:30px;padding-left:28px;line-height: 30px;margin-bottom: 30px;\">用户服务支持：<a href=\"mailto:service@rainet.com.cn\"><strong><font color=\"#666666\">service@rainet.com.cn</font></strong></a></div>"+
+				"</div></div>");
 		String mailbody = sb.toString();
 		// 设置SMTP主机
-		MailSender themail = new MailSender("smtp.exmail.qq.com");
+		MailSender themail = new MailSender("smtp.mxhichina.com");
 		themail.setNeedAuth(true);
 		// 设置邮件标题
 		if (themail.setSubject("Rainet云灌溉找回密码") == false)
@@ -292,7 +303,7 @@ public class MailSender {
 		if (themail.setFrom("service@rainet.com.cn") == false)
 			return false;
 		// 设置发件人的邮件的用户名密码
-		themail.setNamePass("service", "rainet2014");
+		themail.setNamePass("service", "miny3g0s2!@#");
 		// 设置发送的附件
 		// themail.addFileAffix("E:\\ftp\\cca\\Test.java");
 		if (themail.sendout() == false)

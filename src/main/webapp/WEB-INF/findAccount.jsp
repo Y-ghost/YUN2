@@ -48,8 +48,8 @@
 				</div>
 				<div class="form-group input-group-container">
 					<div class="input-group input-group-lg">
-						<img class="very-image" src="">
-						<a class="very-link" href="javascript:void(0);">看不清，换一张</a>
+						<div class="code cursor"></div>
+						<a class="codeBtn cursor">看不清，换一张</a>
 					</div>
 				</div>
 				<div>
@@ -61,5 +61,6 @@
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp" />
 	<script src="${requestScope.basePath}js/findAccount.js"></script>
+	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 </body>
 </html>

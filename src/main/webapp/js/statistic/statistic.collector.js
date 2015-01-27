@@ -53,6 +53,11 @@ rainet.statistic.controller.water = {
 				rainet.statistic.controller.water.initEquipmentList(projectId);
 			});
 		},
+		handlMenuView : function(currentEle){
+			var $ele = $(currentEle);
+			$ele.siblings().removeClass('active');
+			$ele.addClass('active');
+		},
 		//初始化节点列表
 		initEquipmentList : function(id){
 			var param = {pId : id};
@@ -67,56 +72,6 @@ rainet.statistic.controller.water = {
 		
 		//统计
 		statisticMethod : function(pId){
-			var usdeur = [                 
-		                  [Date.UTC(2013,4,1),171751],
-		                  [Date.UTC(2013,4,2),1095],
-		                  [Date.UTC(2013,4,3),299527],
-		                  [Date.UTC(2013,4,7),176203.71],
-		                  [Date.UTC(2013,4,8),452710],
-		                  [Date.UTC(2013,4,9),58968],
-		                  [Date.UTC(2013,4,10),432595.95],
-		                  [Date.UTC(2013,4,11),147793],
-		                  [Date.UTC(2013,4,12),753902.75],
-		                  [Date.UTC(2013,9,2),402275.4],
-		                  [Date.UTC(2013,9,3),317585.99],
-		                  [Date.UTC(2013,9,4),283644],
-		                  [Date.UTC(2013,9,5),364743.9],
-		                  [Date.UTC(2013,9,6),405310],
-		                  [Date.UTC(2013,9,9),688051],
-		                  [Date.UTC(2013,9,10),460117],
-		                  [Date.UTC(2013,9,11),429969.7],
-		                  [Date.UTC(2013,9,12),222008],
-		                  [Date.UTC(2014,2,24),289979],
-		                  [Date.UTC(2014,2,25),342240],
-		                  [Date.UTC(2014,2,26),264457],
-		                  [Date.UTC(2014,2,27),385554],
-		                  [Date.UTC(2014,2,28),201720]]; 
-			var usdeur2 = [                 
-			              [Date.UTC(2013,4,1),71751],
-			              [Date.UTC(2013,4,2),10295],
-			              [Date.UTC(2013,4,3),29927],
-			              [Date.UTC(2013,4,7),17203.71],
-			              [Date.UTC(2013,4,8),42710],
-			              [Date.UTC(2013,4,9),518968],
-			              [Date.UTC(2013,4,10),4132595.95],
-			              [Date.UTC(2013,4,11),1417793],
-			              [Date.UTC(2013,4,12),7531902.75],
-			              [Date.UTC(2013,4,15),5850134.75],
-			              [Date.UTC(2013,4,16),4168919.42],
-			              [Date.UTC(2013,4,17),3753913],
-			              [Date.UTC(2013,4,18),3704918.88],
-			              [Date.UTC(2013,4,19),2440319.2],
-			              [Date.UTC(2013,4,22),3118773.8],
-			              [Date.UTC(2013,4,23),4137405.2],
-			              [Date.UTC(2013,4,24),1137048.02],
-			              [Date.UTC(2013,4,25),2810143],
-			              [Date.UTC(2013,4,26),4814023],
-			              [Date.UTC(2013,4,27),3014884.81],
-			              [Date.UTC(2013,4,28),6216961],
-			              [Date.UTC(2013,5,2),4171514.2]];
-			              
-			              
-			              
 			/*************************************** 设置chart参数 ***************************************/
 			Highcharts.setOptions({
 				global:{
@@ -130,12 +85,46 @@ rainet.statistic.controller.water = {
 					shortMonths:['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
 				}
 			});
+			//导出
+			$(".exportBtn").off('click').on('click', function(){
+				var id = $("#equipmentList").val();
+				var type = $("input[name='statisticType']:checked").val();
+				var startDate = $(".startDate").val()+" 00:00:00";
+				var endDate = $(".endDate").val()+" 00:00:00";
+				
+				if(startDate==" 00:00:00" ){
+					rainet.utils.notification.warning('请选择开始日期!');
+					return;
+				}else if(endDate==" 00:00:00" ){
+					rainet.utils.notification.warning('请选择结束日期!');
+					return;
+				}
+				
+				var param = {pId:pId,eId:id,startDate:new Date(startDate),endDate:new Date(endDate)};
+				if(type==0){
+					rainet.statistic.service["statistic"].waterExport(param, function(data){
+						window.location = rainet.settings.baseUrl + 'statistic/'+"exportExcel?fileName="+data;
+					});
+				}else if(type==1){
+					rainet.statistic.service["statistic"].humidityExport(param, function(data){
+						window.location = rainet.settings.baseUrl + 'statistic/'+"exportExcel?fileName="+data;
+					})
+				}
+			});
 			//统计
 			$(".statisticBtn").off('click').on('click', function(){
 				var id = $("#equipmentList").val();
 				var type = $("input[name='statisticType']:checked").val();
 				var startDate = $(".startDate").val()+" 00:00:00";
 				var endDate = $(".endDate").val()+" 00:00:00";
+				
+				if(startDate==" 00:00:00" ){
+					rainet.utils.notification.warning('请选择开始日期!');
+					return;
+				}else if(endDate==" 00:00:00" ){
+					rainet.utils.notification.warning('请选择结束日期!');
+					return;
+				}
 				
 				var param = {pId:pId,eId:id,startDate:new Date(startDate),endDate:new Date(endDate)};
 				/*************************************** 统计灌水量 ***************************************/

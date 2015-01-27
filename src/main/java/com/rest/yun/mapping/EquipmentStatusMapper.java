@@ -48,4 +48,15 @@ public interface EquipmentStatusMapper {
 	 */
 	long selectEquipmentStatusByEidDate(EquipmentStatus equipmentStatus);
 
+	/**
+	 * @Title:       selectEquipmentStatusList
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午10:17:21
+	 * @Description: 统计用水量详情
+	 * @return       List<EquipmentStatus>
+	 * @throws
+	 */
+	List<EquipmentStatus> selectEquipmentStatusList(
+			EquipmentStatus equipmentStatus);
+
 }

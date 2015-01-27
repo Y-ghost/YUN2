@@ -6,8 +6,10 @@
 <!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
 <jsp:include page="common/header.jsp" />
 <head>
-<link rel="stylesheet" href="${requestScope.basePath}datatable/css/dataTables.bootstrap.css" />
 <link rel="stylesheet" href="${requestScope.basePath}css/jqpagination.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.date.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.time.css" />
 <style type="text/css">
 #form-group {
 	margin-bottom: 5px;
@@ -51,8 +53,8 @@
 					<div class="node-tools">
 						<label class="col-xs-2 col-md-2 control-label" style="padding-left:1;padding-right:3;font-size:14px;line-height: 35px;">统计日期：<input type="hidden" class="projectId" /></label>
 						<div class="col-xs-5 col-md-5 form-group">
-							<input type="text" class="form-control startDate cursor" style="width:120px;float:left;margin-right:30px;" name="startDate" placeholder="开始日期" value="2014-12-28"/>
-							<input type="text" class="form-control endDate cursor" style="width:120px;float:left;" name="endDate" placeholder="结束日期" value="2014-12-30"/>
+							<input type="text" class="form-control startDate cursor" style="width:120px;float:left;margin-right:30px;" name="startDate" placeholder="开始日期" />
+							<input type="text" class="form-control endDate cursor" style="width:120px;float:left;" name="endDate" placeholder="结束日期" />
 						</div>
 						<label class="col-xs-2 col-md-2 control-label" style="padding-left:3;padding-right:3;font-size:14px;line-height: 35px;">统计方式：<input type="hidden" class="projectId" /></label>
 						<div class="col-xs-3 col-md-3  control-label" style="padding-left:1px;padding-right:10px;font-size:14px;">
@@ -84,19 +86,19 @@
 	</div>
 	<jsp:include page="common/footer.jsp" />
 
-	<script src="${requestScope.basePath}datatable/js/jquery.dataTables.js"></script>
-	<script src="${requestScope.basePath}datatable/js/dataTables.bootstrap.js"></script>
 	<!-- Fix IE 6-9  JSON object-->
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/lib/jquery.jqpagination.min.js"></script>
-	<%-- <script src="${requestScope.basePath}bootstrap/js/highcharts.js"></script> --%>
 	<script src="${requestScope.basePath}bootstrap/js/highstock.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/exporting.js"></script>
 	<script src="${requestScope.basePath}js/statistic/statistic.util.js"></script>
 	<script src="${requestScope.basePath}js/statistic/statistic.js"></script>
 	<script src="${requestScope.basePath}js/statistic/statistic.service.js"></script>
 	<script src="${requestScope.basePath}js/statistic/statistic.collector.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.time.js"></script>
 </body>
 </html>
 

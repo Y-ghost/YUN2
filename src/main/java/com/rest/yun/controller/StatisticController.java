@@ -3,6 +3,9 @@ package com.rest.yun.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,4 +60,51 @@ public class StatisticController {
 		return new ResponseWrapper(list);
 	}
 
+	/**
+	 * @Title:       download
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午7:02:15
+	 * @Description: 生成用水量Excel
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="waterExport",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper waterExport(@RequestParam Integer pId, @RequestParam Integer eId,@RequestParam Date startDate, @RequestParam Date endDate, HttpServletRequest request){
+		String fileName = statisticService.waterExport(pId,eId,startDate, endDate,request);
+		return new ResponseWrapper(fileName);
+	}
+	
+	/**
+	 * @Title:       humidityExport
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午7:31:17
+	 * @Description: 生成湿度值Excel
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="humidityExport",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper humidityExport(@RequestParam Integer pId, @RequestParam Integer eId,@RequestParam Date startDate, @RequestParam Date endDate, HttpServletRequest request){
+		String fileName = statisticService.humidityExport(pId,eId,startDate, endDate,request);
+		return new ResponseWrapper(fileName);
+	}
+	
+	/**
+	 * @Title:       export
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午7:59:41
+	 * @Description: 导出Excel
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="exportExcel",method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper exportExcel( @RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
+		statisticService.exportExcel(fileName,request,response);
+		return null;
+	}
 }

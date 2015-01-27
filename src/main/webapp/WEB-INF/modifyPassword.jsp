@@ -31,6 +31,12 @@
 				onsubmit="return false;">
 				<div class="form-group input-group-container">
 					<div class="input-group input-group-lg">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
+							<input type="text" class="form-control" value="${name}" id="username" readonly="readonly">
+					</div>
+				</div>
+				<div class="form-group input-group-container">
+					<div class="input-group input-group-lg">
 						<span class="input-group-addon"><span
 							class="glyphicon glyphicon-lock"></span></span> 
 							<input type="password" class="form-control" placeholder="新密码" name="newPassword" id="newPassword">
@@ -47,7 +53,7 @@
 					<button type="submit" class="btn btn-primary btn-lg btn-block">下一步</button>
 				</div>
 			</form>
-					<input type="hidden" id="userId" value="1"/>
+					<input type="hidden" id="userId" value="${id}"/>
 		</div>
 	</div>
 	<!-- footer -->

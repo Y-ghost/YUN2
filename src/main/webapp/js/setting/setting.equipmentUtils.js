@@ -46,6 +46,9 @@ var selectVal = function(data){
 			if(item.equipment.id==id){
 				$(".soilname",$form).val(item.equipment.soilname); 
 				$(".plantsname",$form).val(item.equipment.plantsname); 
+			}else{
+				$(".soilname",$form).val(-1); 
+				$(".plantsname",$form).val(-1); 
 			}
 		});
 	});
@@ -55,11 +58,11 @@ var addPlants = function($plantsInfo,$growthCycleHeader,$growthCycle){
 	$(".plantsLink").off('click').on('click', function(e){
 		var gcs = $(".growthCycles",$plantsInfo);
 			gcs.empty().append($growthCycleHeader.html());
-			cycledate();
 		
 		var $form = $("form",$plantsInfo);
 		setValidateForPlants($form);
 		
+		cycledate();//....
 		$(".addNewCycle",$plantsInfo).off('click').on('click', function(e){
 			gcs.append($growthCycle.html());
 			
@@ -674,59 +677,24 @@ var setValidateForEquipmentInfo = function($form){
 }
 // 日历控件显示时间
 var dateTime = function() {
-	var obj = $(".EquipmentList").find("input[id=dateTime]");
-	$(obj).off('click').on('click', function(e){
-		$(this).datetimepicker({
-			format : "hh:ii",
-	        language:  'zh-CN',
-	        weekStart: 1,
-			autoclose: 1,
-			todayHighlight: 1,
-			startView: 1,
-			minView: 2,
-			forceParse: 0
+	var time = $(".EquipmentList").find("input[id=dateTime]");
+	$(time).each(function(i){ 
+		$(this).pickatime({
+			format : 'H:i',
+			clear : '关闭'
 		});
 	});
 }
-// 日历控件显示日期
-var cycledate = function(obj) {
-	var obj =  $(".growthCycles").find("input[id=cycledate]");
-	$(obj).off('click').on('click', function(e){
-		$(this).datetimepicker({
-			format : "yyyy-mm-dd",
-			language:  'zh-CN',
-			weekStart: 1,
-			autoclose: 1,
-			todayHighlight: 1,
-			startView: 2,
-			minView: 2,
-			forceParse: 0
+// 日历控件显示时间
+var cycledate = function() {
+	var time = $(".growthCycles").find("input[id=cycledate]");
+	console.log(time.length);
+	$(time).each(function(i){ 
+		$(this).pickadate({
+			today: '今天',
+			clear: '关闭',
+			selectYears: true,
+			selectMonths: true
 		});
 	});
-//	$('#starttime1').datetimepicker({
-//		format : "hh:ii",
-//        language:  'zh-CN',
-//        weekStart: 1,
-//		autoclose: 1,
-//		todayHighlight: 1,
-//		startView: 2,
-//		minView: 2,
-//		forceParse: 0
-//	});
-//	$('#endtime1').datetimepicker({
-//		format : "hh:ii",
-//		language:  'zh-CN',
-//		weekStart: 1,
-//		autoclose: 1,
-//		todayHighlight: 1,
-//		startView: 2,
-//		minView: 2,
-//		forceParse: 0
-//	}).on('changeDate', function(ev) {
-//		var startTime = ev.date.valueOf();
-////		if (start < teach) {
-//		alert("“评估开始时间 ”不能早于“授课时间 ” ！");
-//		$(".timeone").focus();
-////		}
-//	});
 }

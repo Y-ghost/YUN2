@@ -1,5 +1,6 @@
 package com.rest.yun.util;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.NumberFormat;
@@ -146,6 +147,35 @@ public class CommonUtiles {
 			}
 		}
 		return list;
+	}
+	/**
+	 * @Title:       delAllFile
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午9:09:51
+	 * @Description: 删除指定文件夹下所有文件
+	 * @return       void
+	 * @throws
+	 */
+	public static void delAllFile(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			return;
+		}
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(path + tempList[i]);
+			} else {
+				temp = new File(path + File.separator + tempList[i]);
+			}
+			if (temp.isFile()) {
+				temp.delete();
+			}
+			if (temp.isDirectory()) {
+				delAllFile(path + "/" + tempList[i]);//先删除文件夹里面的文件
+			}
+		}
 	}
 	/**
 	 * Decode URL by UTF-8

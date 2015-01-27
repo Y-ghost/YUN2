@@ -121,7 +121,7 @@ rainet.setting.controller.setEquipment = {
 												radio+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">土壤：</label>" +
-													"<div class=\"col-sm-6\"><select class=\"form-control soilname\" name=\"soilname\" value=\""+item.equipment.soilname+"\" id=\"inputLab\"><option value=\"-1\">-选择土壤-</option>"+selectSoilStr+"</select></div>" +
+													"<div class=\"col-sm-6\"><select class=\"form-control soilname\" name=\"soilname\" id=\"inputLab\"><option value=\"-1\">-选择土壤-</option>"+selectSoilStr+"</select></div>" +
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor soilLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">植物：</label>" +
@@ -129,27 +129,27 @@ rainet.setting.controller.setEquipment = {
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor plantsLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">根系深度：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" name=\"rootdepth\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"rootdepth\" value=\""+item.equipment.rootdepth+"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" name=\"rootdepth\" id=\"inputLab\" data-bv-field=\"rootdepth\" value=\""+item.equipment.rootdepth+"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
 													"<label class=\"col-sm-3 control-label\">土壤干重：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilweight\" name=\"soilweight\" style='width:35%;float:left;' id=\"inputLab\" data-bv-field=\"soilweight\" value=\""+item.equipment.soilweight+"\"><span style='line-height:34px;font-size:6px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\"style='width:35%;float:left;' class=\"form-control soilweight\" name=\"soilweight\" id=\"inputLab\" data-bv-field=\"soilweight\" value=\""+item.equipment.soilweight+"\"><span style='line-height:34px;font-size:10px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">湿度上限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humidityup\" name=\"humidityup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humidityup\" value=\""+item.equipment.humidityup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humidityup\" name=\"humidityup\" id=\"inputLab\" data-bv-field=\"humidityup\" value=\""+item.equipment.humidityup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div>" +
 													"<label class=\"col-sm-3 control-label\">湿度下限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humiditydown\" name=\"humiditydown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"humiditydown\" value=\""+item.equipment.humiditydown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humiditydown\" name=\"humiditydown\" id=\"inputLab\" data-bv-field=\"humiditydown\" value=\""+item.equipment.humiditydown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">温度上限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperatureup\" name=\"temperatureup\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperatureup\" value=\""+item.equipment.temperatureup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperatureup\" name=\"temperatureup\" id=\"inputLab\" data-bv-field=\"temperatureup\" value=\""+item.equipment.temperatureup+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div>" +
 													"<label class=\"col-sm-3 control-label\">温度下限：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperaturedown\" name=\"temperaturedown\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"temperaturedown\" value=\""+item.equipment.temperaturedown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperaturedown\" name=\"temperaturedown\" id=\"inputLab\" data-bv-field=\"temperaturedown\" value=\""+item.equipment.temperaturedown+"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">饱和水量：</label>" +
-													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" name=\"soilwater\" style='width:65%;float:left;' id=\"inputLab\" data-bv-field=\"soilwater\" value=\""+item.equipment.soilwater+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
+													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" name=\"soilwater\" id=\"inputLab\" data-bv-field=\"soilwater\" value=\""+item.equipment.soilwater+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
 												"<div class=\"timeLens\" style=\"display:none;\">"+
 												"<hr/>"+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
-													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control week cursor \" id=\"inputLab\" data-bv-field=\"week\" name=\"week\" value=\""+week+"\"></div></div>" +
+													"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control week \" id=\"inputLab\" data-bv-field=\"week\" name=\"week\" value=\""+week+"\"></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
@@ -235,7 +235,7 @@ rainet.setting.controller.setEquipment = {
 							title : '初始化设置',
 							// 支持ESC
 							onEscape : function(){
-								
+								flag=true;
 							},
 							buttons :  {
 								cancel: {
@@ -266,6 +266,241 @@ rainet.setting.controller.setEquipment = {
 				}
 			});
 		},
+		//设置全局模式事件
+		setModel : function(){
+			var _modelTempate = $(this.modelTempate);
+			//设置全局模式
+			$(".setModel").off('click').on('click', function(e){
+				if(flag){
+					flag = false;
+					var mark=false;
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							mark = true;
+							return false;//跳出循环
+						}
+					});
+					if(mark){
+						var list = [];
+						var param;
+						$("[id='equipmentCheckbox']").each(function(){
+							if($(this).is(":checked")){
+								var $form = $(this).parent().parent().parent().find("form");
+								$($form).bootstrapValidator('validate');
+								var bv = $form.data('bootstrapValidator');
+//								if (bv.$invalidFields.length > 0) {
+//									return false;
+//								}
+								var formData = $form.serializeArray();
+								var jsonData = rainet.utils.serializeObject(formData);
+								list.push(jsonData);
+							}
+						});
+						list.handleError = function(result){
+							flag = true;
+							return true;
+						};
+						bootbox.dialog({
+							message : _modelTempate,
+							title : '模式设置',
+							// 支持ESC
+							onEscape : function(){
+								flag=true;
+							},
+							buttons :  {
+								cancel: {
+								      label: "取消",
+								      className: "btn-warning",
+								      callback : function(){
+								    	  flag = true;
+								      }
+								},
+								success: {
+								      label: "确定",
+								      className: "btn-success",
+								      callback : function(){
+//								    	  	rainet.setting.service.equipment.updateList(list, function(data){
+//												if(data){
+//													rainet.utils.notification.success("设置成功!");
+//												}
+//												flag = true;
+//											});
+												flag = true;
+								      }
+								}
+						}
+						});
+					}else{
+						rainet.utils.notification.warning("请先选择节点!");
+						flag = true;
+					}
+				}
+			});
+		},
+		//设置全局自控参数事件
+		setAutoParam : function(){
+			var _autoParamTempate = $(this.autoParamTempate);
+			//设置全局自控参数
+			$(".setAutoParam").off('click').on('click', function(e){
+				if(flag){
+					flag = false;
+					var mark=false;
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							mark = true;
+							return false;//跳出循环
+						}
+					});
+					if(mark){
+						var list = [];
+						var param;
+						$("[id='equipmentCheckbox']").each(function(){
+							if($(this).is(":checked")){
+								var $form = $(this).parent().parent().parent().find("form");
+								$($form).bootstrapValidator('validate');
+								var bv = $form.data('bootstrapValidator');
+//								if (bv.$invalidFields.length > 0) {
+//									return false;
+//								}
+								var formData = $form.serializeArray();
+								var jsonData = rainet.utils.serializeObject(formData);
+								list.push(jsonData);
+							}
+						});
+						list.handleError = function(result){
+							flag = true;
+							return true;
+						};
+						
+						//土壤初始化
+						var soilSelectObj = $("soilname",_autoParamTempate);
+						var selectSoilStr = "";
+						rainet.setting.service.soilInfo.list(function(item){
+							$.each(item,function(i,data){
+								selectSoilStr += "<option value=\""+data.id+"\">"+data.soiltype+"</option>";
+							});
+						});
+						soilSelectObj.append(selectSoilStr);
+						//植物初始化
+						var plantsSelectObj = $("plantsname",_autoParamTempate);
+						var selectPlantsStr = "";
+						rainet.setting.service.plants.list(function(item){
+							$.each(item,function(i,data){
+								selectPlantsStr += "<option value=\""+data.id+"\">"+data.plantsname+"</option>";
+							});
+						});
+						plantsSelectObj.append(selectSoilStr);
+						
+						bootbox.dialog({
+							message : _autoParamTempate,
+							title : '自控参数设置',
+							// 支持ESC
+							onEscape : function(){
+								flag=true;
+							},
+							buttons :  {
+								cancel: {
+								      label: "取消",
+								      className: "btn-warning",
+								      callback : function(){
+								    	  flag = true;
+								      }
+								},
+								success: {
+								      label: "确定",
+								      className: "btn-success",
+								      callback : function(){
+//								    	  	rainet.setting.service.equipment.updateList(list, function(data){
+//												if(data){
+//													rainet.utils.notification.success("设置成功!");
+//												}
+//												flag = true;
+//											});
+												flag = true;
+								      }
+								}
+						}
+						});
+					}else{
+						rainet.utils.notification.warning("请先选择节点!");
+						flag = true;
+					}
+				}
+			});
+		},
+		//设置全局自控参数事件
+		setTimeLen : function(){
+			var _timeLenTempate = $(this.timeLenTempate);
+			//设置全局自控参数
+			$(".setTimeLen").off('click').on('click', function(e){
+				if(flag){
+					flag = false;
+					var mark=false;
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							mark = true;
+							return false;//跳出循环
+						}
+					});
+					if(mark){
+						var list = [];
+						var param;
+						$("[id='equipmentCheckbox']").each(function(){
+							if($(this).is(":checked")){
+								var $form = $(this).parent().parent().parent().find("form");
+								$($form).bootstrapValidator('validate');
+								var bv = $form.data('bootstrapValidator');
+//								if (bv.$invalidFields.length > 0) {
+//									return false;
+//								}
+								var formData = $form.serializeArray();
+								var jsonData = rainet.utils.serializeObject(formData);
+								list.push(jsonData);
+							}
+						});
+						list.handleError = function(result){
+							flag = true;
+							return true;
+						};
+						//日历控件绑定事件
+						dateTime();
+						bootbox.dialog({
+							message : _timeLenTempate,
+							title : '时段控制设置',
+							// 支持ESC
+							onEscape : function(){
+								flag=true;
+							},
+							buttons :  {
+								cancel: {
+									label: "取消",
+									className: "btn-warning",
+									callback : function(){
+										flag = true;
+									}
+								},
+								success: {
+									label: "确定",
+									className: "btn-success",
+									callback : function(){
+//								    	  	rainet.setting.service.equipment.updateList(list, function(data){
+//												if(data){
+//													rainet.utils.notification.success("设置成功!");
+//												}
+//												flag = true;
+//											});
+										flag = true;
+									}
+								}
+							}
+						});
+					}else{
+						rainet.utils.notification.warning("请先选择节点!");
+						flag = true;
+					}
+				}
+			});
+		},
 		
 		setEquipmentInfo : function($hostHtml){
 			var $form = $("form", $hostHtml);
@@ -283,6 +518,9 @@ rainet.setting.controller.setEquipment = {
 			// 绑定搜索事件
 			this.findEquipments($projectList);
 			this.modifyEquipments();
+			this.setModel();
+			this.setAutoParam();
+			this.setTimeLen();
 			this.checked();
 		},
 		
@@ -517,5 +755,72 @@ rainet.setting.controller.setEquipment = {
 						"</div>\n"+
 						"</div>\n"+
 						"</div>\n",
-	
+	modelTempate : "<div>\n"+
+						"<form class=\"form-horizontal\" role=\"form\" id=\"plantsForm\">\n"+
+						"<div class=\"form-group\" style='padding:20px;'>\n"+
+						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>\n"+
+						"</div>\n"+
+						"</form>\n"+
+						"</div>",
+	autoParamTempate : "<div>\n"+
+						"<form class=\"form-horizontal\" role=\"form\" id=\"plantsForm\">\n"+
+						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">土壤：</label>" +
+						"<div class=\"col-sm-6\"><select class=\"form-control soilname\" name=\"soilname\" id=\"inputLab\"><option value=\"-1\">-选择土壤-</option>"+1+"</select></div>" +
+						"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor soilLink\" id=\"inputLab\">自定义</a></div></div>" +
+					"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">植物：</label>" +
+						"<div class=\"col-sm-6\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"inputLab\"><option value=\"-1\">-选择植物-</option>"+2+"</select></div>" +
+						"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor plantsLink\" id=\"inputLab\">自定义</a></div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">根系深度：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" name=\"rootdepth\" id=\"inputLab\" data-bv-field=\"rootdepth\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
+						"<label class=\"col-sm-3 control-label\">土壤干重：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\"style='width:35%;float:left;' class=\"form-control soilweight\" name=\"soilweight\" id=\"inputLab\" data-bv-field=\"soilweight\" value=\"\"><span style='line-height:34px;font-size:10px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">湿度上限：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humidityup\" name=\"humidityup\" id=\"inputLab\" data-bv-field=\"humidityup\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div>" +
+						"<label class=\"col-sm-3 control-label\">湿度下限：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control humiditydown\" name=\"humiditydown\" id=\"inputLab\" data-bv-field=\"humiditydown\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">温度上限：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperatureup\" name=\"temperatureup\" id=\"inputLab\" data-bv-field=\"temperatureup\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div>" +
+						"<label class=\"col-sm-3 control-label\">温度下限：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control temperaturedown\" name=\"temperaturedown\" id=\"inputLab\" data-bv-field=\"temperaturedown\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;℃</span></div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">饱和水量：</label>" +
+						"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" name=\"soilwater\" id=\"inputLab\" data-bv-field=\"soilwater\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>\n" +
+						"</form>\n"+
+						"</div>",
+	timeLenTempate : "<div>\n"+
+						"<form class=\"form-horizontal\" role=\"form\" id=\"plantsForm\">\n"+
+						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
+						"<div class=\"col-sm-9\"><input type=\"text\" class=\"form-control week \" id=\"inputLab\" data-bv-field=\"week\" name=\"week\"></div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
+						"<div class=\"input-group date col-sm-9\">" +
+							"<input type=\"text\" id='dateTime' class=\"form-control timeonestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeonestart\"/>" +
+							"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+							"<input type=\"text\" id='dateTime' class=\"form-control timeoneend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeoneend\"/>" +
+						"</div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段二：</label>" +
+						"<div class=\"input-group date col-sm-9\">" +
+							"<input type=\"text\" id='dateTime' class=\"form-control timetwostart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwostart\"/>" +
+							"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+							"<input type=\"text\" id='dateTime' class=\"form-control timetwoend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwoend\"/>" +
+						"</div></div>" +
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段三：</label>" +
+						"<div class=\"input-group date col-sm-9\">" +
+							"<input type=\"text\" id='dateTime' class=\"form-control timethreestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreestart\"/>" +
+							"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
+							"<input type=\"text\" id='dateTime' class=\"form-control timethreeend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\"/>" +
+						"</div></div>" +
+					"</div>"+
+						"</form>\n"+
+						"</div>",
 };
