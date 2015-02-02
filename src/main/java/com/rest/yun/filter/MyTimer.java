@@ -35,7 +35,8 @@ public class MyTimer {
 	private Logger log = Logger.getLogger(MyTimer.class.getName());
 	private CodingFactoryUtil codingFactory = new CodingFactoryUtil();
 	private CheckReceiveCodingUtil checkCoding = new CheckReceiveCodingUtil();
-	private NetWorkService netWorkService = (NetWorkService) SpringObjectFactoryHolder.getContext().getBean("netWorkServiceImpl");
+	@Autowired
+	private NetWorkService netWorkService;
 	@Autowired
 	private DataTempMapper dataTempMapper;
 	@Autowired

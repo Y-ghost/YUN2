@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	<!-- 定时器执行 -->
-
+ 	
 	<!-- 每天定时01：00整，系统自动删除存储接收指令的临时表旧数据（大于一天的数据） -->
 	<bean id="autoDeleteDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
