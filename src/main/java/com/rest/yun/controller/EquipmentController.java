@@ -163,10 +163,55 @@ public class EquipmentController {
 	@RequestMapping(value="/updateList",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper updateList(@RequestBody List<Equipment> list, HttpSession session) {
-		equipmentService.updateList(list,session);
-		return new ResponseWrapper(true);
+		String result = equipmentService.updateList(list,session);
+		return new ResponseWrapper(result);
 	}
 
+	/**
+	 * @Title:       setListModel
+	 * @author:      杨贵松
+	 * @time         2015年1月31日 下午11:40:24
+	 * @Description: 设置多节点模式
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="/setListModel",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper setListModel(@RequestBody List<Equipment> list, HttpSession session) {
+		boolean flag = equipmentService.setListModel(list,session);
+		return new ResponseWrapper(flag);
+	}
+	/**
+	 * @Title:       setAutoParam
+	 * @author:      杨贵松
+	 * @time         2015年2月1日 下午8:44:09
+	 * @Description: 设置多借点自控参数
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="/setAutoParam",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper setAutoParam(@RequestBody List<Equipment> list, HttpSession session) {
+		boolean flag = equipmentService.setAutoParam(list,session);
+		return new ResponseWrapper(flag);
+	}
+	/**
+	 * @Title:       setTimeLen
+	 * @author:      杨贵松
+	 * @time         2015年2月2日 上午12:26:18
+	 * @Description: 设置多节点时段
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="/setTimeLen",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper setTimeLen(@RequestBody List<Equipment> list, HttpSession session) {
+		boolean flag = equipmentService.setTimeLen(list,session);
+		return new ResponseWrapper(flag);
+	}
 
 	/**
 	 * 更新节点

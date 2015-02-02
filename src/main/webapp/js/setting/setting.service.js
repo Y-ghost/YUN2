@@ -176,6 +176,60 @@ rainet.setting.service = {
 					}
 				});
 			},
+			setListModel: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"setListModel/",
+					$busyEle : $('.EquipmentList'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			setAutoParam: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"setAutoParam/",
+					$busyEle : $('.EquipmentList'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			setTimeLen: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"setTimeLen/",
+					$busyEle : $('.EquipmentList'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
 			
 			putData : function(param, callback){
 				rainet.ajax.execute({

@@ -288,7 +288,7 @@ public class MailSender {
 				"</div></div>");
 		String mailbody = sb.toString();
 		// 设置SMTP主机
-		MailSender themail = new MailSender("smtp.mxhichina.com");
+		MailSender themail = new MailSender("115.28.143.115");
 		themail.setNeedAuth(true);
 		// 设置邮件标题
 		if (themail.setSubject("Rainet云灌溉找回密码") == false)
@@ -303,7 +303,7 @@ public class MailSender {
 		if (themail.setFrom("service@rainet.com.cn") == false)
 			return false;
 		// 设置发件人的邮件的用户名密码
-		themail.setNamePass("service", "miny3g0s2!@#");
+		themail.setNamePass("service", "rainet2014");
 		// 设置发送的附件
 		// themail.addFileAffix("E:\\ftp\\cca\\Test.java");
 		if (themail.sendout() == false)

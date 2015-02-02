@@ -111,6 +111,7 @@ rainet.message.controller.project = {
 		if (!readonly) {
 			$('button[type=submit]', $form).off('click').on('click', function(){
 				// 检查验证是否通过
+				$($form).bootstrapValidator('validate');
 				var bv = $form.data('bootstrapValidator');
 				if (bv.$invalidFields.length > 0) {
 					return false;

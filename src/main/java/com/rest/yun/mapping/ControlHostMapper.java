@@ -60,4 +60,8 @@ public interface ControlHostMapper {
 	 * @throws
 	 */
 	ControlHost selectByCode(String code);
+
+	int selectAllHostCounts(Map<String, Object> map);
+
+	List<ControlHost> selectAllHostPages(Map<String, Object> map);
 }

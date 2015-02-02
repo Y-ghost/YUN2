@@ -211,4 +211,24 @@
     from ControlHost as c inner join project as p on p.id = c.ProjectId
     where c.id = #{hostId}
   </select>
+  
+  <!-- 管理员查询主机数 -->
+  <select id="selectAllHostCounts" resultType="Integer" parameterType="Map">
+    select count(*)
+    from ControlHost
+    <if test="projectID != null and projectID != ''">
+    	where ProjectId = #{projectID}
+    </if>
+  </select>
+  
+  <!-- 管理员查询分页主机信息 -->
+  <select id="selectAllHostPages" resultMap="BaseResultMap" parameterType="Map">
+    select *
+    from ControlHost 
+    <if test="projectID != null and projectID != ''">
+    	where ProjectId = #{projectID}
+    </if>
+    order by createTime desc limit #{index,jdbcType=INTEGER} , #{pageSize,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

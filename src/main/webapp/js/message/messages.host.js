@@ -94,11 +94,9 @@ rainet.message.controller.host = {
 						filed = 'projectid'
 						$('.js-placehoder', $form).show();
 					}
-//					console.log(filed);
 					$field = bv.getFieldElements(filed);
 					bv.updateMessage($field, 'notEmpty', result.message);
 					bv.updateStatus($field, 'INVALID');
-//					console.log(bv);
 					return false;
 				}
 				// 更新host

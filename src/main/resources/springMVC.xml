@@ -31,21 +31,6 @@
         <property name="prefix" value="/WEB-INF/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-   <!--json视图映射 -->
-<!--    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"> -->
-<!-- 	  <property name="mediaTypes"> -->
-<!-- 	    <map> -->
-<!-- 	      	<entry key="json" value="application/json"/>  -->
-<!-- 	    </map> -->
-<!-- 	  </property> -->
-<!-- 	  <property name="defaultViews"> -->
-<!-- 	    <list> -->
-<!--  	      这个 View 比较重要,ModelAndView 里的数据变成JSON -->
-<!-- 	      <bean class="com.rest.yun.filter.MappingJacksonJsonViewExt"> -->
-<!-- 	      </bean> -->
-<!-- 	    </list> -->
-<!-- 	  </property> -->
-<!--     </bean> -->
     <!-- 配置用户访问权限过滤器 -->
 	<mvc:interceptors>
 		<bean class="com.rest.yun.listener.LoginAnnotationInterceptor"></bean>
@@ -62,17 +47,6 @@
 		-->
 		<property name="maxInMemorySize" value="4096" />
 	</bean>
-	<!-- 配置全局异常处理 -->
-<!-- 	<bean id="exceptionResolver" -->
-<!-- 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
-<!-- 		<property name="defaultStatusCode"> -->
-<!-- 			<value>500</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="warnLogCategory"> -->
-<!-- 			<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver -->
-<!-- 			</value> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
 	
 	<bean id="exceptionResolver" class="com.rest.yun.exception.exhandle.YunHandlerExceptionResolver" />
 </beans>

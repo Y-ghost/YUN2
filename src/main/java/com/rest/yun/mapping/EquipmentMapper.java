@@ -78,15 +78,6 @@ public interface EquipmentMapper {
 	 */
 	List<Equipment> selectEqtForList(Map<String, Object> map) throws DataAccessException;
 
-	/**
-	 * @Title:       updateList
-	 * @author:      杨贵松
-	 * @time         2014年12月29日 下午10:13:44
-	 * @Description: 批量更新节点信息
-	 * @return       void
-	 * @throws
-	 */
-	void updateList(List<Equipment> list);
 	
 	/**
 	 * @Title:       selectByPage
@@ -97,4 +88,34 @@ public interface EquipmentMapper {
 	 * @throws
 	 */
 	List<Equipment> selectByPage(Map<String, Object> map);
+
+	/**
+	 * @Title:       setListModel
+	 * @author:      杨贵松
+	 * @time         2015年1月31日 下午11:57:12
+	 * @Description: 设置多节点模式
+	 * @return       void
+	 * @throws
+	 */
+	void setListModel(List<Equipment> list);
+
+	/**
+	 * @Title:       setAutoParam
+	 * @author:      杨贵松
+	 * @time         2015年2月1日 下午8:54:35
+	 * @Description: 设置多节点自控参数
+	 * @return       void
+	 * @throws
+	 */
+	void setAutoParam(List<Equipment> list);
+
+	/**
+	 * @Title:       setTimeLen
+	 * @author:      杨贵松
+	 * @time         2015年2月2日 上午12:40:58
+	 * @Description: 设置多节点时段
+	 * @return       void
+	 * @throws
+	 */
+	void setTimeLen(List<Equipment> list);
 }
