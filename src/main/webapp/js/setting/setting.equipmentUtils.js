@@ -44,11 +44,16 @@ rainet.setting.utils={
 					var $form = $(this).parent().parent().parent().find("form");
 					var id = $form.find("input[name=id]").val(); 
 					if(item.equipment.id==id){
-						$(".soilname",$form).val(item.equipment.soilname); 
-						$(".plantsname",$form).val(item.equipment.plantsname); 
-					}else{
-						$(".soilname",$form).val(-1); 
-						$(".plantsname",$form).val(-1); 
+						if(item.equipment.soilname==null){
+							$(".soilname",$form).val(-1); 
+						}else{
+							$(".soilname",$form).val(item.equipment.soilname); 
+						}
+						if(item.equipment.plantsname==null){
+							$(".plantsname",$form).val(-1); 
+						}else{
+							$(".plantsname",$form).val(item.equipment.plantsname); 
+						}
 					}
 				});
 			});

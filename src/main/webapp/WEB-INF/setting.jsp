@@ -20,6 +20,9 @@
 	width:65%;
 	float:left;
 }
+
+.checkIE{margin-top:30px;}
+
 #form-group {
 	margin-bottom: 5px;
 	margin-right: -5px;
@@ -122,13 +125,14 @@ button.closeCycle {
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.setEquipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
-	<script src="${requestScope.basePath}js/setting/setting.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.putData.js"></script>
 	
 	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
+import com.rest.yun.beans.EquipmentStatus;
 import com.rest.yun.beans.SensorInfo;
 import com.rest.yun.beans.User;
 import com.rest.yun.constants.Constants;
@@ -24,6 +25,7 @@ import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;
 import com.rest.yun.dto.ResponseWrapper;
 import com.rest.yun.listener.Login;
+import com.rest.yun.service.IEquipmentExtService;
 import com.rest.yun.service.IEquipmentService;
 import com.rest.yun.util.JSONConver;
 
@@ -32,6 +34,8 @@ import com.rest.yun.util.JSONConver;
 public class EquipmentController {
 	@Autowired
 	private IEquipmentService equipmentService;
+	@Autowired
+	private IEquipmentExtService equipmentExtService;
 
 	/**
 	 * @Title:       selectEquipments
@@ -163,7 +167,7 @@ public class EquipmentController {
 	@RequestMapping(value="/updateList",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper updateList(@RequestBody List<Equipment> list, HttpSession session) {
-		String result = equipmentService.updateList(list,session);
+		String result = equipmentExtService.updateList(list,session);
 		return new ResponseWrapper(result);
 	}
 
@@ -179,7 +183,7 @@ public class EquipmentController {
 	@RequestMapping(value="/setListModel",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper setListModel(@RequestBody List<Equipment> list, HttpSession session) {
-		boolean flag = equipmentService.setListModel(list,session);
+		boolean flag = equipmentExtService.setListModel(list,session);
 		return new ResponseWrapper(flag);
 	}
 	/**
@@ -194,7 +198,7 @@ public class EquipmentController {
 	@RequestMapping(value="/setAutoParam",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper setAutoParam(@RequestBody List<Equipment> list, HttpSession session) {
-		boolean flag = equipmentService.setAutoParam(list,session);
+		boolean flag = equipmentExtService.setAutoParam(list,session);
 		return new ResponseWrapper(flag);
 	}
 	/**
@@ -209,7 +213,7 @@ public class EquipmentController {
 	@RequestMapping(value="/setTimeLen",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper setTimeLen(@RequestBody List<Equipment> list, HttpSession session) {
-		boolean flag = equipmentService.setTimeLen(list,session);
+		boolean flag = equipmentExtService.setTimeLen(list,session);
 		return new ResponseWrapper(flag);
 	}
 
@@ -241,5 +245,40 @@ public class EquipmentController {
 	public ResponseWrapper delete(@PathVariable int eqtId) {
 		equipmentService.deleteEquipment(eqtId);
 		return new ResponseWrapper(true);
+	}
+	
+	/**
+	 * @Title:       getRelData
+	 * @author:      杨贵松
+	 * @time         2015年2月5日 下午5:04:05
+	 * @Description: 查询现场实时累计灌溉量
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value = "/getRelData", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper getRelData(@RequestParam Integer pId ) {
+		List<EquipmentExt<EquipmentStatus>> list = equipmentExtService.getRelData(pId);
+		return new ResponseWrapper(list);
+	}
+	
+	/**
+	 * @Title:       putData
+	 * @author:      杨贵松
+	 * @time         2015年2月8日 下午3:51:18
+	 * @Description: 赋值
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value="/putData",method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseWrapper putData(@RequestBody List<Equipment> list) {
+		for(Equipment e:list){
+			System.out.println(e.getName());
+		}
+		String result = equipmentExtService.putData(list);
+		return new ResponseWrapper(result);
 	}
 }

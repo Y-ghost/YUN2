@@ -8,6 +8,10 @@
 <head>
 <link rel="stylesheet"
 	href="${requestScope.basePath}css/findAccount.css" />
+	
+<style type="text/css">
+	.checkIE{margin-top:30px;}
+</style>
 </head>
 <body>
 <input type="hidden" id="pageType" value="findAccount"/>

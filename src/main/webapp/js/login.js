@@ -253,7 +253,7 @@ rainet.login.service = {
 			rainet.ajax.execute({
 				url : rainet.login.url.User.url+"login/",
 				data : param,
-				$busyEle : $('#form'),
+				$busyEle : $('body'),
 				method : 'POST',
 				success : function(data) {
 					callback(data);
@@ -264,7 +264,7 @@ rainet.login.service = {
 			rainet.ajax.execute({
 				url : rainet.login.url.User.url+"register/",
 				data : JSON.stringify(param),
-				$busyEle : $('#form'),
+				$busyEle : $('body'),
 				method : 'POST',
 				contentType : 'application/json; charset=utf-8',
 				success : function(data) {
@@ -276,7 +276,7 @@ rainet.login.service = {
 			rainet.ajax.execute({
 				url : rainet.login.url.User.url+"validLoginName/",
 				data : param,
-				$busyEle : $('#passport-title'),
+				$busyEle : $('body'),
 				method : 'GET',
 				success : function(data) {
 					callback(data);
@@ -289,6 +289,15 @@ rainet.login.service = {
 $(document).ready(function() {
 	//隐藏退出按钮
 	$("#exist").css("display","none");
+	//添加IE判断，6、7、8版本的提醒更换浏览器
+	if (!$.support.leadingWhitespace){
+		$(".header").addClass("checkIE");
+		$("body").append("<div class='topDiv' style='overflow:hidden; text-align:center;width:98%;position:fixed; *position:absolute;z-index: 9999;top:1%; left:1%;color:red;'>请选择IE9或更高版本访问，建议使用Google Chrome浏览器，显示效果会更好！<a src='javascript:void(0);' class='topBtn cursor' style='float:right;height:30px;width:30px; margin-right:50px;color:red;'>x</a></div>");
+	}
+	$(".topBtn").click(function(){
+		$(".header").removeClass("checkIE");
+		$(".topDiv").css('display','none');
+	});
 	//添加底部年限
 	var myDate = new Date();
 	$(".copyYear").html(myDate.getFullYear());

@@ -384,7 +384,6 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.project.url,
 				data : param,
-				$busyEle : $('#projectList'),
 				success : function(data) {
 					callback(data);
 				}
@@ -396,7 +395,7 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.equipment.url+"selectEquipmentExt/",
 				data : param,
-				$busyEle : $('.EquipmentList'),
+				$busyEle : $('body'),
 				success : function(data) {
 					callback(data);
 				}
@@ -406,7 +405,7 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.equipment.url+"openOrCloseEquipments/",
 				data : param,
-				$busyEle : $('.EquipmentList'),
+				$busyEle : $('body'),
 				success : function(data) {
 					callback(data);
 				}
@@ -418,6 +417,7 @@ rainet.controlCenter.service = {
 $(document).ready(function() {
 	$("#homeLab").html("控制中心");
 	$("#homeHref").attr("href", "index");
+	
 	rainet.controlCenter.view.init();
 });
 

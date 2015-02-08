@@ -1,7 +1,10 @@
 package com.rest.yun.filter;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
 
@@ -14,8 +17,10 @@ import org.springframework.web.context.ContextLoader;
  * @date 						2014年3月7日 下午7:25:47 
  * @version 					V1.0
  */
-public class SpringObjectFactoryHolder {
+@Component
+public class SpringObjectFactoryHolder implements ApplicationContextAware{
 	private static ApplicationContext context;
+	
 	public static ApplicationContext getContext() {
 		if (null == SpringObjectFactoryHolder.context) {
 			SpringObjectFactoryHolder.context = ContextLoader.getCurrentWebApplicationContext();
@@ -25,7 +30,9 @@ public class SpringObjectFactoryHolder {
 		}
 		return context;
 	}
-	public static void setContext(ApplicationContext context) {
+	
+	@Override
+	public void setApplicationContext(ApplicationContext context) throws BeansException {
 		SpringObjectFactoryHolder.context = context;
 	}
 }

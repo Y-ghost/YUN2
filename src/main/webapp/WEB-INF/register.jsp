@@ -13,7 +13,7 @@
 	width : 500px;
 	margin: 30px auto;
 }
-
+.checkIE{margin-top:30px;}
 .form-signin div {
 	padding : 5px 15px 0px 15px;
 }

@@ -13,7 +13,7 @@
 	margin-right: -5px;
 	margin-left: -5px;
 }
-
+.checkIE{margin-top:30px;}
 #has-error {
 	color: #a94442;
 }

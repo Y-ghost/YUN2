@@ -63,6 +63,16 @@ public class Equipment {
     
     private SoilInfo SoilInfo;
     
+    private Long watervalue;//用于赋值
+    
+	public Long getWatervalue() {
+		return watervalue;
+	}
+
+	public void setWatervalue(Long watervalue) {
+		this.watervalue = watervalue;
+	}
+
 	public Integer getSoilname() {
 		return soilname;
 	}

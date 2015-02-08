@@ -125,7 +125,7 @@ rainet.setting.controller.setEquipment = {
 								str =str + "<div class=\"col-xs-12 col-md-6\">" +
 											"<div class=\"panel panel-default \">" +
 											"<div class=\"panel-heading\">" +
-											"<label>"+item.equipment.name+"</label> <span class=\"float-right\"> <input type=\"checkbox\" class=\"cursor\" name=\"id\" value=\""+item.equipment.id+"\" id=\"equipmentCheckbox\"></span></div>" +
+											"<label>"+item.equipment.name+"</label> <span class=\"float-right\"> <input type=\"checkbox\" class=\"cursor\" value=\""+item.equipment.id+"\" id=\"equipmentCheckbox\"></span></div>" +
 											"<div class=\"panel-body\">" +
 											"<form class=\"form-horizontal\" role=\"form\">" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
@@ -279,6 +279,7 @@ rainet.setting.controller.setEquipment = {
 											});
 								    	  if(len>0){
 								    		  bootbox.hideAll();
+								    		  flag = true;
 								    		  return false;
 								    	  }
 								    	  	rainet.setting.service.equipment.updateList(list, function(data){

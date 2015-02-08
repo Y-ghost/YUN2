@@ -20,6 +20,7 @@
 #has-error {
 	color: #a94442;
 }
+.checkIE{margin-top:30px;}
 
 #inputLab {
 	padding-left: 3px;

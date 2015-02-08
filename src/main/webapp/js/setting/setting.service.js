@@ -30,7 +30,7 @@ rainet.setting.service = {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.project.url+"save/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					contentType : 'application/json; charset=utf-8',
@@ -66,7 +66,7 @@ rainet.setting.service = {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.host.url,
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					contentType : 'application/json; charset=utf-8',
@@ -78,7 +78,7 @@ rainet.setting.service = {
 			validTime: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.host.url+"validTime/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					method : 'GET',
 					data : JSON.stringify(param),
 					success : function(data){
@@ -92,7 +92,24 @@ rainet.setting.service = {
 			list : function(param, callback) {
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"selectEquipmentExt/",
-					$busyEle : $('.equipment-container'),
+					$busyEle : $('body'),
+					data : {pId:param.pId},
+					method : 'GET',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					success : function(data) {
+						callback(data);
+					}
+				});
+			},
+			getRelData : function(param, callback) {
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"getRelData/",
+					$busyEle : $('body'),
 					data : {pId:param.pId},
 					method : 'GET',
 					customHandleError : function(result){
@@ -109,7 +126,7 @@ rainet.setting.service = {
 			selectEquipments : function(param, callback) {
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"selectEquipments/",
-					$busyEle : $('.equipment-container'),
+					$busyEle : $('body'),
 					data : {pId:param.pId},
 					method : 'GET',
 					customHandleError : function(result){
@@ -126,7 +143,7 @@ rainet.setting.service = {
 			searchEquipment: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"searchEquipment/",
-					$busyEle : $('.equipment-container'),
+					$busyEle : $('body'),
 					data : {pId:param.pId},
 					method : 'GET',
 					customHandleError : function(result){
@@ -143,7 +160,7 @@ rainet.setting.service = {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url,
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){
@@ -161,7 +178,25 @@ rainet.setting.service = {
 			updateList: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"updateList/",
-					$busyEle : $('.EquipmentList'),
+					$busyEle : $('body'),
+					data : JSON.stringify(param),
+					method : 'POST',
+					customHandleError : function(result){
+						if (param.handleError){
+							return param.handleError(result);
+						}
+						return true;
+					},
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			putData: function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.node.url+"putData/",
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){
@@ -179,7 +214,7 @@ rainet.setting.service = {
 			setListModel: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"setListModel/",
-					$busyEle : $('.EquipmentList'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){
@@ -197,7 +232,7 @@ rainet.setting.service = {
 			setAutoParam: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"setAutoParam/",
-					$busyEle : $('.EquipmentList'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){
@@ -215,7 +250,7 @@ rainet.setting.service = {
 			setTimeLen: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"setTimeLen/",
-					$busyEle : $('.EquipmentList'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					customHandleError : function(result){
@@ -234,7 +269,7 @@ rainet.setting.service = {
 			putData : function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.node.url+"putData/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : param,
 					method : 'POST',
 					success : function(data){
@@ -266,7 +301,7 @@ rainet.setting.service = {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.soil.url+"save/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					contentType : 'application/json; charset=utf-8',
@@ -299,7 +334,7 @@ rainet.setting.service = {
 			add: function(param, callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.plants.url+"save/",
-					$busyEle : $('.node-container'),
+					$busyEle : $('body'),
 					data : JSON.stringify(param),
 					method : 'POST',
 					contentType : 'application/json; charset=utf-8',
