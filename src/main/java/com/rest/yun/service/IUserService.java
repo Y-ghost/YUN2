@@ -58,7 +58,7 @@ public interface IUserService {
 	 * @return       boolean
 	 * @throws 
 	 */
-	boolean sendEmail(String loginname, HttpServletRequest request);
+	String sendEmail(String loginname, HttpServletRequest request);
 
 	void updateUser(User user, int modifierId);
 
@@ -67,5 +67,15 @@ public interface IUserService {
 	User getUserById(int userId);
 
 	Page<User> selectUsersBy(int pageNow, int pageSize, Map<String, Object> criteria);
+
+	/**
+	 * @Title:       validUserName
+	 * @author:      杨贵松
+	 * @time         2015年1月28日 上午1:38:49
+	 * @Description: 根据用户名查询用户
+	 * @return       User
+	 * @throws
+	 */
+	User validUserName(String userName);
 
 }

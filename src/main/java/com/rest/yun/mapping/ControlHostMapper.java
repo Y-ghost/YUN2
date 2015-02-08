@@ -14,7 +14,6 @@ public interface ControlHostMapper {
 
 	int insertSelective(ControlHost record);
 
-	ControlHost selectByPrimaryKey(Integer id);
 
 	int updateByPrimaryKeySelective(ControlHost record);
 
@@ -24,6 +23,16 @@ public interface ControlHostMapper {
 
 	ControlHost selectByProjectId(int projectId);
 
+	/**
+	 * @Title:       selectByPrimaryKey
+	 * @author:      杨贵松
+	 * @time         2014年12月29日 下午9:15:56
+	 * @Description: 根据id查询主机信息
+	 * @return       ControlHost
+	 * @throws
+	 */
+	ControlHost selectByPrimaryKey(Integer id);
+	
 	/**
 	 * 验证host code 是否存在
 	 * 
@@ -51,4 +60,8 @@ public interface ControlHostMapper {
 	 * @throws
 	 */
 	ControlHost selectByCode(String code);
+
+	int selectAllHostCounts(Map<String, Object> map);
+
+	List<ControlHost> selectAllHostPages(Map<String, Object> map);
 }

@@ -60,7 +60,7 @@ public class ProjectController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectProjects(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
-			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria, HttpSession session) {
 
 		Map<String, Object> criteriaMap = null;
 
@@ -80,7 +80,7 @@ public class ProjectController {
 			}
 		}
 
-		Page<Project> page = projectService.selectProjectBy(pageNow, pageSize, criteriaMap);
+		Page<Project> page = projectService.selectProjectBy(pageNow, pageSize, criteriaMap, session);
 
 		return new ResponseWrapper(page);
 	}

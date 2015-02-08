@@ -71,7 +71,7 @@ h2 {
 }
 
 .passport-progress ul li.current {
-	background-color: #3e8cbd;
+	background-color: #1b926c;
 	color: #fff;
 }
 
@@ -143,3 +143,32 @@ li {
 	cursor: pointer;
 	width:100px;
 }
+
+.code {
+	float: left;
+	margin-right: 10px;
+	text-align: center;
+	height: 40px;
+	line-height: 30px;
+	width: 140px;
+	font-size:20px;
+	background-color: #e4e4e4;
+	font-family: Arial;
+	font-style: italic;
+	color: Red;
+	letter-spacing: 4px;
+	font-weight: 700;
+}
+.codeBtn {
+	float: left;
+	color: #1b926c;
+	font-weight: 700;
+	text-align: center;
+	height: 40px;
+	padding-top: 15px;
+	width: 140px;
+}
+
+
+
+

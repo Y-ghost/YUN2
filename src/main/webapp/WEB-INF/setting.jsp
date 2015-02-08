@@ -6,7 +6,23 @@
 <!-- 放到这里 是header里面的head有效，防止IE8时，自动响应为mobile style-->
 <jsp:include page="common/header.jsp" />
 <head>
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.date.css" />
+<link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.time.css" />
 <style type="text/css">
+.control-label{
+	padding-left:1px;
+	padding-right:1px;
+}
+.form-control{
+	padding-left:1px;
+	padding-right:1px;
+	width:65%;
+	float:left;
+}
+
+.checkIE{margin-top:30px;}
+
 #form-group {
 	margin-bottom: 5px;
 	margin-right: -5px;
@@ -20,6 +36,7 @@
 .panel-heading {
 	font-size: 14px;
 }
+
 #inputLab {
 	padding-left: 3px;
 	padding-right: 3px;
@@ -31,7 +48,7 @@
 
 .fa-1 {
 	font-size: 16px;
-	margin-top:25px;
+	margin-top: 25px;
 }
 
 .projectName {
@@ -42,14 +59,42 @@
 	font-size: 14px;
 	border: 1px solid #ccc;
 }
+
 #projectName {
-	padding:1 0;
+	padding: 1 0;
 	margin-top: 0px;
 }
 
 select.input-sm {
-height: 34px;
-line-height: 34px;
+	height: 34px;
+	line-height: 34px;
+}
+
+button.closeCycle {
+	-webkit-appearance: none;
+	padding: 0;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+}
+
+.closeCycle {
+	float: right;
+	font-size: 21px;
+	font-weight: bold;
+	line-height: 1;
+	color: #000;
+	text-shadow: 0 1px 0 #fff;
+	filter: alpha(opacity = 20);
+	opacity: .2;
+}
+
+.closeCycle:hover, .closeCycle:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+	filter: alpha(opacity = 50);
+	opacity: .5;
 }
 </style>
 </head>
@@ -76,17 +121,21 @@ line-height: 34px;
 	</div>
 	<jsp:include page="common/footer.jsp" />
 
-	<script src="${requestScope.basePath}datatable/js/jquery.dataTables.js"></script>
-	<script src="${requestScope.basePath}datatable/js/dataTables.bootstrap.js"></script>
 	<!-- Fix IE 6-9  JSON object-->
 	<script src="${requestScope.basePath}js/lib/json2.js"></script>
 	<script src="${requestScope.basePath}js/lib/bootbox.min.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.service.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.project.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.host.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.equipment.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.setEquipment.js"></script>
-	<script src="${requestScope.basePath}js/setting/setting.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
+	<script src="${requestScope.basePath}js/setting/setting.putData.js"></script>
+	
+	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>
+	<script src="${requestScope.basePath}bootstrap/js/picker.time.js"></script>
 </body>
 </html>

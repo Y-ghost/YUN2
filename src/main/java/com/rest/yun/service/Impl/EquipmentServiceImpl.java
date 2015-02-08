@@ -32,6 +32,7 @@ import com.rest.yun.mapping.EquipmentDataMapper;
 import com.rest.yun.mapping.EquipmentMapper;
 import com.rest.yun.mapping.EquipmentStatusMapper;
 import com.rest.yun.mapping.SensorInfoMapper;
+import com.rest.yun.mapping.SoilInfoMapper;
 import com.rest.yun.service.IEquipmentService;
 import com.rest.yun.service.NetWorkService;
 import com.rest.yun.util.CheckReceiveCodingUtil;
@@ -56,6 +57,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 	@Autowired
 	private ControlHostMapper controlHostMapper;
 	@Autowired
+	private SoilInfoMapper soilInfoMapper;
+	@Autowired
 	private NetWorkService netWorkService;
 
 	/**
@@ -72,11 +75,11 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			if (!CollectionUtils.isEmpty(eList)) {
 				for (Equipment equipment : eList) {
 					EquipmentExt<EquipmentData> equipmentExt = new EquipmentExt<EquipmentData>();
-					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByeEid(equipment.getId());
+					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByEid(equipment.getId());
 					List<SensorInfo> sList = sensorInfoMapper.selectSensorInfoByEid(equipment.getId());
 					List<EquipmentData> edList = new ArrayList<EquipmentData>();
 					for (SensorInfo sensor : sList) {
-						EquipmentData equipmentData = equipmentDataMapper.selectByPrimaryKey(sensor.getId());
+						EquipmentData equipmentData = equipmentDataMapper.selectBySid(sensor.getId());
 						if (equipmentData == null) {
 							equipmentData = new EquipmentData();
 							equipmentData.setHumidity((float) 0);
@@ -90,6 +93,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					equipmentExt.setCode(equipment.getCode());
 					equipmentExt.setControlHostId(equipment.getControlhostid());
 					equipmentExt.setEquipmentStatus(equipmentStatus);
+					equipmentExt.setEquipment(equipment);
 					equipmentExt.setResult(edList);
 
 					list.add(equipmentExt);
@@ -351,8 +355,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 			
 			try {
 				//删除主机下所有节点及其相关联数据
-				sensorInfoMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentDataMapper.deleteAllByHid(list.get(0).getControlHostId());
+				sensorInfoMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentStatusMapper.deleteAllByHid(list.get(0).getControlHostId());
 				equipmentMapper.deleteAllByHid(list.get(0).getControlHostId());
 				
@@ -363,7 +367,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					equipment.setArea(equipmentExt.getArea());
 					equipment.setControlhostid(equipmentExt.getControlHostId());
 					equipment.setFowparameter(equipmentExt.getFowParameter());
-					equipment.setIrrigationtype(1);
+					equipment.setIrrigationtype(0);
 					equipment.setCreatetime(date);
 					equipment.setCreateuser(user.getId());
 					equipment.setModifytime(date);
@@ -387,6 +391,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
 						sensorInfoMapper.save(sensorList);
 					}else{
 						LOG.warn("该节点下无传感器");
+						throw new ServerException(ErrorCode.SAVE_EQUIPMENT_FAILED);
 					}
 				}
 			} catch (DataAccessException e) {
@@ -480,4 +485,38 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		}
 		return mark;
 	}
+
+	/**
+	 * @Title:       selectEquipments
+	 * @author:      杨贵松
+	 * @time         2014年12月5日 下午10:11:08
+	 * @Description: 查询节点详细信息
+	 * @throws
+	 */
+	@Override
+	public List<EquipmentExt<SensorInfo>> selectEquipments(Integer pId) {
+		List<EquipmentExt<SensorInfo>> list = new ArrayList<EquipmentExt<SensorInfo>>();
+		try {
+			List<Equipment> eList = equipmentMapper.selectByPid(pId);
+			if(!CollectionUtils.isEmpty(eList)){
+				for(Equipment equipment:eList){
+					EquipmentExt<SensorInfo> equipmentExt = new EquipmentExt<SensorInfo>();
+					equipmentExt.setEquipment(equipment);
+					List<SensorInfo> sList = sensorInfoMapper.selectSensorInfoByEid(equipment.getId());
+					if(!CollectionUtils.isEmpty(eList)){
+						equipmentExt.setResult(sList);
+					}
+					list.add(equipmentExt);
+				}
+			}else{
+				LOG.error("查询节点信息为空！");
+				throw new ServerException(ErrorCode.EQUIPMENT_LIST_NULL);
+			}
+		} catch (DataAccessException e) {
+			LOG.error("查询节点信息失败", e);
+			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
+		}
+		return list;
+	}
+	
 }

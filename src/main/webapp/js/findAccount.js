@@ -4,9 +4,15 @@
 var rainet = rainet || {};
 rainet.findAccount = rainet.findAccount || {};
 rainet.findAccount.controller = rainet.findAccount.controller || {};
+var code ; //在全局 定义验证码 
+
 rainet.findAccount.view = function() {
 		var init = function(){
 			var pageType = $("#pageType").val();
+			var username = $("#username").val();
+			if(pageType=="modifyPassword"&&(username=="" || username==null)){
+				location.href=rainet.settings.baseUrl+'indexs/modifyPasswordErr';
+			}
 			rainet.findAccount.controller[pageType].send();
 		};
 
@@ -60,7 +66,7 @@ rainet.findAccount.controller.findAccount = {
 					}
 				});
 			}).on('blur', '#validNum', function(){
-				// 验证项目名称是否存在
+				// 验证码是否正确
 				var bv = $form.data('bootstrapValidator');
 				$field = bv.getFieldElements('validNum');
 				var value = $field.val();
@@ -68,8 +74,8 @@ rainet.findAccount.controller.findAccount = {
 					bv.updateMessage($field, 'notEmpty');
 					return ;
 				}
-				if(value!="1111"){
-					
+				if(value.toUpperCase()!=code){
+					rainet.findAccount.code.createCode();
 					bv.updateMessage($field, 'notEmpty', '验证码输入不正确，请重新输入!');
 					bv.updateStatus($field, 'INVALID');
 				}
@@ -90,13 +96,11 @@ rainet.findAccount.controller.findAccount = {
 		        	var param ={loginname:value};
 		        	//注册用户
 		        	rainet.findAccount.service["User"].sendEmail(param, function(data){
-						if (data) {
-							redirect(data,"findAccount");
-						}else{
-							return false;
-						}
+		        		redirect(data,"findAccount");
 					});
 				});
+				rainet.findAccount.code.createCode();
+				rainet.findAccount.code.changeCode();
 				// Add validation
 				this.setValidate($form);
 		}
@@ -187,12 +191,62 @@ rainet.findAccount.controller.modifyPassword = {
 //注册成功跳转
 var redirect = function(data,methodType){
 	if(methodType=="findAccount"){
-		location.href=rainet.settings.baseUrl+'indexs/modifyPassword';
+		var a = "<div style='padding-left:38px;font-size:14px;'>您的申请已提交成功，请查看您的: <b style='color:#1b926c;font-size:16px;font-weight:700;'>";
+		var b = "</b> 邮箱，马上前往查看？</div>";
+		var msg = a+data+b;
+		bootbox.dialog({
+			message : msg ,
+			title : '发送邮件成功',
+			// 支持ESC
+			onEscape : function(){
+				
+			},
+			buttons :  {
+				cancel: {
+				      label: "取消",
+				      className: "btn-warning"
+				},
+				success: {
+				      label: "前往",
+				      className: "btn-success",
+				      callback : function(){
+				    	  location.href="http://mail."+data.split("@")[1];
+				      }
+				}
+		}
+		});
 	}else if(methodType=="modifyPassword"){
 		location.href=rainet.settings.baseUrl+'indexs/modifyPasswordFinish';
 	}
 }
-
+rainet.findAccount.code={
+			createCode : function() {
+				code = "";
+				var codeLength = 6;// 验证码的长度
+				var checkCode = $(".code");
+				var selectChar = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C',
+						'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+						'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');// 所有候选组成验证码的字符，当然也可以用中文的
+		
+				for (var i = 0; i < codeLength; i++) {
+					var charIndex = Math.floor(Math.random() * 36);
+					code += selectChar[charIndex];
+		
+				}
+				if (checkCode) {
+					checkCode.html(code);
+				}
+			},
+			changeCode:function(){
+				$('.code').off('click').on('click', function(){
+					rainet.findAccount.code.createCode();
+				});
+				$('.codeBtn').off('click').on('click', function(){
+					rainet.findAccount.code.createCode();
+				});
+			}
+	
+}
 
 rainet.findAccount.url = {
 	User : {
@@ -207,7 +261,7 @@ rainet.findAccount.service = {
 			rainet.ajax.execute({
 				url : rainet.findAccount.url.User.url+"sendEmail/",
 				data : param,
-				$busyEle : $('#passport-title'),
+				$busyEle : $('body'),
 				method : 'GET',
 				success : function(data) {
 					callback(data);
@@ -218,7 +272,7 @@ rainet.findAccount.service = {
 			rainet.ajax.execute({
 				url : rainet.findAccount.url.User.url+"modifyPassword/",
 				data : param,
-				$busyEle : $('#passport-title'),
+				$busyEle : $('body'),
 				method : 'POST',
 				success : function(data) {
 					callback(data);
@@ -229,7 +283,7 @@ rainet.findAccount.service = {
 			rainet.ajax.execute({
 				url : rainet.findAccount.url.User.url+"validLoginName/",
 				data : param,
-				$busyEle : $('#passport-title'),
+				$busyEle : $('body'),
 				method : 'GET',
 				success : function(data) {
 					callback(data);
@@ -242,6 +296,15 @@ rainet.findAccount.service = {
 $(document).ready(function() {
 	//隐藏退出按钮
 	$("#exist").css("display","none");
+	//添加IE判断，6、7、8版本的提醒更换浏览器
+	if (!$.support.leadingWhitespace){
+		$(".header").addClass("checkIE");
+		$("body").append("<div class='topDiv' style='overflow:hidden; text-align:center;width:98%;position:fixed; *position:absolute;z-index: 9999;top:1%; left:1%;color:red;'>请选择IE9或更高版本访问，建议使用Google Chrome浏览器，显示效果会更好！<a src='javascript:void(0);' class='topBtn cursor' style='float:right;height:30px;width:30px; margin-right:50px;color:red;'>x</a></div>");
+	}
+	$(".topBtn").click(function(){
+		$(".header").removeClass("checkIE");
+		$(".topDiv").css('display','none');
+	});
 	//添加底部年限
 	var myDate = new Date();
 	$(".copyYear").html(myDate.getFullYear());

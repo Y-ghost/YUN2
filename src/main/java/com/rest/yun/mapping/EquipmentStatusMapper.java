@@ -26,7 +26,7 @@ public interface EquipmentStatusMapper {
 	 * @return       EquipmentStatus
 	 * @throws
 	 */
-	EquipmentStatus selectEquipmentStatusByeEid(Integer eId);
+	EquipmentStatus selectEquipmentStatusByEid(Integer eId);
 
 	/**
 	 * @Title:       deleteAllByHid
@@ -37,5 +37,26 @@ public interface EquipmentStatusMapper {
 	 * @throws
 	 */
 	void deleteAllByHid(int controlHostId);
+	
+	/**
+	 * @Title:       selectEquipmentStatusByEidDate
+	 * @author:      杨贵松
+	 * @time         2015年1月14日 上午6:17:32
+	 * @Description: 查询单独一个节点一天总的灌水量
+	 * @return       EquipmentStatus
+	 * @throws
+	 */
+	long selectEquipmentStatusByEidDate(EquipmentStatus equipmentStatus);
+
+	/**
+	 * @Title:       selectEquipmentStatusList
+	 * @author:      杨贵松
+	 * @time         2015年1月25日 下午10:17:21
+	 * @Description: 统计用水量详情
+	 * @return       List<EquipmentStatus>
+	 * @throws
+	 */
+	List<EquipmentStatus> selectEquipmentStatusList(
+			EquipmentStatus equipmentStatus);
 
 }

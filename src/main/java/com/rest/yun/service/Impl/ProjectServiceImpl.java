@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,9 +149,10 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria) {
+	public Page<Project> selectProjectBy(int pageNow, int pageSize, Map<String, Object> criteria, HttpSession session) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Map<String, Object> dataTmp = new HashMap<String, Object>();
+		User user = (User) session.getAttribute(Constants.USER);
 		Page<Project> page = new Page<Project>(pageNow, pageSize);
 		Date date;
 		try {
@@ -161,6 +164,7 @@ public class ProjectServiceImpl implements IProjectService {
 		// 获取5分钟之前的一个时间点
 		dataTmp.put("lastTime", date);
 		params.put(Constants.PAGE, page);
+		params.put("userId", user.getId());
 		if (criteria != null) {
 			params.putAll(criteria);
 		}

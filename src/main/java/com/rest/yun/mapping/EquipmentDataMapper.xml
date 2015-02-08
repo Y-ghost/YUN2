@@ -11,12 +11,26 @@
     id, SensorId, Humidity, CreateTime
   </sql>
   <!-- 根据传感器id查询最新的一条数据  -->
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectBySid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from Equipment_Data
     where SensorId = #{sId,jdbcType=INTEGER}
     order by Createtime desc limit 1
+  </select>
+  <!-- 获取单个传感器当日的湿度值  -->
+  <select id="selectHumidityBySid" resultType="Float" parameterType="com.rest.yun.beans.EquipmentData" >
+    select IFNULL(AVG(Humidity),0) 
+    from Equipment_Data
+    where SensorId = #{sensorid,jdbcType=INTEGER}
+    and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
+  </select>
+  <!-- 湿度详情  -->
+  <select id="selectHumidityList" resultMap="BaseResultMap" parameterType="com.rest.yun.beans.EquipmentData" >
+    select * 
+    from Equipment_Data
+    where SensorId = #{sensorid,jdbcType=INTEGER}
+    and DATE_FORMAT(createTime,'%Y-%m-%d') =DATE_FORMAT(#{createtime,jdbcType=TIMESTAMP},'%Y-%m-%d')
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from Equipment_Data
@@ -24,9 +38,11 @@
   </delete>
   <!-- 根据主机id删除其关联的所有节点数据信息 -->
   <delete id="deleteAllByHid" parameterType="java.lang.Integer" >
-    delete from Equipment_Data ed 
-    left join equipment e on ed.EquipmentId = e.id
-    where e.ControlHostId = #{controlHostId,jdbcType=INTEGER};
+    delete ed from Equipment_Data ed 
+    left join SensorInfo s on ed.SensorId = s.id
+    left join equipment e on s.EquipmentId = e.id
+    left join ControlHost c on e.controlHostId = c.id
+    where c.id = #{controlHostId,jdbcType=INTEGER};
   </delete>
   <!-- 批量插入节点采集的数据 -->
   <insert id="insert" parameterType="java.util.List" >

@@ -11,7 +11,7 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	<!-- 定时器执行 -->
-
+ 	
 	<!-- 每天定时01：00整，系统自动删除存储接收指令的临时表旧数据（大于一天的数据） -->
 	<bean id="autoDeleteDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -52,33 +52,12 @@
 
 		</property>
 	</bean>
-	<!-- 每天定时04：00整，系统自动采集现场数据 -->
-	<bean id="autoCollectDataDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject">
-			<ref bean="myTimer" />
-		</property>
-		<property name="targetMethod">
-			<value>autoCollectData</value>
-		</property>
-	</bean>
-	<bean id="autoCollectDataTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail">
-			<ref bean="autoCollectDataDetail" />
-		</property>
-		<property name="cronExpression">
-			<!-- 每天凌晨4点0分0妙运行定时任务 -->
-			<value>0 0 4 * * ?</value>
-
-		</property>
-	</bean>
 	<!-- 执行多个触发器 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref local="autoDeleteTrigger" />
 				<ref local="autoValidTrigger" />
-				<ref local="autoCollectDataTrigger" />
 			</list>
 		</property>
 	</bean>

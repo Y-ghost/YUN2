@@ -3,6 +3,7 @@ package com.rest.yun.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentStatus;
 
 public class EquipmentExt<T> implements Serializable {
@@ -16,8 +17,17 @@ public class EquipmentExt<T> implements Serializable {
 	private int irrigationType;//灌溉控制类型
 	private double area;//节点控制面积
 	private int fowParameter;//电磁阀流量参数
+	private Equipment equipment;//节点
 	private EquipmentStatus equipmentStatus;
 	private List<T> result;
+
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
+	}
 
 	public int getId() {
 		return id;
@@ -102,6 +112,14 @@ public class EquipmentExt<T> implements Serializable {
 		builder.append(code);
 		builder.append(", controlHostId=");
 		builder.append(controlHostId);
+		builder.append(", irrigationType=");
+		builder.append(irrigationType);
+		builder.append(", area=");
+		builder.append(area);
+		builder.append(", fowParameter=");
+		builder.append(fowParameter);
+		builder.append(", equipment=");
+		builder.append(equipment);
 		builder.append(", equipmentStatus=");
 		builder.append(equipmentStatus);
 		builder.append(", result=");

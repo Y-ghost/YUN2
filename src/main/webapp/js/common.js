@@ -66,10 +66,9 @@ rainet.utils.notification = {
 
 rainet.utils.busy = function(){
 	var defaults = {
-			template: "<div style=\"position:absolute;left:0;top:0;right:0;bottom:0;height: 100%;width:100%;opacity:.7;background-color:white;\" ng-show=\"display()\">\n"+
-							"<div style=\"position:absolute;left:44.5%;top:37%;\">\n"+
-							"<i class=\"fa fa-spinner fa-spin fa-lg\"></i><Label style=\"padding:0 5px;\"></Label>\n"+
-							"</div>\n"+
+			template: "<div style=\"filter: progid:DXImageTransform.Microsoft.Alpha(opacity=30);position:absolute;left:0;top:0;right:0;z-index: 9998;bottom:0;height: 100%;width:100%;opacity:.3;background-color:#000;\" ng-show=\"display()\"></div>\n"+
+							"<div style=\" position:fixed; *position:absolute;z-index: 9999;top:50%; left:50%;width:200px; margin:-50px 0 0 -50px;font-size:18px;padding-bottom:10px;padding-top:13px;padding-left:30px;padding-right:30px;background-color: #fff;color:#1b926c;\">\n"+
+							"<i class=\"fa fa-spinner fa-spin fa-lg\"></i><Label style=\"padding:0 5px;font-size:14px;\"></Label>\n"+
 						"</div>\n",
 			message:'正在努力加载...'
 	};
@@ -101,8 +100,40 @@ rainet.utils.busy = function(){
 	};
 }();
 
+//获取系统时间
+rainet.utils.systime = function(){
+	this.current();
+}
+//每秒增加一秒
+rainet.utils.current = function(time){
+	rainet.ajax.execute({
+		url : rainet.settings.baseUrl+"system/getSystemTime/",
+		success : function(data) {
+			$(".systime").html(data);
+		}
+	});
+	
+	setInterval(function() {
+		rainet.utils.current();
+	}, 1000); 
+}
+
 //退出系统
 rainet.utils.exist = function(){
+	//添加天气动态
+	$(".systime").html("<iframe width=\"310\" scrolling=\"no\" height=\"25\" frameborder=\"0\" allowtransparency=\"true\" src=\"http://i.tianqi.com/index.php?c=code&id=40&icon=1&num=3\"></iframe>");
+	//添加IE判断，6、7、8版本的提醒更换浏览器
+	if (!$.support.leadingWhitespace){
+		$(".header").addClass("checkIE");
+		$("body").append("<div class='topDiv' style='overflow:hidden; text-align:center;width:98%;position:fixed; *position:absolute;z-index: 9999;top:1%; left:1%;color:red;'>请选择IE9或更高版本访问，建议使用Google Chrome浏览器，显示效果会更好！<a src='javascript:void(0);' class='topBtn cursor' style='float:right;height:30px;width:30px; margin-right:50px;color:red;'>x</a></div>");
+	}
+	$(".topBtn").click(function(){
+		$(".header").removeClass("checkIE");
+		$(".topDiv").css('display','none');
+	});
+	//添加底部年限
+	var myDate = new Date();
+	$(".copyYear").html(myDate.getFullYear());
 	$("#exist").click(function(){
 		if(confirm("确定退出?")){
 			rainet.ajax.execute({

@@ -19,7 +19,9 @@ public class Equipment {
 
     private Double area;
 
-    private String plantsname;
+    private Integer soilname;
+    
+    private Integer plantsname;
 
     private Integer rootdepth;
 
@@ -33,17 +35,17 @@ public class Equipment {
 
     private String week;
 
-    private Date timeonestart;
+    private String timeonestart;
 
-    private Date timeoneend;
+    private String timeoneend;
 
-    private Date timetwostart;
+    private String timetwostart;
 
-    private Date timetwoend;
+    private String timetwoend;
 
-    private Date timethreestart;
+    private String timethreestart;
 
-    private Date timethreeend;
+    private String timethreeend;
 
     private Integer fowparameter;
 
@@ -57,6 +59,43 @@ public class Equipment {
     
     private Project project;
     
+    private PlantsInfo plantsInfo;
+    
+    private SoilInfo SoilInfo;
+    
+    private Long watervalue;//用于赋值
+    
+	public Long getWatervalue() {
+		return watervalue;
+	}
+
+	public void setWatervalue(Long watervalue) {
+		this.watervalue = watervalue;
+	}
+
+	public Integer getSoilname() {
+		return soilname;
+	}
+
+	public void setSoilname(Integer soilname) {
+		this.soilname = soilname;
+	}
+
+	public SoilInfo getSoilInfo() {
+		return SoilInfo;
+	}
+
+	public void setSoilInfo(SoilInfo soilInfo) {
+		SoilInfo = soilInfo;
+	}
+
+	public PlantsInfo getPlantsInfo() {
+		return plantsInfo;
+	}
+
+	public void setPlantsInfo(PlantsInfo plantsInfo) {
+		this.plantsInfo = plantsInfo;
+	}
 
 	public Project getProject() {
 		return project;
@@ -130,12 +169,12 @@ public class Equipment {
         this.area = area;
     }
 
-    public String getPlantsname() {
+    public Integer getPlantsname() {
         return plantsname;
     }
 
-    public void setPlantsname(String plantsname) {
-        this.plantsname = plantsname == null ? null : plantsname.trim();
+    public void setPlantsname(Integer plantsname) {
+        this.plantsname = plantsname;
     }
 
     public Integer getRootdepth() {
@@ -186,51 +225,51 @@ public class Equipment {
         this.week = week == null ? null : week.trim();
     }
 
-    public Date getTimeonestart() {
+    public String getTimeonestart() {
         return timeonestart;
     }
 
-    public void setTimeonestart(Date timeonestart) {
+    public void setTimeonestart(String timeonestart) {
         this.timeonestart = timeonestart;
     }
 
-    public Date getTimeoneend() {
+    public String getTimeoneend() {
         return timeoneend;
     }
 
-    public void setTimeoneend(Date timeoneend) {
+    public void setTimeoneend(String timeoneend) {
         this.timeoneend = timeoneend;
     }
 
-    public Date getTimetwostart() {
+    public String getTimetwostart() {
         return timetwostart;
     }
 
-    public void setTimetwostart(Date timetwostart) {
+    public void setTimetwostart(String timetwostart) {
         this.timetwostart = timetwostart;
     }
 
-    public Date getTimetwoend() {
+    public String getTimetwoend() {
         return timetwoend;
     }
 
-    public void setTimetwoend(Date timetwoend) {
+    public void setTimetwoend(String timetwoend) {
         this.timetwoend = timetwoend;
     }
 
-    public Date getTimethreestart() {
+    public String getTimethreestart() {
         return timethreestart;
     }
 
-    public void setTimethreestart(Date timethreestart) {
+    public void setTimethreestart(String timethreestart) {
         this.timethreestart = timethreestart;
     }
 
-    public Date getTimethreeend() {
+    public String getTimethreeend() {
         return timethreeend;
     }
 
-    public void setTimethreeend(Date timethreeend) {
+    public void setTimethreeend(String timethreeend) {
         this.timethreeend = timethreeend;
     }
 

@@ -121,6 +121,8 @@ rainet.message.view = function(){
 	var init = function(){
 		bindEvent();
 		setView(defaultView);
+		//获取系统时间
+//		rainet.utils.systime();
 		//退出系统
 		rainet.utils.exist();
 	}

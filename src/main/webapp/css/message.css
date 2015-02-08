@@ -82,6 +82,11 @@
 	margin: 20px 0;
 }
 
+.node-containerExt {
+	margin-top: 1px;
+	margin-bottom: 30px;
+}
+
 .node-tools {
 	padding-left: 15px;
 	padding-bottom: 15px;

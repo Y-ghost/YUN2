@@ -56,13 +56,13 @@ rainet.ajax = {
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">登录名/邮箱：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"text\" class=\"form-control\" name=\"loginname\" id=\"loginname\"/>\n"+
+    				"<input type=\"text\" class=\"form-control\" name=\"loginname\" value='admin' id=\"loginname\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">密码：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"password\"  class=\"form-control\" name=\"password\"/>\n"+
+    				"<input type=\"password\"  class=\"form-control\" value='rainet2014' name=\"password\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			 "<div class=\"dialog-footer\" style=\"margin-top:30px;\">\n"+
@@ -158,6 +158,7 @@ rainet.ajax.controller = {
 					if (data) {
 						bootbox.hideAll();
 						rainet.utils.notification.success("登录成功!");
+						location.reload() ;
 					}else{
 						return false;
 					}

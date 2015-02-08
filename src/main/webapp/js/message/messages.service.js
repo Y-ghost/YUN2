@@ -31,7 +31,7 @@ rainet.message.service = {
 			get: function(projectId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.project.url + projectId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -41,7 +41,7 @@ rainet.message.service = {
 				rainet.ajax.execute({
 					url : rainet.message.url.project.url,
 					data : param,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -51,7 +51,7 @@ rainet.message.service = {
 			update: function(project, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.project.url,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'PUT',
 					data : JSON.stringify(project),
 					contentType : 'application/json; charset=utf-8',
@@ -64,7 +64,7 @@ rainet.message.service = {
 			del: function(projectId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.project.url + projectId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'DELETE',
 					success : function(data){
 						callback(data);
@@ -102,7 +102,7 @@ rainet.message.service = {
 			get: function(projectId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.host.url + projectId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -113,7 +113,7 @@ rainet.message.service = {
 				rainet.ajax.execute({
 					url : rainet.message.url.host.url,
 					data : param,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -123,7 +123,7 @@ rainet.message.service = {
 			update: function(config, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.host.url,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'PUT',
 					customHandleError : function(result){
 						if (config.handleError){
@@ -142,7 +142,7 @@ rainet.message.service = {
 			del: function(projectId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.host.url + projectId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'DELETE',
 					success : function(data){
 						callback(data);
@@ -176,7 +176,7 @@ rainet.message.service = {
 			get: function(nodeId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.node.url + nodeId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -187,7 +187,7 @@ rainet.message.service = {
 				rainet.ajax.execute({
 					url : rainet.message.url.node.url,
 					data : param,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -197,7 +197,7 @@ rainet.message.service = {
 			update: function(config, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.node.url,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'PUT',
 					customHandleError : function(result){
 						if (config.handleError){
@@ -216,7 +216,7 @@ rainet.message.service = {
 			del: function(nodeId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.node.url + nodeId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'DELETE',
 					success : function(data){
 						callback(data);
@@ -231,7 +231,7 @@ rainet.message.service = {
 			get: function(logId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.systemLog.url + logId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -242,7 +242,7 @@ rainet.message.service = {
 				rainet.ajax.execute({
 					url : rainet.message.url.systemLog.url,
 					data : param,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -252,7 +252,7 @@ rainet.message.service = {
 			markLogRead: function(config, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.systemLog.url + config.logId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'PUT',
 					customHandleError : function(result){
 						if (config.handleError){
@@ -273,7 +273,7 @@ rainet.message.service = {
 			get: function(userId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.user.url + userId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -284,7 +284,7 @@ rainet.message.service = {
 				rainet.ajax.execute({
 					url : rainet.message.url.user.url,
 					data : param,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					success : function(data){
 						callback(data);
 					}
@@ -294,7 +294,7 @@ rainet.message.service = {
 			update: function(config, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.user.url,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'PUT',
 					customHandleError : function(result){
 						if (config.handleError){
@@ -313,7 +313,7 @@ rainet.message.service = {
 			del: function(userId, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.user.url + userId,
-					$busyEle : $('#tableContainer'),
+					$busyEle : $('body'),
 					method : 'DELETE',
 					success : function(data){
 						callback(data);

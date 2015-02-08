@@ -77,7 +77,7 @@ rainet.setting.controller.project = {
 			$field = bv.getFieldElements('name');
 			var value = $field.val();
 			if ($.trim(value) === '') {
-				bv.updatesetting($field, 'notEmpty');
+				bv.updateMessage($field, 'notEmpty');
 				return ;
 			}
 			var data = {projectName : value,projectId:0};
@@ -103,6 +103,7 @@ rainet.setting.controller.project = {
 		$('button[type=submit]', $form).off('click').on('click', function(){
 			// 检查验证是否通过
 			var bv = $form.data('bootstrapValidator');
+			console.log(bv.$invalidFields.length);
 			if (bv.$invalidFields.length > 0) {
 				return false;
 			}
@@ -142,12 +143,12 @@ rainet.setting.controller.project = {
     			"<div class=\"col-sm-9 \" style=\"text-align:left;\">\n"+
 	    			"<div class=\"radio-inline\">"+
 						"<label>"+
-		    				"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=0 checked/>绿化"+
+		    				"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=\"0\" checked/>绿化"+
 		    			"</label>"+
 	        		"</div>"+	
 	        		"<div class=\"radio-inline\">"+
 		        		"<label>"+
-		        			"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=1/>农业"+
+		        			"<input type=\"radio\" class=\"projectType\" name=\"projecttype\" value=\"1\" />农业"+
 		        		"</label>"+
 	        		"</div>"+		
         		"</div>"+		

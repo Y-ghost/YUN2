@@ -7,6 +7,9 @@
 <jsp:include page="common/header.jsp" />
 <head>
 	<link rel="stylesheet" href="${requestScope.basePath}datatable/css/dataTables.bootstrap.css" />
+	<style type="text/css">
+	.checkIE{margin-top:30px;}
+	</style>
 </head>
 <body>
 	<div class="container-fluid" style="height:100%">

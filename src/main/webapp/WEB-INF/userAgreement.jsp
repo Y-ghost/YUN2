@@ -13,7 +13,7 @@
 #headLine {
 	display: none;
 }
-
+.checkIE{margin-top:30px;}
 .fa-power-off {
 	display: none;
 }
@@ -248,5 +248,20 @@
 	</div>
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp" />
+	<script type="text/javascript">
+$(document).ready(function() {
+	var myDate = new Date();
+	$(".copyYear").html(myDate.getFullYear());
+	//添加IE判断，6、7、8版本的提醒更换浏览器
+	if (!$.support.leadingWhitespace){
+		$(".header").addClass("checkIE");
+		$("body").append("<div class='topDiv' style='overflow:hidden; text-align:center;width:98%;position:fixed; *position:absolute;z-index: 9999;top:1%; left:1%;color:red;'>请选择IE9或更高版本访问，建议使用Google Chrome浏览器，显示效果会更好！<a src='javascript:void(0);' class='topBtn cursor' style='float:right;height:30px;width:30px; margin-right:50px;color:red;'>x</a></div>");
+	}
+	$(".topBtn").click(function(){
+		$(".header").removeClass("checkIE");
+		$(".topDiv").css('display','none');
+	});
+});
+</script>
 </body>
 </html>

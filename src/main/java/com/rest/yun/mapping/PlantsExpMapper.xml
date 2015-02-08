@@ -30,17 +30,24 @@
     delete from PlantsExp
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.rest.yun.beans.PlantsExp" >
-    insert into PlantsExp (id, PlantsId, PlantsSeason, 
-      HumidityUp, HumidityDown, TemperatureUp, 
-      TemperatureDown, StartDate, EndDate, 
-      CreateTime, CreateUser, ModifyTime, 
-      ModifyUser)
-    values (#{id,jdbcType=INTEGER}, #{plantsid,jdbcType=INTEGER}, #{plantsseason,jdbcType=VARCHAR}, 
-      #{humidityup,jdbcType=REAL}, #{humiditydown,jdbcType=REAL}, #{temperatureup,jdbcType=REAL}, 
-      #{temperaturedown,jdbcType=REAL}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{createuser,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
-      #{modifyuser,jdbcType=INTEGER})
+  <!-- 批量添加植物周期数据 -->
+  <insert id="save" parameterType="java.util.List" >
+    <![CDATA[
+	    insert into PlantsExp ( PlantsId, PlantsSeason, 
+	      HumidityUp, HumidityDown, TemperatureUp, 
+	      TemperatureDown, StartDate, EndDate, 
+	      CreateTime, CreateUser, ModifyTime, 
+	      ModifyUser)
+	    values 
+	]]>
+	<foreach collection="list" item="item" index="index"
+			separator=",">
+		    (#{item.plantsid}, #{item.plantsseason}, 
+		      #{item.humidityup}, #{item.humiditydown}, #{item.temperatureup }, 
+		      #{item.temperaturedown }, #{item.startdate }, #{item.enddate }, 
+		      #{item.createtime }, #{item.createuser }, #{item.modifytime }, 
+		      #{item.modifyuser })
+	</foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.rest.yun.beans.PlantsExp" >
     insert into PlantsExp
