@@ -120,7 +120,6 @@ rainet.setting.controller.putData = {
 							flag = true;
 							return true;
 						};
-						var a = {pId:1};
 						bootbox.dialog({
 							message : "该操作最多需要1分钟才能完成，确认赋值？",
 							title : '节点赋值',
@@ -140,7 +139,7 @@ rainet.setting.controller.putData = {
 								      label: "提交",
 								      className: "btn-success",
 								      callback : function(){
-								    	  	rainet.setting.service.equipment.putData(a, function(data){
+								    	  	rainet.setting.service.equipment.putData(list, function(data){
 												if(data==""){
 													rainet.utils.notification.success("赋值成功!");
 												}else{
