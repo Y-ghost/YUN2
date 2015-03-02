@@ -113,7 +113,7 @@ public class EquipmentController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectEqts(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
-			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria, HttpSession session) {
 
 		Map<String, Object> criteriaMap = null;
 
@@ -121,7 +121,7 @@ public class EquipmentController {
 			criteriaMap = JSONConver.conver(criteria, Map.class);
 		}
 
-		Page<Equipment> page = equipmentService.selectEqtForList(pageNow, pageSize, criteriaMap);
+		Page<Equipment> page = equipmentService.selectEqtForList(session,pageNow, pageSize, criteriaMap);
 
 		return new ResponseWrapper(page);
 	}
@@ -275,9 +275,6 @@ public class EquipmentController {
 	@RequestMapping(value="/putData",method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper putData(@RequestBody List<Equipment> list) {
-		for(Equipment e:list){
-			System.out.println(e.getName());
-		}
 		String result = equipmentExtService.putData(list);
 		return new ResponseWrapper(result);
 	}

@@ -200,10 +200,12 @@ public class EquipmentServiceImpl implements IEquipmentService {
 	}
 
 	@Override
-	public Page<Equipment> selectEqtForList(int pageNow, int pageSize, Map<String, Object> criteria) {
+	public Page<Equipment> selectEqtForList(HttpSession session,int pageNow, int pageSize, Map<String, Object> criteria) {
 		Map<String, Object> params = new HashMap<String, Object>();
+		User user = (User) session.getAttribute(Constants.USER);
 		Page<Equipment> page = new Page<Equipment>(pageNow, pageSize);
 		params.put(Constants.PAGE, page);
+		params.put("userId", user.getId());
 		if (criteria != null) {
 			params.putAll(criteria);
 		}
@@ -419,28 +421,26 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		try {
 			ControlHost host = controlHostMapper.selectByPrimaryKey(list.get(0).getControlHostId());
 			// 组装节点传感器地址,即指令的data位
-			String codeData = "";
-			if(list.size()<10){
-				codeData += "0"+list.size();
-			}else{
-				codeData += list.size();
-			}
+			String codeStr = "";
+			
 			for (EquipmentExt<SensorInfo> e : list) {
-				codeData += e.getCode();
+				codeStr += e.getCode();
 				List<SensorInfo> sList = e.getResult();
 				if(!CollectionUtils.isEmpty(sList)){
 					if(sList.size()<10){
-						codeData += "0"+sList.size();
+						codeStr += "0"+sList.size();
 					}else{
-						codeData += sList.size();
+						codeStr += sList.size();
 					}
 					for(SensorInfo si:sList){
-						codeData += "0"+si.getNumber();
+						codeStr += "0"+si.getNumber();
 					}
 				}
 			}
 			
-			byte[] data = codingFactory.string2BCD(codeData);
+			byte[] dataLen = new byte[]{(byte)list.size()};//节点个数
+			byte[] codeData = codingFactory.string2BCD(codeStr);
+			byte[] data = codingFactory.byteMerger(dataLen,codeData);
 			
 			// 组装发送指令
 			byte[] sendData = codingFactory.coding((byte) 0x01, host.getCode(), (byte) 0x08, data);

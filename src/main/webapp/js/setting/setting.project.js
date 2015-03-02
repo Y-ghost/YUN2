@@ -135,7 +135,7 @@ rainet.setting.controller.project = {
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">项目名称：</label>\n"+
     			"<div class=\"col-sm-9\">\n"+
-    				"<input type=\"text\" class=\"form-control projectName\" name=\"name\"/>\n"+
+    				"<input type=\"text\" style='width:100%;' class=\"form-control projectName\" name=\"name\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
@@ -156,24 +156,24 @@ rainet.setting.controller.project = {
   			"<div class=\"form-group\">\n"+
 	  			"<label class=\"col-sm-3 control-label\">负责单位：</label>\n"+
 	  			"<div class=\"col-sm-9\">\n"+
-	  				"<input type=\"text\"  class=\"form-control department\" name=\"department\"/>\n"+
+	  				"<input type=\"text\" style='width:100%;'  class=\"form-control department\" name=\"department\"/>\n"+
 	  			"</div>\n"+
   			"</div>\n"+
   		"<div class=\"form-group\">\n"+
   		"<label class=\"col-sm-3 control-label\">项目地址：</label>\n"+
   				"<div class=\"col-sm-9\">\n"+
     				"<div class=\"col-sm-5 selectItem\" style=\"padding-left:0;\">\n"+
-    					"<select class=\"form-control provinceItem\" name=\"province\"></select>\n"+
+    					"<select class=\"form-control provinceItem\" style='width:100%;' name=\"province\"></select>\n"+
     				"</div>\n"+
     				"<div class=\"col-sm-5 selectItem\">\n"+
-    					"<select class=\"form-control cityItem\" name=\"city\"></select>\n"+
+    					"<select class=\"form-control cityItem\" style='width:100%;' name=\"city\"></select>\n"+
     				"</div>\n"+
     			"</div>\n"+
     	  	"</div>\n"+
   			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">详细地址：</label>\n"+
     			"<div class=\"col-sm-9\">\n"+
-    				"<input type=\"text\" class=\"form-control address\" name=\"address\"/>\n"+
+    				"<input type=\"text\" class=\"form-control address\" style='width:100%;' name=\"address\"/>\n"+
     			"</div>\n"+
     		"</div>\n"+
   			 "<div class=\"modal-footer\">\n"+

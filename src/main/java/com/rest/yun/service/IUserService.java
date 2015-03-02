@@ -66,7 +66,7 @@ public interface IUserService {
 
 	User getUserById(int userId);
 
-	Page<User> selectUsersBy(int pageNow, int pageSize, Map<String, Object> criteria);
+	Page<User> selectUsersBy(HttpSession session,int pageNow, int pageSize, Map<String, Object> criteria);
 
 	/**
 	 * @Title:       validUserName

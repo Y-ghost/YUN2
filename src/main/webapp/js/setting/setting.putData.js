@@ -102,16 +102,6 @@ rainet.setting.controller.putData = {
 								var bv = $form.data('bootstrapValidator');
 								var formData = $form.serializeArray();
 								var jsonData = rainet.utils.serializeObject(formData);
-								jsonData.id=1;
-								jsonData.name=1;
-								jsonData.controlhostid=1;
-								jsonData.irrigationtype=1;
-								jsonData.soilweight=1;
-								jsonData.soilwater=1;
-								jsonData.soilname=1;
-								jsonData.plantsname=1;
-								jsonData.rootdepth=1;
-								jsonData.watervalue=1;
 								list.push(jsonData);
 							}
 						});

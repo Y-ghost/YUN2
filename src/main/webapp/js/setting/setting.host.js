@@ -114,14 +114,14 @@ rainet.setting.controller.host = {
 			"<div class=\"form-group\">\n"+
 				"<label class=\"col-sm-3 control-label\">所属项目：</label>\n"+
 				"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<select class=\"form-control projectName\" name=\"projectid\"></select>\n"+
+    				"<select class=\"form-control projectName\" style='width:100%;' name=\"projectid\"></select>\n"+
     			"</div>\n"+
     		"</div>\n"+
     		"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">主机编号：</label>\n"+
     			"<div class=\"col-sm-9 selectItem\">\n"+
-    				"<input type=\"text\" class=\"form-control code\" name=\"code\"/>\n"+
-    				"<p class=\"help-block js-placehoder\">只允许8位数字</p>\n"+
+    				"<input type=\"text\" class=\"form-control code\" style='width:100%;' name=\"code\"/>\n"+
+    				"<p class=\"help-block js-placehoder\">*&nbsp;只允许8位数字</p>\n"+
     			"</div>\n"+
     		"</div>\n"+
   			"<input type=\"hidden\" name=\"id\" class=\"id\"/>\n"+

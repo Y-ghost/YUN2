@@ -1,21 +1,46 @@
 package com.rest.yun.mapping;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.rest.yun.beans.SoilInfo;
 
 public interface SoilInfoMapper {
-    int deleteByPrimaryKey(Integer id);
+	/**
+	 * @Title:       deleteSoil
+	 * @author:      杨贵松
+	 * @time         2015年2月11日 下午7:19:53
+	 * @Description: 删除土壤数据
+	 * @return       int
+	 * @throws
+	 */
+    int deleteSoil(Integer id);
 
     int insert(SoilInfo record);
 
-    SoilInfo selectByPrimaryKey(Integer id);
+    /**
+     * @Title:       selectSoilById
+     * @author:      杨贵松
+     * @time         2015年2月11日 下午7:15:01
+     * @Description: 根据id查询土壤详情
+     * @return       SoilInfo
+     * @throws
+     */
+    SoilInfo selectSoilById(Integer id);
 
     int updateByPrimaryKeySelective(SoilInfo record);
 
-    int updateByPrimaryKey(SoilInfo record);
+    /**
+     * @Title:       update
+     * @author:      杨贵松
+     * @time         2015年2月11日 下午7:46:00
+     * @Description: 更新土壤信息
+     * @return       int
+     * @throws
+     */
+    int update(SoilInfo record);
 
     /**
      * @Title:       selectSoilInfo
@@ -46,4 +71,14 @@ public interface SoilInfoMapper {
 	 * @throws
 	 */
 	void save(SoilInfo soil);
+
+	/**
+	 * @Title:       selectSoilForList
+	 * @author:      杨贵松
+	 * @time         2015年2月11日 下午6:49:26
+	 * @Description: 分页查询土壤信息
+	 * @return       List<SoilInfo>
+	 * @throws
+	 */
+	List<SoilInfo> selectSoilForList(Map<String, Object> params);
 }

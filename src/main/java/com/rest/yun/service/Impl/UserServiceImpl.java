@@ -220,10 +220,12 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Page<User> selectUsersBy(int pageNow, int pageSize, Map<String, Object> criteria) {
+	public Page<User> selectUsersBy(HttpSession session,int pageNow, int pageSize, Map<String, Object> criteria) {
 		Map<String, Object> params = new HashMap<String, Object>();
+		User user = (User) session.getAttribute(Constants.USER);
 		Page<User> page = new Page<User>(pageNow, pageSize);
 		params.put(Constants.PAGE, page);
+		params.put("userId", user.getId());
 		if (criteria != null) {
 			params.putAll(criteria);
 		}

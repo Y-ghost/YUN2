@@ -22,6 +22,8 @@
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">主机信息管理 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="node">节点信息管理 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="systemLog">报警信息管理 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="soil">土壤信息管理 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="plants">植物信息管理 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="user">用户信息管理<span class="fa fa-angle-right navbar-right"></span></a>
 				</ul>
 			</div>
@@ -67,6 +69,28 @@
 							</div>
 						</div>
 						
+						<div class="form-group soil" style="display:none;">
+							<label class="col-xs-2 col-md-2 control-label">土壤信息查询</label>
+							<div class="col-xs-2 col-md-2">
+								<select class="form-control" id="province">
+								</select>
+							</div>
+							<div class="col-xs-2 col-md-2">
+								<select class="form-control" id="city">
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group plants" style="display:none;">
+							<label class="col-xs-2 col-md-2 control-label">植物信息查询:</label>
+							<div class="col-xs-4 col-md-4">
+								<input id="name" type="text" class="form-control" name="name" placeholder="植物名"/>
+							</div>
+							<div class="col-xs-2 col-md-2">
+								<button id="plantsSearchBtn" type="button" class="btn btn-success">查询</button>
+							</div>
+						</div>
+						
 						<div class="form-group user" style="display:none;">
 							<label class="col-xs-2 col-md-2 control-label">用户信息查询:</label>
 							<div class="col-xs-4 col-md-4">
@@ -105,6 +129,8 @@
 	<script src="${requestScope.basePath}js/message/messages.host.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.eqt.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.systemLog.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.soil.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.plants.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.users.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.js"></script>
 	

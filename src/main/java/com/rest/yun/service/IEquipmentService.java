@@ -36,13 +36,14 @@ public interface IEquipmentService {
 
 	/**
 	 * 分页查询节点列表
+	 * @param session 
 	 * 
 	 * @param pageNow
 	 * @param pageSize
 	 * @param criteria
 	 * @return
 	 */
-	Page<Equipment> selectEqtForList(int pageNow, int pageSize, Map<String, Object> criteria);
+	Page<Equipment> selectEqtForList(HttpSession session, int pageNow, int pageSize, Map<String, Object> criteria);
 
 	/**
 	 * 查询节点的详细信息

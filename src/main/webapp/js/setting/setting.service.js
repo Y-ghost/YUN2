@@ -264,21 +264,18 @@ rainet.setting.service = {
 						callback(data);
 					}
 				});
-			},
-			
-			putData : function(param, callback){
+			}
+		},
+		soilInfo : {
+			get: function(id, callback){
 				rainet.ajax.execute({
-					url : rainet.setting.url.node.url+"putData/",
+					url : rainet.setting.url.soil.url + id,
 					$busyEle : $('body'),
-					data : param,
-					method : 'POST',
 					success : function(data){
 						callback(data);
 					}
 				});
-			}
-		},
-		soilInfo : {
+			},
 			list: function(callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.soil.url+"selectSoilInfo/",
@@ -312,6 +309,15 @@ rainet.setting.service = {
 			}
 		},
 		plants : {
+			get: function(id, callback){
+				rainet.ajax.execute({
+					url : rainet.setting.url.plants.url + id,
+					$busyEle : $('body'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
 			list: function(callback){
 				rainet.ajax.execute({
 					url : rainet.setting.url.plants.url+"selectPlantsInfo/",

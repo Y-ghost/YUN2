@@ -2,6 +2,8 @@ package com.rest.yun.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import com.rest.yun.beans.ControlHost;
 import com.rest.yun.dto.Page;
 
@@ -41,13 +43,14 @@ public interface IControlHostService {
 
 	/**
 	 * Search host list
+	 * @param session 
 	 * 
 	 * @param pageNow
 	 * @param pageSize
 	 * @param criteria
 	 * @return
 	 */
-	Page<Map<String, Object>> selectHostBy(int pageNow, int pageSize, Map<String, Object> criteria);
+	Page<Map<String, Object>> selectHostBy(HttpSession session, int pageNow, int pageSize, Map<String, Object> criteria);
 
 	/**
 	 * 检查Host code是否存(除了{hostId}这个Host)

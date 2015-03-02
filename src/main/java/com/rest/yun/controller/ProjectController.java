@@ -92,6 +92,7 @@ public class ProjectController {
 	 * @return ResponseWrapper
 	 * @throws
 	 */
+	@Login
 	@RequestMapping(value = "{projectId}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper detailProject(@PathVariable int projectId) {
