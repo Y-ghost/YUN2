@@ -1,0 +1,23 @@
+/* Start login */
+.login-oper {
+	padding: 10px 15px
+}
+.login-form {
+	margin-top: 50px;
+}
+.login-oper span {
+	width: 50%;
+	text-align: left;
+}
+.login-oper span.fr {
+	text-align: right;
+}
+.h40 {
+	height: 40px;
+}
+.error_alert {
+	font-size: 14px;
+	color: red;
+	line-height: 40px;
+}
+/* ---End login---- */
