@@ -78,7 +78,18 @@ rainet.setting.utils={
 				var id = $this.children('option:selected').val();
 				if(id!=-1){
 					rainet.setting.service.plants.get(id, function(data){
-						$this.parent().parent().parent().find("input[name=rootdepth]").val(data.rootdepth);
+						$this.parent().parent().parent().find("input[name=rootdepth]").val(data.plants.rootdepth);
+						if(data.result[0]==undefined){
+							$this.parent().parent().parent().find("input[name=humidityup]").val(0);
+							$this.parent().parent().parent().find("input[name=humiditydown]").val(0);
+							$this.parent().parent().parent().find("input[name=temperatureup]").val(0);
+							$this.parent().parent().parent().find("input[name=temperaturedown]").val(0);
+						}else{
+							$this.parent().parent().parent().find("input[name=humidityup]").val(data.result[0].humidityup);
+							$this.parent().parent().parent().find("input[name=humiditydown]").val(data.result[0].humiditydown);
+							$this.parent().parent().parent().find("input[name=temperatureup]").val(data.result[0].temperatureup);
+							$this.parent().parent().parent().find("input[name=temperaturedown]").val(data.result[0].temperaturedown);
+						}
 					});
 				}
 			});

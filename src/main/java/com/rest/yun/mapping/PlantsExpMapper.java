@@ -24,4 +24,14 @@ public interface PlantsExpMapper {
      * @throws
      */
 	void save(List<PlantsExp> list);
+
+	/**
+	 * @Title:       selectByPID
+	 * @author:      杨贵松
+	 * @time         2015年3月4日 下午8:10:26
+	 * @Description: 根据植物id查询灌溉周期
+	 * @return       List<PlantsExt>
+	 * @throws
+	 */
+	List<PlantsExp> selectByPID(int id);
 }

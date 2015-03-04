@@ -438,6 +438,8 @@ rainet.setting.controller.setEquipment = {
 								selectSoilStr += "<option value=\""+data.id+"\">"+data.soiltype+"</option>";
 							});
 							soilSelectObj.append(selectSoilStr);
+							//选择土壤
+							rainet.setting.utils.selectSoil();
 						});
 						//植物初始化
 						var plantsSelectObj = $(".plantsname",_autoParamTempate);
@@ -447,6 +449,8 @@ rainet.setting.controller.setEquipment = {
 								selectPlantsStr += "<option value=\""+data.id+"\">"+data.plantsname+"</option>";
 							});
 							plantsSelectObj.append(selectPlantsStr);
+							//选择植物
+							rainet.setting.utils.selectPlants();
 						});
 						bootbox.dialog({
 							message : _autoParamTempate,

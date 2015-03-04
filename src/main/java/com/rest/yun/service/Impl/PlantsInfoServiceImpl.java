@@ -121,7 +121,10 @@ public class PlantsInfoServiceImpl implements IPlantsInfoService {
 	@Override
 	public PlantsExt selectPlantsById(int id) {
 		PlantsInfo plants = plantsInfoMapper.selectPlantsById(id);
-//		List<PlantsExt> expList = plantsExpMapper.selectByPrimaryKey(id);
-		return null;
+		List<PlantsExp> result = plantsExpMapper.selectByPID(id);
+		PlantsExt pe = new PlantsExt();
+		pe.setPlants(plants);
+		pe.setResult(result);
+		return pe;
 	}
 }
