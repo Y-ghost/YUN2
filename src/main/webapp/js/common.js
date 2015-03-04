@@ -61,6 +61,9 @@ rainet.utils.notification = {
 	},
 	warning : function(text){
 		noty({text : text, type : 'warning', theme : 'bootstrapTheme', timeout : 1500});
+	},
+	wapError : function(text) {
+		$('#errorMessage').text(text);
 	}
 };
 
@@ -149,3 +152,24 @@ rainet.utils.exist = function(){
 		}
 	});
 }
+
+rainet.event = {
+		click : function($target, callback, event){
+			var isSupportTouch = "ontouchend" in document ? true : false;
+			if (isSupportTouch) {
+				event = event ? event : 'tap';
+				$target.each(function(){
+					$(this).off(event).on(event, function(){
+						callback();
+					}); 
+				});
+				
+			} else {
+				$target.each(function(){
+					$(this).off('click').on('click', function(){
+						callback();
+					});
+				});
+			}
+		}
+};
