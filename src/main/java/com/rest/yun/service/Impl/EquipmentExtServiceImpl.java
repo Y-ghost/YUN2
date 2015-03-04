@@ -314,7 +314,7 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 		// 查询节点信息
 		try {
 			byte[] param = new byte[8];
-			SoilInfo soil = soilInfoMapper.selectByPrimaryKey(equipment.getSoilname());
+			SoilInfo soil = soilInfoMapper.selectSoilById(equipment.getSoilname());
 			float paramA = soil.getParametera();
 			float paramB = soil.getParameterb();
 			float paramC = soil.getParameterc();
@@ -852,38 +852,35 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 		try {
 			ControlHost host = controlHostMapper.selectByProjectId(pId);
 			String hCode = host.getCode();
-//			
-//			byte[] data = {};
-//			
-//			// 组装发送指令
-//			byte[] sendData = codingFactory.coding((byte) 0x01, hCode, (byte) 0x2B, data);
-//			// 开始的时间
-//			Date startDate = new Date();
-//			Client.sendToServer(sendData);
-//			// 等待获取主机返回的指令，等待10秒
-//			String dataContext = "";
-//			try {
-//				dataContext = netWorkService.waitData(hCode, "3B", startDate);
-//			} catch (ParseException e1) {
-//				LOG.error("获取10秒后的时间时异常", e1);
-//				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
-//			} catch (InterruptedException e1) {
-//				LOG.error("获取10秒后的时间时sleep异常", e1);
-//				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
-//			}
-//			
-//			boolean flag = false;
-//			byte[] receiveData = null;
-//			if (!dataContext.equals("")) {
-//				receiveData = codingFactory.string2BCD(dataContext);
-//				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
-//			}
-//			if (flag) {
-//				int num = receiveData[12];
-//				String usingData = dataContext.substring(26,dataContext.length()-6);
-			if (true) {
-				int num = 2;
-				String usingData = "000100000001000200000001";
+			
+			byte[] data = {};
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, hCode, (byte) 0x2B, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(hCode, "3B", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				int num = receiveData[12];
+				String usingData = dataContext.substring(26,dataContext.length()-6);
 				
 				for(int i=0;i<num;i++){
 					//节点地址

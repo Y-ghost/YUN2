@@ -61,7 +61,7 @@ public class CommonUtiles {
 	 * @return       double[]
 	 * @throws
 	 */
-	public static float[] caculate(double[][] b)
+	public static float[] caculate(double[][] b) throws NumberFormatException
 	{
 		double[][] a = new double[4][5];
 		for(int i=0;i<4;i++){

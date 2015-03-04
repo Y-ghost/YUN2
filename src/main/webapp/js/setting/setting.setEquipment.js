@@ -163,15 +163,15 @@ rainet.setting.controller.setEquipment = {
 												"<hr/>"+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
-													"<div class=\"col-sm-9\"><input type=\"hidden\" class=\"form-control week \" id=\"week\" data-bv-field=\"week\" name=\"week\" value=\""+week+"\">" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"0\"/>&nbsp;All</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"1\"/>&nbsp;一</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"2\"/>&nbsp;二</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"3\"/>&nbsp;三</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"4\"/>&nbsp;四</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"5\"/>&nbsp;五</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"6\"/>&nbsp;六</label>" +
-													"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\" class='cursor' value=\"7\"/>&nbsp;日</label></div></div>" +
+													"<div class=\"col-sm-9\"><select class=\"form-control week \" id=\"week\" multiple=\"multiple\" data-bv-field=\"week\" name=\"week\" value=\""+week+"\">" +
+													"<option value=\"1\"> 周一</option>" +
+													"<option value=\"2\"> 周二</option>" +
+													"<option value=\"3\"> 周三</option>" +
+													"<option value=\"4\"> 周四</option>" +
+													"<option value=\"5\"> 周五</option>" +
+													"<option value=\"6\"> 周六</option>" +
+													"<option value=\"7\"> 周日</option>"+
+													"</select></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
@@ -202,6 +202,12 @@ rainet.setting.controller.setEquipment = {
 							rainet.setting.utils.radioChange();
 							//select初始选中事件
 							rainet.setting.utils.selectVal(data);
+							//选择土壤
+							rainet.setting.utils.selectSoil();
+							//选择植物
+							rainet.setting.utils.selectPlants();
+							//灌溉周期事件
+							rainet.setting.utils.multiselect();
 							//日历控件绑定事件
 							rainet.setting.utils.dateTime();
 							//添加土壤信息事件
@@ -243,6 +249,7 @@ rainet.setting.controller.setEquipment = {
 								list.push(jsonData);
 							}
 						});
+						console.log(JSON.stringify(list));
 						list.handleError = function(result){
 							flag = true;
 							return true;
@@ -514,10 +521,13 @@ rainet.setting.controller.setEquipment = {
 				if(flag){
 					//日历控件绑定事件
 					rainet.setting.utils.timeLen(_timeLenTempate);
+					//灌溉周期事件
+					rainet.setting.utils.multiselect();
 					
 					var $formgroup = $("form",_timeLenTempate).find("div[id=form-group]");
 					$($formgroup).each(function(){
 						$(this).removeClass("has-error");
+						$(this).removeClass("has-success");
 					});
 					
 					rainet.setting.utils.setValidateForTimeLen(_timeLenTempate);
@@ -540,11 +550,11 @@ rainet.setting.controller.setEquipment = {
 								list.push(jsonData);
 							}
 						});
-						console.log(list);
 						list.handleError = function(result){
 							flag = true;
 							return true;
 						};
+						
 						bootbox.dialog({
 							message : _timeLenTempate,
 							title : '时段控制设置',
@@ -901,18 +911,18 @@ rainet.setting.controller.setEquipment = {
 						"</form>\n"+
 						"</div>",
 	timeLenTempate : "<div>\n"+
-						"<form class=\"form-horizontal\" role=\"form\" id=\"timeLenForm\">\n"+
-						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+					"<form class=\"form-horizontal\" role=\"form\" id=\"timeLenForm\">\n"+
+					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 						"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
-						"<div class=\"col-sm-9\"><input type=\"hidden\" class=\"form-control week \" id=\"week\" data-bv-field=\"week\" name=\"week\">" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;全选</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周一</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周二</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周三</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周四</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周五</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周六</label>" +
-						"<label class=\"col-sm-1 control-label\"><input type=\"checkbox\"/>&nbsp;周日</label></div></div>" +
+						"<div class=\"col-sm-9\"><select class=\"form-control week \" id=\"week\" multiple=\"multiple\" data-bv-field=\"week\" name=\"week\">" +
+						"<option value=\"1\"> 周一</option>" +
+						"<option value=\"2\"> 周二</option>" +
+						"<option value=\"3\"> 周三</option>" +
+						"<option value=\"4\"> 周四</option>" +
+						"<option value=\"5\"> 周五</option>" +
+						"<option value=\"6\"> 周六</option>" +
+						"<option value=\"7\"> 周日</option>"+
+						"</select></div></div>" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 						"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
 						"<div class=\"input-group date col-sm-9\">" +

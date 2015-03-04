@@ -58,7 +58,7 @@ public class HostController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectHosts(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
-			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria, HttpSession session) {
 
 		Map<String, Object> criteriaMap = null;
 
@@ -66,7 +66,7 @@ public class HostController {
 			criteriaMap = JSONConver.conver(criteria, Map.class);
 		}
 
-		Page<Map<String, Object>> page = controlHostService.selectHostBy(pageNow, pageSize, criteriaMap);
+		Page<Map<String, Object>> page = controlHostService.selectHostBy(session,pageNow, pageSize, criteriaMap);
 
 		return new ResponseWrapper(page);
 	}

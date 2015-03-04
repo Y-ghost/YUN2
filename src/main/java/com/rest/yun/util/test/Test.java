@@ -1,29 +1,45 @@
 package com.rest.yun.util.test;
 
-import java.text.DecimalFormat;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.util.CollectionUtils;
 
 import com.rest.yun.util.CodingFactoryUtil;
+import com.rest.yun.util.CommonUtiles;
 
 
 
 public class Test {
-	public static void main(String[] args) {
+	private static final DateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+	
+	public static void main(String[] args) throws ParseException {
 		CodingFactoryUtil codingFactory = new CodingFactoryUtil();
-//		byte[] eCode = codingFactory.string2BCD("0001");
-//		byte[] eData = codingFactory.longToByte(Long.parseLong("20000"));
-//		byte[] a = codingFactory.byteMerger(eCode, eData);
-		
-//		StringBuffer sb = new StringBuffer ("123456789");
-//		System.out.println(sb.reverse());
-//		long a = 30;
-//		String s = "E0";
-//		long times = Long.valueOf(s,16);
-//		String ss = s.substring(4,s.length()-2);
-//		byte[] b = {(byte) 0xE0};
-//		byte[] c = codingFactory.coding((byte)0x01, "00000002", (byte)0x22, b);
-		float f = (float)Math.round(((float)(10+186*0.001))*100)/100;
-		System.out.println(Math.pow(2,3));
+		byte[] eData = codingFactory.longToByte(10000L);
+		double[][] val = {{17.0,1.0},{22.0,1.5},{1.0,2.0},{1.0,1.0}};
+		float[] tmp = CommonUtiles.caculate(val);
+		System.out.println(tmp[0]);
 	}
+	
+	 public static int daysBetween(Date smdate,Date bdate) throws ParseException    
+	    {    
+	        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");  
+	        smdate=sdf.parse(sdf.format(smdate));  
+	        bdate=sdf.parse(sdf.format(bdate));  
+	        Calendar cal = Calendar.getInstance();    
+	        cal.setTime(smdate);    
+	        long time1 = cal.getTimeInMillis();                 
+	        cal.setTime(bdate);    
+	        long time2 = cal.getTimeInMillis();         
+	        long between_days=(time2-time1)/(1000*3600*24);  
+	            
+	       return Integer.parseInt(String.valueOf(between_days));           
+	    }    
 	
 	public static float[] function(float x,float y){
 		float[] param = new float[4];
@@ -113,5 +129,37 @@ public class Test {
 		l |= ((long) b[6] << 48);
 		l |= ((long) b[7] << 56);
 		return l;
+	}
+	
+	private static List<Date> printDay(Date start, Date end) {
+		List<Date> list = new ArrayList<Date>();
+		Calendar startDay = Calendar.getInstance();
+		Calendar endDay = Calendar.getInstance();
+
+		startDay.setTime(start);
+		endDay.setTime(end);
+		// 给出的日期开始日比终了日大则不执行打印
+		if (startDay.compareTo(endDay) > 0) {
+			return list;
+		}
+		// 给出的日期开始日与终了日相同则打印开始日期后终止
+		if (startDay.compareTo(endDay) == 0) {
+			list.add(start);
+			return list;
+		}
+		// 现在打印中的日期
+		Calendar currentPrintDay = startDay;
+		while (true) {
+			// 打印日期
+			list.add(currentPrintDay.getTime());
+			// 日期加一
+			currentPrintDay.add(Calendar.DATE, 1);
+			// 日期加一后判断是否达到终了日，达到则终止打印
+			if (currentPrintDay.compareTo(endDay) == 0) {
+				list.add(currentPrintDay.getTime());
+				break;
+			}
+		}
+		return list;
 	}
 }

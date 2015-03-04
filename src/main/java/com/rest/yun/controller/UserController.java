@@ -206,7 +206,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseWrapper selectUsers(@RequestParam(required = false, defaultValue = "1") Integer pageNow,
-			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria) {
+			@RequestParam(required = false, defaultValue = "10") Integer pageSize, String criteria, HttpSession session) {
 
 		Map<String, Object> criteriaMap = null;
 
@@ -220,7 +220,7 @@ public class UserController {
 			}
 		}
 
-		Page<User> page = userService.selectUsersBy(pageNow, pageSize, criteriaMap);
+		Page<User> page = userService.selectUsersBy(session,pageNow, pageSize, criteriaMap);
 
 		return new ResponseWrapper(page);
 	}

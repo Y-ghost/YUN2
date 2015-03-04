@@ -13,6 +13,9 @@ rainet.statistic.controller.water = {
 			var str = "";
 			pageNum = data.pageNum;
 			pages = data.pages;
+			if(pages==0){
+				pages = 1;
+			}
 			$.each(data.result,function(index,item){
 				var linkActive = "";
 				if(index==0){
@@ -45,6 +48,8 @@ rainet.statistic.controller.water = {
 			var id = $("#projectList a:first").attr("id");
 			if(id!=undefined){
 				rainet.statistic.controller.water.initEquipmentList(id);
+			}else{
+				rainet.utils.notification.warning("您还没有添加项目，请先添加项目!");
 			}
 			
 			$('.panelLink').off('click').on('click', function() {

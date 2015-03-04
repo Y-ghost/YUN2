@@ -9,6 +9,12 @@
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.date.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.time.css" />
+
+<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/jquery-ui.css" />
+<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/jquery.multiselect.css" />
+<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/style.css" />
+<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/prettify.css" />
+
 <style type="text/css">
 .control-label{
 	padding-left:1px;
@@ -96,6 +102,160 @@ button.closeCycle {
 	filter: alpha(opacity = 50);
 	opacity: .5;
 }
+.panel-border {
+	border: 1px solid #ddd
+}
+
+.panelLink {
+	font-size: 14px;
+	padding-top: 10px;
+	margin-top: 3px;
+	color:#000;
+}
+.panelLink span{
+	line-height:22px;
+}
+
+.link-heading {
+	font-size: 14px;
+	padding-top: 10px;
+	margin-top: 20px;
+}
+.border {
+	border: 1px solid #ddd;
+}
+
+.header {
+	border-radius: 0px;
+	background-color: #f5f5f5;
+}
+
+.header a{
+	padding-top:8px;
+}
+
+.header span{
+	color: #000;
+	font-size: 16px;
+}
+#homeLab{
+	font-size:16px;
+	font-family: 'Microsoft YaHei', Arial, "宋体", Helvetica, STHeiti;
+}
+.border-bottom {
+	border-bottom: 1px solid #ddd;
+}
+
+.border-right {
+	border-right: 1px solid #ddd;
+}
+
+.driver {
+	height: 1px;
+	margin: 9px 1px;
+	overflow: hidden;
+	background-color: #e5e5e5;
+	border-bottom: 1px solid #ddd;
+}
+
+.no-border .list-group-item {
+	border: 0;
+	padding: 10px 0;
+}
+
+.ul-border-bottom .list-group-item {
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid #ddd;
+}
+
+.float-right {
+	float: right;
+}
+
+.font-size-18 {
+	font-size: 18px;
+	font-weight: bold;
+}
+.font-size-16 {
+	font-size: 16px;
+}
+
+.node-container {
+	margin: 20px 0;
+}
+
+.node-containerExt {
+	margin-top: 1px;
+	margin-bottom: 30px;
+}
+
+.node-tools {
+	padding-left: 15px;
+	padding-bottom: 15px;
+}
+
+.selectItem .form-control-feedback {
+	top: 0;
+	right: -15px !important;
+}
+
+.dialog-footer {
+	padding: 15px;
+	text-align: right;
+	border-top: 1px solid #e5e5e5;
+}
+
+.cursor {
+	cursor: pointer;
+}
+
+.table td a {
+	max-width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+
+.footer-bottom {
+	clear: both;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 20px 0;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+.footer {
+	margin-top: 50px;
+	border-top: 1px solid #e5e5e5;
+	background-color: #f5f5f5;
+}
+
+body {
+	color: #000;
+	font-size: 12px;
+	line-height: 22px;
+	font-family: 'Microsoft YaHei', Arial, "宋体", Helvetica, STHeiti;
+	background: #fff;
+	_height: 100%;
+}
+
+input {
+	font: 12px/16px "Microsoft YaHei", Arial, "宋体";
+	color: #000;
+}
+
+.dialog-footer:after {
+	clear: both;
+}
+
+.dialog-footer:before, .dialog-footer:after {
+	display: table;
+	content: " ";
+}
 </style>
 </head>
 <body>
@@ -110,8 +270,7 @@ button.closeCycle {
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="setEquipment">节点传感器参数设置 <span class="fa fa-angle-right navbar-right"></span></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理 <span class="fa fa-angle-right navbar-right"></span></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="validTime">主机校时管理<span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理<span class="fa fa-angle-right navbar-right"></span></a>
 				</ul>
 			</div>
 			<div class="equipment-container">
@@ -134,6 +293,11 @@ button.closeCycle {
 	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.putData.js"></script>
 	
+	<script src="${requestScope.basePath}multiselects/js/jquery.ui.core.js"></script>
+	<script src="${requestScope.basePath}multiselects/js/jquery.ui.widget.js"></script>
+	<script src="${requestScope.basePath}multiselects/js/jquery.multiselect.min.js"></script>
+	<script src="${requestScope.basePath}multiselects/js/prettify.js"></script>
+
 	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/picker.time.js"></script>

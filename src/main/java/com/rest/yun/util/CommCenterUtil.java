@@ -7,13 +7,13 @@ import com.rest.yun.beans.DataBean;
 
 /**
  * 
- * 项目名称：BEMS
- * 类名：CommCenterUtil
- * @author hp
- * 描述：指令发送接受中心
- * 创建人：hp
- * 创建时间：2013-10-15 下午03:22:37
- * 备注：
+ * @project:					yun 
+ * @Title: 						CommCenterUtil.java 		
+ * @Package 					com.rest.yun.util
+ * @Description: 				指令发送接受中心
+ * @author 						杨贵松   
+ * @date 						2014年2月11日 下午8:33:56
+ * @version 					V2.0
  */
 public class CommCenterUtil {
 
@@ -26,52 +26,23 @@ public class CommCenterUtil {
 	private int s = 0;
 
 	/**
-	 * 
-	 * @author hp
-	 * @param portid
-	 *            这个类主要用于对串口进行管理和设置，是对串口进行访问控制的核心类
-	 * @param serialPort
-	 *            该类主要实现串口数据通信
-	 * @param out
-	 *            输出流
-	 * @param in
-	 *            输入流
-	 * @param flag
-	 *            判断空调类型：0：串口通讯、1：无线通讯
-	 * @param receive
-	 *            接收指令的数组
-	 * @param temp
-	 *            存储临时流数据的数组
-	 * @param DataBean
-	 *            处理发送及接收指令的bean：ReceiveData保存接收指令、SendData保存发送的指令、
-	 *            UseringData保存指令中的DATA[n]数据
-	 * @return DataBean
-	 * @throws Exception
-	 * 
-	 * */
+	 * @Title:      sendAndReceive
+	 * @author:     杨贵松
+	 * @time        2014年2月11日 下午8:35:56
+	 * @param       portid 		这个类主要用于对串口进行管理和设置，是对串口进行访问控制的核心类
+	 * @param 		serialPort  该类主要实现串口数据通信
+	 * @param 		out   		输出流
+	 * @param 		in 			输入流
+	 * @param 		flag 		判断空调类型：0：串口通讯、1：无线通讯
+	 * @param 		receive 	接收指令的数组
+	 * @param 		temp 		存储临时流数据的数组
+	 * @param 		DataBean 	处理发送及接收指令的bean：ReceiveData保存接收指令、SendData保存发送的指令、UseringData保存指令中的DATA[n]数据
+	 * @return 		DataBean
+	 * @throws
+	 */
 	public DataBean sendAndReceive(byte[] data,int flag) throws Exception {
 		// 获取设置的端口号
 		long startTime = 0;
-//		if(flag==0){
-//			// 打开串口
-//			out = CommCon.getOut2CAC();
-//			out.write(data);
-//			dataBean.setSendData(data);
-//			System.out.println("发送指令："+sendCoding.bytesToHexString(data).toUpperCase());
-//			
-//			startTime=System.currentTimeMillis();   //获取开始时间
-//			in = CommCon.getIn2CAC();
-//		}else if(flag == 1){
-//			// 打开串口
-//			out = CommCon.getOut2DAC();
-//			out.write(data);
-//			dataBean.setSendData(data);
-//			
-//			System.out.println("发送指令："+sendCoding.bytesToHexString(data).toUpperCase());
-//			startTime=System.currentTimeMillis();   //获取开始时间
-//			in = CommCon.getIn2DAC();
-//		}
-
 		int i = 0;
 		while (i < 20) {
 			// 读取流中的所有指令存进临时数组

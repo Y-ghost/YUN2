@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,10 +103,13 @@ public class ControlHostServiceImpl implements IControlHostService {
 	}
 
 	@Override
-	public Page<Map<String, Object>> selectHostBy(int pageNow, int pageSize, Map<String, Object> criteria) {
+	public Page<Map<String, Object>> selectHostBy(HttpSession session,int pageNow, int pageSize, Map<String, Object> criteria) {
 		Map<String, Object> params = new HashMap<String, Object>();
+		User user = (User) session.getAttribute(Constants.USER);
 		Page<Map<String, Object>> page = new Page<Map<String, Object>>(pageNow, pageSize);
 		params.put(Constants.PAGE, page);
+		params.put("userId", user.getId());
+		
 		if (criteria != null) {
 			params.putAll(criteria);
 		}

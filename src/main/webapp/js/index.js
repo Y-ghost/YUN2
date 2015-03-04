@@ -67,13 +67,13 @@ rainet.controlCenter.view = function() {
 					strError = "<label class=\"col-sm-3 control-label\" id=\"has-error\">传感器"+Num+"：</label>" +
 					"<div class=\"col-sm-3 has-error\">" +
 					"<input type=\"text\" class=\"form-control address\"" +
-					"id=\"inputLab\" data-bv-field=\"address\"value=\""+data.humidity+" %\"/>" +
+					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+data.humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
 					"</div>";
 				}else{
 					strError = "<label class=\"col-sm-3 control-label\">传感器"+Num+"：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control address\"" +
-					"id=\"inputLab\" data-bv-field=\"address\"value=\""+data.humidity+" %\"/>" +
+					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+data.humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
 					"</div>"
 				}
 				humidity = data.humidity;
@@ -85,14 +85,35 @@ rainet.controlCenter.view = function() {
 			var eTemperature = "";
 			var eStatus = "";
 			var velocity = "";
+			
+			var tmpStr1 = "";
+			var tmpStr2 = "";
 			if(item.equipmentStatus == null){
-				eTemperature = "null";
-				eStatus = "null";
+				eTemperature = "异常";
+				eStatus = "异常";
 				velocity = "0";
+				
+				tmpStr1 = "<div class=\"col-sm-3\">" +
+							"<input type=\"text\" class=\"form-control projectName\"" +
+							"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;color:#a94442;' data-bv-field=\"name\" value=\""+eTemperature+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;℃</span>\n" +
+							"</div>";
+				tmpStr2 = "<div class=\"col-sm-3\">" +
+							"<input type=\"text\" class=\"form-control projectName\"" +
+							"id=\"inputLab\" data-bv-field=\"name\" style=\"color:#a94442;\" value=\""+eStatus+"\"/>" +
+							"</div>";
 			}else{
 				eTemperature = item.equipmentStatus.temperature;
 				eStatus = item.equipmentStatus.status;
 				velocity = item.equipmentStatus.velocity;
+				
+				tmpStr1 = "<div class=\"col-sm-3\">" +
+							"<input type=\"text\" class=\"form-control projectName\"" +
+							"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"name\" value=\""+eTemperature+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;℃</span>\n" +
+							"</div>";
+				tmpStr2 = "<div class=\"col-sm-3\">" +
+							"<input type=\"text\" class=\"form-control projectName\"" +
+							"id=\"inputLab\" data-bv-field=\"name\" value=\""+eStatus+"\"/>" +
+							"</div>";
 			}
 			
 			var area = item.equipment.area;
@@ -112,7 +133,10 @@ rainet.controlCenter.view = function() {
 				rootdepth = 0 ;
 			}
 			
-			var water = area*rootdepth*soilweight/10000*(soilwater-(humidity*soilwater)/(soilweight*100));
+			var water = (Number(area*rootdepth*soilweight/10000*(soilwater-(humidity*soilwater)/(soilweight*100)))).toFixed(3);
+			if(water<=0 || isNaN(water)){
+				water = 0;
+			}
 			
 			str = str + "<div class=\"col-xs-12 col-md-6\">" +
 					"<div class=\"panel panel-default \">" +
@@ -125,26 +149,20 @@ rainet.controlCenter.view = function() {
 					"<form class=\"form-horizontal\" role=\"form\">" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 					"<label class=\"col-sm-3 control-label\">土壤温度：</label>" +
-					"<div class=\"col-sm-3\">" +
-					"<input type=\"text\" class=\"form-control projectName\"" +
-					"id=\"inputLab\" data-bv-field=\"name\" value=\""+eTemperature+" ℃\"/>" +
-					"</div>" +
+					tmpStr1 +
 					"<label class=\"col-sm-3 control-label\">阀门状态：</label>" +
-					"<div class=\"col-sm-3\">" +
-					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\""+eStatus+"\"/>" +
-					"</div>" +
+					tmpStr2 +
 					"</div>" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 					"<label class=\"col-sm-3 control-label\">预期水量：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\""+(Number(water)).toFixed(3)+" L\"/>" +
+					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"department\" value=\""+water+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;L</span>\n" +
 					"</div>" +
 					"<label class=\"col-sm-3 control-label\">水流速度：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" data-bv-field=\"department\" value=\""+velocity+" L/min\"/>" +
+					"id=\"inputLab\" style='width:40%;float:left;padding-right:5px;' data-bv-field=\"department\" value=\""+velocity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;L/min</span>\n" +
 					"</div>" +
 					"</div>" +
 					sensorStr +

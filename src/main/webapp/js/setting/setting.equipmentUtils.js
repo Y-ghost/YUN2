@@ -58,6 +58,45 @@ rainet.setting.utils={
 				});
 			});
 		},
+		//改变土壤事件
+		selectSoil : function(){
+			$(".soilname").change(function() {
+				var $this = $(this);
+				var id = $this.children('option:selected').val();
+				if(id!=-1){
+					rainet.setting.service.soilInfo.get(id, function(data){
+						$this.parent().parent().parent().find("input[name=soilweight]").val(data.soilweight);
+						$this.parent().parent().parent().find("input[name=soilwater]").val(data.soilwater);
+					});
+				}
+			});
+		},
+		//改变植物事件
+		selectPlants : function(){
+			$(".plantsname").change(function() {
+				var $this = $(this);
+				var id = $this.children('option:selected').val();
+				if(id!=-1){
+					rainet.setting.service.plants.get(id, function(data){
+						$this.parent().parent().parent().find("input[name=rootdepth]").val(data.rootdepth);
+					});
+				}
+			});
+		},
+		//select初始选中事件
+		multiselect : function(){
+			 $(".week").multiselect({
+			        noneSelectedText: "-请选择周期-",
+			        checkAllText: "全选",
+			        uncheckAllText: '全不选',
+			        selectedList:7,
+			        onClick: function(){   
+			            if(this.checked){   
+			                alert("I was just checked!");   
+			            }   
+			        }  
+			   });
+		},
 		//自定义植物信息
 		addPlants : function($plantsInfo,$growthCycleHeader,$growthCycle){
 			$(".plantsLink").off('click').on('click', function(e){
@@ -338,7 +377,7 @@ rainet.setting.utils={
 					bv.updateMessage($field, 'notEmpty');
 					return ;
 				}
-				var param = {soiltype : value};
+				var param = {soilType : value};
 				rainet.setting.service.soilInfo.validName(param, function(data){
 					if (data) {
 						// 存在，更新错误信息的提示
@@ -656,22 +695,6 @@ rainet.setting.utils={
 						}
 					}
 					// 验证植物名称是否存在
-				}).on('blur.rainet', '.plantsname', function(){
-					var bv = $form.data('bootstrapValidator');
-					$field = bv.getFieldElements('plantsname');
-					var value = $field.val();
-					if ($.trim(value) === '') {
-						bv.updateMessage($field, 'notEmpty');
-						return ;
-					}
-					var param = {plantsname : value};
-					rainet.setting.service.plants.validName(param, function(data){
-						if (data) {
-							// 存在，更新错误信息的提示
-							bv.updateMessage($field, 'notEmpty', '植物名称已存在');
-							bv.updateStatus($field, 'INVALID');
-						}
-					});
 				});
 			});
 			

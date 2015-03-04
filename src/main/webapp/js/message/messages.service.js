@@ -19,6 +19,12 @@ rainet.message.url = {
 		systemLog : {
 			url : rainet.settings.baseUrl + 'message/'
 		},
+		plants : {
+			url : rainet.settings.baseUrl + 'plants/'
+		},
+		soil : {
+			url : rainet.settings.baseUrl + 'soil/'
+		},
 		user : {
 			url : rainet.settings.baseUrl + 'User/'
 		}
@@ -259,6 +265,131 @@ rainet.message.service = {
 							return config.handleError(result);
 						}
 						return true;
+					},
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			
+		},
+		
+		
+		plants : {
+			get: function(id, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.plants.url + id,
+					$busyEle : $('body'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.plants.url+"selectPlantsInfo",
+					data : param,
+					$busyEle : $('body'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			update: function(project, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.plants.url,
+					$busyEle : $('body'),
+					method : 'PUT',
+					data : JSON.stringify(project),
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			del: function(id, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.plants.url + id,
+					$busyEle : $('body'),
+					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			validName: function(data, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.plants.url + 'validName',
+					method : 'GET',
+					data : {
+						plantsname : data.name,
+						plantsId : data.id
+					},
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			
+			
+		},
+		
+		
+		soil : {
+			get: function(id, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.soil.url + id,
+					$busyEle : $('body'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			list : function(param, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.soil.url,
+					data : param,
+					$busyEle : $('body'),
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			update: function(project, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.soil.url,
+					$busyEle : $('body'),
+					method : 'PUT',
+					data : JSON.stringify(project),
+					contentType : 'application/json; charset=utf-8',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			
+			del: function(id, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.soil.url + id,
+					$busyEle : $('body'),
+					method : 'DELETE',
+					success : function(data){
+						callback(data);
+					}
+				});
+			},
+			validName: function(data, callback){
+				rainet.ajax.execute({
+					url : rainet.message.url.soil.url + 'validName',
+					method : 'GET',
+					data : {
+						soilType : data.name,
+						id : data.id
 					},
 					success : function(data){
 						callback(data);

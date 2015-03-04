@@ -245,6 +245,9 @@
 	 	<if test="loginName != null and loginName != ''">
 		  	LoginName = #{loginName}
 		</if>
+	 	<if test="userId != 1">
+		  	and id = #{userId}
+		</if>
 	 </where>
 	 
 	 order by 

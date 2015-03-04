@@ -135,6 +135,9 @@
 	 	<if test="pId != null and pId != ''">
 		  	p.id = #{pId}
 		</if>
+		<if test="userId != 1">
+		  	and Createuser = #{userId}
+		</if>
 	 </where>
 	 
 	 order by 
@@ -526,12 +529,17 @@
   <!-- Select equipment by some parameters -->
   <select id="selectEqtForList" parameterType="map" resultMap="BaseResultMap">
 	
-	 select e.* from Equipment e
+	 select e.* from Equipment e left join Controlhost c on c.id = e.ControlHostId
 	 
-	 <if test="projectId !=null and projectId != ''">
-    		left join Controlhost c on c.id = ControlHostId
-    		 where c.ProjectId = #{projectId}
-     </if>  
+     <where>
+	 	<if test="projectId !=null and projectId != 0">
+		  	c.ProjectId = #{projectId}
+		</if>
+		<if test="userId != 1">
+		  	and e.Createuser = #{userId}
+		</if>
+	 </where>
+	 
 	 order by 
 	 <choose>
 	 	<when test="sortField != null and sortField != ''">
