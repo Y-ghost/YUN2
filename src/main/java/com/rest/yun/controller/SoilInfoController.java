@@ -99,6 +99,14 @@ public class SoilInfoController {
 		SoilInfo soil = soilInfoService.selectSoilById(id);
 		return new ResponseWrapper(soil);
 	}
+	/**
+	 * @Title:       delSoil
+	 * @author:      杨贵松
+	 * @time         2015年3月2日 下午8:50:16
+	 * @Description: 删除土壤信息
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
 	@Login
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
 	@ResponseBody

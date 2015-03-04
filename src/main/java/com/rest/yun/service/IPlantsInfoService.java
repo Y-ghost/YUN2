@@ -16,4 +16,6 @@ public interface IPlantsInfoService {
 
 	boolean validPlantsName(String plantsname, int plantsId);
 
+	PlantsExt selectPlantsById(int id);
+
 }

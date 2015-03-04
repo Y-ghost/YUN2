@@ -157,7 +157,7 @@ rainet.controlCenter.view = function() {
 					"<label class=\"col-sm-3 control-label\">预期水量：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control department\"" +
-					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"department\" value=\""+water+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;L</span>\n" +
+					"id=\"inputLab\" style='width:75%;float:left;padding-right:5px;' data-bv-field=\"department\" value=\""+water+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;L</span>\n" +
 					"</div>" +
 					"<label class=\"col-sm-3 control-label\">水流速度：</label>" +
 					"<div class=\"col-sm-3\">" +

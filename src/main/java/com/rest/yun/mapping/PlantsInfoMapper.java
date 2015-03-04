@@ -11,8 +11,6 @@ public interface PlantsInfoMapper {
 
     int insert(PlantsInfo record);
 
-    PlantsInfo selectByPrimaryKey(Integer id);
-
     int updateByPrimaryKeySelective(PlantsInfo record);
 
     int updateByPrimaryKey(PlantsInfo record);
@@ -46,4 +44,14 @@ public interface PlantsInfoMapper {
 	 * @throws
 	 */
 	boolean validPlantsName(@Param("plantsname") String plantsname, @Param("plantsId") int plantsId);
+
+	/**
+	 * @Title:       selectPlantsById
+	 * @author:      杨贵松
+	 * @time         2015年3月2日 下午8:52:46
+	 * @Description: 查询植物详情
+	 * @return       PlantsInfo
+	 * @throws
+	 */
+	PlantsInfo selectPlantsById(int id);
 }
