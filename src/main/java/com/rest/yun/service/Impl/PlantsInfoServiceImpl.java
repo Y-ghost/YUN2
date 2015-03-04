@@ -110,4 +110,18 @@ public class PlantsInfoServiceImpl implements IPlantsInfoService {
 	public boolean validPlantsName(String plantsname, int plantsId) {
 		return plantsInfoMapper.validPlantsName(plantsname,plantsId);
 	}
+
+	/**
+	 * @Title:       selectPlantsById
+	 * @author:      杨贵松
+	 * @time         2015年3月2日 下午8:52:14
+	 * @Description: 查询植物详情
+	 * @throws
+	 */
+	@Override
+	public PlantsExt selectPlantsById(int id) {
+		PlantsInfo plants = plantsInfoMapper.selectPlantsById(id);
+//		List<PlantsExt> expList = plantsExpMapper.selectByPrimaryKey(id);
+		return null;
+	}
 }

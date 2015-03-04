@@ -19,8 +19,8 @@
     <include refid="Base_Column_List" />
     from PlantsInfo
   </select>
-  
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!-- 根据id查询植物详情 -->
+  <select id="selectPlantsById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from PlantsInfo

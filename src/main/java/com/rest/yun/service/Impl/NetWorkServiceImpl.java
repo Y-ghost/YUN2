@@ -233,7 +233,6 @@ public class NetWorkServiceImpl implements NetWorkService{
 			}
 		} catch (Exception e) {
 			log.error("服务器保存接收的数据到DataTemp表中异常!"+e);
-			e.printStackTrace();
 		}
 	}
 	

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -71,5 +72,20 @@ public class PlantsController {
 	public ResponseWrapper validName(@RequestParam String plantsname, @RequestParam(required = false, defaultValue = "0") int plantsId) {
 		boolean result = plantsInfoService.validPlantsName(CommonUtiles.fixedChinaCode(plantsname), plantsId);
 		return new ResponseWrapper(result);
+	}
+	/**
+	 * @Title:       getPlants
+	 * @author:      杨贵松
+	 * @time         2015年3月2日 下午8:51:10
+	 * @Description: 查询植物详细信息
+	 * @return       ResponseWrapper
+	 * @throws
+	 */
+	@Login
+	@RequestMapping(value = "{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseWrapper getPlants(@PathVariable int id) {
+		PlantsExt plants = plantsInfoService.selectPlantsById(id);
+		return new ResponseWrapper(plants);
 	}
 }
