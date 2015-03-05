@@ -115,3 +115,20 @@
 	text-align: center;
 	margin-top: 10px;
 }
+
+/*-----End Forget Password*/
+
+/*Start Index*/
+.menu ul li {
+	margin-top : 20px;
+	padding: 0 10px;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	background-color: #fafafa;
+	font-size: 16px;
+}
+.menu .fa-angle-right {
+	line-height: 40px;
+}
