@@ -17,8 +17,8 @@
 	<div class="container v-content" id="v-content">
 	   <div class="menu">
 	   	<ul>
-			<li id="projects"><a>项目信息</a><i class="pull-right fa fa-angle-right"></i></li>
-			<li id="nodes"><a>节点信息</a><i class="pull-right fa fa-angle-right"></i></li>
+			<li id="projects"><a href="${requestScope.basePath}indexs/messages?type=project">项目信息</a><i class="pull-right fa fa-angle-right"></i></li>
+			<li id="nodes"><a href="${requestScope.basePath}indexs/messages?type=node">节点信息</a><i class="pull-right fa fa-angle-right"></i></li>
 		</ul>
 	   </div>
 	</div>
