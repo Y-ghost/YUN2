@@ -3,7 +3,6 @@
 
 var rainet = rainet || {};
 rainet.login = rainet.login || {};
-rainet.login.controller = rainet.login.controller || {};
 
 rainet.login.view = function() {
 	
@@ -38,6 +37,7 @@ rainet.login.view = function() {
 	};
 	
 	var init = function(){
+		rainet.mobile.setBodyHeight();
 		_bindEvent();
 	};
 

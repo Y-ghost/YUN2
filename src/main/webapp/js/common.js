@@ -64,6 +64,9 @@ rainet.utils.notification = {
 	},
 	wapError : function(text) {
 		$('#errorMessage').text(text);
+	},
+	wapClearError : function() {
+		$('#errorMessage').text('');
 	}
 };
 
@@ -173,3 +176,10 @@ rainet.event = {
 			}
 		}
 };
+
+rainet.mobile = {
+		setBodyHeight : function(){
+			var scrollHeight = $('.v-header').height()+$('.v-bottom').height();
+			$('#v-content').height( $(window).height()-scrollHeight );
+		}
+}

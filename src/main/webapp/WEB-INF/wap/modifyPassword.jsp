@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-<title>Rainet云灌溉-把灌溉装进口袋</title>
+<title>找回密码</title>
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/font-awesome.min.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/validation/css/bootstrapValidator.min.css" />
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="${requestScope.basePath}wap/css/yun.css" />
 </head>
 <body>
-	<div class="container-fluid v-header">
+<div class="container-fluid v-header">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed">
 				<span class="sr-only">Toggle navigation</span> 
@@ -33,43 +33,60 @@
 			</a>
 		</div>
 	</div>
-	<div class="container v-content" id="v-content" >
-		<form id="form" class="login-form" role="form" onsubmit="return false;">
-			<div class="text-center"><h2 style="margin-bottom:30px;"></h2></div>
-			<div class="form-group input-group-container">
-				<div class="input-group input-group-lg">
-					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
-					<input type="text" class="form-control" placeholder="用户名" name="loginname" id="loginname">
+	<div class="container v-content" id="v-content">
+		<div id="passport-title">
+			<div class="wrap" style="margin-bottom:30px;">
+			</div>
+		</div>
+		<div id="passport-finder" class="wrap">
+			<div class="passport-progress">
+				<ul>
+					<li>验证身份</li>
+					<li class="current">设置新密码<em></em></li>
+					<li>完成<em></em></li>
+				</ul>
+			</div>
+		</div>
+		<div>
+			<form id="form" role="form"
+				onsubmit="return false;">
+				<div class="form-group input-group-container">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
+							<input type="text" class="form-control" value="${name}" id="username" readonly="readonly">
+					</div>
 				</div>
-			</div>
-			<div>
-				<div class="input-group input-group-lg">
-					<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
-					<input type="password" class="form-control" placeholder="密码" name="password" id="password">
+				<div class="form-group input-group-container">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon"><span
+							class="glyphicon glyphicon-lock"></span></span> 
+							<input type="password" class="form-control" placeholder="新密码" name="newPassword" id="newPassword">
+					</div>
 				</div>
-			</div>
-			<div class="h40">
-				<span id="errorMessage" class="error_alert"></span>
-			</div>
-			<div>
-				<button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">登录</button>
-			</div>
-		</form>
-			<div class="login-oper">
-				<span class="fl">
-					<a href="${requestScope.basePath}indexs/findAccount">忘记密码?</a>
-				</span>
-				<span class="fr">
-					没有账号？<a href="${requestScope.basePath}indexs/register">立即注册</a>
-				</span>
-			</div>
+				<div class="form-group input-group-container">
+					<div class="input-group input-group-lg">
+						<span class="input-group-addon"><span
+							class="glyphicon glyphicon-lock"></span></span> 
+							<input type="password" class="form-control" placeholder="确认密码" name="rePassword" id="rePassword">
+					</div>
+				</div>
+				<div class="h40">
+					<span id="errorMessage" class="error_alert"></span>
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">下一步</button>
+				</div>
+			</form>
+					<input type="hidden" id="userId" value="${id}"/>
+		</div>
 	</div>
 <input type="hidden" id="basePath" value="${requestScope.basePath}"/>
+<input type="hidden" id="pageType" value="modifyPassword"/>
 <script src="${requestScope.basePath}wap/js/lib/zepto.js"></script>
 <script src="${requestScope.basePath}wap/js/lib/touch.js"></script>
 <script src="${requestScope.basePath}js/settings.js"></script>
 <script src="${requestScope.basePath}js/common.js"></script>
 <script src="${requestScope.basePath}js/ajax.js"></script>
-<script src="${requestScope.basePath}wap/js/login.js"></script>
+<script src="${requestScope.basePath}wap/js/findAccount.js"></script>
 </body>
 </html>

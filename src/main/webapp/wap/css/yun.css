@@ -1,3 +1,10 @@
+/* Common */
+.yun-title {
+	height: 60px;
+	text-align: center;
+	font: 18px/60px microsoft yahei;
+}
+
 /* Start login */
 .login-oper {
 	padding: 10px 15px
@@ -21,3 +28,90 @@
 	line-height: 40px;
 }
 /* ---End login---- */
+
+/* Forget Password*/
+.passport-progress {
+}
+
+.passport-progress {
+	margin: 0 auto;
+	font-family: 'Microsoft YaHei';
+	margin-bottom: 20px;
+}
+
+.passport-progress ul li.current {
+	background-color: #1b926c;
+	color: #fff;
+}
+
+.passport-progress ul li {
+	width: 33%;
+	background-color: #e4e4e4;
+	text-align: center;
+	font-size: 14px;
+	line-height: 31px;
+	float: left;
+	position: relative;
+}
+
+.passport-progress ul {
+	border-radius: 5px;
+	overflow: hidden;
+}
+.passport-progress ul li em {
+	position: absolute;
+	left: -16px;
+	top: 0;
+	width: 32px;
+	height: 31px;
+	background: url(../../images/arrow_progress.png)
+		no-repeat;
+}
+.code {
+	float: left;
+	margin-right: 10px;
+	text-align: center;
+	height: 40px;
+	line-height: 30px;
+	width: 140px;
+	font-size:20px;
+	background-color: #e4e4e4;
+	font-family: Arial;
+	font-style: italic;
+	color: Red;
+	letter-spacing: 4px;
+	font-weight: 700;
+}
+.codeBtn {
+	float: left;
+	color: #1b926c;
+	font-weight: 700;
+	text-align: center;
+	height: 40px;
+	padding-top: 15px;
+	width: 140px;
+}
+.ope-tips {
+	color: #21292c;
+	text-align: center;
+	font-size: 24px;
+	font-weight: 700;
+}
+.ope-tips-success {
+	vertical-align: middle;
+	line-height: 1.2;
+}
+.ope-tips-success i {
+	background: url(../../images/ico_success.png) no-repeat 0 0;
+	background-size: 18px 18px;
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	margin-right: 8px;
+}
+.hepl-b-tips {
+	color: #5a5f7d;
+	font-size: 14px;
+	text-align: center;
+	margin-top: 10px;
+}
