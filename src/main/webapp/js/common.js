@@ -163,14 +163,14 @@ rainet.event = {
 				event = event ? event : 'tap';
 				$target.each(function(){
 					$(this).off(event).on(event, function(){
-						callback();
+						callback(this);
 					}); 
 				});
 				
 			} else {
 				$target.each(function(){
 					$(this).off('click').on('click', function(){
-						callback();
+						callback(this);
 					});
 				});
 			}

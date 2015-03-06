@@ -18,62 +18,59 @@
 	<!-- Container body -->
 		<div>
 		    <div class="menu" id="wrapper">
+		    	<div id="scroller">
+		    		<div class="pullDown">
+						<span class="pullDownIcon"></span>
+						<span class="pullDownLabel">下拉刷新...</span>
+					</div>
 					<ul id="list">
-			<li>Pretty row 1</li>
-			<li>Pretty row 2</li>
-			<li>Pretty row 3</li>
-			<li>Pretty row 4</li>
-			<li>Pretty row 5</li>
-			<li>Pretty row 6</li>
-			<li>Pretty row 7</li>
-			<li>Pretty row 8</li>
-			<li>Pretty row 9</li>
-			<li>Pretty row 10</li>
-			<li>Pretty row 11</li>
-			<li>Pretty row 12</li>
-			<li>Pretty row 13</li>
-			<li>Pretty row 14</li>
-			<li>Pretty row 15</li>
-			<li>Pretty row 16</li>
-			<li>Pretty row 17</li>
-			<li>Pretty row 18</li>
-			<li>Pretty row 19</li>
-			<li>Pretty row 20</li>
-			<li>Pretty row 21</li>
-			<li>Pretty row 22</li>
-			<li>Pretty row 23</li>
-			<li>Pretty row 24</li>
-			<li>Pretty row 25</li>
-			<li>Pretty row 26</li>
-			<li>Pretty row 27</li>
-			<li>Pretty row 28</li>
-			<li>Pretty row 29</li>
-			<li>Pretty row 30</li>
-			<li>Pretty row 31</li>
-			<li>Pretty row 32</li>
-			<li>Pretty row 33</li>
-			<li>Pretty row 34</li>
-			<li>Pretty row 35</li>
-			<li>Pretty row 36</li>
-			<li>Pretty row 37</li>
-			<li>Pretty row 38</li>
-			<li>Pretty row 39</li>
-			<li>Pretty row 40</li>
-				</ul>
-				<div id="pullUp">
-					<span class="pullUpIcon"></span><span class="pullUpLabel">Pull up to refresh...</span>
+						<li>
+							<a class="detail-item">Pretty row 1</a><i class="pull-right fa fa-angle-down"></i>
+							<div class="detail" style="display:none;">
+								<div>
+								<label>项目单位:</label><div>河南锐利特计算机科技有限公司asdfasdfasdfas
+								</div>
+							</div>
+							<div>
+								<label>项目地址:</label><p>河南锐利特计算机科技有限公司</p>
+							</div>
+							<div>
+								<label>创建时间:</label><p>河南锐利特计算机科技有限公司</p>
+							</div>
+							</div>
+						</li>
+						
+						<li>
+							<a class="detail-item">Pretty row 2</a><i class="pull-right fa fa-angle-down"></i>
+							<div class="detail" style="display:none;">
+								<div>
+								<label>项目单位:</label><div>河南锐利特计算机科技有限公司asdfasdfasdfas
+								</div>
+							</div>
+							<div>
+								<label>项目地址:</label><p>河南锐利特计算机科技有限公司</p>
+							</div>
+							<div>
+								<label>创建时间:</label><p>河南锐利特计算机科技有限公司</p>
+							</div>
+							</div>
+						</li>
+					</ul>
+				<div class="pullUp">
+				</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<jsp:include page="common/footer.jsp" />
+	<script src="${requestScope.basePath}wap/js/lib/iscroll-probe.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.service.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
 	<script src="${requestScope.basePath}wap/js/message/messages.project.js"></script>
 	<script src="${requestScope.basePath}wap/js/message/messages.eqt.js"></script>
 	<script src="${requestScope.basePath}wap/js/message/messages.js"></script>
-	
+
 </body>
 </html>
