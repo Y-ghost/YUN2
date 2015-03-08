@@ -101,7 +101,7 @@
 <script src="${requestScope.basePath}wap/js/lib/touch.js"></script>
 <script src="${requestScope.basePath}js/settings.js"></script>
 <script src="${requestScope.basePath}js/common.js"></script>
-<script src="${requestScope.basePath}js/ajax.js"></script>
+<script src="${requestScope.basePath}wap/js/ajax.js"></script>
 <script src="${requestScope.basePath}wap/js/findAccount.js"></script>
 </body>
 </html>

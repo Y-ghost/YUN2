@@ -79,9 +79,13 @@ rainet.utils.busy = function(){
 			message:'正在努力加载...'
 	};
 	
+	var mobileStyle = '<div id="busy_layer" class="busy-layer">'+
+       '<div class="busy-text"><img src="'+rainet.settings.baseUrl+'images/loading.gif" alt="正在努力加载中。。。" style="width:100px; height:100px"/></div>'+
+       '</div>';
+	
 	var $template = undefined;
 	
-	var loading = function(text, $ele) {
+	var loading = function(text, $ele, mobile) {
 		if (!$ele) {
 			$ele = $('body');
 		}
@@ -89,8 +93,12 @@ rainet.utils.busy = function(){
 		if (position === 'static' || position === '' || typeof position === 'undefined'){
 			$ele.css('position','relative');
 		}
-		$template = $(defaults.template);
-		$('label', $template).text(text || defaults.message);
+		if (mobile) {
+			$template = $(mobileStyle);
+		} else {
+			$template = $(defaults.template);
+			$('label', $template).text(text || defaults.message);
+		}
 		$ele.append($template);
 	}
 	
@@ -180,6 +188,6 @@ rainet.event = {
 rainet.mobile = {
 		setBodyHeight : function(){
 			var scrollHeight = $('.v-header').height()+$('.v-bottom').height();
-			$('#v-content').height( $(window).height()-scrollHeight );
+			$('#v-content').height( $(window).height()-scrollHeight -10);
 		}
 }

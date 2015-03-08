@@ -8,7 +8,7 @@ rainet.ajax = {
 			$.ajax({
 				  beforeSend : function(){
 					  rainet.utils.busy.remove();
-					  rainet.utils.busy.loading(options.busyMsg, options.$busyEle);
+					  rainet.utils.busy.loading(options.busyMsg, options.$busyEle, 'mobile');
 					  rainet.utils.notification.wapClearError();
 					  if (options.beforeSend) {
 						  options.beforeSend();

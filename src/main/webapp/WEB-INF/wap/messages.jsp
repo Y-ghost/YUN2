@@ -1,4 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	String module = request.getParameter("type");
+%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
@@ -14,57 +17,27 @@
 </head>
 <jsp:include page="common/header.jsp" />
 <body>
-	<div class="container-fluid v-content" id="v-content" style="padding:0;">
+	<div class="container-fluid v-content" id="v-content" style="padding:0;position: relative;">
 	<!-- Container body -->
 		<div>
 		    <div class="menu" id="wrapper">
 		    	<div id="scroller">
-		    		<div class="pullDown">
-						<span class="pullDownIcon"></span>
-						<span class="pullDownLabel">下拉刷新...</span>
+		    		<div class="pullDown" id="pullDown">
+						<span class="pullDownIcon">&nbsp;</span>
+						<span class="pullDownLabel">下拉刷新</span>
 					</div>
 					<ul id="list">
-						<li>
-							<a class="detail-item">Pretty row 1</a><i class="pull-right fa fa-angle-down"></i>
-							<div class="detail" style="display:none;">
-								<div>
-								<label>项目单位:</label><div>河南锐利特计算机科技有限公司asdfasdfasdfas
-								</div>
-							</div>
-							<div>
-								<label>项目地址:</label><p>河南锐利特计算机科技有限公司</p>
-							</div>
-							<div>
-								<label>创建时间:</label><p>河南锐利特计算机科技有限公司</p>
-							</div>
-							</div>
-						</li>
-						
-						<li>
-							<a class="detail-item">Pretty row 2</a><i class="pull-right fa fa-angle-down"></i>
-							<div class="detail" style="display:none;">
-								<div>
-								<label>项目单位:</label><div>河南锐利特计算机科技有限公司asdfasdfasdfas
-								</div>
-							</div>
-							<div>
-								<label>项目地址:</label><p>河南锐利特计算机科技有限公司</p>
-							</div>
-							<div>
-								<label>创建时间:</label><p>河南锐利特计算机科技有限公司</p>
-							</div>
-							</div>
-						</li>
 					</ul>
-				<div class="pullUp">
+				<div class="" id="pullUp">
+					<span class="pullUpIcon"></span>
+						<span class="pullUpLabel"></span>
 				</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	<input type="hidden" id="module" value="<%=module%>"/>
 	<jsp:include page="common/footer.jsp" />
-	<script src="${requestScope.basePath}wap/js/lib/iscroll-probe.js"></script>
 	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.service.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
