@@ -41,32 +41,46 @@ rainet.message.view = function(){
 			 $ul.data('page', param.pageNow);
 			 $ul.empty();
 		 }
-		// Get list
-  		rainet.message.service[module].list(param, function(result){
-  			var datas = result.result;
-  			$ul.data('page', result.pageNum);
-  			if (refresh) {
-  				 $ul.empty();
-  			}
-  			if (!datas.length) {
-  				$('#pullUp').css('text-align', 'center');
-  				$('.pullUpLabel', '#pullUp').text('亲，已加载完了！');
-  				setTimeout(function(){
-  					$('.pullUpLabel', '#pullUp').text('');
-  				}, 800);
-  				$('#pullUp').removeClass('pullUp');
-  				return ;
-  			}
-  			var lis = rainet.message.controller[module].setData(datas);
-  			$ul.append(lis);
-  			_bindEvent();
-  		});
+		 if (rainet.message.controller[module].updateParam) {
+			 rainet.message.controller[module].updateParam(param);
+		 }
+		 
+		 if (rainet.message.controller[module].loadData) {
+			 // 自定义 加载数据
+			 rainet.message.controller[module].loadData(param, $ul, _bindEvent);
+		 } else {
+			 	//默认 加载数据方式
+		  		rainet.message.service[module].list(param, function(result){
+		  			var datas = result.result;
+		  			$ul.data('page', result.pageNum);
+		  			if (refresh) {
+		  				 $ul.empty();
+		  			}
+		  			if (!datas.length) {
+		  				$('#pullUp').css('text-align', 'center');
+		  				$('.pullUpLabel', '#pullUp').text('亲，已加载完了！');
+		  				setTimeout(function(){
+		  					$('.pullUpLabel', '#pullUp').text('');
+		  				}, 800);
+		  				$('#pullUp').removeClass('pullUp');
+		  				return ;
+		  			}
+		  			var lis = rainet.message.controller[module].setData(datas);
+		  			$ul.append(lis);
+		  			_bindEvent();
+		  		});
+		 }
 	}
 	
 	var module_init = function(){
 		var module = $('#module').val();
 		if (!rainet.message.controller[module]) {
 			module = 'project';
+		}
+		if (!rainet.message.controller[module].iscroll) {
+			$('.pullDownLabel', '#pullDown').text('');
+			$('#pullDown').removeClass('pullDown');
+			$('#wrapper').css('overflow','visible');
 		}
 		initScroll(module);
 		_loadData(module);
@@ -159,9 +173,10 @@ rainet.message.view = function(){
 		       setTimeout(function () { $('#wrapper').css({left:0}); }, 100);  
 		     
 		};
-		
-		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-		load_content();
+		if (rainet.message.controller[module].iscroll) {
+			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+			load_content();
+		}
 	
 	};
 	

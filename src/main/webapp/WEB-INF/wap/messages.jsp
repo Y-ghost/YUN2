@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String module = request.getParameter("type");
+	String pId = request.getParameter("pId");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,23 +23,38 @@
 		<div>
 		    <div class="menu" id="wrapper">
 		    	<div id="scroller">
-		    		<div class="pullDown" id="pullDown">
-						<span class="pullDownIcon">&nbsp;</span>
-						<span class="pullDownLabel">下拉刷新</span>
-					</div>
 					<ul id="list">
+		     			<li>
+						<div class="detail" >
+							<div class="fl" style="width:80%;">
+								<label class="detail-item" style="font-size:16px;">水吧 </label><br/>
+								<label>状态:</label><span>开启</span>
+		     				</div>
+		     				<div class="fr" id="">
+<!-- 		     					<span class="switch on" style="line-height:40px;">NO</span> -->
+		     					<i class="fa fa-toggle-on fa-3x"></i>
+		     				</div>
+		     			</div>
+		     			</li>
+		     			<li>
+		     			<div class="detail" id="">
+							<div class="fl" style="width:80%;" >
+								<label class="detail-item" style="line-height:40px;font-size:16px;">施肥罐 </label><br/>
+		     				</div>
+		     				<div class="fr">
+<!-- 		     					<span class="switch off" style="line-height:40px;">Off</span> -->
+		     					<i class="fa fa-toggle-off fa-3x"></i>
+		     				</div>
+		     			</div>
+		     			</li>
 					</ul>
-				<div class="" id="pullUp">
-					<span class="pullUpIcon"></span>
-						<span class="pullUpLabel"></span>
-				</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<input type="hidden" id="module" value="<%=module%>"/>
+	<input type="hidden" id="pId" value="<%=pId%>"/>
 	<jsp:include page="common/footer.jsp" />
-	<script src="${requestScope.basePath}js/jquery.cityInfo.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.service.js"></script>
 	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
 	<script src="${requestScope.basePath}wap/js/message/messages.project.js"></script>

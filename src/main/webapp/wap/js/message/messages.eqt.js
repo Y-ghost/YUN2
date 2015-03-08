@@ -10,17 +10,60 @@ rainet.message.controller.node = {
 	
   setData : function(datas) {
 	  var result = '';
-	  $.each(datas, function(i, data){
-			var li = '<li><a class="detail-item">'+data.name+'</a><i class="pull-right fa fa-angle-down"></i><div class="detail" style="display:none;">'+
-			'<div><label>节点编号:</label><div class="detail-item-c">'+data.code+'</div></div>'+
-		     '<div><label>流量参数:</label><div class="detail-item-c">'+data.fowparameter+'</div></div>'+
-		     '<div><label>所属项目名称:</label><div class="detail-item-c">'+data.project.name+'</div></div>'+
-		     '<div><label>创建时间:</label><div class="detail-item-c">'+rainet.message.util.formateDate(data.createtime)+'</div></div>'+
-		     '<div><label>修改时间:</label><div class="detail-item-c">'+rainet.message.util.formateDate(data.modifytime)+'</div></div>'+
-		     '</div></li>';
+	  $.each(datas, function(i, item){
+		  var eTemperature = "异常";
+		  var eStatus = "异常";
+		  if (item.equipmentStatus) {
+			  eTemperature = item.equipmentStatus.temperature;
+			  eStatus = item.equipmentStatus.status;
+		  }
+			var li = '<li style="padding-top:10px;padding-bottom:10px;">'+
+				'<div class="detail" >'+
+			'<div class="fl" style="width:80%;">'+
+				'<label class="detail-item" style="font-size:16px;">'+item.name+'</label><br/>'+
+				'<label>土壤湿度：</label><span>'+eTemperature+'</span>'+
+				'<label>&nbsp;&nbsp;湿度值一：</label><span>80%</span><br/>'+
+				'<label>阀门状态：</label><span>'+eStatus+'</span>'+
+				'</div>'+
+				'<div class="fr switch-js" style="height:75px;" id='+item.id+'>'+
+					'<i class="fa fa-toggle-on  fa-3x" style="line-height:75px;"></i>'+
+				'</div>'+
+			'</div>'+
+			'</li>';
 			result +=li;
 	 });
 	 return result;
+  },
+  
+  updateParam : function(param) {
+	  var pId = $('#pId').val();
+	  if (pId.trim()) {
+		  param.pId = pId;
+	  }
+  },
+  
+  loadData : function(param, $ul, callback) {
+	  var data = {param : param};
+	  data.handleError = function(result) {
+		  $('#pullDown').css('text-align', 'center');
+			$('.pullDownLabel', '#pullDown').text(result.message);
+			$('#pullDown').removeClass('pullDown');
+			$('.pullDownLabel', '#pullDown').addClass('error_alert');
+	  };
+	  var that = this;
+	  rainet.message.service.node.listByPid(data, function(result){
+		  $('#pullDown').hide();
+		  var lis = that.setData(result);
+		  $ul.append(lis);
+		  if (callback) {
+			  callback();
+		  };
+		  rainet.event.click($('.switch-js', '#list'), function(self){
+				alert($(self).attr('id'));
+			});
+		  
+	  });
+	  
   }
 };
 

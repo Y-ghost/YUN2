@@ -200,6 +200,23 @@ rainet.message.service = {
 				});
 			},
 			
+			listByPid : function(data, callback) {
+				rainet.ajax.execute({
+					url :  rainet.message.url.node.url + "selectEquipmentExt/",
+					customHandleError : function(result){
+						if (data.handleError){
+							return data.handleError(result);
+						}
+						return true;
+					},
+					data : data.param,
+					$busyEle : $('body'),
+					success : function(data) {
+						callback(data);
+					}
+				});
+			},
+			
 			update: function(config, callback){
 				rainet.ajax.execute({
 					url : rainet.message.url.node.url,

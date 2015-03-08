@@ -24,7 +24,7 @@
 }
 .error_alert {
 	font-size: 14px;
-	color: red;
+	color: red !important;
 	line-height: 40px;
 }
 /* ---End login---- */
@@ -127,13 +127,16 @@
 	/*height: 40px;*/
 	line-height: 40px;
 	border-bottom: 1px solid #ccc;
-	border-top: 1px solid #fff;
 	font-size: 16px;
 }
 
 .menu ul li a{
 	width:90%;
 	display: inline-block;
+}
+
+.menu ul li .project-item {
+	width:85%;
 }
 
 #wrapper {
@@ -181,7 +184,7 @@
 	line-height: 40px;
 	border-bottom: 1px solid #ccc;
 	border-top: 1px solid #fff;
-	background-color: #fafafa;
+	/*background-color: #fafafa;*/
 	font-size: 16px;
 }
 .pullDownLabel, .pullUpLabel {color:#999}
@@ -208,11 +211,10 @@ to {-webkit-transform:rotate(360deg) translateZ(0)}
 #list .detail {
 	font-size: 12px;
 	line-height : 20px;
-	border-top: 1px solid #ccc;
+	overflow: hidden;
 }
 #list .detail div{
 	margin-bottom : 5px;
-	margin-left:10px;
 }
 
 #list .detail div:first-child{
@@ -221,6 +223,25 @@ to {-webkit-transform:rotate(360deg) translateZ(0)}
 
 #list .detail .detail-item-c{
 	margin-left : 15px;
+}
+.detail .fr {
+	position:relative;
+}
+.fr .fa {
+	color:#28A92A;
+}
+.switch {
+	position: absolute;
+	color: #fff;
+	font-size: 14px;
+}
+.on {
+	left: 2px;
+}
+.off {
+	left: 30px;
+	color: #000;
+	font-size: 12px;
 }
 /*---End Index And Message---*/
 

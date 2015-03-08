@@ -14,15 +14,36 @@
 </head>
 <jsp:include page="common/header.jsp" />
 <body>
-	<div class="container v-content" id="v-content">
-	   <div class="menu">
-	   	<ul>
-			<li id="projects"><a href="${requestScope.basePath}indexs/messages?type=project"><i class="fa fa-tasks"></i> 项目信息</a><i class="pull-right fa fa-angle-right"></i></li>
-			<li id="nodes"><a href="${requestScope.basePath}indexs/messages?type=node"><i class="fa fa-tint"></i> 节点信息</a><i class="pull-right fa fa-angle-right"></i></li>
-		</ul>
-	   </div>
-	</div>
+<!-- 	   <div class="menu"> -->
+<!-- 	   	<ul> -->
+<%-- 			<li id="projects"><a href="${requestScope.basePath}indexs/messages?type=project"><i class="fa fa-tasks"></i> 项目信息</a><i class="pull-right fa fa-angle-right"></i></li> --%>
+<%-- 			<li id="nodes"><a href="${requestScope.basePath}indexs/messages?type=node"><i class="fa fa-tint"></i> 节点信息</a><i class="pull-right fa fa-angle-right"></i></li> --%>
+<!-- 		</ul> -->
+<!-- 	   </div> -->
+<div class="container-fluid v-content" id="v-content" style="padding:0;position: relative;">
+	<!-- Container body -->
+		<div>
+		    <div class="menu" id="wrapper">
+		    	<div id="scroller">
+		    		<div class="pullDown" id="pullDown">
+						<span class="pullDownIcon">&nbsp;</span>
+						<span class="pullDownLabel">下拉刷新</span>
+					</div>
+					<ul id="list">
+					</ul>
+				<div class="" id="pullUp">
+					<span class="pullUpIcon"></span>
+						<span class="pullUpLabel"></span>
+				</div>
+				</div>
+			</div>
+		</div>
+</div>
+	<input type="hidden" id="module" value="project"/>
 	<jsp:include page="common/footer.jsp" />
-	<script src="${requestScope.basePath}wap/js/index.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.service.js"></script>
+	<script src="${requestScope.basePath}js/message/messages.util.js"></script>
+	<script src="${requestScope.basePath}wap/js/message/messages.project.js"></script>
+	<script src="${requestScope.basePath}wap/js/message/messages.js"></script>
 </body>
 </html>
