@@ -208,20 +208,20 @@ to {-webkit-transform:rotate(360deg) translateZ(0)}
 .menu .fa {
 	line-height: 40px;
 }
-#list .detail {
+.ul-data .detail {
 	font-size: 12px;
 	line-height : 20px;
 	overflow: hidden;
 }
-#list .detail div{
+.ul-datat .detail div{
 	margin-bottom : 5px;
 }
 
-#list .detail div:first-child{
+.ul-data .detail div:first-child{
 	margin-top : 5px;
 }
 
-#list .detail .detail-item-c{
+.ul-data .detail .detail-item-c{
 	margin-left : 15px;
 }
 .detail .fr {
@@ -234,14 +234,6 @@ to {-webkit-transform:rotate(360deg) translateZ(0)}
 	position: absolute;
 	color: #fff;
 	font-size: 14px;
-}
-.on {
-	left: 2px;
-}
-.off {
-	left: 30px;
-	color: #000;
-	font-size: 12px;
 }
 /*---End Index And Message---*/
 

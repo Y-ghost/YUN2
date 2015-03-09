@@ -39,6 +39,9 @@
 			</div>
 		</div>
 </div>
+<div class="busy-layer" id="noData" style="display:none;">
+		  <div class="busy-text"><span style="color: #666262;">无数据</span></div>
+	</div>
 	<input type="hidden" id="module" value="project"/>
 	<jsp:include page="common/footer.jsp" />
 	<script src="${requestScope.basePath}js/message/messages.service.js"></script>

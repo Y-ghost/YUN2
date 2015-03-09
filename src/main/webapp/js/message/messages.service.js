@@ -247,6 +247,17 @@ rainet.message.service = {
 				});
 			},
 			
+			openOrClose : function(param, callback) {
+				rainet.ajax.execute({
+					url : rainet.message.url.node.url + "openOrCloseEquipments/",
+					data : param,
+					$busyEle : $('body'),
+					success : function(data) {
+						callback(data);
+					}
+				});
+			}
+			
 			
 		},
 		

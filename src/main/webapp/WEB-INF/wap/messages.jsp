@@ -23,34 +23,46 @@
 		<div>
 		    <div class="menu" id="wrapper">
 		    	<div id="scroller">
-					<ul id="list">
-		     			<li>
-						<div class="detail" >
-							<div class="fl" style="width:80%;">
-								<label class="detail-item" style="font-size:16px;">水吧 </label><br/>
-								<label>状态:</label><span>开启</span>
-		     				</div>
-		     				<div class="fr" id="">
-<!-- 		     					<span class="switch on" style="line-height:40px;">NO</span> -->
-		     					<i class="fa fa-toggle-on fa-3x"></i>
-		     				</div>
-		     			</div>
-		     			</li>
-		     			<li>
-		     			<div class="detail" id="">
-							<div class="fl" style="width:80%;" >
-								<label class="detail-item" style="line-height:40px;font-size:16px;">施肥罐 </label><br/>
-		     				</div>
-		     				<div class="fr">
-<!-- 		     					<span class="switch off" style="line-height:40px;">Off</span> -->
-		     					<i class="fa fa-toggle-off fa-3x"></i>
-		     				</div>
-		     			</div>
-		     			</li>
+		    		<div class="pullDown" id="pullDown">
+						<span class="pullDownIcon">&nbsp;</span>
+						<span class="pullDownLabel">下拉刷新</span>
+					</div>
+<!-- 					<ul class="ul-data"> -->
+<!-- 		     			<li> -->
+<!-- 						<div class="detail" > -->
+<!-- 							<div class="fl" style="width:80%;"> -->
+<!-- 								<label class="detail-item" style="font-size:16px;">水吧 </label><br/> -->
+<!-- 								<label>状态:</label><span>开启</span> -->
+<!-- 		     				</div> -->
+<!-- 		     				<div class="fr" id=""> -->
+<!-- 		     					<i class="fa fa-toggle-on fa-3x"></i> -->
+<!-- 		     				</div> -->
+<!-- 		     			</div> -->
+<!-- 		     			</li> -->
+<!-- 		     			<li> -->
+<!-- 		     			<div class="detail" id=""> -->
+<!-- 							<div class="fl" style="width:80%;" > -->
+<!-- 								<label class="detail-item" style="line-height:40px;font-size:16px;">施肥罐 </label><br/> -->
+<!-- 		     				</div> -->
+<!-- 		     				<div class="fr"> -->
+<!-- 		     					<i class="fa fa-toggle-off fa-3x"></i> -->
+<!-- 		     				</div> -->
+<!-- 		     			</div> -->
+<!-- 		     			</li> -->
+<!-- 					</ul> -->
+					
+					<ul class="ul-data" id="list">
 					</ul>
+					<div class="" id="pullUp">
+					<span class="pullUpIcon"></span>
+						<span class="pullUpLabel"></span>
+				</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="busy-layer" id="noData" style="display:none;">
+		  <div class="busy-text"><span style="color: #666262;">无数据</span></div>
 	</div>
 	<input type="hidden" id="module" value="<%=module%>"/>
 	<input type="hidden" id="pId" value="<%=pId%>"/>

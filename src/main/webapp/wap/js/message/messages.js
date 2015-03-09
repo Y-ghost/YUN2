@@ -57,12 +57,16 @@ rainet.message.view = function(){
 		  				 $ul.empty();
 		  			}
 		  			if (!datas.length) {
-		  				$('#pullUp').css('text-align', 'center');
-		  				$('.pullUpLabel', '#pullUp').text('亲，已加载完了！');
-		  				setTimeout(function(){
-		  					$('.pullUpLabel', '#pullUp').text('');
-		  				}, 800);
-		  				$('#pullUp').removeClass('pullUp');
+		  				if (result.pageNum == 1) {
+		  					$('#noData').show();
+		  				} else {
+		  					$('#pullUp').css('text-align', 'center');
+			  				$('.pullUpLabel', '#pullUp').text('亲，没有数据！');
+			  				setTimeout(function(){
+			  					$('.pullUpLabel', '#pullUp').text('');
+			  				}, 800);
+			  				$('#pullUp').removeClass('pullUp');
+		  				}
 		  				return ;
 		  			}
 		  			var lis = rainet.message.controller[module].setData(datas);
@@ -77,10 +81,10 @@ rainet.message.view = function(){
 		if (!rainet.message.controller[module]) {
 			module = 'project';
 		}
-		if (!rainet.message.controller[module].iscroll) {
-			$('.pullDownLabel', '#pullDown').text('');
-			$('#pullDown').removeClass('pullDown');
-			$('#wrapper').css('overflow','visible');
+		if (rainet.message.controller[module].disabledPullUp) {
+			//$('.pullDownLabel', '#pullUp').text('');
+			$('#pullUp').hide();
+			//$('#wrapper').css('overflow','visible');
 		}
 		initScroll(module);
 		_loadData(module);
@@ -102,7 +106,9 @@ rainet.message.view = function(){
 	   
 	   // 上拉分页--加载更多数据
 	   function pullUpAction () {
-		   _loadData(module);
+		   if (!rainet.message.controller[module].disabledPullUp) {
+			   _loadData(module);
+			}
 		   if(myScroll){
 	          myScroll.refresh();
 	       }
@@ -164,7 +170,7 @@ rainet.message.view = function(){
 		  				pullUpEl.className = 'pullUp loading';
 		  				pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
 		  				// 加载新数据
-		  				pullUpAction();	
+		  				pullUpAction();
 		  			}
 		  		}
 		      });
@@ -173,10 +179,12 @@ rainet.message.view = function(){
 		       setTimeout(function () { $('#wrapper').css({left:0}); }, 100);  
 		     
 		};
-		if (rainet.message.controller[module].iscroll) {
+		/*if (rainet.message.controller[module].iscroll) {
 			document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 			load_content();
-		}
+		}*/
+		document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+		load_content();
 	
 	};
 	
