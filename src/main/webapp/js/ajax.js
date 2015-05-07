@@ -23,6 +23,7 @@ rainet.ajax = {
 				  contentType : options.contentType,
 				  dataType: options.dataType || 'json',
 				  success: function(data){
+					  console.log(JSON.stringify(data));
 					  rainet.utils.busy.remove();
 					  var status = data.code;
 					  if (status != '200') {
@@ -56,13 +57,13 @@ rainet.ajax = {
 			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">登录名/邮箱：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"text\" class=\"form-control\" name=\"loginname\" value='admin' id=\"loginname\"/>\n"+
+    				"<input type=\"text\" class=\"form-control\" name=\"loginname\" value='' id=\"loginname\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			"<div class=\"form-group\">\n"+
     			"<label class=\"col-sm-3 control-label\">密码：</label>\n"+
     			"<div class=\"col-sm-8\">\n"+
-    				"<input type=\"password\"  class=\"form-control\" value='rainet2014' name=\"password\"/>\n"+
+    				"<input type=\"password\"  class=\"form-control\" value='' name=\"password\"/>\n"+
     			"</div>\n"+
   			"</div>\n"+
   			 "<div class=\"dialog-footer\" style=\"margin-top:30px;\">\n"+
@@ -137,6 +138,9 @@ rainet.ajax.controller = {
 			$form.data('bootstrapValidator').disableSubmitButtons(true);
 		},
 		send : function($loginHtml){
+//			alert("登录超时，请重新登录！");
+//			location.href=rainet.settings.baseUrl+"indexs/index";
+			
 			var $form = $loginHtml;
 			//keyCode=13是回车键
 			$("body").keydown(function() {

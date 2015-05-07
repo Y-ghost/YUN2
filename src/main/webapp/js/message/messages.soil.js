@@ -240,7 +240,7 @@ rainet.message.controller.soil = {
   table : {
 		// 项目管理的表头
 		columns : [
-		           	{ "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq},
+		           	{"sTitle": "序号",  "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq},
 		           	{ "sTitle": "土壤名称",  "targets": 1, "render" : rainet.message.util.formateLink},
 		           	{ "sTitle": "干容重(g/cm<sup>3</sup>)", "targets": 2 },
 		           	{ "sTitle": "饱和持水量(%)",  "targets": 3 },

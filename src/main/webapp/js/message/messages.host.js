@@ -140,7 +140,7 @@ rainet.message.controller.host = {
 	table : {
 	  parent : this,
 	  columns : [
-		           	{ "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
+		           	{ "sTitle": "序号", "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
 		           	{ "sTitle": "主机编号",  "targets": 1, "render" : rainet.message.util.formateLink },
 		           	{ "sTitle": "所属项目名称", "targets": 2 },
 		           	{ "sTitle": "创建时间",  "targets": 3, "render" : rainet.message.util.formateDate },

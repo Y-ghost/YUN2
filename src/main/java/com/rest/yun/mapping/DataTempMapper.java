@@ -8,6 +8,8 @@ import com.rest.yun.beans.DataTemp;
 public interface DataTempMapper {
 	
 	DataTemp selectDataTemp(Map<String, Object> map);
+	
+	List<DataTemp> selectDataTempForList(Map<String, Object> map);
 
 	void insert(DataTemp dataTemp);
 

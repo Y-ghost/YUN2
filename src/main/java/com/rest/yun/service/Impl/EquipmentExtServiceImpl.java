@@ -94,7 +94,8 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 						continue;
 					}
 					//3.设置ABCD参数值
-					boolean f3 = setCoefficient(equipment,host.getCode());
+					boolean f3 = true;
+//					boolean f3 = setCoefficient(equipment,host.getCode());
 					if(!f3){
 						listError.add(equipment);
 						continue;

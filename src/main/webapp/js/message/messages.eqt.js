@@ -154,7 +154,7 @@ rainet.message.controller.node = {
 	
 	table : {
 	  columns : [
-		           	{ "sTitle":'', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
+		           	{ "sTitle":'序号', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
 		           	{ "sTitle": "节点名称",  "targets": 1, "render" : rainet.message.util.formateLink },
 		           	{ "sTitle": "节点编号", "targets": 2 },
 		           	{ "sTitle": "流量参数",  "targets": 3 },

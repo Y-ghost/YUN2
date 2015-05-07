@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
-import com.rest.yun.beans.EquipmentStatus;
 import com.rest.yun.beans.SensorInfo;
 import com.rest.yun.dto.EquipmentExt;
 import com.rest.yun.dto.Page;

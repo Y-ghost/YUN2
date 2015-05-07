@@ -136,7 +136,7 @@
 		  	p.id = #{pId}
 		</if>
 		<if test="userId != 1">
-		  	and Createuser = #{userId}
+		  	and p.id in (select up.ProjectId from UserProjectRel as up where up.UserId = #{userId})
 		</if>
 	 </where>
 	 
@@ -536,7 +536,7 @@
 		  	c.ProjectId = #{projectId}
 		</if>
 		<if test="userId != 1">
-		  	and e.Createuser = #{userId}
+		  	and c.ProjectId in (select up.ProjectId from UserProjectRel as up where up.UserId = #{userId})
 		</if>
 	 </where>
 	 

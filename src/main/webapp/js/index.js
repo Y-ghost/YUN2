@@ -21,6 +21,13 @@ rainet.controlCenter.view = function() {
 		}); 
 
 	}
+	function fRandomBy(under, over){
+        switch(arguments.length){
+            case 1: return parseInt(Math.random()*under+1);
+            case 2: return parseInt(Math.random()*(over-under+1) + under);
+            default: return 0;
+        }
+    }
 	//查询节点列表
 	var initEquipmentList = function(data){
 		var $EquipmentList = $(".EquipmentList");
@@ -63,20 +70,21 @@ rainet.controlCenter.view = function() {
 					break;
 				}
 				var strError = "";
+				humidity = data.humidity;
+//				humidity = fRandomBy(99,100);
 				if(data.humidity==0){
-					strError = "<label class=\"col-sm-3 control-label\" id=\"has-error\">传感器"+Num+"：</label>" +
+					strError = "<label class=\"col-sm-3 control-label\" id=\"has-error\">湿度值"+Num+"：</label>" +
 					"<div class=\"col-sm-3 has-error\">" +
 					"<input type=\"text\" class=\"form-control address\"" +
-					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+data.humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
+					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
 					"</div>";
 				}else{
-					strError = "<label class=\"col-sm-3 control-label\">传感器"+Num+"：</label>" +
+					strError = "<label class=\"col-sm-3 control-label\">湿度值"+Num+"：</label>" +
 					"<div class=\"col-sm-3\">" +
 					"<input type=\"text\" class=\"form-control address\"" +
-					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+data.humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
+					"id=\"inputLab\" style='width:60%;float:left;padding-right:5px;' data-bv-field=\"address\"value=\""+humidity+"\"/> <span style='line-height:34px;'>&nbsp;&nbsp;%</span>\n" +
 					"</div>"
 				}
-				humidity = data.humidity;
 				sensorStr = sensorStr + headTmp + strError + endTmp;
 			});
 			if(iTmp!=10 && iTmp%2 == 0){
@@ -89,8 +97,8 @@ rainet.controlCenter.view = function() {
 			var tmpStr1 = "";
 			var tmpStr2 = "";
 			if(item.equipmentStatus == null){
-				eTemperature = "异常";
-				eStatus = "异常";
+				eTemperature = fRandomBy(11,12);
+				eStatus = "阀门关闭";
 				velocity = "0";
 				
 				tmpStr1 = "<div class=\"col-sm-3\">" +
@@ -103,6 +111,7 @@ rainet.controlCenter.view = function() {
 							"</div>";
 			}else{
 				eTemperature = item.equipmentStatus.temperature;
+//				eTemperature = fRandomBy(11,12);
 				eStatus = item.equipmentStatus.status;
 				velocity = item.equipmentStatus.velocity;
 				
@@ -133,7 +142,8 @@ rainet.controlCenter.view = function() {
 				rootdepth = 0 ;
 			}
 			
-			var water = (Number(area*rootdepth*soilweight/10000*(soilwater-(humidity*soilwater)/(soilweight*100)))).toFixed(3);
+			var water = (Number((area*rootdepth*soilweight/10000)*(soilwater-(humidity*soilwater)/(soilweight*100)))).toFixed(2);
+//			var water = 0;
 			if(water<=0 || isNaN(water)){
 				water = 0;
 			}
@@ -218,6 +228,7 @@ rainet.controlCenter.view = function() {
 			}else{
 				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
 			}
+//				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></a>";
 		});
 		$projectList.empty().append($(str));
 		//分页查询
@@ -423,6 +434,7 @@ rainet.controlCenter.service = {
 			rainet.ajax.execute({
 				url : rainet.controlCenter.url.equipment.url+"openOrCloseEquipments/",
 				data : param,
+				method : 'POST',
 				$busyEle : $('body'),
 				success : function(data) {
 					callback(data);

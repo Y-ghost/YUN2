@@ -2,7 +2,7 @@
 <%
 String contextPath = request.getContextPath();
 
-String url = contextPath +  "/indexs/index";
+String url = contextPath +  "/indexs/control";
 response.sendRedirect(url);
 %>
 

@@ -134,17 +134,17 @@ rainet.setting.controller.setEquipment = {
 												"<input type=\"hidden\" name=\"controlhostid\" value=\""+item.equipment.controlhostid+"\"/>"+	
 												radio+
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
-													"<label class=\"col-sm-3 control-label\">土壤：</label>" +
+													"<label class=\"col-sm-3 control-label\">质地：</label>" +
 													"<div class=\"col-sm-6\"><select class=\"form-control soilname\" name=\"soilname\" id=\"inputLab\"><option value=\"-1\">-选择土壤-</option>"+selectSoilStr+"</select></div>" +
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor soilLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
-													"<label class=\"col-sm-3 control-label\">植物：</label>" +
-													"<div class=\"col-sm-6\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"inputLab\"><option value=\"-1\">-选择植物-</option>"+selectPlantsStr+"</select></div>" +
+													"<label class=\"col-sm-3 control-label\">作物：</label>" +
+													"<div class=\"col-sm-6\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"inputLab\"><option value=\"-1\">-选择作物-</option>"+selectPlantsStr+"</select></div>" +
 													"<div class=\"col-sm-3\" style='line-height:34px;'><a class=\"cursor plantsLink\" id=\"inputLab\">自定义</a></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">根系深度：</label>" +
 													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control rootdepth\" name=\"rootdepth\" id=\"inputLab\" data-bv-field=\"rootdepth\" value=\""+item.equipment.rootdepth+"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
-													"<label class=\"col-sm-3 control-label\">土壤干重：</label>" +
+													"<label class=\"col-sm-3 control-label\">土壤容重：</label>" +
 													"<div class=\"col-sm-3\"><input type=\"text\"style='width:35%;float:left;' class=\"form-control soilweight\" name=\"soilweight\" id=\"inputLab\" data-bv-field=\"soilweight\" value=\""+item.equipment.soilweight+"\"><span style='line-height:34px;font-size:10px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 													"<label class=\"col-sm-3 control-label\">湿度上限：</label>" +
@@ -691,7 +691,7 @@ rainet.setting.controller.setEquipment = {
 		soilInfoTempate : "<div>\n"+
 						"<form class=\"form-horizontal\" role=\"form\">\n"+
 						"<div class=\"form-group\">\n"+
-						"<label class=\"col-sm-3 control-label\">土壤名称：</label>\n"+
+						"<label class=\"col-sm-3 control-label\">质地名称：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
 						"<input type=\"text\" style='width:100%;' class=\"form-control soiltype\" name=\"soiltype\"/>\n"+
 						"</div>\n"+
@@ -773,7 +773,7 @@ rainet.setting.controller.setEquipment = {
 	plantsInfoTempate : "<div>\n"+
 						"<form class=\"form-horizontal\" role=\"form\" id=\"plantsForm\">\n"+
 						"<div class=\"form-group\">\n"+
-						"<label class=\"col-sm-3 control-label\">植物名称：</label>\n"+
+						"<label class=\"col-sm-3 control-label\">作物名称：</label>\n"+
 						"<div class=\"col-sm-3\">\n"+
 						"<input type=\"text\" style='width:100%;' class=\"form-control plantsname\" name=\"plantsname\"/>\n"+
 						"</div>\n"+
@@ -797,7 +797,7 @@ rainet.setting.controller.setEquipment = {
 						"<div class=\"growthCycle\">"+
 						"<hr/>"+
 						"<div class=\"form-group\">\n"+
-						"<label class=\"col-sm-3 control-label\">植物生长周期名：</label>\n"+
+						"<label class=\"col-sm-3 control-label\">作物生长周期名：</label>\n"+
 						"<div class=\"col-sm-9\">\n"+
 						"<input type=\"text\" style='width:100%;' class=\"form-control plantsseason\" name=\"plantsseason\"/>\n"+
 						"</div>\n"+
@@ -838,7 +838,7 @@ rainet.setting.controller.setEquipment = {
 						"<div class=\"growthCycle\">"+
 						"<hr style='width:95%;float:left;'/><button type=\"button\" class=\"closeCycle\" style='color:red;line-height:39px;width:5%;' aria-hidden=\"true\">-</button>"+
 						"<div class=\"form-group\">\n"+
-						"<label class=\"col-sm-3 control-label\">植物生长周期名：</label>\n"+
+						"<label class=\"col-sm-3 control-label\">作物生长周期名：</label>\n"+
 						"<div class=\"col-sm-9\">\n"+
 						"<input type=\"text\" style='width:100%;' class=\"form-control plantsseason\" name=\"plantsseason\"/>\n"+
 						"</div>\n"+
@@ -887,17 +887,17 @@ rainet.setting.controller.setEquipment = {
 	autoParamTempate : "<div>\n"+
 						"<form class=\"form-horizontal\" role=\"form\" id=\"autoParamForm\">\n"+
 						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
-						"<label class=\"col-sm-3 control-label\">土壤：</label>" +
+						"<label class=\"col-sm-3 control-label\">质地：</label>" +
 						"<div class=\"col-sm-8\"><select class=\"form-control soilname\" name=\"soilname\" id=\"soilname\"><option value=\"-1\">-选择土壤-</option>"+1+"</select></div>" +
 						"</div>" +
 					"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
-						"<label class=\"col-sm-3 control-label\">植物：</label>" +
-						"<div class=\"col-sm-8\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"plantsname\"><option value=\"-1\">-选择植物-</option>"+2+"</select></div>" +
+						"<label class=\"col-sm-3 control-label\">作物：</label>" +
+						"<div class=\"col-sm-8\"><select class=\"form-control plantsname\" name=\"plantsname\" id=\"plantsname\"><option value=\"-1\">-选择作物-</option>"+2+"</select></div>" +
 						"</div>" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 						"<label class=\"col-sm-3 control-label\">根系深度：</label>" +
 						"<div class=\"col-sm-3\"><input type=\"text\" style='width:60%;float:left;padding-left:1px;padding-right:1px;' class=\"form-control rootdepth\" name=\"rootdepth\" id=\"rootdepth\" data-bv-field=\"rootdepth\" value=\"\"><span style='line-height:34px;'>&nbsp;&nbsp;cm</span></div>" +
-						"<label class=\"col-sm-3 control-label\">土壤干重：</label>" +
+						"<label class=\"col-sm-3 control-label\">土壤容重：</label>" +
 						"<div class=\"col-sm-3\"><input type=\"text\" style='width:35%;float:left;padding-left:1px;padding-right:1px;' class=\"form-control soilweight\" name=\"soilweight\" id=\"soilweight\" data-bv-field=\"soilweight\" value=\"\"><span style='line-height:34px;font-size:10px;'>&nbsp;&nbsp;g/cm<sup>3</sup></span></div></div>" +
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 						"<label class=\"col-sm-3 control-label\">湿度上限：</label>" +

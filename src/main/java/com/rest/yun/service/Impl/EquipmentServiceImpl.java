@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.rest.yun.beans.ControlHost;
+import com.rest.yun.beans.DataTemp;
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.EquipmentStatus;
@@ -72,7 +73,29 @@ public class EquipmentServiceImpl implements IEquipmentService {
 		List<EquipmentExt<EquipmentData>> list = new ArrayList<EquipmentExt<EquipmentData>>();
 		try {
 			List<Equipment> eList = equipmentMapper.selectByPid(pId);
+			//发送搜索指令
+			
 			if (!CollectionUtils.isEmpty(eList)) {
+				ControlHost host = controlHostMapper.selectByProjectId(pId);
+				byte[] data = {};
+				// 组装发送指令
+				byte[] sendData = codingFactory.coding((byte) 0x01, host.getCode(), (byte) 0x05, data);
+				// 开始的时间
+				Date startDate = new Date();
+				Client.sendToServer(sendData);
+				// 等待获取主机返回的指令，等待10秒
+				List<DataTemp> dataT = new ArrayList<DataTemp>();
+				try {
+//					netWorkService.waitData(host.getCode(), "15", startDate);
+					dataT = netWorkService.waitDataForList(host.getCode(), "15", startDate);
+				} catch (ParseException e1) {
+					LOG.error("获取10秒后的时间时异常", e1);
+					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+				} catch (InterruptedException e1) {
+					LOG.error("获取10秒后的时间时sleep异常", e1);
+					throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+				}
+
 				for (Equipment equipment : eList) {
 					EquipmentExt<EquipmentData> equipmentExt = new EquipmentExt<EquipmentData>();
 					EquipmentStatus equipmentStatus = equipmentStatusMapper.selectEquipmentStatusByEid(equipment.getId());
@@ -99,11 +122,11 @@ public class EquipmentServiceImpl implements IEquipmentService {
 					list.add(equipmentExt);
 				}
 			} else {
-				LOG.warn("Equipment is null");
+				LOG.warn("节点为空!");
 				throw new ServerException(ErrorCode.EQUIPMENT_LIST_NULL);
 			}
 		} catch (DataAccessException e) {
-			LOG.error("查询实时现场数据异常", e);
+			LOG.error("查询节点实时状态异常!", e);
 			throw new ServerException(ErrorCode.SELECT_EQUIPMENT_LIST_FAILED);
 		}
 		return list;

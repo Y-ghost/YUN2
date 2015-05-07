@@ -135,7 +135,7 @@ rainet.utils.current = function(time){
 //退出系统
 rainet.utils.exist = function(){
 	//添加天气动态
-	$(".systime").html("<iframe width=\"310\" scrolling=\"no\" height=\"25\" frameborder=\"0\" allowtransparency=\"true\" src=\"http://i.tianqi.com/index.php?c=code&id=40&icon=1&num=3\"></iframe>");
+//	$(".systime").html("<iframe width=\"310\" scrolling=\"no\" height=\"25\" frameborder=\"0\" allowtransparency=\"true\" src=\"http://i.tianqi.com/index.php?c=code&id=40&icon=1&num=3\"></iframe>");
 	//添加IE判断，6、7、8版本的提醒更换浏览器
 	if (!$.support.leadingWhitespace){
 		$(".header").addClass("checkIE");
@@ -155,6 +155,7 @@ rainet.utils.exist = function(){
 				success : function(data) {
 					if(data){
 						location.href=rainet.settings.baseUrl+'indexs/login';
+//						location.href=rainet.settings.baseUrl+'indexs/index';
 					}
 				}
 			});

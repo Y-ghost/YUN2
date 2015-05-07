@@ -143,7 +143,7 @@ rainet.message.controller.plants = {
   table : {
 		// 项目管理的表头
 		columns : [
-		           	{ "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq},
+		           	{ "sTitle": "序号", "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq},
 		           	{ "sTitle": "项目名称",  "targets": 1, "render" : rainet.message.util.formateLink},
 		           	{ "sTitle": "项目单位", "targets": 2 },
 		           	{ "sTitle": "项目地址",  "targets": 3 },

@@ -235,7 +235,7 @@ var redirect = function(data,methodType){
 	if(methodType=="register"){
 		location.href=rainet.settings.baseUrl+'indexs/login';
 	}else if(methodType=="login"){
-		location.href=rainet.settings.baseUrl+'indexs/index';
+		location.href=rainet.settings.baseUrl+'indexs/control';
 	}
 }
 

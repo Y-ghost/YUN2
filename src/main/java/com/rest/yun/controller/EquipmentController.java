@@ -63,7 +63,7 @@ public class EquipmentController {
 	@Login
 	@RequestMapping(value = "/selectEquipmentExt", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseWrapper selectEquipmentExt(@RequestParam Integer pId) {
+	public ResponseWrapper selectEquipmentExt(@RequestParam(required = false, defaultValue = "0") Integer pId) {
 		List<EquipmentExt<EquipmentData>> list = equipmentService.selectEquipmentExt(pId);
 		return new ResponseWrapper(list);
 	}
@@ -78,7 +78,7 @@ public class EquipmentController {
 	 * @throws
 	 */
 	@Login
-	@RequestMapping(value = "/openOrCloseEquipments", method = RequestMethod.GET)
+	@RequestMapping(value = "/openOrCloseEquipments", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseWrapper openOrCloseEquipments(@RequestParam Integer optionType, @RequestParam String id) {
 		boolean flag = equipmentService.openEquipments(optionType, id);

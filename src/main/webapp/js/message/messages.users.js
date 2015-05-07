@@ -119,7 +119,7 @@ rainet.message.controller.user = {
 	
 	table : {
 	  columns : [
-		           	{ "sTitle":'', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
+		           	{ "sTitle": "序号",  "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
 		           	{ "sTitle": "登录名",  "targets": 1, "render" : rainet.message.util.formateLink },
 		           	{ "sTitle": "用户名", "targets": 2 },
 		           	{ "sTitle": "电话",  "targets": 3 },

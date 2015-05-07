@@ -10,7 +10,7 @@
       <ul class="list-inline text-center">
         <li>&copy;2012-<span class="copyYear">2014</span></li>
         <li><a href="http://www.Rainet.com.cn/" target="_blank" title="河南锐利特计算机科技有限公司">Rainet.com.cn</a> 版权所有
-			&nbsp;&nbsp;备案号：<a href="http://www.miitbeian.gov.cn/" target="_blank" title="豫ICP备14002834号">豫ICP备14002834号</a></li>
+			&nbsp;&nbsp;备案号：<a href="http://www.miitbeian.gov.cn/" target="_blank" title="豫ICP备14002834号-1">豫ICP备14002834号-1</a></li>
 			
       </ul>
     </div>

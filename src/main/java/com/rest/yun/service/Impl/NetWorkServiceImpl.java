@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -91,7 +92,6 @@ public class NetWorkServiceImpl implements NetWorkService{
 			dataTemp.setDatacontext(Rdata);
 			dataTemp.setReceivetime(date);
 			dataTempMapper.insert(dataTemp);
-			
 			//解析接收的节点数据存储到状态表中
 			if(controlType.equals("15")){
 				
@@ -116,10 +116,8 @@ public class NetWorkServiceImpl implements NetWorkService{
 						map.put("hCode", code);
 						map.put("eCode", eCode);
 						Equipment equipment = equipmentMapper.selectEquipmentByHcodeAndEcode(map);
-						
 						//传感器个数
 						int sNum = Integer.parseInt(usingData.substring(numTmp+22,numTmp+24));
-						
 						//水流脉冲数
 						long waterVal = Long.valueOf(usingData.substring(numTmp+10,numTmp+18),16);
 						
@@ -136,19 +134,23 @@ public class NetWorkServiceImpl implements NetWorkService{
 									systemLog.setLogcontext("采集异常：【" + equipment.getProject().getName() + "】项目下【" + equipment.getName() + "】监控节点数据异常，当天采集的数据小于历史数据!");
 									systemLog.setLogtime(date);
 									systemLog.setLogtype(0);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志
-									systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+									systemLog.setLogstatus("未读");// 0 表示未读, 1 表示已读
 									sysLogList.add(systemLog);
 								}
 								systemLogMapper.insert(sysLogList);
 								log.error("数据采集异常:【" + equipment.getProject().getName() + "】项目下【" + equipment.getName() + "】监控节点数据异常，当天采集的数据小于历史数据!");
-								numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
+								numTmp += 22 + 2 + sNum * 4;// 节点地址长度+传感器个数+传感器地址长度
 							}else{//当天采集的数据合理，保存或者这是块新节点，没有采集的数据，开始保存
 								//节点状态
 								EquipmentStatus statusVal = new EquipmentStatus();
 								statusVal.setEquipmentid(equipment.getId());
 								statusVal.setCreatetime(date);
 								statusVal.setWatervalue(waterVal);
-								statusVal.setCurrentvalue(waterVal-equipmentStatus.getWatervalue());
+								if(equipmentStatus==null){
+									statusVal.setCurrentvalue(waterVal-0);
+								}else{
+									statusVal.setCurrentvalue(waterVal-equipmentStatus.getWatervalue());
+								}
 								String status = "";
 								byte result = codingFactory.string2BCD(usingData.substring(numTmp+8,numTmp+10))[0];
 								switch (result) {
@@ -198,11 +200,11 @@ public class NetWorkServiceImpl implements NetWorkService{
 									dataVal.setSensorid(sensorInfo.getId());
 									listData.add(dataVal);
 								}
-								numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
+								numTmp += 22 + 2 + sNum * 4;// 节点地址长度+传感器个数+传感器地址长度
 							}
 						}else{
 							log.error("数据采集--" + code + " 号主机下【" + eCode + "】监控节点数据采集失败，节点信息为空，可能未注册!");
-							numTmp += 22 + 2 + sNum * 2;// 节点地址长度+传感器个数+传感器地址长度
+							numTmp += 22 + 2 + sNum * 4;// 节点地址长度+传感器个数+传感器地址长度
 						}
 						num -- ;
 					}
@@ -224,14 +226,16 @@ public class NetWorkServiceImpl implements NetWorkService{
 						systemLog.setLogcontext("采集：" + code + "号主机的数据失败(未接收到指令或者接收的指令格式不对)!");
 						systemLog.setLogtime(date);
 						systemLog.setLogtype(0);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志
-						systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+						systemLog.setLogstatus("未读");// 0 表示未读, 1 表示已读
 						sysLogList.add(systemLog);
 					}
 					systemLogMapper.insert(sysLogList);
 					log.error("数据采集--" + code + "号主机数据采集失败(未接收到指令或者接收的指令格式不对)!");
 				}
 			}
-		} catch (Exception e) {
+		} catch (ParseException e) {
+			log.error("获取系统时间异常!"+e);
+		} catch (DataAccessException e) {
 			log.error("服务器保存接收的数据到DataTemp表中异常!"+e);
 		}
 	}
@@ -253,12 +257,33 @@ public class NetWorkServiceImpl implements NetWorkService{
 		map.put("endDate", dateTime);
 		try {
 			dateTemp = dataTempMapper.selectDataTemp(map);
-		} catch (Exception e) {
+		} catch (DataAccessException e) {
 			log.error("获取服务器保存的DataTemp临时数据异常!"+e);
 		}
 		return dateTemp;
 	}
-	
+	/**
+	 * @Title:       getNetDataForList
+	 * @author:      杨贵松
+	 * @time         2015年5月4日 下午2:44:43
+	 * @Description: 从临时存储空间中获取服务器返回的指令列表
+	 * @return       List<DataTemp>
+	 * @throws
+	 */
+	public List<DataTemp> getNetDataForList(String address,String controlId,Date dateTime,Date startDate){
+		List<DataTemp> dateTemp = new ArrayList<DataTemp>();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("address", address);
+		map.put("controlId", controlId);
+		map.put("startDate", startDate);
+		map.put("endDate", dateTime);
+		try {
+			dateTemp = dataTempMapper.selectDataTempForList(map);
+		} catch (DataAccessException e) {
+			log.error("获取服务器保存的DataTemp临时数据异常!"+e);
+		}
+		return dateTemp;
+	}
 	/**
 	 * @Title: 				waitData 
 	 * @author 				杨贵松
@@ -290,7 +315,30 @@ public class NetWorkServiceImpl implements NetWorkService{
 		}
 		return dataContext;
 	}
-	
+	/**
+	 * @Title:       waitDataForList
+	 * @author:      杨贵松
+	 * @time         2015年5月4日 下午2:47:13
+	 * @Description: 等待接收主机返回数据列表，超过10秒结束等待
+	 * @return       List<DataTemp>
+	 * @throws
+	 */
+	public List<DataTemp> waitDataForList(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
+		Date endDate = CommonUtiles.getLastDate(10);
+		List<DataTemp> data = new ArrayList<DataTemp>();
+		long time = 0;
+		while(data.size() <= 0 && time<endDate.getTime()){
+			Thread.sleep(500);
+			data = getNetDataForList(address, ContralCode,endDate,startDate);
+			if(data.size() <= 0){
+				time = System.currentTimeMillis();
+				continue;
+			}else{
+				break;
+			}
+		}
+		return data;
+	}
 	/**
 	 * @Title: 				waitDataForSearchEquipment 
 	 * @author 				杨贵松
@@ -374,7 +422,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 					systemLog.setLogcontext("项目【"+host.getProject().getName()+"】下有一个节点监测的湿度过低,请及时查看!");
 					systemLog.setLogtime(date);
 					systemLog.setLogtype(1);// 0 表示采集异常报警日志 , 1 表示实时土壤温度过低报警日志 
-					systemLog.setLogstatus("0");// 0 表示未读, 1 表示已读
+					systemLog.setLogstatus("未读");// 0 表示未读, 1 表示已读
 					sysLogList.add(systemLog);
 					
 					//声明推送用户对象

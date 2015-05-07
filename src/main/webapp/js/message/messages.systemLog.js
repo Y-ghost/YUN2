@@ -16,20 +16,18 @@ rainet.message.controller.systemLog = {
    				return "湿度报警";
    			}
 		},
-		
 		setOperateHtml : function(data){
-			if (data == '未读') {
-   				return "<button class=\"btn btn-info edit\">标记已读</button>";
-   			}
-   			if (data == '已读') {
-   				return "<button class=\"btn btn-info\" disabled>标记已读</button>";
-   			}
+			return "<button class=\"btn btn-info edit\">标记已读</button>";
+//			if (data == "未读") {
+//   				return "<button class=\"btn btn-info edit\">标记已读</button>";
+//   			}
 		},
 		
 		// 从后台获取数据之后，设置对应报警信息的值，以弹出框的形式展示
 		setLogInfo : function(data, readonly, $dataTable){
 			var $logHtml = $(this.infoTemplate).attr('id', 'logInfo'+data.id);
 			$('.type',$logHtml).empty().append('<option>'+this.formateLogType(data.logtype)+'</option>');
+			$(".context", $logHtml).val(data.logcontext);
 			$(".status", $logHtml).val(data.logstatus);
 			$(".logTime", $logHtml).val(rainet.utils.formateDate(data.logtime));
 			
@@ -54,27 +52,26 @@ rainet.message.controller.systemLog = {
 		},
 	table : {
 	  columns : [
-		           	{ "sTitle":'', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
+		           	{ "sTitle":'序号', "targets": 0, "orderable": false, "render" : rainet.message.util.formateSeq },
 		           	{ "sTitle": "消息标题",  "targets": 1, "orderable": false, "render" : rainet.message.util.formateLink },
 		           	{ "sTitle": "消息类型", "targets": 2, "render" : function(data){
 		           			return rainet.message.controller.systemLog.formateLogType(data);
 		           		}
 		           	},
 		           	{ "sTitle": "接受时间",  "targets": 3, "render" : rainet.message.util.formateDate },
-		           	{ "sTitle": "消息状态", "targets": 4, },
-		           	{ "sTitle": "操作",   "targets": 5, "orderable": false, "render" : function(data){
+		           	{ "sTitle": "消息状态", "targets": 4 },
+		           	{ "sTitle": "操作",   "targets": 5, "orderable": false, "data": null, "render": function(data){
 		           			return rainet.message.controller.systemLog.setOperateHtml(data);
 		           		}
 		           	}
 		],
-		order : [3, 'desc'],
+		order : [4, 'desc'],
 		
 		dataRef : [
 		           {'data':'id'},
 		           {'data':'logcontext'},
 		           {'data':'logtype'},
 		           {'data':'logtime'},
-		           {'data':'logstatus'},
 		           {'data':'logstatus'},
 		],
 		
@@ -116,10 +113,16 @@ rainet.message.controller.systemLog = {
     			"</div>\n"+
     		"</div>\n"+
     		"<div class=\"form-group\">\n"+
-    			"<label class=\"col-sm-3 control-label\">状态：</label>\n"+
+    			"<label class=\"col-sm-3 control-label\">内容：</label>\n"+
     			"<div class=\"col-sm-9\">\n"+
-    				"<input type=\"text\" class=\"form-control status\" name=\"status\"/>\n"+
+    				"<textarea class=\"form-control context\" name=\"context\"/>\n"+
     			"</div>\n"+
+    		"</div>\n"+
+    		"<div class=\"form-group\">\n"+
+    		"<label class=\"col-sm-3 control-label\">状态：</label>\n"+
+    		"<div class=\"col-sm-9\">\n"+
+    		"<input type=\"text\" class=\"form-control status\" name=\"status\"/>\n"+
+    		"</div>\n"+
     		"</div>\n"+
     		"<div class=\"form-group\">\n"+
 				"<label class=\"col-sm-3 control-label\">时间：</label>\n"+

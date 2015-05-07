@@ -20,6 +20,13 @@
     and ContralType = #{controlId} 
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[>=]]> DATE_FORMAT(#{startDate} ,'%Y-%m-%d %H:%i:%s')
     and DATE_FORMAT(ReceiveTime,'%Y-%m-%d %H:%i:%s') <![CDATA[<=]]> DATE_FORMAT(#{endDate} ,'%Y-%m-%d %H:%i:%s')
+    order by ReceiveTime desc limit 1
+  </select>
+  <!-- 等待返回指令列表 -->
+  <select id="selectDataTempForList" resultMap="BaseResultMap" parameterType="Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from Data_temp
   </select>
   <!-- 通过检查心跳包，监测判断主机是否在线 -->
   <select id="selectDataCount" resultType="java.lang.Integer" parameterType="Map" >
