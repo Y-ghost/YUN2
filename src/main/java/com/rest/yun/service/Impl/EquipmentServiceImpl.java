@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.rest.yun.beans.ControlHost;
-import com.rest.yun.beans.DataTemp;
 import com.rest.yun.beans.Equipment;
 import com.rest.yun.beans.EquipmentData;
 import com.rest.yun.beans.EquipmentStatus;
@@ -84,10 +83,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
 				Date startDate = new Date();
 				Client.sendToServer(sendData);
 				// 等待获取主机返回的指令，等待10秒
-				List<DataTemp> dataT = new ArrayList<DataTemp>();
 				try {
-//					netWorkService.waitData(host.getCode(), "15", startDate);
-					dataT = netWorkService.waitDataForList(host.getCode(), "15", startDate);
+					netWorkService.waitDataForList(host.getCode(), "15", startDate,eList.size());
 				} catch (ParseException e1) {
 					LOG.error("获取10秒后的时间时异常", e1);
 					throw new ServerException(ErrorCode.ILLEGAL_PARAM);

@@ -97,8 +97,9 @@ rainet.controlCenter.view = function() {
 			var tmpStr1 = "";
 			var tmpStr2 = "";
 			if(item.equipmentStatus == null){
-				eTemperature = fRandomBy(11,12);
-				eStatus = "阀门关闭";
+				eTemperature = 0;
+//				eTemperature = fRandomBy(11,12);
+				eStatus = "空";
 				velocity = "0";
 				
 				tmpStr1 = "<div class=\"col-sm-3\">" +

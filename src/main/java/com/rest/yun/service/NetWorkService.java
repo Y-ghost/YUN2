@@ -14,7 +14,7 @@ public interface NetWorkService {
 	
 	public String waitData(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
 	
-	public List<DataTemp> waitDataForList(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
+	public List<DataTemp> waitDataForList(String address,String ContralCode,Date startDate,int size) throws ParseException, InterruptedException;
 	
 	public String waitDataForSearchEquipment(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException;
 	

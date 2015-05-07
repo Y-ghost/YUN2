@@ -81,7 +81,9 @@ public class PaginationInterceptor implements Interceptor, Serializable {
 				@SuppressWarnings("unchecked")
 				Map<String, Object> map = (Map<String, Object>) param;
 				Object object = map.get(PAGE_OBJECT);
-
+				if (object==null) {
+					return invocation.proceed();
+				}
 				Page<?> page = (Page<?>) object;
 				// Get current sql
 				String sql = boundSql.getSql();

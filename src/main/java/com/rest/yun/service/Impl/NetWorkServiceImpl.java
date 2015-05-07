@@ -323,14 +323,22 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @return       List<DataTemp>
 	 * @throws
 	 */
-	public List<DataTemp> waitDataForList(String address,String ContralCode,Date startDate) throws ParseException, InterruptedException{
+	public List<DataTemp> waitDataForList(String address,String ContralCode,Date startDate,int size) throws ParseException, InterruptedException{
 		Date endDate = CommonUtiles.getLastDate(10);
 		List<DataTemp> data = new ArrayList<DataTemp>();
+		int num = 0 ;
+		if(size/8==0){
+			num = 1;
+		}else if(size/8>=1 && size%8==0){
+			num = size/8;
+		}else if(size/8>=1 && size%8>0){
+			num = size/8+1;
+		}
 		long time = 0;
 		while(data.size() <= 0 && time<endDate.getTime()){
 			Thread.sleep(500);
 			data = getNetDataForList(address, ContralCode,endDate,startDate);
-			if(data.size() <= 0){
+			if(data.size() < num){
 				time = System.currentTimeMillis();
 				continue;
 			}else{
