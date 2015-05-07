@@ -196,7 +196,7 @@
 			<if test="city !=null and city != ''">
 				AND City = #{city}
 			</if>
-			<if test="userId !=null and userId != ''">
+			<if test="userId !=null and userId != '' and userId != 1 ">
 				AND id in (select ProjectId from UserProjectRel where UserId = #{userId})
 			</if>
 		</where>
