@@ -34,7 +34,7 @@
 			</button>
 			<a class="navbar-brand" href="index" id="headerIndex">
 				<img src="${requestScope.basePath}images/logo.png" style="width:120px;height:30px;"/>
-				<span class="navbar-right" style="margin-top:10px;">漯河高标准粮田水肥一体化物联网系统</span>
+				<span class="navbar-right" style="margin-top:10px;">云灌溉</span>
 			</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
