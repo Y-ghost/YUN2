@@ -60,6 +60,6 @@ public interface IProjectService {
 	 */
 	boolean validProjectName(String projectName, int projectId);
 
-	List<Map<String, Object>> getAllProjectName();
+	List<Map<String, Object>> getAllProjectName(HttpSession session);
 
 }

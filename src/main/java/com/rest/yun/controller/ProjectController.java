@@ -141,8 +141,8 @@ public class ProjectController {
 	@Login
 	@RequestMapping(value = "names", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseWrapper getAllProjectName() {
-		List<Map<String, Object>> result = projectService.getAllProjectName();
+	public ResponseWrapper getAllProjectName(HttpSession session) {
+		List<Map<String, Object>> result = projectService.getAllProjectName(session);
 		return new ResponseWrapper(result);
 	}
 

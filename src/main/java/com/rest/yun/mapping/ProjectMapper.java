@@ -24,6 +24,6 @@ public interface ProjectMapper {
 
 	boolean validProjectName(@Param("name") String name, @Param("projectId") int projectId);
 
-	List<Map<String, Object>> getAllProjectName();
+	List<Map<String, Object>> getAllProjectName(@Param("userId") Integer userId);
 
 }

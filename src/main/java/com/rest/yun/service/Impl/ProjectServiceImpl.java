@@ -207,8 +207,10 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllProjectName() {
-		return projectMapper.getAllProjectName();
+	public List<Map<String, Object>> getAllProjectName(HttpSession session) {
+		User user = (User) session.getAttribute(Constants.USER);
+		int userId = user.getId();
+		return projectMapper.getAllProjectName(userId);
 	}
 
 }

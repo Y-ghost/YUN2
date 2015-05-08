@@ -32,13 +32,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index" id="headerIndex">
+			<a class="navbar-brand" href="control" id="headerIndex">
 				<img src="${requestScope.basePath}images/logo.png" style="width:120px;height:30px;"/>
 				<span class="navbar-right" style="margin-top:10px;">云灌溉</span>
 			</a>
 		</div>
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
+				<li><div style="height:54px;text-align: center;line-height: 50px;color:#1b926c;font-size:14px;"><span style="font-size:12px;">尊敬的&nbsp;&nbsp;</span>${sessionScope.user.loginname}<span style="font-size:12px;">&nbsp;&nbsp;用户，您好！</span></div></li>
 				<li><a href="javascript:void(0);" id="exist" title="退出"><i class="fa fa-power-off fa-2x"></i></a></li>
 			</ul>
 		</div>
