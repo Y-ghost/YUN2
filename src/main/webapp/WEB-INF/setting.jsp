@@ -10,11 +10,6 @@
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.date.css" />
 <link rel="stylesheet" href="${requestScope.basePath}bootstrap/css/default.time.css" />
 
-<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/jquery-ui.css" />
-<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/jquery.multiselect.css" />
-<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/style.css" />
-<link rel="stylesheet" href="${requestScope.basePath}multiselects/css/prettify.css" />
-
 <style type="text/css">
 .control-label{
 	padding-left:1px;
@@ -293,11 +288,6 @@ input {
 	<script src="${requestScope.basePath}js/setting/setting.equipmentUtils.js"></script>
 	<script src="${requestScope.basePath}js/setting/setting.putData.js"></script>
 	
-	<script src="${requestScope.basePath}multiselects/js/jquery.ui.core.js"></script>
-	<script src="${requestScope.basePath}multiselects/js/jquery.ui.widget.js"></script>
-	<script src="${requestScope.basePath}multiselects/js/jquery.multiselect.min.js"></script>
-	<script src="${requestScope.basePath}multiselects/js/prettify.js"></script>
-
 	<script src="${requestScope.basePath}bootstrap/js/picker.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/picker.date.js"></script>
 	<script src="${requestScope.basePath}bootstrap/js/picker.time.js"></script>

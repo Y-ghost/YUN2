@@ -176,7 +176,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 									break;
 								}
 								statusVal.setStatus(status);
-								if(receiveData[numTmp/2+12]<0){
+								if(receiveData[numTmp/2+12+3]<0){
 									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+12+3]-receiveData[numTmp/2+12+4]*0.01))*10)/10);
 								}else{
 									statusVal.setTemperature((float)Math.round(((float)(receiveData[numTmp/2+12+3]+receiveData[numTmp/2+12+4]*0.01))*10)/10);
@@ -185,15 +185,18 @@ public class NetWorkServiceImpl implements NetWorkService{
 								listStatus.add(statusVal);
 								
 								//传感器湿度数据
-								EquipmentData dataVal = new EquipmentData();
 								for(int i=1;i<=sNum;i++){
+									EquipmentData dataVal = new EquipmentData();
 									Map<String,Object> sensorMap = new HashMap<String, Object>();
 									sensorMap.put("eId", equipment.getId());
 									sensorMap.put("num", i);
 									SensorInfo sensorInfo = sensorInfoMapper.selectByEidAndNum(sensorMap);
 									dataVal.setCreatetime(date);
-									float hTmp = (float)Math.round(((float)(receiveData[numTmp/2+12+12+i]+receiveData[numTmp/2+12+13+i]*0.01))*100)/100;
+									float hTmp = (float)Math.round(((float)(receiveData[numTmp/2+12+12+(i*2-1)]+receiveData[numTmp/2+12+13+(i*2-1)]*0.01))*100)/100;
 									float soilWater = equipment.getSoilwater();
+									if(hTmp==-1){
+										hTmp = soilWater;
+									}
 									BigDecimal tmp = new BigDecimal(hTmp/soilWater*100);
 									float humidity = tmp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 									dataVal.setHumidity(humidity);
@@ -351,7 +354,7 @@ public class NetWorkServiceImpl implements NetWorkService{
 	 * @Title: 				waitDataForSearchEquipment 
 	 * @author 				杨贵松
 	 * @date 				2014年4月22日 下午3:51:33
-	 * @Description: 		等待接收主机返回的搜索节点地址数据，超过20秒结束等待 
+	 * @Description: 		等待接收主机返回的搜索节点地址数据，超过46秒结束等待 
 	 * @param address
 	 * @param ContralCode
 	 * @param startDate

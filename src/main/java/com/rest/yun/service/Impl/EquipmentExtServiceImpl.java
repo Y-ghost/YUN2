@@ -94,8 +94,8 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 						continue;
 					}
 					//3.设置ABCD参数值
-					boolean f3 = true;
-//					boolean f3 = setCoefficient(equipment,host.getCode());
+//					boolean f3 = true;
+					boolean f3 = setCoefficient(equipment,host.getCode());
 					if(!f3){
 						listError.add(equipment);
 						continue;
@@ -103,7 +103,7 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 					//4.时段设置
 					boolean f4 = true;
 					if(equipment.getIrrigationtype()==2){
-						f3 = setTimeLen(equipment,host.getCode());
+						f4 = setTimeLen(equipment,host.getCode());
 					}
 					if(f1&&f2&&f3&&f4){
 						equipment.setModifyuser(user.getId());
@@ -229,8 +229,8 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 			float humidityDown = equipment.getHumiditydown();
 			float soilWater = equipment.getSoilwater();
 
-			BigDecimal a = new BigDecimal(humidityUp * soilWater);
-			BigDecimal b = new BigDecimal(humidityDown * soilWater);
+			BigDecimal a = new BigDecimal(humidityUp * soilWater/100);
+			BigDecimal b = new BigDecimal(humidityDown * soilWater/100);
 			float hUp = a.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 			float hDown = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 			float tUp = equipment.getTemperatureup();
@@ -518,7 +518,7 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 	 */
 	@Override
 	public boolean setListModel(List<Equipment> list, HttpSession session) {
-		boolean mark = true;
+		boolean mark = false;
 		String codeStr = "";
 		int model = list.get(0).getIrrigationtype();
 		Date date = new Date();
@@ -635,8 +635,8 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 			float humidityDown = list.get(0).getHumiditydown();
 			float soilWater = list.get(0).getSoilwater();
 
-			BigDecimal a = new BigDecimal(humidityUp * soilWater);
-			BigDecimal b = new BigDecimal(humidityDown * soilWater);
+			BigDecimal a = new BigDecimal(humidityUp * soilWater/100);
+			BigDecimal b = new BigDecimal(humidityDown * soilWater/100);
 			float hUp = a.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 			float hDown = b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 			float tUp = list.get(0).getTemperatureup();
@@ -749,24 +749,23 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 			String startthree = obj.getTimethreestart();
 			String endthree = obj.getTimethreeend();
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("hhmm");
 			String timeone="";
 			String timetwo="";
 			String timethree="";
 			if(!startone.equals("")){
-				timeone = sdf.format(startone)+sdf.format(endone);
+				timeone = startone+endone;
 			}else{
 				timeone = "24002400";
 			}
 			
 			if(!starttwo.equals("")){
-				timetwo = sdf.format(starttwo)+sdf.format(endtwo);
+				timetwo = starttwo+endtwo;
 			}else{
 				timetwo = "24002400";
 			}
 			
 			if(!startthree.equals("")){
-				timethree = sdf.format(startthree)+sdf.format(endthree);
+				timethree = startthree+endthree;
 			}else{
 				timethree = "24002400";
 			}

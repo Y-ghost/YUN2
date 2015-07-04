@@ -519,8 +519,8 @@
 		      TimeTwoEnd = #{item.timetwoend,jdbcType=VARCHAR},
 		      TimeThreeStart = #{item.timethreestart,jdbcType=VARCHAR},
 		      TimeThreeEnd = #{item.timethreeend,jdbcType=VARCHAR},
-			  Modifyuser = #{item.item.modifyuser},
-			  Modifytime = #{item.item.modifytime}
+			  Modifyuser = #{item.modifyuser},
+			  Modifytime = #{item.modifytime}
 		</set>
 		where id = #{item.id}
 	</foreach>  

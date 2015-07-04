@@ -22,8 +22,8 @@ rainet.ajax = {
 				  // type of data we are expecting in return:
 				  contentType : options.contentType,
 				  dataType: options.dataType || 'json',
+				  jsonp: options.jsonp,
 				  success: function(data){
-					  console.log(JSON.stringify(data));
 					  rainet.utils.busy.remove();
 					  var status = data.code;
 					  if (status != '200') {

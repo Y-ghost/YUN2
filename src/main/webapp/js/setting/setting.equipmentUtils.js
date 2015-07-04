@@ -95,18 +95,22 @@ rainet.setting.utils={
 			});
 		},
 		//select初始选中事件
-		multiselect : function(){
-			 $(".week").multiselect({
-			        noneSelectedText: "-请选择周期-",
-			        checkAllText: "全选",
-			        uncheckAllText: '全不选',
-			        selectedList:7,
-			        onClick: function(){   
-			            if(this.checked){   
-			                alert("I was just checked!");   
-			            }   
-			        }  
-			   });
+		checkTime : function(){
+			var a = $("#zero");
+			$("#zero").bind("change",function(){
+				alert("....");
+			});
+			$("#zero").change(function(){
+				alert($(this).is(":checked"));
+					if($(this).is(":checked")){
+					
+						 var weekVal = "";
+						 $(this).parent().find("input[type='checkbox']").each(function(data){
+								weekVal = weekVal + $(this).val()+",";
+						});
+						 alert(weekVal);
+					}
+				});
 		},
 		//自定义植物信息
 		addPlants : function($plantsInfo,$growthCycleHeader,$growthCycle){

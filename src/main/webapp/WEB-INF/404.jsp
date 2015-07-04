@@ -27,7 +27,7 @@
 		<div style="height:30px;font-family: 'Copperplate Gothic Bold'; font-size: 14px;text-align:center;line-height: 30px;">抱歉，页面找不到了，小的正在努力找寻中...</div>
 	</div>
 	<div style="padding:10px;">
-		<div style="height:30px;text-align:center;line-height: 30px;"><a href="../index.jsp" style="font-family: 'Copperplate Gothic Bold'; font-size: 20px; color: #1b926c;">返回系统>> </a></div>
+		<div style="height:30px;text-align:center;line-height: 30px;"><a href="${requestScope.basePath}indexs/control" style="font-family: 'Copperplate Gothic Bold'; font-size: 20px; color: #1b926c;">返回系统>> </a></div>
 	</div>
 </div>
 

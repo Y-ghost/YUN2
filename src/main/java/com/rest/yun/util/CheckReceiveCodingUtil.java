@@ -128,6 +128,9 @@ public class CheckReceiveCodingUtil {
 	public boolean checkSum(byte[] receive) {
 		int length = receive[0];
 		int checksum = length;
+		if(checksum<0){
+			checksum = checksum + 256;
+		}
 		for (int i = 1; i < receive.length - 3; i++) {
 			checksum += (receive[i] + 256) % 256;
 		}

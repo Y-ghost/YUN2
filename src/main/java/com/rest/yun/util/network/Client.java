@@ -39,7 +39,7 @@ public class Client {
 
 	public static void sendToServer(byte[] bytes) {
 		try {
-//			Client client = new Client("115.28.143.115", 8090);
+//			Client client = new Client("192.168.1.110", 8091);
 			String ip = InetAddress.getLocalHost().getHostAddress();
 			Client client = new Client(ip, 8090);
 			final Channel channel = client.connect();
