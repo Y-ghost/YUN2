@@ -1,5 +1,6 @@
 package com.rest.yun.util.test;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,10 +21,28 @@ public class Test {
 	
 	public static void main(String[] args) throws ParseException {
 		CodingFactoryUtil codingFactory = new CodingFactoryUtil();
-		byte[] eData = codingFactory.longToByte(10000L);
-		double[][] val = {{17.0,1.0},{22.0,1.5},{1.0,2.0},{1.0,1.0}};
-		float[] tmp = CommonUtiles.caculate(val);
-		System.out.println(tmp[0]);
+		byte[] r = codingFactory.string2BCD("434845434B2001000000081501000121510F00005D310000050000FF00122F0A4E0000EC0235");
+		float hTmp = (float)Math.round(((float)((byte)0x00)+0x00*0.01)*100)/100;
+		float a = (float)Math.round(((float)(r[25]+r[26]*0.01))*100)/100;
+		float b = (float)Math.round(((float)(r[27]+r[28]*0.01))*100)/100;
+		float c = (float)Math.round(((float)(r[29]+r[30]*0.01))*100)/100;
+		float d = (float)Math.round(((float)(r[31]+r[32]*0.01))*100)/100;
+		float e = (float)Math.round(((float)(r[33]+r[34]*0.01))*100)/100;
+		
+		BigDecimal tmp = new BigDecimal(c/21.1*100);
+		float humidity = tmp.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+		
+		String timeLen = "";
+		String[] week = {};
+		int T0 =0;
+		if(!"1".equals("")){
+			week = "1".split(",");
+			T0 = week.length;
+			for(int i=0;i<T0;i++){
+				timeLen += "0"+week[i];
+			}
+		}
+		System.out.println(timeLen);
 	}
 	
 	 public static int daysBetween(Date smdate,Date bdate) throws ParseException    

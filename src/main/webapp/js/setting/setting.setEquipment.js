@@ -59,36 +59,43 @@ rainet.setting.controller.setEquipment = {
 							var str = "";
 							$.each(data,function(index,item){
 								var radio = "";
-								switch(item.equipment.irrigationtype){
-								case 0:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
-									break;
-								case 1:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
-									break;
-								case 2:
-									radio = "<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-									"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>" ;
-									break;
-								}
-								
 								var timeLen = "";
+								var flowP = "";
 								switch(item.equipment.irrigationtype){
 								case 0:
 									timeLen = "<div class=\"timeLens\" style=\"display:none;\">" ;
+									flowP = "<div class=\"flowP\" style=\"display:none;\">" ;
+									radio = "<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"3\">&nbsp;&nbsp;&nbsp;&nbsp;流量</div></div>" ;
 									break;
 								case 1:
 									timeLen = "<div class=\"timeLens\" style=\"display:none;\">" ;
+									flowP = "<div class=\"flowP\" style=\"display:none;\">" ;
+									radio = "<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"3\">&nbsp;&nbsp;&nbsp;&nbsp;流量</div></div>" ;
 									break;
 								case 2:
 									timeLen = "<div class=\"timeLens\">" ;
+									flowP = "<div class=\"flowP\" style=\"display:none;\">" ;
+									radio = "<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"3\">&nbsp;&nbsp;&nbsp;&nbsp;流量</div></div>" ;
+									break;
+								case 3:
+									timeLen = "<div class=\"timeLens\" style=\"display:none;\">" ;
+									flowP = "<div class=\"flowP\">" ;
+									radio = "<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" id=\"inputLab\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div>" +
+									"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"irrigationtype\" class=\"modelClass\" checked id=\"inputLab\" value=\"3\">&nbsp;&nbsp;&nbsp;&nbsp;流量</div></div>" ;
 									break;
 								}
+								
 								
 								//时段
 								var week = "";
@@ -99,27 +106,27 @@ rainet.setting.controller.setEquipment = {
 								var timethreestart = "";
 								var timethreeend = "";
 								
-								if(item.equipment.week != null){
+								if(item.equipment.week != null && item.equipment.week!=null ){
 									week = item.equipment.week;
 								}
 								
-								if(item.equipment.timeonestart != null){
-									timeonestart = item.equipment.timeonestart;
+								if(item.equipment.timeonestart != null && item.equipment.timeonestart != ""){
+									timeonestart = item.equipment.timeonestart.substring(0,2)+":"+item.equipment.timeonestart.substring(2,4);
 								}
-								if(item.equipment.timeoneend != null){
-									timeoneend = item.equipment.timeoneend;
+								if(item.equipment.timeoneend != null && item.equipment.timeoneend != ""){
+									timeoneend = item.equipment.timeoneend.substring(0,2)+":"+item.equipment.timeoneend.substring(2,4);
 								}
-								if(item.equipment.timetwostart != null){
-									timetwostart = item.equipment.timetwostart;
+								if(item.equipment.timetwostart != null && item.equipment.timetwostart != ""){
+									timetwostart = item.equipment.timetwostart.substring(0,2)+":"+item.equipment.timetwostart.substring(2,4);
 								}
-								if(item.equipment.timetwoend != null){
-									timetwoend = item.equipment.timetwoend;
+								if(item.equipment.timetwoend != null && item.equipment.timetwoend != ""){
+									timetwoend = item.equipment.timetwoend.substring(0,2)+":"+item.equipment.timetwoend.substring(2,4);
 								}
-								if(item.equipment.timethreestart != null){
-									timethreestart = item.equipment.timethreestart;
+								if(item.equipment.timethreestart != null && item.equipment.timethreestart != ""){
+									timethreestart = item.equipment.timethreestart.substring(0,2)+":"+item.equipment.timethreestart.substring(2,4);
 								}
-								if(item.equipment.timethreeend != null){
-									timethreeend = item.equipment.timethreeend;
+								if(item.equipment.timethreeend != null && item.equipment.timethreeend != ""){
+									timethreeend = item.equipment.timethreeend.substring(0,2)+":"+item.equipment.timethreeend.substring(2,4);
 								}
 								
 								str =str + "<div class=\"col-xs-12 col-md-6\">" +
@@ -130,6 +137,7 @@ rainet.setting.controller.setEquipment = {
 											"<form class=\"form-horizontal\" role=\"form\">" +
 												"<div class=\"form-group has-feedback\" style='margin-bottom:10px;padding-bottom:10px;border-bottom:#ddd 1px solid;' id=\"form-group\">" +
 												"<input type=\"hidden\" name=\"id\" value=\""+item.equipment.id+"\"/>" +
+												"<input type=\"hidden\" name=\"name\" value=\""+item.equipment.name+"\"/>" +
 												"<input type=\"hidden\" name=\"code\" value=\""+item.equipment.code+"\"/>" +
 												"<input type=\"hidden\" name=\"controlhostid\" value=\""+item.equipment.controlhostid+"\"/>"+	
 												radio+
@@ -161,40 +169,50 @@ rainet.setting.controller.setEquipment = {
 													"<div class=\"col-sm-3\"><input type=\"text\" class=\"form-control soilwater\" name=\"soilwater\" id=\"inputLab\" data-bv-field=\"soilwater\" value=\""+item.equipment.soilwater+"\"><span style='line-height:34px;'>&nbsp;&nbsp;%</span></div></div>" +
 												timeLen+
 												"<hr/>"+
-												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+												"<div class=\"form-group has-feedback\" id=\"timeLenForm\">" +
 													"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
 													"<div class=\"col-sm-9\" id=\"timeArea\">" +
-													"<input type=\"checkbox\" class=\"cursor\" id=\"zero\" value=\"0\"> 全选</input>&nbsp;&nbsp;" +
+//													"<input type=\"checkbox\" class=\"cursor\" id=\"zero\" value=\"0\"> 全选</input>&nbsp;&nbsp;" +
 													"<input type=\"hidden\" id=\"week\" value=\""+week+"\" />" +
 													"<input type=\"checkbox\" class=\"cursor\" id=\"one\" value=\"1\"> 周一</input>&nbsp;&nbsp;" +
 													"<input type=\"checkbox\" class=\"cursor\" id=\"two\" value=\"2\"> 周二</input>&nbsp;&nbsp;" +
-													"<input type=\"checkbox\" class=\"cursor\" id=\"thr\" value=\"3\"> 周三</input></br>" +
-													"<input type=\"checkbox\" class=\"cursor\" id=\"four\" value=\"4\"> 周四</input>&nbsp;&nbsp;" +
+													"<input type=\"checkbox\" class=\"cursor\" id=\"thr\" value=\"3\"> 周三</input>&nbsp;&nbsp;" +
+													"<input type=\"checkbox\" class=\"cursor\" id=\"four\" value=\"4\"> 周四</input></br>" +
 													"<input type=\"checkbox\" class=\"cursor\" id=\"five\" value=\"5\"> 周五</input>&nbsp;&nbsp;" +
 													"<input type=\"checkbox\" class=\"cursor\" id=\"six\" value=\"6\"> 周六</input>&nbsp;&nbsp;" +
 													"<input type=\"checkbox\" class=\"cursor\" id=\"sev\" value=\"7\"> 周日</input>&nbsp;&nbsp;" +
 													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
-													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段一：</label>" +
+													"<label class=\"col-sm-3 control-label\">时段一&nbsp;&nbsp;&nbsp;&nbsp;：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
 														"<input type=\"text\" id='dateTime' class=\"form-control timeonestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeonestart\" value=\""+timeonestart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
 														"<input type=\"text\" id='dateTime' class=\"form-control timeoneend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timeoneend\" value=\""+timeoneend+"\"/>" +
 													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
-													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段二：</label>" +
+													"<label class=\"col-sm-3 control-label\">时段二&nbsp;&nbsp;&nbsp;&nbsp;：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
 														"<input type=\"text\" id='dateTime' class=\"form-control timetwostart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwostart\" value=\""+timetwostart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
 														"<input type=\"text\" id='dateTime' class=\"form-control timetwoend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timetwoend\" value=\""+timetwoend+"\"/>" +
 													"</div></div>" +
 												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
-													"<label class=\"col-sm-3 control-label\"><input type=\"checkbox\"/>&nbsp;时段三：</label>" +
+													"<label class=\"col-sm-3 control-label\">时段三&nbsp;&nbsp;&nbsp;&nbsp;：</label>" +
 													"<div class=\"input-group date col-sm-9\">" +
 														"<input type=\"text\" id='dateTime' class=\"form-control timethreestart cursor\" style=\"margin-left:15px;width: 100px; margin-right: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreestart\" value=\""+timethreestart+"\"/>" +
 														"<span style=\"line-height: 30px; position: relative; float: left;\">-</span> "+
 														"<input type=\"text\" id='dateTime' class=\"form-control timethreeend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\" value=\""+timethreeend+"\"/>" +
 													"</div></div>" +
+												"</div>"+
+												flowP+
+												"<hr/>"+
+												"<div class=\"form-group has-feedback\" id=\"flowForm\">" +
+												"<label class=\"col-sm-3 control-label\">流量参数：</label>" +	
+												"<div class=\"col-sm-9\" id=\"flow\">" +
+												"<input type=\"text\" class=\"form-control\" id=\"flow\" value=\""+week+"\" /><span style=\"line-height:34px;\">&nbsp;&nbsp;L</span>" +
+												"</div></div>" +
+												"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+												"</div></div>" +
 												"</div>"+
 											"</form></div></div></div>";
 							});
@@ -204,12 +222,14 @@ rainet.setting.controller.setEquipment = {
 							rainet.setting.utils.radioChange();
 							//select初始选中事件
 							rainet.setting.utils.selectVal(data);
+							//周期初始选中事件
+							rainet.setting.utils.selectWeekVal(data);
 							//选择土壤
 							rainet.setting.utils.selectSoil();
 							//选择植物
 							rainet.setting.utils.selectPlants();
 							//灌溉周期事件
-//							rainet.setting.utils.multiselect();
+							//rainet.setting.utils.multiselect();
 							//日历控件绑定事件
 							rainet.setting.utils.dateTime();
 							//添加土壤信息事件
@@ -241,16 +261,7 @@ rainet.setting.controller.setEquipment = {
 						}
 					});
 					if(mark){
-						var list = [];
-						$("[id='equipmentCheckbox']").each(function(){
-							if($(this).is(":checked")){
-								var $form = $(this).parent().parent().parent().find("form");
-								var bv = $form.data('bootstrapValidator');
-								var formData = $form.serializeArray();
-								var jsonData = rainet.utils.serializeObject(formData);
-								list.push(jsonData);
-							}
-						});
+						 var list = [];
 						list.handleError = function(result){
 							flag = true;
 							return true;
@@ -275,21 +286,74 @@ rainet.setting.controller.setEquipment = {
 								      className: "btn-success",
 								      callback : function(){
 								    	  var len = 0;
-								    	  $("[id='equipmentCheckbox']").each(function(){
+											$("[id='equipmentCheckbox']").each(function(){
 												if($(this).is(":checked")){
 													var $form = $(this).parent().parent().parent().find("form");
-													$($form).bootstrapValidator('validate');
 													var bv = $form.data('bootstrapValidator');
+													var formData = $form.serializeArray();
+													var jsonData = rainet.utils.serializeObject(formData);
+													
+													var weekVal = "";
+													$("#timeArea",$form).find("input[type='checkbox']:checked").each(function(data){
+														weekVal = weekVal + $(this).val()+",";
+													});
+													$("#week",$form).val(weekVal.substring(0,weekVal.length-1));
+													var week = $("#week",$form).val();
+													
+											    	var timeonestart = $form.find("[name='timeonestart']").val().replace(":","");
+											    	var timeoneend = $form.find("[name='timeoneend']").val().replace(":","");
+											    	var timetwostart = $form.find("[name='timetwostart']").val().replace(":","");
+											    	var timetwoend = $form.find("[name='timetwoend']").val().replace(":","");
+											    	var timethreestart =$form.find("[name='timethreestart']").val().replace(":","");
+											    	var timethreeend = $form.find("[name='timethreeend']").val().replace(":","");
+											    	
+											    	jsonData.week=week;
+											    	if(timeonestart.length<4){
+											    		jsonData.timeonestart="0"+timeonestart;
+											    	}else{
+											    		jsonData.timeonestart=timeonestart;
+											    	}
+											    	if(timeoneend.length<4){
+											    		jsonData.timeoneend="0"+timeoneend;
+											    	}else{
+											    		jsonData.timeoneend=timeoneend
+											    	}
+											    	if(timetwostart.length<4){
+											    		jsonData.timetwostart="0"+timetwostart;
+											    	}else{
+											    		jsonData.timetwostart=timetwostart;
+											    	}
+											    	if(timetwoend.length<4){
+											    		jsonData.timetwoend="0"+timetwoend;
+											    	}else{
+											    		jsonData.timetwoend=timetwoend;
+											    	}
+											    	if(timethreestart.length<4){
+											    		jsonData.timethreestart="0"+timethreestart;
+											    	}else{
+											    		jsonData.timethreestart=timethreestart;
+											    	}
+											    	if(timethreeend.length<4){
+											    		jsonData.timethreeend="0"+timethreeend;
+											    	}else{
+											    		jsonData.timethreeend=timethreeend;
+											    	}
+											    	
+													list.push(jsonData);
+													
 													if (bv.$invalidFields.length > 0) {
 														len += bv.$invalidFields.length;
 													}
 												}
 											});
+											
 								    	  if(len>0){
 								    		  bootbox.hideAll();
 								    		  flag = true;
 								    		  return false;
 								    	  }
+								    	  
+								    	  
 								    	  	rainet.setting.service.equipment.updateList(list, function(data){
 												if(data==""){
 													rainet.utils.notification.success("设置成功!");
@@ -533,7 +597,7 @@ rainet.setting.controller.setEquipment = {
 						$(this).removeClass("has-success");
 					});
 					
-					rainet.setting.utils.setValidateForTimeLen(_timeLenTempate);
+//					rainet.setting.utils.setValidateForTimeLen(_timeLenTempate);
 					flag = false;
 					var mark=false;
 					$("[id='equipmentCheckbox']").each(function(){
@@ -543,9 +607,6 @@ rainet.setting.controller.setEquipment = {
 						}
 					});
 					if(mark){
-						//灌溉周期事件
-//						rainet.setting.utils.checkTime();
-						
 						var list = [];
 						var param;
 						$("[id='equipmentCheckbox']").each(function(){
@@ -651,6 +712,93 @@ rainet.setting.controller.setEquipment = {
 				}
 			});
 		},
+		//设置全局流量控制事件
+		setFlow : function(){
+			var _flowTempate = $(this.flowTempate);
+			//设置全流量控制
+			$(".setFlow").off('click').on('click', function(e){
+				if(flag){
+					var $formgroup = $("form",_flowTempate).find("div[id=form-group]");
+					$($formgroup).each(function(){
+						$(this).removeClass("has-error");
+						$(this).removeClass("has-success");
+					});
+					
+					flag = false;
+					var mark=false;
+					$("[id='equipmentCheckbox']").each(function(){
+						if($(this).is(":checked")){
+							mark = true;
+							return false;//跳出循环
+						}
+					});
+					if(mark){
+						var list = [];
+						var param;
+						$("[id='equipmentCheckbox']").each(function(){
+							if($(this).is(":checked")){
+								var $form = $(this).parent().parent().parent().find("form");
+								var formData = $form.serializeArray();
+								var jsonData = rainet.utils.serializeObject(formData);
+								list.push(jsonData);
+							}
+						});
+						list.handleError = function(result){
+							flag = true;
+							return true;
+						};
+						
+						bootbox.dialog({
+							message : _flowTempate,
+							title : '流量控制设置',
+							// 支持ESC
+							onEscape : function(){
+								flag=true;
+							},
+							buttons :  {
+								cancel: {
+									label: "取消",
+									className: "btn-warning",
+									callback : function(){
+										flag = true;
+									}
+								},
+								success: {
+									label: "确定",
+									className: "btn-success",
+									callback : function(){
+										var $form = $("#flowForm");
+										$($form).bootstrapValidator('validate');
+										var bv = $form.data('bootstrapValidator');
+										if (bv.$invalidFields.length > 0) {
+											return false;
+										}
+										var flow = $("#flowParam").val();
+										alert(flow);
+										if(flow==""||flow==null){
+											rainet.utils.notification.warning("流量参数不能为空!");
+											return false;
+										}else{
+//											rainet.setting.service.equipment.setTimeLen(list, function(data){
+//												if(data){
+													rainet.utils.notification.success("测试设置成功!");
+//												}else{
+//													rainet.utils.notification.error("设置失败!");
+//												}
+												flag = true;
+//											});
+										}
+									}
+								}
+							}
+						});
+					}else{
+						rainet.utils.notification.warning("请先选择节点!");
+						flag = true;
+					}
+				}
+			});
+		},
 		
 		setEquipmentInfo : function($hostHtml){
 			var $form = $("form", $hostHtml);
@@ -671,6 +819,7 @@ rainet.setting.controller.setEquipment = {
 			this.setModel();
 			this.setAutoParam();
 			this.setTimeLen();
+			this.setFlow();
 			this.checked();
 		},
 		
@@ -701,15 +850,18 @@ rainet.setting.controller.setEquipment = {
 						"</div>"+
 						"<div class=\"col-xs-9 col-md-9\">" +
 						"<div class=\"node-container\">" +
-						"<div class=\"node-tools\" style=\"font-size:14px;height:55px;\">" +
-						"<div class=\"col-xs-4 col-md-4 text-center\">" +
+						"<div class=\"node-tools\" style=\"margin-left:60px;font-size:14px;height:55px;\">" +
+						"<div class=\"col-xs-3 col-md-3 text-left\">" +
 						"<a href=\"javascript:void(0);\" class=\"setModel\">模式设置</a>" +
 						"</div>" +
-						"<div class=\"col-xs-4 col-md-3 text-left\">" +
-						"<a href=\"javascript:void(0);\" class=\"setAutoParam\">自控参数设置</a>" +
+						"<div class=\"col-xs-3 col-md-3 text-left\">" +
+						"<a href=\"javascript:void(0);\" class=\"setAutoParam\">自控参数</a>" +
 						"</div>" +
-						"<div class=\"col-xs-4 col-md-5 text-left\">" +
+						"<div class=\"col-xs-3 col-md-3 text-left\">" +
 						"<a href=\"javascript:void(0);\" class=\"setTimeLen\">时段设置</a>" +
+						"</div>" +
+						"<div class=\"col-xs-3 col-md-3 text-left\">" +
+						"<a href=\"javascript:void(0);\" class=\"setFlow\">流量设置</a>" +
 						"</div>" +
 						"</div>" +
 						"<div class=\"EquipmentList\">" +
@@ -908,9 +1060,10 @@ rainet.setting.controller.setEquipment = {
 	modelTempate : "<div>\n"+
 						"<form class=\"form-horizontal\" role=\"form\" id=\"plantsForm\">\n"+
 						"<div class=\"form-group\" style='padding:20px;'>\n"+
-						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" checked value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
-						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
-						"<div class=\"col-sm-4 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div></div>\n"+
+						"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" checked value=\"0\" >&nbsp;&nbsp;&nbsp;&nbsp;手动</input></div>" +
+						"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" value=\"1\">&nbsp;&nbsp;&nbsp;&nbsp;自动</div>" +
+						"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" value=\"2\">&nbsp;&nbsp;&nbsp;&nbsp;时段</div>\n"+
+						"<div class=\"col-sm-3 text-center\"><input type=\"radio\" name=\"allModel\" class=\"modelClass\" value=\"3\">&nbsp;&nbsp;&nbsp;&nbsp;流量</div></div>\n"+
 						"</div>\n"+
 						"</form>\n"+
 						"</div>",
@@ -949,12 +1102,11 @@ rainet.setting.controller.setEquipment = {
 					"<div class=\"form-group has-feedback\" id=\"form-group\">" +
 						"<label class=\"col-sm-3 control-label\">灌溉周期：</label>" +	
 						"<div class=\"col-sm-9\" id=\"timeArea2\">" +
-						"<input type=\"checkbox\" class=\"cursor\" id=\"zero\" value=\"0\"> 全选</input>&nbsp;&nbsp;" +
 						"<input type=\"hidden\" id=\"week\"/>" +
 						"<input type=\"checkbox\" class=\"cursor\" id=\"one\" value=\"1\"> 周一</input>&nbsp;&nbsp;" +
 						"<input type=\"checkbox\" class=\"cursor\" id=\"two\" value=\"2\"> 周二</input>&nbsp;&nbsp;" +
-						"<input type=\"checkbox\" class=\"cursor\" id=\"thr\" value=\"3\"> 周三</input></br>" +
-						"<input type=\"checkbox\" class=\"cursor\" id=\"four\" value=\"4\"> 周四</input>&nbsp;&nbsp;" +
+						"<input type=\"checkbox\" class=\"cursor\" id=\"thr\" value=\"3\"> 周三</input>&nbsp;&nbsp;" +
+						"<input type=\"checkbox\" class=\"cursor\" id=\"four\" value=\"4\"> 周四</input></br>" +
 						"<input type=\"checkbox\" class=\"cursor\" id=\"five\" value=\"5\"> 周五</input>&nbsp;&nbsp;" +
 						"<input type=\"checkbox\" class=\"cursor\" id=\"six\" value=\"6\"> 周六</input>&nbsp;&nbsp;" +
 						"<input type=\"checkbox\" class=\"cursor\" id=\"sev\" value=\"7\"> 周日</input>&nbsp;&nbsp;" +
@@ -981,6 +1133,18 @@ rainet.setting.controller.setEquipment = {
 							"<input type=\"text\" id='dateTime' class=\"form-control timethreeend cursor\" style=\"width: 100px; margin-left: 5px; padding-right: 5px;padding-left: 5px;\" name=\"timethreeend\"/>" +
 						"</div></div>" +
 					"</div>"+
+						"</form>\n"+
+						"</div>",
+	flowTempate : "<div>\n"+
+						"<form class=\"form-horizontal\" role=\"form\" id=\"flowForm\">\n"+
+						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"<label class=\"col-sm-3 control-label\">流量参数：</label>" +	
+						"<div class=\"col-sm-9\" id=\"flow\">" +
+						"<input type=\"text\" class=\"form-control\" id=\"flowParam\" /><span style=\"line-height:34px;\">&nbsp;&nbsp;L</span>" +
+						"</div></div>" +
+						"<div class=\"form-group has-feedback\" id=\"form-group\">" +
+						"</div></div>" +
+						"</div>"+
 						"</form>\n"+
 						"</div>",
 };

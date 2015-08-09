@@ -64,7 +64,7 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 	 * @Title:       updateList
 	 * @author:      杨贵松
 	 * @time         2014年12月28日 下午4:43:21
-	 * @Description: 批量设置节点及传感器信息
+	 * @Description: 初始化节点设置
 	 * @throws
 	 */
 	@Override
@@ -94,7 +94,6 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 						continue;
 					}
 					//3.设置ABCD参数值
-//					boolean f3 = true;
 					boolean f3 = setCoefficient(equipment,host.getCode());
 					if(!f3){
 						listError.add(equipment);
@@ -105,7 +104,12 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 					if(equipment.getIrrigationtype()==2){
 						f4 = setTimeLen(equipment,host.getCode());
 					}
-					if(f1&&f2&&f3&&f4){
+					//5.流量设置
+					boolean f5 = true;
+					if(equipment.getIrrigationtype()==3){
+						f5 = setTimeLen(equipment,host.getCode());
+					}
+					if(f1&&f2&&f3&&f4&&f5){
 						equipment.setModifyuser(user.getId());
 						equipment.setModifytime(new Date());
 						listOK.add(equipment);
@@ -116,7 +120,7 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 				}
 				//将成功的节点信息保存到数据库
 				if(CollectionUtils.isEmpty(listOK)){
-					LOG.error("设置节点及传感器失败");
+					LOG.error("设置节点及传感器全部失败");
 					throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_FAILD);
 				}else if(!CollectionUtils.isEmpty(listError)){
 					String name = "";
@@ -128,8 +132,8 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 				}
 			}
 		} catch (DataAccessException e) {
-			LOG.error("设置节点及传感器失败", e);
-			throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_FAILD);
+			LOG.error("设置节点及传感器异常", e);
+			throw new ServerException(ErrorCode.INIT_EQUIPMENT_INFO_ERR);
 		}
 		return result;
 	}
@@ -498,6 +502,104 @@ public class EquipmentExtServiceImpl implements IEquipmentExtService {
 				case (byte) 0xA0:
 					mark = false;
 					break;
+				default:
+					break;
+				}
+			}
+		} catch (DataAccessException e) {
+			LOG.error("设置节点时段控制异常", e);
+			throw new ServerException(ErrorCode.SET_EQUIPMENT_PARAM_FAILD);
+		}
+		return mark;
+	}
+	
+	/**
+	 * @Title:       setFlowPara
+	 * @author:      杨贵松
+	 * @time         2015年7月23日 上午12:04:13
+	 * @Description: 单独设置一个节点的流量控制参数
+	 * @return       boolean
+	 * @throws
+	 */
+	public boolean setFlowPara(Equipment equipment,String cCode){
+		boolean mark = false;
+		// 查询节点信息
+		try {
+			
+			String startone = equipment.getTimeonestart();
+			String endone = equipment.getTimeoneend();
+			String starttwo = equipment.getTimetwostart();
+			String endtwo = equipment.getTimetwoend();
+			String startthree = equipment.getTimethreestart();
+			String endthree = equipment.getTimethreeend();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("hhmm");
+			String timeone="";
+			String timetwo="";
+			String timethree="";
+			if(!startone.equals("")){
+				timeone = sdf.format(startone)+sdf.format(endone);
+			}else{
+				timeone = "24002400";
+			}
+			
+			if(!starttwo.equals("")){
+				timetwo = sdf.format(starttwo)+sdf.format(endtwo);
+			}else{
+				timetwo = "24002400";
+			}
+			
+			if(!startthree.equals("")){
+				timethree = sdf.format(startthree)+sdf.format(endthree);
+			}else{
+				timethree = "24002400";
+			}
+			
+			String timeLen = "";
+			String[] week = {};
+			int T0 =0;
+			if(!equipment.getWeek().equals("")){
+				week = equipment.getWeek().split(",");
+				T0 = week.length;
+				for(int i=0;i<T0;i++){
+					timeLen += "0"+week[i];
+				}
+			}
+			
+			byte[] data = codingFactory.byteMerger(codingFactory.string2BCD(timeone+timetwo+timethree+"01"+equipment.getCode()),codingFactory.string2BCD("0"+T0+timeLen));
+			
+			// 组装发送指令
+			byte[] sendData = codingFactory.coding((byte) 0x01, cCode, (byte) 0x26, data);
+			// 开始的时间
+			Date startDate = new Date();
+			Client.sendToServer(sendData);
+			// 等待获取主机返回的指令，等待10秒
+			String dataContext = "";
+			try {
+				dataContext = netWorkService.waitData(cCode, "36", startDate);
+			} catch (ParseException e1) {
+				LOG.error("获取10秒后的时间时异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			} catch (InterruptedException e1) {
+				LOG.error("获取10秒后的时间时sleep异常", e1);
+				throw new ServerException(ErrorCode.ILLEGAL_PARAM);
+			}
+			
+			boolean flag = false;
+			byte[] receiveData = null;
+			if (!dataContext.equals("")) {
+				receiveData = codingFactory.string2BCD(dataContext);
+				flag = checkCoding.checkReceiveCoding(receiveData, sendData);
+			}
+			if (flag) {
+				byte num = receiveData[12];
+				switch (num) {
+				case 0x0A:
+					mark = true;
+					break;
+				case (byte) 0xA0:
+					mark = false;
+				break;
 				default:
 					break;
 				}

@@ -21,13 +21,13 @@ rainet.controlCenter.view = function() {
 		}); 
 
 	}
-	function fRandomBy(under, over){
-        switch(arguments.length){
-            case 1: return parseInt(Math.random()*under+1);
-            case 2: return parseInt(Math.random()*(over-under+1) + under);
-            default: return 0;
-        }
-    }
+//	function fRandomBy(under, over){
+//        switch(arguments.length){
+//            case 1: return parseInt(Math.random()*under+1);
+//            case 2: return parseInt(Math.random()*(over-under+1) + under);
+//            default: return 0;
+//        }
+//    }
 	//查询节点列表
 	var initEquipmentList = function(data){
 		var $EquipmentList = $(".EquipmentList");
@@ -71,7 +71,6 @@ rainet.controlCenter.view = function() {
 				}
 				var strError = "";
 				humidity = data.humidity;
-//				humidity = fRandomBy(99,100);
 				if(data.humidity==0){
 					strError = "<label class=\"col-sm-3 control-label\" id=\"has-error\">湿度值"+Num+"：</label>" +
 					"<div class=\"col-sm-3 has-error\">" +
@@ -98,7 +97,6 @@ rainet.controlCenter.view = function() {
 			var tmpStr2 = "";
 			if(item.equipmentStatus == null){
 				eTemperature = 0;
-//				eTemperature = fRandomBy(11,12);
 				eStatus = "空";
 				velocity = "0";
 				
@@ -112,7 +110,6 @@ rainet.controlCenter.view = function() {
 							"</div>";
 			}else{
 				eTemperature = item.equipmentStatus.temperature;
-//				eTemperature = fRandomBy(11,12);
 				eStatus = item.equipmentStatus.status;
 				velocity = item.equipmentStatus.velocity;
 				
@@ -144,17 +141,36 @@ rainet.controlCenter.view = function() {
 			}
 			
 			var water = (Number((area*rootdepth*soilweight/10000)*(soilwater-(humidity*soilwater)/(soilweight*100)))).toFixed(2);
-//			var water = 0;
 			if(water<=0 || isNaN(water)){
 				water = 0;
 			}
 			
+			//模式
+			var model = "";
+			var pause = "";
+			switch(item.equipment.irrigationtype){
+			case 0 :
+				model = "手动模式";
+				break;
+			case 1 :
+				model = "自动模式";
+				break;
+				
+			case 2 :
+				model = "时段模式";
+				break;
+			case 3 :
+				model = "流量模式";
+				pause = "<span class=\"float-right\" style=\"margin-top:5px;\"> <i id=\"pause\" class=\"fa fa-pause cursor\" style=\"margin-right:30px;\"></i><i id=\"play\" class=\"fa fa-play cursor\"></i></span>";
+				break;
+				
+			}
 			str = str + "<div class=\"col-xs-12 col-md-6\">" +
 					"<div class=\"panel panel-default \">" +
 					"<div class=\"panel-heading\">" +
-					"<label>"+item.name+"</label> <span class=\"float-right\"> " +
 					"<input type=\"checkbox\" class=\"cursor\" name=\""+item.id+"\" id=\"equipmentCheckbox\"/>" +
-					"</span>" +
+					"<label style=\"margin-left:10px;\">"+item.name+"</label> <label style=\"margin-left:30px;font-size:10px;color:#1b926c;\">"+model+"</label>" +
+					pause +
 					"</div>" +
 					"<div class=\"panel-body\">" +
 					"<form class=\"form-horizontal\" role=\"form\">" +
@@ -204,6 +220,8 @@ rainet.controlCenter.view = function() {
 			handlMenuView(this);
 			var projectId =$(this).attr("id");
 			var param = {pId : projectId};
+			$(".checkAll").checked = false;
+			console.log($(".checkAll").checked);
 			rainet.controlCenter.service["equipment"].list(param, function(data){
 				initEquipmentList(data);
 			});
@@ -229,7 +247,6 @@ rainet.controlCenter.view = function() {
 			}else{
 				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-exclamation-triangle text-danger navbar-right dropdown cursor' id='通讯故障!'></span></a>";
 			}
-//				str = str + "<a href='javascript:void(0);' class='list-group-item panelLink "+linkActive+"' id='"+item.id+"' name='"+item.projecttype+"'>"+item.name+"<span class='fa fa-wifi text-success navbar-right dropdown cursor' id='通讯正常!'></span></a>";
 		});
 		$projectList.empty().append($(str));
 		//分页查询

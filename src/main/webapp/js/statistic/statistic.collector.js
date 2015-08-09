@@ -210,7 +210,7 @@ rainet.statistic.controller.water = {
 					borderColor:"#ddd",
 					borderRadius:1,
 					borderWidth:1,
-					height:400,
+					height:450,
 					spacing:[20, 10, 15, 10]
 				},
 				colors: ["#7cb5ec", "#aaeeee", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
@@ -249,9 +249,14 @@ rainet.statistic.controller.water = {
 				        	 }
 				         },
 				         credits:{
-				        	 enabled: false,
+				        	 enabled: true,
 				        	 href: "http://www.rainet.com.cn/",
-				        	 text: '锐利特科技'
+				        	 text: '锐利特科技',
+				        	 style: {
+				        		    cursor: 'pointer',
+				        		    color: '#4cae4c',
+				        		    fontSize: '10px'
+				        		}
 				         },
 				         exporting:{
 				        	 // 是否允许导出
@@ -319,7 +324,7 @@ rainet.statistic.controller.water = {
 				        		 align: 'left',
 				        		 // 标签格式化
 				        		 formatter: function(){
-				        			 return '￥'+this.value;
+				        			 return ''+this.value;
 				        		 }
 				        	 }
 				         },
@@ -338,7 +343,7 @@ rainet.statistic.controller.water = {
 					borderColor:"#ddd",
 					borderRadius:1,
 					borderWidth:1,
-					height:400,
+					height:450,
 					spacing:[20, 10, 15, 10]
 				},
 				colors: ["#7cb5ec", "#aaeeee", "#f7a35c", "#90ee7e", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
@@ -377,9 +382,14 @@ rainet.statistic.controller.water = {
 				        	 }
 				         },
 				         credits:{
-				        	 enabled: false,
+				        	 enabled: true,
 				        	 href: "http://www.rainet.com.cn/",
-				        	 text: '锐利特科技'
+				        	 text: '锐利特科技',
+				        	 style: {
+				        		    cursor: 'pointer',
+				        		    color: '#4cae4c',
+				        		    fontSize: '10px'
+				        		}
 				         },
 				         exporting:{
 				        	 // 是否允许导出
@@ -446,7 +456,7 @@ rainet.statistic.controller.water = {
 				        		 align: 'left',
 				        		 // 标签格式化
 				        		 formatter: function(){
-				        			 return '￥'+this.value;
+				        			 return ''+this.value;
 				        		 }
 				        	 }
 				         },

@@ -34,6 +34,11 @@ rainet.setting.utils={
 				}else{
 					$(this).parent().parent().parent().find("div.timeLens").css("display","none");
 				}
+				if($(this).val()==3){
+					$(this).parent().parent().parent().find("div.flowP").css("display","inline");
+				}else{
+					$(this).parent().parent().parent().find("div.flowP").css("display","none");
+				}
 			});
 		},
 		
@@ -53,6 +58,46 @@ rainet.setting.utils={
 							$(".plantsname",$form).val(-1); 
 						}else{
 							$(".plantsname",$form).val(item.equipment.plantsname); 
+						}
+					}
+				});
+			});
+		},
+		
+		//周期初始选中事件
+		selectWeekVal : function(data){
+			$.each(data,function(index,item){
+				$("[id='equipmentCheckbox']").each(function(){
+					var $form = $(this).parent().parent().parent().find("form");
+					var id = $form.find("input[name=id]").val(); 
+					if(item.equipment.id==id){
+						if(item.equipment.week!="" && item.equipment.week!=null){
+							var w = item.equipment.week.split(",");
+							for(var i=0 ; i<w.length ; i++){
+								switch(w[i]){
+								case "1" :
+									$("#one",$form).attr("checked",true);
+									break;
+								case "2" :
+									$("#two",$form).attr("checked",true);
+									break;
+								case "3" :
+									$("#thr",$form).attr("checked",true);
+									break;
+								case "4" :
+									$("#four",$form).attr("checked",true);
+									break;
+								case "5" :
+									$("#five",$form).attr("checked",true);
+									break;
+								case "6" :
+									$("#six",$form).attr("checked",true);
+									break;
+								case "7" :
+									$("#sev",$form).attr("checked",true);
+									break;
+								}
+							}
 						}
 					}
 				});

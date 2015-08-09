@@ -264,7 +264,10 @@ input {
   					<a href="javascript:void(0);" class="list-group-item panelLink link-heading active" data-name="project">添加项目信息 <span class="fa fa-angle-right navbar-right "></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="host">添加主机信息 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="equipment">搜索节点信息 <span class="fa fa-angle-right navbar-right"></span></a>
-  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="setEquipment">节点传感器参数设置 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="setEquipment">节点详细参数设置 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="selectModel">查询节点模式设置 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="selectAutoParam">查询节点自控参数 <span class="fa fa-angle-right navbar-right"></span></a>
+  					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="selectTimeLen">查询节点时段参数 <span class="fa fa-angle-right navbar-right"></span></a>
   					<a href="javascript:void(0);" class="list-group-item panelLink " data-name="putData">节点赋值管理<span class="fa fa-angle-right navbar-right"></span></a>
 				</ul>
 			</div>
