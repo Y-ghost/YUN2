@@ -70,7 +70,11 @@ rainet.controlCenter.view = function() {
 					break;
 				}
 				var strError = "";
-				humidity = data.humidity;
+				if(data.humidity>100){
+					humidity == 100;
+				}else{
+					humidity = data.humidity;
+				}
 				if(data.humidity==0){
 					strError = "<label class=\"col-sm-3 control-label\" id=\"has-error\">湿度值"+Num+"：</label>" +
 					"<div class=\"col-sm-3 has-error\">" +

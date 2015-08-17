@@ -667,8 +667,8 @@ rainet.setting.utils={
 								},
 								between : {
 									min:0,
-									max:50,
-									message: '只能为0~50℃'
+									max:60,
+									message: '只能为0~60℃'
 								}
 							}
 						},
@@ -683,8 +683,8 @@ rainet.setting.utils={
 								},
 								between : {
 									min:0,
-									max:50,
-									message: '只能为0~50℃'
+									max:60,
+									message: '只能为0~60℃'
 								}
 							}
 						},
